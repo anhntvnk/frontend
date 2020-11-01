@@ -2,10 +2,12 @@ import { Button } from 'antd';
 import React from 'react';
 import ROUTE from './routes';
 
+const isLogin = true;
+
 export default [
   {
     exact: true,
-    url: ROUTE.HOMEPAGE,
+    path: ROUTE.HOMEPAGE,
     title: 'Trang Chủ',
     key: 'home',
     label: {
@@ -14,7 +16,7 @@ export default [
   },
   {
     exact: true,
-    url: ROUTE.COMPANY,
+    path: ROUTE.COMPANY,
     title: 'Công Ty',
     key: 'company',
     label: {
@@ -23,7 +25,7 @@ export default [
   },
   {
     exact: true,
-    url: ROUTE.PROJECT,
+    path: ROUTE.PROJECT,
     title: 'Dự Án',
     key: 'project',
     label: {
@@ -32,7 +34,7 @@ export default [
   },
   {
     exact: true,
-    url: '',
+    path: '',
     title: 'Thông Báo',
     key: 'notify',
     label: {
@@ -40,16 +42,22 @@ export default [
     },
   },
   {
-    url: ROUTE.SETTING,
+    exact: true,
+    path: ROUTE.PACKAGES,
+    title: 'Nâng Cấp MVP',
+    key: 'package',
+  },
+  {
+    path: ROUTE.SETTING,
     title: 'Cài Đặt',
     key: 'settings',
     label: {
       iconClass: 'far fa-home-alt',
     },
-    isLogin: false,
+    isLogin: !isLogin,
   },
   {
-    url: ROUTE.LOGIN,
+    path: ROUTE.LOGIN,
     title: (
       <Button className="btn-login" type="primary" shape="round" size="large">
         Đăng Nhập
@@ -60,6 +68,6 @@ export default [
     label: {
       iconClass: 'far fa-home-alt',
     },
-    isLogin: true,
+    isLogin,
   },
 ];

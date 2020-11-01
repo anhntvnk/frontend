@@ -1,0 +1,103 @@
+@import '../../scss/_variables.less';
+
+.vnk-footer {
+  color: #ffffff;
+  .vnk-info {
+    background-color: #b7252c;
+    height: 409px;
+    border-bottom: 1px solid #ffffff;
+
+    .vnk-address {
+      position: absolute;
+      top: -20px;
+      // left: 185px;
+      // bottom: 21px;
+      height: 429px;
+      background: #ffffff;
+      box-shadow: 5px 5px 30px rgba(0, 0, 0, 0.25);
+      border-radius: 10px 10px 0px 0px;
+
+      .ant-card-body {
+        .ant-row {
+          margin-bottom: 70px;
+        }
+      }
+
+      .qrcode {
+        padding-left: 30px;
+        p {
+          margin-bottom: 0px;
+        }
+        .vnk-qrcode {
+          width: 66px;
+          height: 67px;
+        }
+      }
+
+      .vnk-logo {
+        width: 142px;
+        height: 140px;
+        margin-top: 28px;
+      }
+
+      .vnk-contact {
+        display: flex;
+
+        span {
+          font-size: 20px;
+          color: #223645;
+          font-weight: 400;
+          a {
+            color: #223645;
+          }
+        }
+      }
+    }
+    .sp-title {
+      font-weight: bold;
+      font-size: 18px;
+      line-height: 25px;
+    }
+
+    .vnk-support {
+      .vnk-download-app {
+        width: 153px;
+        height: 45px;
+      }
+      .ant-card {
+        background-color: #b7252c;
+        color: #ffffff;
+      }
+    }
+
+    .vnk-social {
+      .vnk-seminar {
+        width: 447px;
+        height: 227px;
+      }
+
+      .ant-card {
+        background-color: #b7252c;
+        color: #ffffff;
+        .ant-card-body {
+          padding-bottom: 0;
+        }
+      }
+    }
+  }
+  .vnk-copyright {
+    background-color: #b7252c;
+    height: 80px;
+    line-height: 80px;
+    text-align: center;
+    .vnk-iso {
+      width: 170px;
+      height: 64px;
+    }
+  }
+
+  .info-wapper {
+    max-width: 1280px;
+    margin: auto;
+  }
+}

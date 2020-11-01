@@ -1,6 +1,27 @@
 @import '../../_variables.less';
 
-.vnk-main {
+.ant-layout {
   font-family: Ubuntu;
   width: 100%;
+
+  .ant-layout-header {
+    background: #ffffff;
+    // border: 1px solid rgba(0, 0, 0, 0.1);
+    -webkit-box-shadow: none;
+    box-shadow: none;
+
+    @media only screen and (max-width: 767.99px) {
+      padding: 0px;
+    }
+  }
+
+  .ant-layout-content {
+    height: 1200px;
+    padding: 100px;
+
+    @media only screen and (max-width: 767.99px) {
+      height: auto;
+      padding: 0px;
+    }
+  }
 }

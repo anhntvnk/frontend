@@ -12,6 +12,8 @@ import styled from 'styled-components';
 import { Switch, withRouter } from 'react-router-dom';
 
 import HomePage from 'containers/HomePage/Loadable';
+import Packages from 'containers/Packages/Loadable';
+import Projects from 'containers/Projects/Loadable';
 // import NotFoundPage from 'containers/NotFoundPage/Loadable';
 
 import { PrivateLayout } from '../../components/Layouts';
@@ -29,14 +31,13 @@ const AppWrapper = styled.div`
 
 const App = () => (
   <AppWrapper>
-    <Helmet
-      titleTemplate="%s - React.js Boilerplate"
-      defaultTitle="React.js Boilerplate"
-    >
-      <meta name="description" content="A React.js Boilerplate application" />
+    <Helmet titleTemplate="%s - My Project" defaultTitle="My Project">
+      <meta name="description" content="My Project application" />
     </Helmet>
     <Switch>
       <PrivateLayout exact path={ROUTE.HOMEPAGE} component={HomePage} />
+      <PrivateLayout exact path={ROUTE.PACKAGES} component={Packages} />
+      <PrivateLayout exact path={ROUTE.PROJECT} component={Projects} />
     </Switch>
     <GlobalStyle />
   </AppWrapper>

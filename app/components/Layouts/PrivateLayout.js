@@ -10,14 +10,20 @@
 // Modules
 import React from 'react';
 import { Route } from 'react-router-dom';
+import { Layout } from 'antd';
+
 // Custom Components
 import Navbar from '../NavBar';
-import Footer from '../Footer';
+import VnkFooter from '../Footer';
+import MypHeader from './Header';
 import Menu from '../../constants/menu';
 // import { isLoggedIn } from '../../../services/auth';
 // Utilities, Constants & Styles
 // import { ROUTE } from '../../constants';
 import '../../scss/components/layouts/layouts.less';
+import './static/index.less';
+
+const { Content } = Layout;
 // ===================
 
 // ===== MAIN COMPONENT =====
@@ -26,17 +32,18 @@ export default ({ component: Component, getComponent, ...remain }) => (
   <Route
     {...remain}
     render={({ location }) => (
-      <div className="vnk-main">
-        <div className="vnk-navbar">
+      <Layout>
+        <MypHeader isMobile={false} />
+        {/* <Header>
           <Navbar data={Menu} />
-        </div>
-        <div className="vnk-content" style={{ marginTop: '100px' }}>
+        </Header> */}
+        <Content>
           {getComponent ? getComponent({ location }) : <Component />}
-        </div>
+        </Content>
         <div className="vnk-footer">
-          <Footer />
+          <VnkFooter />
         </div>
-      </div>
+      </Layout>
     )}
   />
 );

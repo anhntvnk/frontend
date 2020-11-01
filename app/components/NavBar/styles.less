@@ -1,91 +1,92 @@
 @import '../../scss/_variables.less';
-.vnk-navbar {
-  .vnk-header {
-    max-width: 1280px;
-    margin: 0 auto;
-    height: 64px;
 
-    .vnk-logo {
-      flex: 0 0 auto;
+.vnk-header {
+  max-width: 1280px;
+  margin: 0 auto;
+  height: 64px;
 
-      .logo {
-        padding-left: 40px;
-        overflow: hidden;
-        white-space: nowrap;
-        text-decoration: none;
-        font-weight: bold;
-        font-size: 36px;
-        // line-height: 42px;
-        color: @primary-red;
+  .vnk-logo {
+    flex: 0 0 auto;
 
-        .vnk-img {
-          position: relative;
-          top: -1.5px;
-          height: 60px;
-          margin-right: 16px;
-        }
+    .logo {
+      padding-left: 40px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 36px;
+      // line-height: 42px;
+      color: @primary-red;
+
+      .vnk-img {
+        position: relative;
+        top: -1.5px;
+        height: 60px;
+        margin-right: 16px;
+      }
+    }
+  }
+
+  .vnk-menu {
+    flex: 1 1 auto;
+
+    .ant-menu-horizontal {
+      line-height: 63px;
+      float: right;
+
+      .btn-login {
+        background: @primary-red;
+        border-color: @primary-red;
       }
     }
 
-    .vnk-menu {
-      flex: 1 1 auto;
+    .ant-menu-horizontal:not(.ant-menu-dark) > .login-item:hover,
+    .ant-menu-horizontal:not(.ant-menu-dark)
+      > .login-item
+      .ant-menu-submenu:hover,
+    .ant-menu-horizontal:not(.ant-menu-dark)
+      > .login-item
+      .ant-menu-item-active,
+    .ant-menu-horizontal:not(.ant-menu-dark)
+      > .login-item
+      .ant-menu-submenu-active,
+    .ant-menu-horizontal:not(.ant-menu-dark) > .login-item .ant-menu-item-open,
+    .ant-menu-horizontal:not(.ant-menu-dark)
+      > .login-item
+      .ant-menu-submenu-open,
+    .ant-menu-horizontal:not(.ant-menu-dark)
+      > .login-item
+      .ant-menu-item-selected,
+    .ant-menu-horizontal:not(.ant-menu-dark)
+      > .login-item
+      .ant-menu-submenu-selected {
+      color: inherit;
+      border: none !important;
+    }
 
-      .ant-menu-horizontal {
-        line-height: 63px;
-        float: right;
+    .ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-item:hover,
+    .ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-submenu:hover,
+    .ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-item-active,
+    .ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-submenu-active,
+    .ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-item-open,
+    .ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-submenu-open,
+    .ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-item-selected,
+    .ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-submenu-selected {
+      color: @text-green;
+      border-color: @text-green;
+    }
 
-        .btn-login {
-          background: @primary-red;
-          border-color: @primary-red;
-        }
-      }
+    .ant-menu-item {
+      font-size: 16px;
+    }
 
-      .ant-menu-horizontal:not(.ant-menu-dark) > .login-item:hover,
-      .ant-menu-horizontal:not(.ant-menu-dark)
-        > .login-item
-        .ant-menu-submenu:hover,
-      .ant-menu-horizontal:not(.ant-menu-dark)
-        > .login-item
-        .ant-menu-item-active,
-      .ant-menu-horizontal:not(.ant-menu-dark)
-        > .login-item
-        .ant-menu-submenu-active,
-      .ant-menu-horizontal:not(.ant-menu-dark)
-        > .login-item
-        .ant-menu-item-open,
-      .ant-menu-horizontal:not(.ant-menu-dark)
-        > .login-item
-        .ant-menu-submenu-open,
-      .ant-menu-horizontal:not(.ant-menu-dark)
-        > .login-item
-        .ant-menu-item-selected,
-      .ant-menu-horizontal:not(.ant-menu-dark)
-        > .login-item
-        .ant-menu-submenu-selected {
-        color: inherit;
-        border: none !important;
-      }
+    .login-item,
+    .ant-menu-horizontal > .ant-menu-submenu {
+      border-bottom: none;
+    }
 
-      .ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-item:hover,
-      .ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-submenu:hover,
-      .ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-item-active,
-      .ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-submenu-active,
-      .ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-item-open,
-      .ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-submenu-open,
-      .ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-item-selected,
-      .ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-submenu-selected {
-        color: @text-green;
-        border-color: @text-green;
-      }
-
-      .ant-menu-item {
-        font-size: 16px;
-      }
-
-      .login-item,
-      .ant-menu-horizontal > .ant-menu-submenu {
-        border-bottom: none;
-      }
+    @media only screen and (max-width: 767.99px) {
+      display: none;
     }
   }
 }
