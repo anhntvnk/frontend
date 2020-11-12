@@ -9,14 +9,6 @@ const GlobalStyle = createGlobalStyle`
     line-height: 1.5;
   }
 
-  body {
-    font-family: 'Ubuntu';
-  }
-
-  body.fontLoaded {
-    font-family: 'Ubuntu';
-  }
-
   #app {
     background-color: #fafafa;
     min-height: 100%;

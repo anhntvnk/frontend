@@ -1,33 +1,28 @@
-import React from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import { Table } from 'antd';
+import './styles.less';
 
-import Ul from './Ul';
-import Wrapper from './Wrapper';
+class List extends PureComponent {
+  render() {
+    const { ...tableProps } = this.props;
 
-function List(props) {
-  const ComponentToRender = props.component;
-  let content = <div />;
-
-  // If we have items, render them
-  if (props.items) {
-    content = props.items.map(item => (
-      <ComponentToRender key={`item-${item.id}`} item={item} />
-    ));
-  } else {
-    // Otherwise render a single component
-    content = <ComponentToRender />;
+    return (
+      <Table
+        {...tableProps}
+        className="table-list"
+        bordered
+        scroll={{ x: 1200 }}
+        simple
+        rowKey={record => record.id}
+      />
+    );
   }
-
-  return (
-    <Wrapper>
-      <Ul>{content}</Ul>
-    </Wrapper>
-  );
 }
 
 List.propTypes = {
-  component: PropTypes.elementType.isRequired,
-  items: PropTypes.array,
+  dataSource: PropTypes.object,
+  location: PropTypes.object,
 };
 
 export default List;

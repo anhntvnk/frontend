@@ -1,5 +1,6 @@
+/* eslint-disable no-case-declarations */
 /*
- * HomeReducer
+ * ProjectsReducer
  *
  * The reducer takes care of our data. Using actions, we can
  * update our application state. To add a new action,
@@ -8,25 +9,22 @@
  */
 
 import produce from 'immer';
-import { CHANGE_USERNAME } from './constants';
+import { LOAD_PROJECTS_SUCCESS } from './constants';
 
 // The initial state of the App
 export const initialState = {
-  username: '',
   project: [],
 };
 
 /* eslint-disable default-case, no-param-reassign */
-const homeReducer = (state = initialState, action) =>
+const projectReducer = (state = initialState, action) =>
   produce(state, draft => {
-    console.log(action.type);
-
     switch (action.type) {
-      case CHANGE_USERNAME:
-        // Delete prefixed '@' from the github username
-        draft.username = action.username.replace(/@/gi, '');
+      case LOAD_PROJECTS_SUCCESS:
+        const { response } = action;
+        draft.project = response;
         break;
     }
   });
 
-export default homeReducer;
+export default projectReducer;

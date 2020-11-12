@@ -1,22 +1,16 @@
 /**
- * Homepage selectors
+ * Project selectors
  */
 
 import { createSelector } from 'reselect';
 import { initialState } from './reducer';
 
-const selectHome = state => state.home || initialState;
-
-const makeSelectUsername = () =>
-  createSelector(
-    selectHome,
-    homeState => homeState.username,
-  );
+const selectProjects = state => state.projects || initialState;
 
 const makeSelectProjects = () =>
   createSelector(
-    selectHome,
+    selectProjects,
     projectState => projectState.project,
   );
 
-export { selectHome, makeSelectUsername, makeSelectProjects };
+export { selectProjects, makeSelectProjects };

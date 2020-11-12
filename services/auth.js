@@ -1,5 +1,4 @@
 import instance from 'axios';
-// import { get } from 'lodash';
 
 export const postLogin = (url, props) =>
   new Promise((resolve, reject) => {
@@ -14,29 +13,31 @@ export const postLogin = (url, props) =>
       })
       .post(url, props)
       .then(res => {
-        resolve(res.data);
+        const {
+          data,
+          data: { id, userId },
+        } = res;
+
+        setUserSession(id, userId);
+        resolve(data);
       })
       .catch(e => reject(e));
-  });
-
-// return the user data from the session storage
-export const getUser = () => {
-  const userStr = sessionStorage.getItem('user');
-  if (userStr) return JSON.parse(userStr);
-  return null;
-};
+  }).catch(e => e.response);
 
 // return the token from the session storage
 export const getToken = () => sessionStorage.getItem('token') || null;
 
+export const getUserId = () => sessionStorage.getItem('userId') || null;
+
+export const isLoggedIn = () => !!getToken();
 // remove the token and user from the session storage
 export const removeUserSession = () => {
   sessionStorage.removeItem('token');
-  sessionStorage.removeItem('user');
+  sessionStorage.removeItem('userId');
 };
 
 // set the token and user from the session storage
-export const setUserSession = (token, user) => {
+export const setUserSession = (token, userId) => {
   sessionStorage.setItem('token', token);
-  sessionStorage.setItem('user', JSON.stringify(user));
+  sessionStorage.setItem('userId', userId);
 };

@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /*
  * HomePage
@@ -20,37 +21,34 @@ import {
   makeSelectError,
 } from 'containers/App/selectors';
 import H1 from 'components/H1';
-import { Form, Input, Button, Checkbox, Row, Col } from 'antd';
+import H3 from 'components/H3';
+import { Row, Col } from 'antd';
 import {
-  UserOutlined,
-  LockOutlined,
-  ArrowRightOutlined,
-  PhoneOutlined,
-  IdcardOutlined,
+  CaretRightFilled,
+  FileTextFilled,
+  DribbbleSquareOutlined,
 } from '@ant-design/icons';
 import CenteredSection from './CenteredSection';
-import Section from './Section';
 import { loadRepos } from '../App/actions';
 import { changeUsername } from './actions';
 import { makeSelectUsername } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
-import welcomeLeft from '../../assets/images/welcome-left.png';
-import welcomeRight from '../../assets/images/welcome-right.png';
-import searchData from '../../assets/images/search-data.png';
-import market from '../../assets/images/market.png';
+import homeApp from '../../assets/images/home-app.jpg';
+import appStore from '../../assets/images/app-store.png';
+import chPlay from '../../assets/images/ch-play.png';
+import info from '../../assets/images/feature/info.png';
+import next from '../../assets/images/feature/next.png';
+import scale from '../../assets/images/feature/scale.png';
+import statchart from '../../assets/images/feature/statschart.png';
+import successReport from '../../assets/images/feature/success-report.png';
+import teacherIcon from '../../assets/images/feature/teacher-icon.png';
+import kpi from '../../assets/images/feature/kpi.jpg';
 import './styles.less';
 
 const key = 'home';
 
-export function HomePage({
-  username,
-  loading,
-  error,
-  repos,
-  onSubmitForm,
-  onChangeUsername,
-}) {
+export function HomePage({ username, onSubmitForm }) {
   useInjectReducer({ key, reducer });
   useInjectSaga({ key, saga });
 
@@ -59,242 +57,213 @@ export function HomePage({
     if (username && username.trim().length > 0) onSubmitForm();
   }, []);
 
-  const reposListProps = {
-    loading,
-    error,
-    repos,
-  };
-
-  const onFinish = values => {
-    console.log('Received values of form: ', values);
-  };
-
   return (
-    <article>
+    <div>
       <Helmet>
-        <title>My Project Welcome</title>
-        <meta name="description" content="My Project Welcome" />
+        <title>Trang Chủ</title>
+        <meta name="description" content="Trang Chủ" />
       </Helmet>
-      <Row className="vnk-welcome">
+      <div className="vnk-homepage">
         <CenteredSection>
-          <H1 className="welcome-back">Welcome Back!</H1>
+          <H1 className="vnk-headline">
+            KHÔNG CHỈ LÀ CẬP NHẬT THÔNG TIN DỰ ÁN
+          </H1>
+
+          <hr className="vnk-line" />
         </CenteredSection>
-        <Col span={24} xs={24}>
-          <div className="vnk-login">
+
+        <Row className="page1">
+          <Col sm={24} lg={12}>
             <CenteredSection>
-              <H1 className="welcome-text">
-                Chào mừng bạn đến với Hệ thống dữ liệu My Project!
-              </H1>
+              <img
+                // width={280}
+                height={450}
+                src={homeApp}
+                alt="App My Project"
+              />
             </CenteredSection>
+          </Col>
+          <Col sm={24} lg={12}>
+            <H3 className="box-title">
+              Các dự án đang theo dõi được lưu vào Trang chủ
+            </H3>
+            <p className="vnk-paragraph">
+              Tất cả các thông tin dự án bạn đang quan tâm bao gồm cả trạng
+              thái, tiến trình ra sao sẽ được truy cập một cách đơn giản trên
+              Trang chủ
+            </p>
+            <p className="vnk-paragraph">
+              <CaretRightFilled />
+              Việc thêm dự án mới rất thuận tiện vì được ưu tiên.
+            </p>
+            <p className="vnk-paragraph">
+              <CaretRightFilled />
+              Thêm các công ty mới cũng thuận tiện không kém.
+            </p>
+            <p className="vnk-paragraph">
+              <CaretRightFilled />
+              Tiến trình làm việc của dự án được nêu bật
+            </p>
+            <p className="vnk-paragraph">
+              <CaretRightFilled />
+              Bổ sung dễ dàng nhiệm vụ làm việc
+            </p>
+            <p className="vnk-paragraph">
+              <CaretRightFilled />
+              Thanh tìm kiếm giúp bạn tiết kiệm thời gian.
+            </p>
+          </Col>
+        </Row>
 
-            <div className="flex">
-              <img src={welcomeLeft} alt="" className="img-welcome-left" />
-              <div className="vnk-content-login">
-                <Form
-                  name="normal_login"
-                  className="login-form"
-                  initialValues={{
-                    remember: true,
-                  }}
-                  onFinish={onFinish}
-                >
-                  <H1 className="form-title">Đăng Nhập</H1>
-                  <Form.Item
-                    name="email"
-                    rules={[
-                      {
-                        required: true,
-                        message: 'Please input your Email!',
-                      },
-                    ]}
-                  >
-                    <Input
-                      prefix={<UserOutlined className="site-form-item-icon" />}
-                      placeholder="Email"
-                    />
-                  </Form.Item>
-                  <Form.Item
-                    name="password"
-                    rules={[
-                      {
-                        required: true,
-                        message: 'Please input your Password!',
-                      },
-                    ]}
-                  >
-                    <Input
-                      prefix={<LockOutlined className="site-form-item-icon" />}
-                      type="password"
-                      placeholder="Password"
-                    />
-                  </Form.Item>
-                  <Form.Item>
-                    <Form.Item name="remember" valuePropName="checked" noStyle>
-                      <Checkbox className="vnk-remember">Remember me</Checkbox>
-                    </Form.Item>
-
-                    <a className="login-form-forgot" href="">
-                      Quên mật khẩu
-                    </a>
-                  </Form.Item>
-
-                  <Form.Item>
-                    <Button
-                      type="primary"
-                      htmlType="submit"
-                      className="login-form-button"
-                    >
-                      Đăng Nhập
-                    </Button>
-                  </Form.Item>
-                </Form>
-              </div>
-            </div>
-
-            <img src={welcomeRight} alt="" className="img-welcome-right" />
-            <div className="sercurity">
-              <div className="sercurity-bg" />
-              <div className="sercurity-text">
-                <H1 className="sercurity-title">Sercurity Code</H1>
-                <p className="sercurity-content">
-                  Data Security is one of our best facilities. Allows for your
-                  files to be safer. The file can be secured with a code or
-                  password that you created, so only you can open the file.
-                </p>
-                <p className="learn-more">
-                  Lean More <ArrowRightOutlined />
-                </p>
-              </div>
-            </div>
-
-            <Col span={24} xs={24} style={{ marginTop: '100px' }}>
-              <Section>
-                <img src={searchData} alt="" className="img-search-data" />
-                <div className="sercurity">
-                  <div className="search-data-bg" />
-                  <div className="search-data-text">
-                    <H1 className="sercurity-title">Sercurity Code</H1>
-                    <p className="sercurity-content">
-                      Data Security is one of our best facilities. Allows for
-                      your files to be safer. The file can be secured with a
-                      code or password that you created, so only you can open
-                      the file.
-                    </p>
-                    <p className="learn-more">
-                      Lean More <ArrowRightOutlined />
-                    </p>
-                  </div>
-                </div>
-                <div className="vnk-content-regisrer">
-                  <Form
-                    name="normal_register"
-                    className="register-form"
-                    initialValues={{
-                      remember: true,
-                    }}
-                    onFinish={onFinish}
-                  >
-                    <H1 className="form-title">Đăng ký tài khoản!</H1>
-                    <Form.Item style={{ marginBottom: 0, width: '420px' }}>
-                      <Form.Item
-                        name="name"
-                        rules={[{ required: true }]}
-                        style={{
-                          display: 'inline-block',
-                          width: 'calc(50% - 8px)',
-                        }}
-                      >
-                        <Input
-                          prefix={
-                            <IdcardOutlined className="site-form-item-icon" />
-                          }
-                          placeholder="Nhập Họ Tên"
-                        />
-                      </Form.Item>
-                      <Form.Item
-                        name="phone"
-                        rules={[
-                          {
-                            required: true,
-                            message: 'Số Điện Thoại là bắt buộc!',
-                          },
-                        ]}
-                        style={{
-                          display: 'inline-block',
-                          width: 'calc(50% - 8px)',
-                          margin: '0 8px',
-                        }}
-                      >
-                        <Input
-                          prefix={
-                            <PhoneOutlined className="site-form-item-icon" />
-                          }
-                          placeholder="Số Điện Thoại"
-                        />
-                      </Form.Item>
-                    </Form.Item>
-                    <Form.Item
-                      name="username"
-                      rules={[
-                        {
-                          required: true,
-                          message: 'Địa chỉ Email là bắt buộc!',
-                        },
-                      ]}
-                    >
-                      <Input
-                        prefix={
-                          <UserOutlined className="site-form-item-icon" />
-                        }
-                        placeholder="Địa chỉ Email"
-                      />
-                    </Form.Item>
-                    <Form.Item
-                      name="password"
-                      rules={[
-                        {
-                          required: true,
-                          message: 'Mật khẩu là bắt buộc!',
-                        },
-                      ]}
-                    >
-                      <Input
-                        prefix={
-                          <LockOutlined className="site-form-item-icon" />
-                        }
-                        type="password"
-                        placeholder="Nhập Mật Khẩu"
-                      />
-                    </Form.Item>
-
-                    <Form.Item>
-                      <Button
-                        type="primary"
-                        htmlType="submit"
-                        className="login-form-button"
-                      >
-                        Đăng Ký
-                      </Button>
-                    </Form.Item>
-                  </Form>
-                </div>
-                <img src={market} alt="" className="img-market" />
-              </Section>
+        <div className="page2">
+          <Row className="content">
+            <Col sm={24} lg={12} className="myp-software">
+              <H1 className="vnk-headline title ">Phần Mềm My Project</H1>
+              <p className="vnk-paragraph ">
+                Tiết kiệm thời gian và gia tăng số lượng dự án cho bạn!
+              </p>
+              <p className="vnk-paragraph ">"Save Time More Project"</p>
+              <p className="vnk-paragraph ">
+                Tải App My Project trên kho ứng dụng
+              </p>
+              <Row className="app-mobile">
+                <Col sm={24} lg={12}>
+                  <img src={appStore} alt="App-store App My Project" />
+                </Col>
+                <Col sm={24} lg={12}>
+                  <img src={chPlay} alt="CH-play App My Project" />
+                </Col>
+              </Row>
             </Col>
-          </div>
-        </Col>
-      </Row>
-    </article>
+            <Col sm={24} lg={12} className="ipApp">
+              <div className="app-bg" />
+              {/* <img
+                className="ipApp"
+                width={550}
+                height={600}
+                src={ipApp}
+                alt="App My Project"
+              /> */}
+            </Col>
+          </Row>
+        </div>
+
+        <Row className="page3 pd-tb myp-feature">
+          <Col sm={24} lg={10}>
+            <CenteredSection>
+              <img
+                // width={280}
+                height={450}
+                style={{ marginTop: '10px' }}
+                src={kpi}
+                alt="App My Project"
+              />
+            </CenteredSection>
+          </Col>
+          <Col sm={24} lg={14}>
+            <Row>
+              <Col className="highlights">
+                <H1 className="vnk-headline">Tính năng nổi bật</H1>
+                <hr className="vnk-line hr-feature" />
+              </Col>
+            </Row>
+            <Row>
+              <Col sm={24} lg={12} className="flex">
+                <img width={78} height={78} src={next} alt="progess" />
+                <div className="pd-r">
+                  <H3 className="feature-title">1. Quy trình</H3>
+                  <span className="vnk-paragraph feature">
+                    Nó sẽ giúp bạn có được một quy trình bán hàng dự án hiệu
+                    quả!
+                  </span>
+                </div>
+              </Col>
+              <Col sm={24} lg={12} className="flex">
+                <img width={78} height={78} src={statchart} alt="statchart" />
+                <div className="pd-r">
+                  <H3 className="feature-title">5. Đo KPI</H3>
+                  <span className="vnk-paragraph feature">
+                    Nó sẽ giúp bạn biết được hôm nay mình có được thu nhập bao
+                    nhiêu.
+                  </span>
+                </div>
+              </Col>
+              <Col sm={24} lg={12} className="flex">
+                <img width={78} height={78} src={scale} alt="statchart" />
+                <div className="pd-r">
+                  <H3 className="feature-title">2. Đo Lường</H3>
+                  <span className="vnk-paragraph feature">
+                    Nó sẽ giúp bạn biết được hôm nay mình có được thu nhập bao
+                    nhiêu.
+                  </span>
+                </div>
+              </Col>
+              <Col sm={24} lg={12} className="flex">
+                <img width={78} height={78} src={teacherIcon} alt="statchart" />
+                <div className="pd-r">
+                  <H3 className="feature-title">6. Giao việc</H3>
+                  <span className="vnk-paragraph feature">
+                    Nó sẽ giúp bạn giao việc được cho đội nhóm của mình.
+                  </span>
+                </div>
+              </Col>
+              <Col sm={24} lg={12} className="flex">
+                <FileTextFilled />
+                <div className="pd-r">
+                  <H3 className="feature-title">3. Công việc</H3>
+                  <span className="vnk-paragraph feature">
+                    Nó sẽ giúp bạn quản lý được các công việc bản thân phải làm.
+                  </span>
+                </div>
+              </Col>
+              <Col sm={24} lg={12} className="flex">
+                <DribbbleSquareOutlined />
+                <div className="pd-r">
+                  <H3 className="feature-title">7. Quảng Bá</H3>
+                  <span className="vnk-paragraph feature">
+                    Nó sẽ giúp bạn quảng bá được thông tin công ty của các bạn.
+                  </span>
+                </div>
+              </Col>
+              <Col sm={24} lg={12} className="flex">
+                <img width={78} height={78} src={info} alt="statchart" />
+                <div className="pd-r">
+                  <H3 className="feature-title">5. Thông tin</H3>
+                  <span className="vnk-paragraph feature">
+                    Nó sẽ giúp bạn có được thông tin các dự án mà không phải tốn
+                    công sức.
+                  </span>
+                </div>
+              </Col>
+              <Col sm={24} lg={12} className="flex">
+                <img
+                  width={78}
+                  height={78}
+                  src={successReport}
+                  alt="statchart"
+                />
+                <div className="pd-r">
+                  <H3 className="feature-title">8. Doanh số</H3>
+                  <span className="vnk-paragraph feature">
+                    Nó sẽ giúp bạn dự đoán và gia tăng thu nhập khi sử dụng.
+                  </span>
+                </div>
+              </Col>
+            </Row>
+          </Col>
+        </Row>
+
+        <Row className="interface">
+          <Col sm={24} lg={10} />
+        </Row>
+      </div>
+    </div>
   );
 }
 
 HomePage.propTypes = {
-  loading: PropTypes.bool,
-  error: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
-  repos: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
   onSubmitForm: PropTypes.func,
   username: PropTypes.string,
-  onChangeUsername: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({

@@ -49,5 +49,4 @@ class PhoneNav extends React.PureComponent {
   }
 }
 
-
 export default polyfill(PhoneNav);

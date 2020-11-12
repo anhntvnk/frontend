@@ -9,7 +9,7 @@ import android from '../../assets/images/android.png';
 import chPlay from '../../assets/images/ch-play.png';
 import appStore from '../../assets/images/app-store.png';
 import seminar from '../../assets/images/seminar.png';
-import logo from '../../assets/images/logo/Logo.jpg';
+import logo from '../../assets/images/logo/my-project.png';
 
 function Footer() {
   return (

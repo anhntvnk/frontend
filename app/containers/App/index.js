@@ -14,9 +14,12 @@ import { Switch, withRouter } from 'react-router-dom';
 import HomePage from 'containers/HomePage/Loadable';
 import Packages from 'containers/Packages/Loadable';
 import Projects from 'containers/Projects/Loadable';
+import Companys from 'containers/Companys/Loadable';
+import LoginForm from 'containers/LoginForm/Loadable';
+import Register from 'containers/Register/Loadable';
 // import NotFoundPage from 'containers/NotFoundPage/Loadable';
 
-import { PrivateLayout } from '../../components/Layouts';
+import { PrivateLayout, PublicLayout } from '../../components/Layouts';
 import GlobalStyle from '../../global-styles';
 import { ROUTE } from '../../constants';
 
@@ -35,9 +38,12 @@ const App = () => (
       <meta name="description" content="My Project application" />
     </Helmet>
     <Switch>
-      <PrivateLayout exact path={ROUTE.HOMEPAGE} component={HomePage} />
+      <PublicLayout exact path={ROUTE.LOGIN} component={LoginForm} />
+      <PublicLayout exact path={ROUTE.REGISTER} component={Register} />
+      <PublicLayout exact path={ROUTE.HOMEPAGE} component={HomePage} />
       <PrivateLayout exact path={ROUTE.PACKAGES} component={Packages} />
       <PrivateLayout exact path={ROUTE.PROJECT} component={Projects} />
+      <PrivateLayout exact path={ROUTE.COMPANY} component={Companys} />
     </Switch>
     <GlobalStyle />
   </AppWrapper>

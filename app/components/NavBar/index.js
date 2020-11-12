@@ -5,7 +5,7 @@ import { UnorderedListOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
 import './styles.less';
 import { Link } from 'react-router-dom';
-import logo from '../../assets/images/logo/Logo.jpg';
+import logo from '../../assets/images/logo/my-project.png';
 
 const content = (
   <div>

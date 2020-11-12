@@ -15,7 +15,7 @@ import packageEnterprise from '../../assets/images/package-enterprise.png';
 
 export default function FeaturePage() {
   return (
-    <div>
+    <div className="upgrade-mvp">
       <Helmet>
         <title>Packages</title>
         <meta
