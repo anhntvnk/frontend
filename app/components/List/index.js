@@ -6,13 +6,15 @@ import './styles.less';
 class List extends PureComponent {
   render() {
     const { ...tableProps } = this.props;
+    const { loading } = tableProps;
 
     return (
       <Table
         {...tableProps}
         className="table-list"
         bordered
-        scroll={{ x: 1200 }}
+        loading={loading}
+        scroll={{ x: 900 }}
         simple
         rowKey={record => record.id}
       />
@@ -21,7 +23,7 @@ class List extends PureComponent {
 }
 
 List.propTypes = {
-  dataSource: PropTypes.object,
+  dataSource: PropTypes.array,
   location: PropTypes.object,
 };
 

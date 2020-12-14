@@ -1,6 +1,6 @@
 import ROUTE from './routes';
 import API from './apis';
-// eslint-disable-next-line import/no-cycle
 import MENU from './menu';
+import ENUMS from './enums';
 
-export { ROUTE, API, MENU };
+export { ROUTE, API, MENU, ENUMS };

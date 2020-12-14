@@ -1,18 +1,22 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Link, withRouter } from 'react-router-dom';
-import { Row, Col, Menu, Button } from 'antd';
+import { Row, Col, Menu } from 'antd';
 import { enquireScreen } from 'enquire-js';
+import Avatar from 'react-avatar';
 import dataMenu from '../../constants/menu';
 import PhoneNav from './PhoneNav';
 import logo from '../../assets/images/logo/logo-update.png';
 import Banner from './Banner';
 import { isLoggedIn, removeUserSession } from '../../../services/auth';
+import './Header.less';
 
 let isMobile;
 enquireScreen(b => {
   isMobile = b;
 });
+
+const { SubMenu } = Menu;
 
 class Header extends React.Component {
   static contextTypes = {
@@ -59,15 +63,6 @@ class Header extends React.Component {
             </Menu.Item>
           );
         })}
-        {/* <Menu.Item key="home">
-          <Link to={ROUTE.HOMEPAGE}>Trang Chủ</Link>
-        </Menu.Item>
-        <Menu.Item key="companys">
-          <Link to={ROUTE.COMPANY}>Công Ty</Link>
-        </Menu.Item>
-        <Menu.Item key="projects">
-          <Link to={ROUTE.PROJECT}>Dự Án</Link>
-        </Menu.Item> */}
       </Menu>
     );
   };
@@ -101,12 +96,36 @@ class Header extends React.Component {
                       Đăng Nhập
                     </Link>
                   ) : (
-                    <Button
-                      onClick={() => this.logoutAccount(history)}
-                      className="btn-logout"
-                    >
-                      Đăng xuất
-                    </Button>
+                    <Menu key="user" mode="horizontal">
+                      <SubMenu
+                        title={
+                          <Fragment>
+                            <Avatar
+                              name="Thúy Nga"
+                              size="35px"
+                              round
+                              color="#357edd"
+                            />
+                            <span style={{ color: '#fff', paddingLeft: '5px' }}>
+                              Thúy Nga
+                            </span>
+                          </Fragment>
+                        }
+                      >
+                        <Menu.Item key="persional-infomation">
+                          Thông tin cá nhân
+                        </Menu.Item>
+                        <Menu.Item key="change-password">
+                          Đổi mật khẩu
+                        </Menu.Item>
+                        <Menu.Item
+                          key="SignOut"
+                          onClick={() => this.logoutAccount(history)}
+                        >
+                          Đăng Xuất
+                        </Menu.Item>
+                      </SubMenu>
+                    </Menu>
                   )}
                 </div>
               </Col>

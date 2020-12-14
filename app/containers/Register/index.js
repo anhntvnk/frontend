@@ -38,7 +38,7 @@ export function Register() {
   };
 
   return (
-    <div>
+    <div className="register-myp">
       <Helmet>
         <title>Đăng Ký Tài Khoản My Project</title>
         <meta name="description" content="Đăng Ký Tài Khoản My Project" />

@@ -17,7 +17,6 @@ const GlobalStyle = createGlobalStyle`
 
   p,
   label {
-    font-family: 'Ubuntu';
     line-height: 1.5em;
   }
 `;

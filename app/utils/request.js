@@ -1,3 +1,4 @@
+import axios from 'axios';
 /**
  * Parses the JSON returned by a network request
  *
@@ -29,6 +30,13 @@ function checkStatus(response) {
   throw error;
 }
 
+function resData(response) {
+  if (response.status === 204 || response.status === 205) {
+    return null;
+  }
+  return response.data;
+}
+
 /**
  * Requests a URL, returning a promise
  *
@@ -41,4 +49,13 @@ export default function request(url, options) {
   return fetch(url, options)
     .then(checkStatus)
     .then(parseJSON);
+}
+
+export async function fetchAxios(options) {
+  let res = await axios(options);
+
+  res = checkStatus(res);
+  res = resData(res);
+
+  return res;
 }

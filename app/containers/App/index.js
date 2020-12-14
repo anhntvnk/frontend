@@ -9,11 +9,15 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import styled from 'styled-components';
-import { Switch, withRouter } from 'react-router-dom';
+import { get as _get } from 'lodash';
+import { Switch, withRouter, Redirect } from 'react-router-dom';
 
 import HomePage from 'containers/HomePage/Loadable';
+import Dashboard from 'containers/Dashboard/Loadable';
 import Packages from 'containers/Packages/Loadable';
 import Projects from 'containers/Projects/Loadable';
+import ProjectDetails from 'containers/Projects/Details';
+import ProjectAddNew from 'containers/Projects/AddNew';
 import Companys from 'containers/Companys/Loadable';
 import LoginForm from 'containers/LoginForm/Loadable';
 import Register from 'containers/Register/Loadable';
@@ -44,6 +48,23 @@ const App = () => (
       <PrivateLayout exact path={ROUTE.PACKAGES} component={Packages} />
       <PrivateLayout exact path={ROUTE.PROJECT} component={Projects} />
       <PrivateLayout exact path={ROUTE.COMPANY} component={Companys} />
+      <PrivateLayout exact path={ROUTE.DASHBOARD} component={Dashboard} />
+      <PrivateLayout
+        exact
+        path={ROUTE.PROJECT_DETAILS}
+        getComponent={({ props: { location } }) =>
+          _get(location, 'state.data') ? (
+            <ProjectDetails {...location.state} />
+          ) : (
+            <Redirect strict to={ROUTE.PROJECT} />
+          )
+        }
+      />
+      <PrivateLayout
+        exact
+        path={ROUTE.PROJECT_ADDNEW}
+        getComponent={() => <ProjectAddNew />}
+      />
     </Switch>
     <GlobalStyle />
   </AppWrapper>

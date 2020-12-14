@@ -27,6 +27,7 @@ class PhoneNav extends React.PureComponent {
 
   render() {
     const { children } = this.props;
+
     const { show } = this.state;
     const barClassName = classnames('phone-nav-bar', {
       open: show,

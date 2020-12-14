@@ -195,7 +195,7 @@ export default function Banner({ isMobile }) {
             lập tức khi sử dụng <b>My Project</b>. Hãy đăng ký vào form để được
             chúng tôi tư vấn và hỗ trợ.
           </p>
-          {!isLoggedIn && (
+          {!isLoggedIn() && (
             <div className="button-wrapper" key="button">
               <Link
                 component="a"

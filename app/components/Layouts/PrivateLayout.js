@@ -36,9 +36,9 @@ export default ({ component: Component, getComponent, ...remain }) => (
           <Content>
             {getComponent ? getComponent({ props }) : <Component {...props} />}
           </Content>
-          <div className="vnk-footer">
+          {/* <div className="vnk-footer">
             <VnkFooter />
-          </div>
+          </div> */}
         </Layout>
       ) : (
         <Redirect to={ROUTE.LOGIN} />

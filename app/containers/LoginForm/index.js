@@ -27,7 +27,7 @@ export function LoginForm({ history }) {
 
     const token = _get(auth, 'id', false);
     if (token) {
-      history.replace('/');
+      history.replace('/dashboard');
     } else {
       const unauthorized = _get(auth, 'data.error', false);
       // eslint-disable-next-line no-useless-return

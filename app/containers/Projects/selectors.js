@@ -13,4 +13,21 @@ const makeSelectProjects = () =>
     projectState => projectState.project,
   );
 
-export { selectProjects, makeSelectProjects };
+const makeSelectLoading = () =>
+  createSelector(
+    selectProjects,
+    projectState => projectState.loading,
+  );
+
+const makeSelectFollowedProjects = () =>
+  createSelector(
+    selectProjects,
+    projectState => projectState.followedProjects,
+  );
+
+export {
+  selectProjects,
+  makeSelectProjects,
+  makeSelectLoading,
+  makeSelectFollowedProjects,
+};

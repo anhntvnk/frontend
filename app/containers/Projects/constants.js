@@ -15,4 +15,7 @@ export const LOAD_PROJECTS_ERROR = 'vnk/Projects/LOAD_PROJECTS_ERROR';
 
 export const CHANGE_FOLLOW = 'vnk/Projects/CHANGE_FOLLOW';
 export const CHANGE_FOLLOW_SUCCESS = 'vnk/Projects/CHANGE_FOLLOW_SUCCESS';
+export const UN_FOLLOW = 'vnk/Projects/UN_FOLLOW';
+export const UN_FOLLOW_SUCCESS = 'vnk/Projects/UN_FOLLOW_SUCCESS';
 export const LOAD_REPOS_ERROR = 'vnk/Projects/LOAD_REPOS_ERROR';
+export const LOADING = 'vnk/Projects/LOADING';

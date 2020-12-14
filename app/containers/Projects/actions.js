@@ -21,6 +21,9 @@ import {
   LOAD_PROJECTS_ERROR,
   CHANGE_FOLLOW,
   CHANGE_FOLLOW_SUCCESS,
+  UN_FOLLOW,
+  UN_FOLLOW_SUCCESS,
+  LOADING,
 } from './constants';
 
 /**
@@ -67,11 +70,26 @@ export function loadProjectsError(error) {
  *
  * @param  {object} error The error
  *
- * @return {object}       An action object with a type of LOAD_PROJECTS_ERROR passing the error
+ * @return {object}       An action object with a type of CHANGE_FOLLOW passing the error
  */
-export function changeFollow() {
+export function changeFollow(data) {
   return {
     type: CHANGE_FOLLOW,
+    data,
+  };
+}
+
+/**
+ * Dispatched when loading the repositories fails
+ *
+ * @param  {object} error The error
+ *
+ * @return {object}       An action object with a type of UN_FOLLOW passing the error
+ */
+export function unFollow(id) {
+  return {
+    type: UN_FOLLOW,
+    id,
   };
 }
 
@@ -86,5 +104,31 @@ export function changeFollowSuccess(response) {
   return {
     type: CHANGE_FOLLOW_SUCCESS,
     response,
+  };
+}
+
+/**
+ * Dispatched when the repositories are loaded by the request saga
+ *
+ * @param  {array} repos The repository data
+ *
+ * @return {object}
+ */
+export function unFollowSuccess(response) {
+  return {
+    type: UN_FOLLOW_SUCCESS,
+    response,
+  };
+}
+
+/**
+ * Load the repositories, this action starts the request saga
+ *
+ * @return {object} An action object with a type of LOAD_PROJECTS
+ */
+export function reLoading(isLoading) {
+  return {
+    type: LOADING,
+    isLoading,
   };
 }

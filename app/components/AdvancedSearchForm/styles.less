@@ -1,5 +1,7 @@
 .ant-advanced-search-form {
-  padding: 20px;
+  margin-bottom: 30px;
+  padding: 20px 10px;
+  border: 1px solid #c0c0c0;
 
   .myp-filter {
     .ant-col {
@@ -11,11 +13,25 @@
       .ant-form-item-control {
         display: grid;
         justify-content: flex-end;
+        @media screen and (max-width: 767px) {
+          display: flex;
+        }
+
         .ant-form-item-control-input {
-          width: 240px;
-          @media screen and (max-width: 767px) {
-            width: 220px;
+          width: 280px;
+
+          @media screen and (max-width: 1280px) {
+            width: 260px;
           }
+
+          @media screen and (max-width: 960px) {
+            width: 225px;
+          }
+
+          @media screen and (max-width: 767px) {
+            width: auto;
+          }
+
         }
       }
     }

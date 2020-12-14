@@ -1,11 +1,24 @@
-.ant-layout-content {
-  padding: 100px;
+.ant-layout {
+  background: #dedddd;
 
-  @media only screen and (max-width: 767.99px) {
-    padding: 20px 10px;
-  }
+  .project-table {
+    background: #fff;
+    padding: 15px;
+    max-width: 1350px;
+    box-sizing: border-box;
+    margin: auto;
 
-  .ant-table-tbody > tr.ant-table-row-level-1:hover > td {
-    background: #dee2e6;
+    @media only screen and (max-width: 767.99px) {
+      padding: 20px 10px;
+      // margin: auto;
+    }
+
+    .ant-table-tbody > tr.ant-table-row-level-1:hover > td {
+      background: #dee2e6;
+    }
+
+    .ant-table-cell > a {
+      color: #2f54eb;
+    }
   }
 }
