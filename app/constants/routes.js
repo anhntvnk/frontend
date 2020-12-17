@@ -9,6 +9,7 @@ export default {
   REGISTER: '/register',
   PACKAGES: '/packages',
   REPORT: '/report',
+  PROCEDURE: '/procedure',
   PROJECT_DETAILS: '/projects/details',
   PROJECT_ADDNEW: '/projects/add-new',
 };

@@ -18,6 +18,7 @@ import Packages from 'containers/Packages/Loadable';
 import Projects from 'containers/Projects/Loadable';
 import ProjectDetails from 'containers/Projects/Details';
 import ProjectAddNew from 'containers/Projects/AddNew';
+import Procedure from 'containers/Procedure';
 import Companys from 'containers/Companys/Loadable';
 import LoginForm from 'containers/LoginForm/Loadable';
 import Register from 'containers/Register/Loadable';
@@ -49,6 +50,17 @@ const App = () => (
       <PrivateLayout exact path={ROUTE.PROJECT} component={Projects} />
       <PrivateLayout exact path={ROUTE.COMPANY} component={Companys} />
       <PrivateLayout exact path={ROUTE.DASHBOARD} component={Dashboard} />
+      <PrivateLayout
+        exact
+        path={ROUTE.PROCEDURE}
+        getComponent={({ props: { location } }) =>
+          _get(location, 'state.data') ? (
+            <Procedure {...location.state} />
+          ) : (
+            <Redirect strict to={ROUTE.PROJECT} />
+          )
+        }
+      />
       <PrivateLayout
         exact
         path={ROUTE.PROJECT_DETAILS}

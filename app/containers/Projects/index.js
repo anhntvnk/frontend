@@ -111,11 +111,6 @@ export function Projects({
       sorter: (a, b) => a.name.length - b.name.length,
       render: (text, record) => (
         <Link
-          // onClick={() =>
-          //   history.push(ROUTE.PROJECT_DETAILS, state: {
-          //     projectId: record.id,
-          //   })
-          // }
           to={{
             pathname: ROUTE.PROJECT_DETAILS,
             state: {

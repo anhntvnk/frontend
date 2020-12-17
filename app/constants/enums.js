@@ -12,10 +12,10 @@ const STATE = {
 
 const STATE_LIST = [
   {
-    status_code: 0,
+    status_code: false,
     name: 'Dự án',
     label: 'Dự án',
-    color: '#00bcd4',
+    color: '',
   },
   {
     status_code: 1,

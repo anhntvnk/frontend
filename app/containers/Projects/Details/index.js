@@ -23,6 +23,7 @@ import { useInjectSaga } from 'utils/injectSaga';
 import CenteredSection from 'components/CenteredSection';
 import ProjectDetailsMobile from 'components/Projects/DetailsMobile';
 import ProjectDetailsWeb from 'components/Projects/DetailsWeb';
+import DynamicForm from 'components/Projects/DynamicForm';
 import Contact from 'components/Projects/Contact';
 import H2 from 'components/H2';
 import styled from 'styled-components';
@@ -30,6 +31,7 @@ import { makeSelectProjects } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 import './styles.less';
+import { ROUTE } from '../../../constants';
 
 const key = 'projectDetails';
 const { TabPane } = Tabs;
@@ -64,7 +66,7 @@ enquireScreen(b => {
   mobileScreen = b;
 });
 
-export function ProjectDetails({ data }) {
+export function ProjectDetails({ history, data }) {
   useInjectReducer({ key, reducer });
   useInjectSaga({ key, saga });
 
@@ -78,7 +80,11 @@ export function ProjectDetails({ data }) {
     });
   }, []);
 
-  console.log(isMobile);
+  const changeStatus = project => {
+    history.push(ROUTE.PROCEDURE, {
+      data: project,
+    });
+  };
 
   return (
     <Details className="project-details">
@@ -126,6 +132,7 @@ export function ProjectDetails({ data }) {
                   className="btn-change-status"
                   type="primary"
                   size="large"
+                  onClick={() => changeStatus(data)}
                 >
                   Chuyển trạng thái
                 </Button>
@@ -150,7 +157,7 @@ export function ProjectDetails({ data }) {
               <Contact data={data} />
             </TabPane>
             <TabPane tab="Ghi chú" key="3">
-              Content of card tab 3
+              <DynamicForm data={data} />
             </TabPane>
             <TabPane tab="Giao việc" key="4">
               Giao việc
@@ -163,6 +170,7 @@ export function ProjectDetails({ data }) {
 }
 
 ProjectDetails.propTypes = {
+  history: PropTypes.object,
   data: PropTypes.object,
 };
 
