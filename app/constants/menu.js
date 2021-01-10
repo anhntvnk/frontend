@@ -30,21 +30,21 @@ export default [
       iconClass: 'far fa-home-alt',
     },
   },
-  {
-    exact: true,
-    path: '',
-    title: 'Thông Báo',
-    key: 'notify',
-    label: {
-      iconClass: 'far fa-home-alt',
-    },
-  },
-  {
-    exact: true,
-    path: ROUTE.PACKAGES,
-    title: 'Nâng Cấp MVP',
-    key: 'packages',
-  },
+  // {
+  //   exact: true,
+  //   path: '',
+  //   title: 'Thông Báo',
+  //   key: 'notify',
+  //   label: {
+  //     iconClass: 'far fa-home-alt',
+  //   },
+  // },
+  // {
+  //   exact: true,
+  //   path: ROUTE.PACKAGES,
+  //   title: 'Nâng Cấp MVP',
+  //   key: 'packages',
+  // },
   {
     path: ROUTE.SETTING,
     title: 'Cài Đặt',

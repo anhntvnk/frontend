@@ -3,25 +3,80 @@
  */
 
 import { call, put, takeLatest } from 'redux-saga/effects';
-import { LOAD_COMPANYS } from 'containers/Companys/constants';
+import request, { fetchAxios } from 'utils/request';
+
+import {
+  LOAD_COMPANYS,
+  LOAD_COMPANYS_FOLLOW,
+  LOAD_COMPANYS_UNFOLLOW,
+} from './constants';
 import {
   loadCompanySuccess,
   loadCompanysError,
-} from 'containers/Companys/actions';
-
-import request from 'utils/request';
+  followCompanySuccess,
+  followCompanysError,
+} from './actions';
+import API from '../../constants/apis';
+import { getToken, getUserId } from '../../../services/auth';
 
 export function* getCompanys() {
-  // Select username from store
-  const requestURL = `http://vnk.vn/api/company`;
+  // get all company
+  const reqCompany = `${API.BASE_URL}/company`;
+  const reqCompanyFollow = `${API.BASE_URL}/user/${getUserId()}/companies`;
 
   try {
-    // Call our request helper (see 'utils/request')
-    const repos = yield call(request, requestURL);
+    const companys = yield call(request, reqCompany);
+    const companyFollows = yield call(request, reqCompanyFollow);
 
-    yield put(loadCompanySuccess(repos));
+    yield put(loadCompanySuccess({ companys, companyFollows }));
   } catch (err) {
     yield put(loadCompanysError(err));
+  }
+}
+
+export function* followCompanys(action) {
+  // get all company
+  const { companyId } = action;
+  const req = `${API.BASE_URL}/user/${getUserId()}/companies/rel/${companyId}`;
+
+  try {
+    const response = yield call(fetchAxios, {
+      method: 'put',
+      url: req,
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `${getToken()}`,
+      },
+      responseType: 'json',
+      data: undefined,
+    });
+
+    yield put(followCompanySuccess({ ...response, isFollow: true }));
+  } catch (err) {
+    yield put(followCompanysError(err));
+  }
+}
+
+export function* unfollowCompanys(action) {
+  // get all company
+  const { companyId } = action;
+  const req = `${API.BASE_URL}/user/${getUserId()}/companies/rel/${companyId}`;
+
+  try {
+    yield call(fetchAxios, {
+      method: 'delete',
+      url: req,
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `${getToken()}`,
+      },
+      responseType: 'json',
+      data: undefined,
+    });
+
+    yield put(followCompanySuccess({ companyId, isFollow: false }));
+  } catch (err) {
+    yield put(followCompanysError(err));
   }
 }
 
@@ -33,4 +88,6 @@ export default function* githubData() {
   // It returns task descriptor (just like fork) so we can continue execution
   // It will be cancelled automatically on component unmount
   yield takeLatest(LOAD_COMPANYS, getCompanys);
+  yield takeLatest(LOAD_COMPANYS_FOLLOW, followCompanys);
+  yield takeLatest(LOAD_COMPANYS_UNFOLLOW, unfollowCompanys);
 }

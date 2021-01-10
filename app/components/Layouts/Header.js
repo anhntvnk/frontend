@@ -1,15 +1,25 @@
 import React, { Fragment } from 'react';
+import axios from 'axios';
 import PropTypes from 'prop-types';
 import { Link, withRouter } from 'react-router-dom';
-import { Row, Col, Menu } from 'antd';
+import { Row, Col, Menu, Popover, Badge, List, Tabs } from 'antd';
+import { BellOutlined, RightOutlined } from '@ant-design/icons';
+import moment from 'moment';
 import { enquireScreen } from 'enquire-js';
 import Avatar from 'react-avatar';
+import ROUTE from '../../constants/routes';
 import dataMenu from '../../constants/menu';
 import PhoneNav from './PhoneNav';
 import logo from '../../assets/images/logo/logo-update.png';
 import Banner from './Banner';
-import { isLoggedIn, removeUserSession } from '../../../services/auth';
+import {
+  isLoggedIn,
+  removeUserSession,
+  getUserId,
+  getToken,
+} from '../../../services/auth';
 import './Header.less';
+import API from '../../constants/apis';
 
 let isMobile;
 enquireScreen(b => {
@@ -28,6 +38,7 @@ class Header extends React.Component {
 
     this.state = {
       isMobile,
+      username: '',
     };
   }
 
@@ -37,9 +48,31 @@ class Header extends React.Component {
         isMobile: !!b,
       });
     });
+
+    if (!this.state.username) {
+      axios
+        .create({
+          baseURL: API.BASE_URL,
+          timeout: 5000,
+          validateStatus(status) {
+            return (status >= 200 && status < 300) || status === 403; // default
+          },
+          headers: { 'Content-Type': 'application/json' },
+        })
+        .get(`${API.BASE_URL}/user/${getUserId()}?access_token=${getToken()}`)
+        .then(response => {
+          const {
+            // eslint-disable-next-line camelcase
+            data: { full_name },
+          } = response;
+          this.setState({ username: full_name });
+        })
+        .catch(e => console.log(e));
+    }
   }
 
   getMenuToRender = () => {
+    // eslint-disable-next-line react/prop-types
     const { location } = this.props;
 
     const menuMode = this.state.isMobile ? 'inline' : 'horizontal';
@@ -73,6 +106,17 @@ class Header extends React.Component {
   };
 
   render() {
+    const notifications = [
+      {
+        title: 'New User is registered.',
+        date: new Date(Date.now() - 10000000),
+      },
+      {
+        title: 'Application has been approved.',
+        date: new Date(Date.now() - 50000000),
+      },
+    ];
+    // eslint-disable-next-line react/prop-types
     const { location, history } = this.props;
     const menu = this.getMenuToRender();
     const module = location.pathname.replace(/(^\/|\/$)/g, '').split('/')[0];
@@ -91,6 +135,54 @@ class Header extends React.Component {
               <Col md={18} sm={0}>
                 <div className="menu">
                   {menu}
+                  <Popover
+                    placement="bottomRight"
+                    trigger="click"
+                    key="notifications"
+                    overlayClassName="notificationPopover"
+                    // getPopupContainer={() =>
+                    //   document.querySelector('#primaryLayout')
+                    // }
+                    content={
+                      <div className="notification">
+                        <List
+                          itemLayout="horizontal"
+                          dataSource={notifications}
+                          locale={{
+                            emptyText: <>You have viewed all notifications.</>,
+                          }}
+                          renderItem={item => (
+                            <List.Item className="notificationItem">
+                              <List.Item.Meta
+                                title={item.title}
+                                description={moment(item.date).fromNow()}
+                              />
+                              <RightOutlined
+                                style={{ fontSize: 10, color: '#ccc' }}
+                              />
+                            </List.Item>
+                          )}
+                        />
+                        {/* {notifications.length ? (
+                          <div
+                            onClick={onAllNotificationsRead}
+                            className={styles.clearButton}
+                          >
+                            <Trans>Clear notifications</Trans>
+                          </div>
+                        ) : null} */}
+                      </div>
+                    }
+                  >
+                    <Badge
+                      count={notifications.length}
+                      dot
+                      offset={[-10, 10]}
+                      className="iconButton"
+                    >
+                      <BellOutlined className="iconFont" />
+                    </Badge>
+                  </Popover>
                   {!isLoggedIn() ? (
                     <Link className="btn-login" to="/login">
                       Đăng Nhập
@@ -107,13 +199,13 @@ class Header extends React.Component {
                               color="#357edd"
                             />
                             <span style={{ color: '#fff', paddingLeft: '5px' }}>
-                              Thúy Nga
+                              {this.state.username}
                             </span>
                           </Fragment>
                         }
                       >
                         <Menu.Item key="persional-infomation">
-                          Thông tin cá nhân
+                          <Link to={ROUTE.USER}>Thông tin cá nhân</Link>
                         </Menu.Item>
                         <Menu.Item key="change-password">
                           Đổi mật khẩu

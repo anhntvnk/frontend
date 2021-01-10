@@ -17,7 +17,7 @@ import { createStructuredSelector } from 'reselect';
 
 import { useInjectReducer } from 'utils/injectReducer';
 import { useInjectSaga } from 'utils/injectSaga';
-import { Avatar, message } from 'antd';
+import { Avatar, message, Tag } from 'antd';
 import moment from 'moment';
 import List from 'components/List';
 import AdvancedSearchForm from 'components/AdvancedSearchForm';
@@ -139,7 +139,20 @@ export function Projects({
       title: 'Giai đoạn',
       dataIndex: 'stage',
       key: 'stage',
-      width: 200,
+      width: 150,
+    },
+    {
+      title: 'Trạng thái',
+      dataIndex: 'status_code',
+      key: 'status_code',
+      render: statusCode => {
+        const task = _.get(ENUMS.STATE_LIST, `[${statusCode}]`);
+        return (
+          <Tag color={task.color} style={{ color: task.colorText }}>
+            {task.label}
+          </Tag>
+        );
+      },
     },
     {
       title: 'Ngày cập nhật',

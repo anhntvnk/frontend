@@ -169,7 +169,7 @@ const AdvancedSearchForm = ({
           <Form.Item name="" key="project-type" label="Dự án">
             <Select
               onChange={onChangeProject}
-              initialValues={projectType === 'project-follow' ? 1 : 0}
+              defaultValue={projectType === 'project-follow' ? 1 : 0}
               optionFilterProp="children"
               filterOption={(input, option) =>
                 option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0

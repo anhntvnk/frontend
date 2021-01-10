@@ -10,7 +10,7 @@ import {
   EnvironmentOutlined,
   PlusOutlined,
 } from '@ant-design/icons';
-import AdvancedSearchForm from 'components/AdvancedSearchForm';
+import SearchCompany from 'components/SearchCompany';
 import styled from 'styled-components';
 import H2 from '../H2';
 import './styles.less';
@@ -51,17 +51,8 @@ export function ListItem({ data }) {
     return str.toLowerCase().trim();
   };
 
-  const searchProjects = advSearch => {
-    const {
-      owner: filterOwner,
-      contractors: filterNTC,
-      subcontractors: filterNTP,
-      citys: filterCity,
-      month_of_completion,
-      month_of_commencement,
-      type: filterType,
-      stage: filterStage,
-    } = advSearch;
+  const search = advSearch => {
+    const { owner: filterOwner, citys: filterCity } = advSearch;
     const listData = [];
 
     for (let i = 0; i < data.length; i += 1) {
@@ -75,28 +66,6 @@ export function ListItem({ data }) {
         owner.indexOf(cleanText(filterOwner)) === -1
       ) {
         addToList = false;
-      }
-
-      if (addToList) {
-        const ntc = item.nha_thau_chinh ? cleanText(item.nha_thau_chinh) : '';
-
-        if (
-          typeof filterNTC !== 'undefined' &&
-          ntc.indexOf(cleanText(filterNTC)) === -1
-        ) {
-          addToList = false;
-        }
-      }
-
-      if (addToList) {
-        const ntp = item.nha_thau_phu ? cleanText(item.nha_thau_phu) : '';
-
-        if (
-          typeof filterNTP !== 'undefined' &&
-          ntp.indexOf(cleanText(filterNTP)) === -1
-        ) {
-          addToList = false;
-        }
       }
 
       if (addToList) {
@@ -115,39 +84,6 @@ export function ListItem({ data }) {
           }
         }
       }
-      if (addToList) {
-        const type = item.type || '';
-
-        if (typeof filterType !== 'undefined' && type !== filterType) {
-          addToList = false;
-        }
-      }
-      if (addToList) {
-        const stage = item.stage || '';
-        if (typeof filterStage !== 'undefined' && stage !== filterStage) {
-          addToList = false;
-        }
-      }
-      //   if (addToList) {
-      //     let start = item.startX ? item.startX : '';
-      //     let filterStart =
-      //       this.state.lastFilter.filterStart.length > 0
-      //         ? this.getDateText(this.state.lastFilter.filterStart)
-      //         : '';
-      //     if (filterStart.length > 0 && start.indexOf(filterStart) === -1) {
-      //       addToList = false;
-      //     }
-      //   }
-      //   if (addToList) {
-      //     let finish = item.finishX ? item.finishX : '';
-      //     let filterFinish =
-      //       this.state.lastFilter.filterFinish.length > 0
-      //         ? this.getDateText(this.state.lastFilter.filterFinish)
-      //         : '';
-      //     if (filterFinish.length > 0 && finish.indexOf(filterFinish) === -1) {
-      //       addToList = false;
-      //     }
-      //   }
 
       if (addToList) listData.push(item);
     }
@@ -161,10 +97,7 @@ export function ListItem({ data }) {
   return (
     <Row className="list-content">
       <Col lg={24}>
-        <AdvancedSearchForm
-          onSearchProjects={searchProjects}
-          onResetFields={onResetFields}
-        />
+        <SearchCompany onsearch={search} onResetFields={onResetFields} />
         <Row className="top-bar">
           <Col lg={12} className="list-title">
             <H2>Danh Sách Dự Án</H2>

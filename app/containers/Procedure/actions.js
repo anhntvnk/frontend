@@ -1,5 +1,5 @@
 /*
- * Home Actions
+ * Procedure Actions
  *
  * Actions change things in your application
  * Since this boilerplate uses a uni-directional data flow, specifically redux,
@@ -16,46 +16,28 @@
  */
 
 import {
-  LOAD_COMPANYS,
-  LOAD_COMPANYS_SUCCESS,
-  LOAD_COMPANYS_ERROR,
+  CHANGE_STATE_PROCEDURE,
+  CHANGE_STATE_PROCEDURE_SUCCESS,
+  CHANGE_STATE_PROCEDURE_ERROR,
 } from './constants';
 
-/**
- * Load the repositories, this action starts the request saga
- *
- * @return {object} An action object with a type of LOAD_COMPANYS
- */
-export function loadCompanys() {
+export function updateStateProcedure(data) {
   return {
-    type: LOAD_COMPANYS,
+    type: CHANGE_STATE_PROCEDURE,
+    data,
   };
 }
 
-/**
- * Dispatched when the repositories are loaded by the request saga
- *
- * @param  {array} repos The repository data
- *
- * @return {object}
- */
-export function loadCompanySuccess(response) {
+export function updateStateProcedureSuccess(response) {
   return {
-    type: LOAD_COMPANYS_SUCCESS,
+    type: CHANGE_STATE_PROCEDURE_SUCCESS,
     response,
   };
 }
 
-/**
- * Dispatched when loading the repositories fails
- *
- * @param  {object} error The error
- *
- * @return {object}       An action object with a type of LOAD_COMPANYS_ERROR passing the error
- */
-export function loadCompanysError(error) {
+export function updateStateProcedureError(error) {
   return {
-    type: LOAD_COMPANYS_ERROR,
+    type: CHANGE_STATE_PROCEDURE_ERROR,
     error,
   };
 }

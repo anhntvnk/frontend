@@ -1,5 +1,5 @@
 /*
- * Home Actions
+ * Dashboard Actions
  *
  * Actions change things in your application
  * Since this boilerplate uses a uni-directional data flow, specifically redux,
@@ -16,19 +16,19 @@
  */
 
 import {
-  LOAD_PROJECTS_FOLLOW,
-  LOAD_PROJECTS_FOLLOW_SUCCESS,
-  LOAD_PROJECTS_FOLLOW_ERROR,
+  LOAD_DATA_DASHBOARD,
+  LOAD_DATA_DASHBOARD_SUCCESS,
+  LOAD_DATA_DASHBOARD_ERROR,
 } from './constants';
 
 /**
  * Load the repositories, this action starts the request saga
  *
- * @return {object} An action object with a type of LOAD_PROJECTS
+ * @return {object} An action object with a type of LOAD_DATA_DASHBOARD
  */
-export function loadProjectsFollow() {
+export function loadDashboard() {
   return {
-    type: LOAD_PROJECTS_FOLLOW,
+    type: LOAD_DATA_DASHBOARD,
   };
 }
 
@@ -39,9 +39,9 @@ export function loadProjectsFollow() {
  *
  * @return {object}
  */
-export function loadProjectsFollowSuccess(response) {
+export function loadDashboardSuccess(response) {
   return {
-    type: LOAD_PROJECTS_FOLLOW_SUCCESS,
+    type: LOAD_DATA_DASHBOARD_SUCCESS,
     response,
   };
 }
@@ -51,11 +51,11 @@ export function loadProjectsFollowSuccess(response) {
  *
  * @param  {object} error The error
  *
- * @return {object}       An action object with a type of LOAD_PROJECTS_ERROR passing the error
+ * @return {object}       An action object with a type of LOAD_DATA_DASHBOARD_ERROR passing the error
  */
-export function loadProjectsFollowError(error) {
+export function loadDashboardError(error) {
   return {
-    type: LOAD_PROJECTS_FOLLOW_ERROR,
+    type: LOAD_DATA_DASHBOARD_ERROR,
     error,
   };
 }

@@ -19,6 +19,10 @@ import {
   LOAD_COMPANYS,
   LOAD_COMPANYS_SUCCESS,
   LOAD_COMPANYS_ERROR,
+  LOAD_COMPANYS_FOLLOW_SUCCESS,
+  LOAD_COMPANYS_FOLLOW_ERROR,
+  LOAD_COMPANYS_FOLLOW,
+  LOAD_COMPANYS_UNFOLLOW,
 } from './constants';
 
 /**
@@ -56,6 +60,34 @@ export function loadCompanySuccess(response) {
 export function loadCompanysError(error) {
   return {
     type: LOAD_COMPANYS_ERROR,
+    error,
+  };
+}
+
+export function followCompany(companyId) {
+  return {
+    type: LOAD_COMPANYS_FOLLOW,
+    companyId,
+  };
+}
+
+export function unfollowCompany(companyId) {
+  return {
+    type: LOAD_COMPANYS_UNFOLLOW,
+    companyId,
+  };
+}
+
+export function followCompanySuccess(response) {
+  return {
+    type: LOAD_COMPANYS_FOLLOW_SUCCESS,
+    response,
+  };
+}
+
+export function followCompanysError(error) {
+  return {
+    type: LOAD_COMPANYS_FOLLOW_ERROR,
     error,
   };
 }

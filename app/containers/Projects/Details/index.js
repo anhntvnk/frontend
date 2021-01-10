@@ -14,13 +14,17 @@ import { compose } from 'redux';
 import moment from 'moment';
 import _ from 'lodash';
 import { Row, Col, Tabs, Button } from 'antd';
-import { ScheduleTwoTone, HomeTwoTone } from '@ant-design/icons';
+import {
+  ScheduleTwoTone,
+  HomeTwoTone,
+  ArrowLeftOutlined,
+} from '@ant-design/icons';
 import { createStructuredSelector } from 'reselect';
 import { enquireScreen } from 'enquire-js';
 
 import { useInjectReducer } from 'utils/injectReducer';
 import { useInjectSaga } from 'utils/injectSaga';
-import CenteredSection from 'components/CenteredSection';
+import CenteredSectionWithBack from 'components/CenteredSectionWithBack';
 import ProjectDetailsMobile from 'components/Projects/DetailsMobile';
 import ProjectDetailsWeb from 'components/Projects/DetailsWeb';
 import DynamicForm from 'components/Projects/DynamicForm';
@@ -92,9 +96,17 @@ export function ProjectDetails({ history, data }) {
         <title>Chi tiết dự án</title>
         <meta name="description" content="Chi tiết dự án" />
       </Helmet>
-      <CenteredSection>
-        <H2 className="title">Chi tiết dự án</H2>
-      </CenteredSection>
+      <CenteredSectionWithBack>
+        <Button
+          type="primary"
+          shape="round"
+          icon={<ArrowLeftOutlined />}
+          onClick={() => history.goBack()}
+        >
+          Quay lại
+        </Button>
+        <H2>Chi tiết Công Ty</H2>
+      </CenteredSectionWithBack>
 
       <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 16 }}>
         {!isMobile && (

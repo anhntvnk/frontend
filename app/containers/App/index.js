@@ -20,8 +20,12 @@ import ProjectDetails from 'containers/Projects/Details';
 import ProjectAddNew from 'containers/Projects/AddNew';
 import Procedure from 'containers/Procedure';
 import Companys from 'containers/Companys/Loadable';
+import CompanyDetails from 'containers/Companys/Details';
+import KpiDay from 'containers/Kpi/Day';
+import KpiMonth from 'containers/Kpi/Month';
 import LoginForm from 'containers/LoginForm/Loadable';
 import Register from 'containers/Register/Loadable';
+import User from 'containers/User/Loadable';
 // import NotFoundPage from 'containers/NotFoundPage/Loadable';
 
 import { PrivateLayout, PublicLayout } from '../../components/Layouts';
@@ -50,6 +54,20 @@ const App = () => (
       <PrivateLayout exact path={ROUTE.PROJECT} component={Projects} />
       <PrivateLayout exact path={ROUTE.COMPANY} component={Companys} />
       <PrivateLayout exact path={ROUTE.DASHBOARD} component={Dashboard} />
+      <PrivateLayout exact path={ROUTE.USER} component={KpiDay} />
+      <PrivateLayout exact path={ROUTE.KPI_DAY} component={KpiDay} />
+      <PrivateLayout exact path={ROUTE.KPI_MONTH} component={KpiMonth} />
+      <PrivateLayout
+        exact
+        path={ROUTE.COMPANY}
+        getComponent={({ props: { location } }) =>
+          _get(location, 'state.data') ? (
+            <Companys {...location.state} />
+          ) : (
+            <Redirect strict to={ROUTE.PROJECT} />
+          )
+        }
+      />
       <PrivateLayout
         exact
         path={ROUTE.PROCEDURE}
@@ -72,6 +90,39 @@ const App = () => (
           )
         }
       />
+      <PrivateLayout
+        exact
+        path={ROUTE.COMPANY_DETAILS}
+        getComponent={({ props: { location } }) =>
+          _get(location, 'state.data') ? (
+            <CompanyDetails {...location.state} />
+          ) : (
+            <Redirect strict to={ROUTE.COMPANY} />
+          )
+        }
+      />
+      {/* <PrivateLayout
+        exact
+        path={ROUTE.KPI_DAY}
+        getComponent={({ props: { location } }) =>
+          _get(location, 'state.data') ? (
+            <KpiDay {...location.state} />
+          ) : (
+            <Redirect strict to={ROUTE.HOMEPAGE} />
+          )
+        }
+      />
+      <PrivateLayout
+        exact
+        path={ROUTE.KPI_MONTH}
+        getComponent={({ props: { location } }) =>
+          _get(location, 'state.data') ? (
+            <KpiMonth {...location.state} />
+          ) : (
+            <Redirect strict to={ROUTE.HOMEPAGE} />
+          )
+        }
+      /> */}
       <PrivateLayout
         exact
         path={ROUTE.PROJECT_ADDNEW}

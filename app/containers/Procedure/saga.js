@@ -3,22 +3,38 @@
  */
 
 import { call, put, takeLatest } from 'redux-saga/effects';
-import request from 'utils/request';
-import { loadCompanySuccess, loadCompanysError } from './actions';
+import { fetchAxios } from 'utils/request';
+import {
+  updateStateProcedureSuccess,
+  updateStateProcedureError,
+} from './actions';
 
 import { CHANGE_STATE_PROCEDURE } from './constants';
+import API from '../../constants/apis';
 
-export function* changeStateProcedure() {
+export function* changeStateProcedure(actionData) {
+  const { data } = actionData;
+
   // Select username from store
-  const requestURL = `http://vnk.vn/api/company`;
+  const requestURL = `${API.BASE_URL}/FollowedProjects/${data.id}`;
 
   try {
     // Call our request helper (see 'utils/request')
-    const repos = yield call(request, requestURL);
+    const response = yield call(fetchAxios, {
+      method: 'put',
+      url: requestURL,
+      headers: { 'Content-Type': 'application/json' },
+      responseType: 'json',
+      data,
+    });
 
-    yield put(loadCompanySuccess(repos));
+    if (response) {
+      yield put(updateStateProcedureSuccess(response));
+    } else {
+      yield put(updateStateProcedureError('Đã có lỗi xảy ra !'));
+    }
   } catch (err) {
-    yield put(loadCompanysError(err));
+    yield put(updateStateProcedureError(err));
   }
 }
 

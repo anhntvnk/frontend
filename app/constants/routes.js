@@ -10,6 +10,10 @@ export default {
   PACKAGES: '/packages',
   REPORT: '/report',
   PROCEDURE: '/procedure',
+  USER: '/user',
   PROJECT_DETAILS: '/projects/details',
+  COMPANY_DETAILS: '/company/details',
   PROJECT_ADDNEW: '/projects/add-new',
+  KPI_DAY: '/kpi/day',
+  KPI_MONTH: '/kpi/montth',
 };

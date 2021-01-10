@@ -10,7 +10,7 @@ const selectDashboard = state => state.dashboard || initialState;
 const makeSelectDashboard = () =>
   createSelector(
     selectDashboard,
-    Dashboardstate => Dashboardstate.projectFollows,
+    state => state.dashboard,
   );
 
 export { selectDashboard, makeSelectDashboard };

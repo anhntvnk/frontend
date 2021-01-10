@@ -17,7 +17,7 @@ import { useInjectReducer } from 'utils/injectReducer';
 import { useInjectSaga } from 'utils/injectSaga';
 import { Row, Col } from 'antd';
 import { ROUTE } from '../../constants';
-import { loadProjectsFollow } from './actions';
+import { loadDashboard } from './actions';
 import { makeSelectDashboard } from './selectors';
 // import { Page } from 'components';
 import NumberCard from './numberCard';
@@ -27,13 +27,20 @@ import './styles.less';
 
 const key = 'dashboard';
 
-export function Dashboard({ projectFollows, onFetchProjectFollow }) {
+export function Dashboard({ dashboards, onFetchDashboard }) {
   useInjectReducer({ key, reducer });
   useInjectSaga({ key, saga });
 
   useEffect(() => {
-    onFetchProjectFollow();
+    onFetchDashboard();
   }, []);
+
+  const {
+    countCompany,
+    countCompanyFollowed,
+    countProject,
+    countProjectsFollowed,
+  } = dashboards;
 
   const Color = {
     green: '#64ea91',
@@ -68,26 +75,28 @@ export function Dashboard({ projectFollows, onFetchProjectFollow }) {
       icon: 'search',
       color: Color.yellow,
       title: 'tìm kiếm dự án',
+      number: countProject,
       url: ROUTE.PROJECT,
     },
     {
       icon: 'project-follow',
       color: Color.red,
       title: 'Danh mục dự án đang theo',
-      number: 4324,
+      number: countProjectsFollowed,
       url: `${ROUTE.PROJECT}?project-follow`,
     },
     {
       icon: 'search',
       color: Color.grey,
       title: 'tìm kiếm công ty',
+      number: countCompany,
       url: ROUTE.COMPANY,
     },
     {
       icon: 'company',
       color: Color.vnk,
       title: 'danh mục công ty đang theo',
-      number: 3241,
+      number: countCompanyFollowed,
       url: ROUTE.COMPANY,
     },
     {
@@ -118,17 +127,17 @@ export function Dashboard({ projectFollows, onFetchProjectFollow }) {
 }
 
 Dashboard.propTypes = {
-  onFetchProjectFollow: PropTypes.func,
-  projectFollows: PropTypes.array,
+  onFetchDashboard: PropTypes.func,
+  dashboards: PropTypes.array,
 };
 
 const mapStateToProps = createStructuredSelector({
-  projectFollows: makeSelectDashboard(),
+  dashboards: makeSelectDashboard(),
 });
 
 export function mapDispatchToProps(dispatch) {
   return {
-    onFetchProjectFollow: () => dispatch(loadProjectsFollow()),
+    onFetchDashboard: () => dispatch(loadDashboard()),
   };
 }
 

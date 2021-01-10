@@ -5,7 +5,7 @@
  * This is the first thing users see of our App, at the '/' route
  */
 
-import React from 'react';
+import React, { useState } from 'react';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
@@ -13,16 +13,16 @@ import moment from 'moment';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import { Card, Row, Col, Button } from 'antd';
+import { Card, Row, Col, Button, Popconfirm, message } from 'antd';
+import { ArrowLeftOutlined } from '@ant-design/icons';
 import { createStructuredSelector } from 'reselect';
 import { useInjectReducer } from 'utils/injectReducer';
 import { useInjectSaga } from 'utils/injectSaga';
 import styled from 'styled-components';
-import CenteredSection from 'components/CenteredSection';
 import H1 from 'components/H1';
 import { ENUMS } from '../../constants';
-import { loadCompanys } from './actions';
-import { makeSelectCompanys } from './selectors';
+import { updateStateProcedure } from './actions';
+import { makeSelectErrorMessage, makeSelectSuccessMessage } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 import './styles.less';
@@ -30,18 +30,40 @@ import projectImg from '../../assets/images/home/p-2.png';
 
 const key = 'procedure';
 
-export function Procedure({ history, data }) {
+export function Procedure({
+  history,
+  data,
+  successMessage,
+  errorMessage,
+  onUpdateStatus,
+}) {
   useInjectReducer({ key, reducer });
   useInjectSaga({ key, saga });
 
+  const [projectDetail, setProjectDetail] = useState(data);
+
+  const taskCurrent = _.get(ENUMS.STATE_LIST, `[${data.status_code}]`);
+  const nextTask = _.get(ENUMS.STATE_LIST, `[${data.status_code + 1}]`);
+
+  if (successMessage) {
+    message.success(successMessage);
+    history.replace({ ...history.location, state: { data: projectDetail } });
+  }
+
+  if (errorMessage) {
+    message.error(errorMessage);
+  }
+
   const comfirmChangeTask = project => {
-    const nextTask = _.get(ENUMS.STATE_LIST, `[${project.status_code + 1}]`);
     if (nextTask) {
       const newData = Object.assign(project, {
         status_code: nextTask.status_code,
-        name: nextTask.name,
+        status: nextTask.name,
         last_modified: moment().format(),
       });
+
+      setProjectDetail(newData);
+      onUpdateStatus(newData);
     }
   };
 
@@ -52,65 +74,145 @@ export function Procedure({ history, data }) {
         <meta name="description" content="Quy trình Quản lý dự án" />
       </Helmet>
       <CenteredSection>
+        <Button
+          type="primary"
+          shape="round"
+          icon={<ArrowLeftOutlined />}
+          onClick={() => history.goBack()}
+        >
+          Quay lại
+        </Button>
         <H1>Quy trình Quản lý dự án</H1>
       </CenteredSection>
-
-      <Row gutter={32}>
-        {ENUMS.STATE_LIST.map(status => (
-          <Col lg={8} sm={24}>
-            <CardStatus>
-              <Card
-                cover={
-                  <Status>
-                    <StatusItem bgColor={status.color}>
-                      {status.status_code ? (
-                        <h1 style={{ color: status.colorText }}>
-                          {status.status_code}
-                        </h1>
-                      ) : (
-                        <img src={projectImg} height={118} alt="" />
-                      )}
-                    </StatusItem>
-                  </Status>
-                }
-              >
-                {status.label}
-              </Card>
-            </CardStatus>
-          </Col>
-        ))}
-      </Row>
-      <ChangeStatus>
-        <Row>
-          <Col lg={8}>
-            <Status flexCenter="center">
-              <StatusItem bgColor="red">
-                <h1 style={{ color: 'black' }}>1</h1>
-              </StatusItem>
-            </Status>
-          </Col>
-          <Col className="btn-change-status" lg={8}>
-            <Button onClick={() => comfirmChangeTask(data)}>
-              Chuyển trạng thái
-            </Button>
-          </Col>
-          <Col lg={8}>
-            <Status flexCenter="center">
-              <StatusItem bgColor="red">
-                <h1 style={{ color: 'black' }}>3</h1>
-              </StatusItem>
-            </Status>
-          </Col>
+      <ProcedureState>
+        <Row gutter={{ xs: 8, sm: 24, md: 24, lg: 32 }}>
+          {ENUMS.STATE_LIST.map(status => (
+            <Col lg={8} xs={8} key={status.status_code}>
+              <CardStatus>
+                <Card
+                  cover={
+                    <Status>
+                      <StatusItem bgColor={status.color}>
+                        {status.status_code ? (
+                          <h1 style={{ color: status.colorText }}>
+                            {status.status_code}
+                          </h1>
+                        ) : (
+                          <img src={projectImg} alt="" />
+                        )}
+                      </StatusItem>
+                    </Status>
+                  }
+                >
+                  {status.label}
+                </Card>
+              </CardStatus>
+            </Col>
+          ))}
         </Row>
+      </ProcedureState>
+      <ChangeStatus>
+        {nextTask ? (
+          <Row>
+            <Col lg={8} xs={8}>
+              <Status flexCenter="center">
+                <span>{taskCurrent.status_code}</span>
+                <StatusItem bgColor={taskCurrent.color} mobile>
+                  <h1 style={{ color: taskCurrent.colorText }}>
+                    {taskCurrent.name}
+                  </h1>
+                </StatusItem>
+              </Status>
+            </Col>
+            <Col className="btn-change-status" lg={8} xs={8}>
+              <Popconfirm
+                placement="top"
+                title="Bạn có muốn chuyển trạng thái không ?"
+                onConfirm={() => comfirmChangeTask(data)}
+                okText="Yes"
+                cancelText="No"
+              >
+                <Button>Chuyển trạng thái</Button>
+              </Popconfirm>
+            </Col>
+            <Col lg={8} xs={8}>
+              <Status flexCenter="center">
+                <span>{nextTask.status_code}</span>
+                <StatusItem bgColor={nextTask.color} mobile>
+                  <h1 style={{ color: nextTask.colorText }}>{nextTask.name}</h1>
+                </StatusItem>
+              </Status>
+            </Col>
+          </Row>
+        ) : (
+          <Row>
+            <Col lg={24} xs={24}>
+              <Status flexCenter="center">
+                <span>{taskCurrent.status_code}</span>
+                <StatusItem bgColor={taskCurrent.color} mobile>
+                  <h1 style={{ color: taskCurrent.colorText }}>
+                    {taskCurrent.name}
+                  </h1>
+                </StatusItem>
+              </Status>
+            </Col>
+          </Row>
+        )}
       </ChangeStatus>
     </ProcedureComponent>
   );
 }
 
+const CenteredSection = styled.section`
+  text-align: center;
+  margin: 50px 0px;
+  text-transform: uppercase;
+  .ant-btn {
+    display: flex;
+    align-items: center;
+    float: left;
+    margin-top: 6px;
+    @media only screen and (max-width: 767.99px) {
+      margin-top: 0;
+    }
+  }
+
+  @media only screen and (max-width: 767.99px) {
+    padding: 10px;
+    font-size: 8px;
+    margin: 30px 0px;
+  }
+`;
+
+const ProcedureState = styled.section`
+  @media only screen and (max-width: 767.99px) {
+    padding: 10px;
+  }
+`;
+
 const ChangeStatus = styled.section`
   background: #fff;
   border: 1px solid #f0f0f0;
   height: 200px;
+  .btn-change-status {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .ant-btn {
+      background: linear-gradient(#b92327, #00acc1);
+      color: #fff;
+      font-weight: 600;
+      text-transform: capitalize;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+
+      @media only screen and (max-width: 767.99px) {
+        padding: 10px;
+        margin-top: 50px;
+      }
+    }
+  }
 `;
 
 const ProcedureComponent = styled.div`
@@ -120,11 +222,19 @@ const ProcedureComponent = styled.div`
 `;
 
 const Status = styled.section`
-  display: flex;
+  display: grid;
   justify-content: ${props => props.flexCenter || 'flex-end'};
   align-items: center;
   text-align: center;
-  padding-top: ${props => (props.flexCenter ? '30px' : '20px')};
+  padding-top: ${props => (props.flexCenter ? '10px' : '20px')};
+  @media only screen and (max-width: 767.99px) {
+    padding-top: 16px;
+  }
+
+  span {
+    font-weight: 600;
+    font-size: 24px;
+  }
 `;
 
 const StatusItem = styled.div`
@@ -139,26 +249,66 @@ const StatusItem = styled.div`
   border-radius: 50%;
   -moz-border-radius: 50%;
   -webkit-border-radius: 50%;
+  h1 {
+    margin-bottom: 0;
+    font-size: 15px;
+    padding: 10px;
+  }
+
+  img {
+    height: 118px;
+    @media only screen and (max-width: 767.99px) {
+      height: 50px;
+    }
+  }
+
+  @media only screen and (max-width: 767.99px) {
+    width: ${props => (props.mobile ? '90px' : '50px')};
+    height: ${props => (props.mobile ? '90px' : '50px')};
+  }
 `;
 
 const CardStatus = styled.div`
   margin-bottom: 30px;
-  height: 250px;
+  height: 200px;
+  @media only screen and (max-width: 767.99px) {
+    margin-bottom: 0px;
+    height: 160px;
+  }
+  .ant-card {
+    @media only screen and (max-width: 767.99px) {
+      height: 140px;
+    }
+  }
+  .ant-card-body {
+    text-align: center;
+    font-size: 15px;
+    font-weight: 500;
+    text-transform: uppercase;
+    @media only screen and (max-width: 767.99px) {
+      font-size: 12px;
+      font-weight: 500;
+      padding: 12px;
+    }
+  }
 `;
 
 Procedure.propTypes = {
-  // onFetchCompany: PropTypes.func,
+  onUpdateStatus: PropTypes.func,
   data: PropTypes.object,
   history: PropTypes.object,
+  successMessage: PropTypes.string,
+  errorMessage: PropTypes.string,
 };
 
 const mapStateToProps = createStructuredSelector({
-  company: makeSelectCompanys(),
+  successMessage: makeSelectSuccessMessage(),
+  errorMessage: makeSelectErrorMessage(),
 });
 
 export function mapDispatchToProps(dispatch) {
   return {
-    onFetchCompany: () => dispatch(loadCompanys()),
+    onUpdateStatus: data => dispatch(updateStateProcedure(data)),
   };
 }
 

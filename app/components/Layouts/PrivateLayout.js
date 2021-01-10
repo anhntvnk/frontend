@@ -30,7 +30,7 @@ export default ({ component: Component, getComponent, ...remain }) => (
   <Route
     {...remain}
     render={props =>
-      isLoggedIn() ? (
+      // isLoggedIn() ? (
         <Layout>
           <MypHeader {...props} />
           <Content>
@@ -40,9 +40,9 @@ export default ({ component: Component, getComponent, ...remain }) => (
             <VnkFooter />
           </div> */}
         </Layout>
-      ) : (
-        <Redirect to={ROUTE.LOGIN} />
-      )
+      // ) : (
+      //   <Redirect to={ROUTE.LOGIN} />
+      // )
     }
   />
 );

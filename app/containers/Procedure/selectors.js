@@ -1,16 +1,22 @@
 /**
- * Project selectors
+ * Procedure selectors
  */
 
 import { createSelector } from 'reselect';
 import { initialState } from './reducer';
 
-const selectCompanys = state => state.companys || initialState;
+const select = state => state.procedure || initialState;
 
-const makeSelectCompanys = () =>
+const makeSelectSuccessMessage = () =>
   createSelector(
-    selectCompanys,
-    Companystate => Companystate.company,
+    select,
+    state => state.successMessage,
   );
 
-export { selectCompanys, makeSelectCompanys };
+const makeSelectErrorMessage = () =>
+  createSelector(
+    select,
+    state => state.errorMessage,
+  );
+
+export { select, makeSelectSuccessMessage, makeSelectErrorMessage };

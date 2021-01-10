@@ -10,7 +10,23 @@ const selectCompanys = state => state.companys || initialState;
 const makeSelectCompanys = () =>
   createSelector(
     selectCompanys,
-    Companystate => Companystate.company,
+    state => state.companys,
+  );
+const makeSelectCompanyFollows = () =>
+  createSelector(
+    selectCompanys,
+    state => state.companyFollows,
   );
 
-export { selectCompanys, makeSelectCompanys };
+const makeSelectLoading = () =>
+  createSelector(
+    selectCompanys,
+    state => state.loading,
+  );
+
+export {
+  makeSelectLoading,
+  selectCompanys,
+  makeSelectCompanys,
+  makeSelectCompanyFollows,
+};

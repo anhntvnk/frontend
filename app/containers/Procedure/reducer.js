@@ -9,21 +9,34 @@
  */
 
 import produce from 'immer';
-import { LOAD_COMPANYS_SUCCESS } from './constants';
+import {
+  CHANGE_STATE_PROCEDURE_ERROR,
+  CHANGE_STATE_PROCEDURE_SUCCESS,
+} from './constants';
 
 // The initial state of the App
 export const initialState = {
   company: [],
+  successMessage: '',
+  errorMessage: '',
 };
 
 /* eslint-disable default-case, no-param-reassign */
 const companyReducer = (state = initialState, action) =>
   produce(state, draft => {
     switch (action.type) {
-      case LOAD_COMPANYS_SUCCESS:
-        const { response } = action;
-        draft.company = response;
+      case CHANGE_STATE_PROCEDURE_SUCCESS:
+        console.log('vvv1111');
+        draft.successMessage = 'Chuysển trạng thái thành công !';
         break;
+      case CHANGE_STATE_PROCEDURE_ERROR:
+        console.log('vvv');
+        draft.errorMessage = 'Đã có lỗi xảy ra !';
+        break;
+      default:
+        draft.company = initialState.company;
+        draft.successMessage = initialState.successMessage;
+        draft.errorMessage = initialState.errorMessage;
     }
   });
 
