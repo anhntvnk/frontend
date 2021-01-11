@@ -1,5 +1,5 @@
 import React from 'react';
-import { get as _get} from 'lodash';
+import { get as _get } from 'lodash';
 import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
 import { Card, Row, Col, Button, List } from 'antd';

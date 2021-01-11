@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Row, Col } from 'antd';
 import styled from 'styled-components';
 import moment from 'moment';
-import { get as _get} from 'lodash';
+import { get as _get } from 'lodash';
 import logo from '../../../assets/images/logo/my-project.png';
 
 const BoxDetail = styled.section`

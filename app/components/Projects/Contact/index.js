@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Row, Col, List, Avatar } from 'antd';
-import { get as _get} from 'lodash';
+import { get as _get } from 'lodash';
 import styled from 'styled-components';
 
 import logo from '../../../assets/images/logo/my-project.png';
