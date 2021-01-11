@@ -2,8 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Row, Col, Form, Input, Button, Space } from 'antd';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
-import _ from 'lodash';
-import logo from '../../../assets/images/logo/my-project.png';
 
 function DynamicForm({ data }) {
   const onFinish = values => {

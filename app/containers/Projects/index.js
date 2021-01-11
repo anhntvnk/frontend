@@ -12,7 +12,7 @@ import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import _ from 'lodash';
+import { get as _get, omit as _omit, clone as _clone } from 'lodash';
 import { createStructuredSelector } from 'reselect';
 
 import { useInjectReducer } from 'utils/injectReducer';
@@ -55,7 +55,7 @@ export function Projects({
     projectType === 'project-follow' ? followedProjects : project;
 
   if (history.location.state) {
-    message.success(_.get(history.location.state, 'successMessage', ''));
+    message.success(_get(history.location.state, 'successMessage', ''));
     history.replace({ ...history.location, state: undefined });
   }
 
@@ -78,9 +78,9 @@ export function Projects({
 
   const onFollow = (isFollow, projectFl) => {
     if (isFollow) {
-      const data = _.omit(_.clone(projectFl), ['idParentProjects', 'id']);
+      const data = _omit(_clone(projectFl), ['idParentProjects', 'id']);
       data.user_id = getUserId();
-      data.team_id = _.get(projectFl, 'user.team_id', 0);
+      data.team_id = _get(projectFl, 'user.team_id', 0);
       data.parent_project_id = projectFl.id;
       data.last_modified = moment().format();
       data.status = ENUMS.STATE.SANG_LOC;
@@ -91,7 +91,7 @@ export function Projects({
     } else {
       // eslint-disable-next-line no-lonely-if
       if (_.has(projectFl, 'parent_project_id')) {
-        onUnFollowProject(_.get(projectFl, 'id', ''));
+        onUnFollowProject(_get(projectFl, 'id', ''));
       }
     }
   };
@@ -146,7 +146,7 @@ export function Projects({
       dataIndex: 'status_code',
       key: 'status_code',
       render: statusCode => {
-        const task = _.get(ENUMS.STATE_LIST, `[${statusCode}]`);
+        const task = _get(ENUMS.STATE_LIST, `[${statusCode}]`);
         return (
           <Tag color={task.color} style={{ color: task.colorText }}>
             {task.label}
@@ -173,14 +173,14 @@ export function Projects({
       render: (id, record) => (
         <Link
           className="btn-editor"
-          onClick={() => onFollow(!_.get(record, 'is_follow', false), record)}
+          onClick={() => onFollow(!_get(record, 'is_follow', false), record)}
           to={[]}
         >
           <div
             style={{
               whiteSpace: 'nowrap',
               color: `${
-                _.get(record, 'is_follow', false)
+                _get(record, 'is_follow', false)
                   ? 'rgb(32, 120, 244)'
                   : '#65676b'
               }`,

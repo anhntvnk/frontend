@@ -8,7 +8,7 @@
 import React, { useState } from 'react';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import _ from 'lodash';
+import { get as _get } from 'lodash';
 import moment from 'moment';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
@@ -42,8 +42,8 @@ export function Procedure({
 
   const [projectDetail, setProjectDetail] = useState(data);
 
-  const taskCurrent = _.get(ENUMS.STATE_LIST, `[${data.status_code}]`);
-  const nextTask = _.get(ENUMS.STATE_LIST, `[${data.status_code + 1}]`);
+  const taskCurrent = _get(ENUMS.STATE_LIST, `[${data.status_code}]`);
+  const nextTask = _get(ENUMS.STATE_LIST, `[${data.status_code + 1}]`);
 
   if (successMessage) {
     message.success(successMessage);

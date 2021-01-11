@@ -1,19 +1,15 @@
 import React from 'react';
-import _ from 'lodash';
+import { get as _get} from 'lodash';
 import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
 import { Card, Row, Col, Button, List } from 'antd';
 import {
-  ArrowLeftOutlined,
-  CheckCircleTwoTone,
+  CheckCircleOutlined,
   SmileTwoTone,
   ReconciliationTwoTone,
   PhoneTwoTone,
 } from '@ant-design/icons';
 import styled from 'styled-components';
-import H1 from 'components/H1';
-import H3 from 'components/H3';
-import projectImg from '../../assets/images/home/p-2.png';
 
 // eslint-disable-next-line react/prop-types
 function Point({ point }) {
@@ -24,7 +20,7 @@ function Point({ point }) {
   );
 }
 
-function Kpi({ kpi }) {
+function Kpi({ kpi, back }) {
   return (
     <KpiComponent>
       <Helmet>
@@ -35,34 +31,38 @@ function Kpi({ kpi }) {
         <Button
           type="primary"
           shape="round"
-          icon={<ArrowLeftOutlined />}
+          icon={<back />}
           // onClick={() => history.goBack()}
         >
           Quay lại
         </Button>
-        <H1>Thông tin cá nhân</H1>
+        <h1>Thông tin cá nhân</h1>
       </CenteredSectionWithBack>
       <KpiState>
         <Row gutter={{ xs: 8, sm: 24, md: 24, lg: 16 }}>
           <Col lg={8} xs={24}>
-            <H3>Thông tin cá nhân</H3>
+            <h3>Thông tin cá nhân</h3>
             <CardStatus>
               <Card
                 cover={
                   <Status>
                     <StatusItem>
-                      <img src={projectImg} alt="" />
+                      <img
+                        // eslint-disable-next-line global-require
+                        src={require('../../assets/images/globe/noavatar.png')}
+                        alt=""
+                      />
                     </StatusItem>
                   </Status>
                 }
               >
-                <span>{_.get(kpi, 'full_name')}</span>
+                <span>{_get(kpi, 'full_name')}</span>
               </Card>
             </CardStatus>
           </Col>
           <Col lg={16} xs={24}>
             <Profile>
-              <H3>KPIs tháng </H3>
+              <h3>KPIs tháng </h3>
               <List
                 size="small"
                 // header={<div>Header</div>}
@@ -77,7 +77,7 @@ function Kpi({ kpi }) {
                     <b>
                       1. Cuộc gọi (<Point point="1" />)
                     </b>
-                    {_.get(kpi, 'phone')}
+                    {_get(kpi, 'phone')}
                   </Col>
                   <Col lg={12}>
                     <Button type="primary" shape="round" size="small">
@@ -96,7 +96,7 @@ function Kpi({ kpi }) {
                     <b>
                       2. Lịch hẹn gặp (<Point point="3" />)
                     </b>
-                    : {_.get(kpi, 'phone')}
+                    : {_get(kpi, 'phone')}
                   </Col>
                   <Col lg={12}>
                     <Button type="primary" shape="round" size="small">
@@ -115,7 +115,7 @@ function Kpi({ kpi }) {
                     <b>
                       3. Chào giá (<Point point="5" />)
                     </b>
-                    : {_.get(kpi, 'phone')}
+                    : {_get(kpi, 'phone')}
                   </Col>
                   <Col lg={12}>
                     <Button type="primary" shape="round" size="small">
@@ -128,13 +128,13 @@ function Kpi({ kpi }) {
                 </List.Item>
                 <List.Item>
                   <Col lg={12}>
-                    <CheckCircleTwoTone
+                    <CheckCircleOutlined
                       style={{ fontSize: '24px', paddingRight: '8px' }}
                     />
                     <b>
                       4. Chốt đơn hàng (<Point point="15" />)
                     </b>
-                    : {_.get(kpi, 'phone')}
+                    : {_get(kpi, 'phone')}
                   </Col>
                   <Col lg={12}>
                     <Button type="primary" shape="round" size="small">
@@ -318,6 +318,7 @@ const CardStatus = styled.div`
 
 Kpi.propTypes = {
   kpi: PropTypes.any,
+  back: PropTypes.any,
 };
 
 export default Kpi;

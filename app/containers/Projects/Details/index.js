@@ -12,7 +12,7 @@ import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import moment from 'moment';
-import _ from 'lodash';
+import { get as _get } from 'lodash';
 import { Row, Col, Tabs, Button } from 'antd';
 import {
   ScheduleTwoTone,
@@ -115,11 +115,11 @@ export function ProjectDetails({ history, data }) {
               <Col className="group-item" lg={24} md={24}>
                 <BoxDetail>
                   <span className="description">Dự án:</span>
-                  <p className="project-name">{_.get(data, 'name', '')}</p>
+                  <p className="project-name">{_get(data, 'name', '')}</p>
                   <span className="description">
                     <span>Cập nhật mới:&nbsp;</span>
                     <span>
-                      {moment(_.get(data, 'last_modified', '')).format(
+                      {moment(_get(data, 'last_modified', '')).format(
                         'DD/MM/YYYY',
                       )}
                     </span>

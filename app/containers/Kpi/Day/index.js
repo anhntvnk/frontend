@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /*
- * ProjectPage
+ * DayPage
  *
  * This is the first thing users see of our App, at the '/' route
  */
@@ -10,6 +10,7 @@ import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
+import { ArrowLeftOutlined } from '@ant-design/icons';
 import { createStructuredSelector } from 'reselect';
 import { useInjectReducer } from 'utils/injectReducer';
 import { useInjectSaga } from 'utils/injectSaga';
@@ -30,7 +31,7 @@ export function User({ history, userProfile, onLoadUserProfile }) {
     onLoadUserProfile();
   }, []);
 
-  return <KpiDay kpi={userProfile} />;
+  return <KpiDay kpi={userProfile} back={ArrowLeftOutlined} />;
 }
 
 User.propTypes = {

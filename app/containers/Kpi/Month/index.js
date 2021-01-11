@@ -7,7 +7,7 @@
 
 import React, { useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
-import _ from 'lodash';
+import { get as _get } from 'lodash';
 import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
@@ -66,12 +66,16 @@ export function User({ history, userProfile, onLoadUserProfile }) {
                 cover={
                   <Status>
                     <StatusItem>
-                      <img src={projectImg} alt="" />
+                      <img
+                        // eslint-disable-next-line global-require
+                        src={require('../../../assets/images/globe/noavatar.png')}
+                        alt=""
+                      />
                     </StatusItem>
                   </Status>
                 }
               >
-                <span>{_.get(userProfile, 'full_name')}</span>
+                <span>{_get(userProfile, 'full_name')}</span>
               </Card>
             </CardStatus>
           </Col>
@@ -87,37 +91,37 @@ export function User({ history, userProfile, onLoadUserProfile }) {
                   >
                     <List.Item>
                       <Col lg={12}>
-                        <b>Mobile</b>: {_.get(userProfile, 'phone')}
+                        <b>Mobile</b>: {_get(userProfile, 'phone')}
                       </Col>
                       <Col lg={12}>
-                        <b>Tel (officee)</b>: {_.get(userProfile, 'tel_office')}
+                        <b>Tel (officee)</b>: {_get(userProfile, 'tel_office')}
                       </Col>
                     </List.Item>
                     <List.Item>
                       <Col lg={24}>
-                        <b>Email</b>: {_.get(userProfile, 'email')}
+                        <b>Email</b>: {_get(userProfile, 'email')}
                       </Col>
                     </List.Item>
                     <List.Item>
                       <Col lg={24}>
                         <b>Địa chỉ (officee)</b>:{' '}
-                        {_.get(userProfile, 'address_office')}
+                        {_get(userProfile, 'address_office')}
                       </Col>
                     </List.Item>
                     <List.Item>
                       <Col lg={12}>
-                        <b>Địa chỉ (nhà)</b>: {_.get(userProfile, 'address')}
+                        <b>Địa chỉ (nhà)</b>: {_get(userProfile, 'address')}
                       </Col>
                       <Col lg={12}>
-                        <b>Thành phố</b>: {_.get(userProfile, 'city')}
+                        <b>Thành phố</b>: {_get(userProfile, 'city')}
                       </Col>
                     </List.Item>
                     <List.Item>
                       <Col lg={12}>
-                        <b>Công ty</b>: {_.get(userProfile, 'company')}
+                        <b>Công ty</b>: {_get(userProfile, 'company')}
                       </Col>
                       <Col lg={12}>
-                        <b>Ghi chú</b>: {_.get(userProfile, 'note')}
+                        <b>Ghi chú</b>: {_get(userProfile, 'note')}
                       </Col>
                     </List.Item>
                   </List>

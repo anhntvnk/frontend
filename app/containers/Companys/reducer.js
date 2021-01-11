@@ -9,7 +9,7 @@
  */
 
 import produce from 'immer';
-import _ from 'lodash';
+import { includes as _includes } from 'lodash';
 import {
   LOAD_COMPANYS_SUCCESS,
   LOAD_COMPANYS_FOLLOW_SUCCESS,
@@ -28,7 +28,7 @@ const mappingCompany = (companys, companyFollows) => {
 
   const newCompanys = companys.map(company =>
     Object.assign(company, {
-      is_follow: _.includes(companyFollowId, company.id),
+      is_follow: _includes(companyFollowId, company.id),
     }),
   );
 

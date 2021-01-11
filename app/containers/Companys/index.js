@@ -8,7 +8,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link, withRouter } from 'react-router-dom';
-import _ from 'lodash';
+import { get as _get} from 'lodash';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
@@ -112,14 +112,14 @@ export function Companys({
       render: (id, record) => (
         <Link
           className="btn-editor"
-          onClick={() => onFollow(!_.get(record, 'is_follow', false), id)}
+          onClick={() => onFollow(!_get(record, 'is_follow', false), id)}
           to="#"
         >
           <div
             style={{
               whiteSpace: 'nowrap',
               color: `${
-                _.get(record, 'is_follow', false)
+                _get(record, 'is_follow', false)
                   ? 'rgb(32, 120, 244)'
                   : '#65676b'
               }`,

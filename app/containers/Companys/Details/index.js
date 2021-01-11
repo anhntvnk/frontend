@@ -12,7 +12,7 @@ import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import moment from 'moment';
-import _ from 'lodash';
+import { get as _get } from 'lodash';
 import { Row, Col, Button } from 'antd';
 import { ArrowLeftOutlined } from '@ant-design/icons';
 import { createStructuredSelector } from 'reselect';
@@ -104,10 +104,10 @@ export function CompanyDetails({ history, data }) {
           <Col className="group-item" lg={24} md={24}>
             <BoxDetail>
               <span className="description">Dự án:</span>
-              <p className="company-name">{_.get(data, 'name', '')}</p>
+              <p className="company-name">{_get(data, 'name', '')}</p>
               <span className="description">
                 <span>Ngày thành lập:&nbsp;</span>
-                <span>{_.get(data, 'date', '')}</span>
+                <span>{_get(data, 'date', '')}</span>
               </span>
             </BoxDetail>
           </Col>
@@ -119,34 +119,34 @@ export function CompanyDetails({ history, data }) {
               <BoxDetail>
                 <span>
                   <span className="description">Liên hệ:&nbsp;</span>
-                  {_.get(data, 'contacts', '').map(ct => (
+                  {_get(data, 'contacts', '').map(ct => (
                     <>
                       <p className="contact-name">
-                        {_.get(ct, 'name', '')} ({_.get(ct, 'position', '')})
+                        {_get(ct, 'name', '')} ({_get(ct, 'position', '')})
                       </p>
                     </>
                   ))}
                 </span>
                 <span>
                   <span className="description">Giám đốc:&nbsp;</span>
-                  <p>{_.get(data, 'manager', '')}</p>
+                  <p>{_get(data, 'manager', '')}</p>
                 </span>
                 <span>
                   <span className="description">Địa chỉ văn phòng:&nbsp;</span>
                   <p>
-                    {_.get(data, 'office_address', '')}{' '}
-                    {_.get(data, 'district', '')}
+                    {_get(data, 'office_address', '')}{' '}
+                    {_get(data, 'district', '')}
                   </p>
                 </span>
                 <span>
                   <span className="description">Thành phố (Tỉnh):&nbsp;</span>
-                  <p>{_.get(data, 'city', '')}</p>
+                  <p>{_get(data, 'city', '')}</p>
                 </span>
               </BoxDetail>
             </Col>
             <Col lg={8} style={{ justifyContent: 'center', display: 'flex' }}>
               <img
-                src={_.get(data, 'image') || logo}
+                src={_get(data, 'image') || logo}
                 width={220}
                 alt=""
                 className="vnk-logo"
@@ -156,33 +156,33 @@ export function CompanyDetails({ history, data }) {
               <BoxDetail>
                 <span>
                   <span className="description">Số điện thoại:&nbsp;</span>
-                  <p>{_.get(data, 'phone', '')}</p>
+                  <p>{_get(data, 'phone', '')}</p>
                 </span>
                 <span>
                   <span className="description">Địa chỉ Email:&nbsp;</span>
-                  <p>{_.get(data, 'email', '')}</p>
+                  <p>{_get(data, 'email', '')}</p>
                 </span>
                 <span>
                   <span className="description">Trang web:&nbsp;</span>
-                  <p>{_.get(data, 'website', '')}</p>
+                  <p>{_get(data, 'website', '')}</p>
                 </span>
                 <span>
                   <span className="description">Cập nhật mới nhất:&nbsp;</span>
                   <p>
-                    {moment(_.get(data, 'latest_update', '')).format(
+                    {moment(_get(data, 'latest_update', '')).format(
                       'DD/MM/YYYY',
                     )}
                   </p>
                 </span>
                 <span>
                   <span className="description">Ghi chú cá nhân:&nbsp;</span>
-                  <p>{_.get(data, 'note', '')}</p>
+                  <p>{_get(data, 'note', '')}</p>
                 </span>
                 <span>
                   <span className="description">
                     Dự án liên quan tới công ty:&nbsp;
                   </span>
-                  <p>{_.get(data, 'description', '')}</p>
+                  <p>{_get(data, 'description', '')}</p>
                 </span>
               </BoxDetail>
             </Col>

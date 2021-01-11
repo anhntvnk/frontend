@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Row, Col, List, Avatar } from 'antd';
-import _ from 'lodash';
+import { get as _get} from 'lodash';
 import styled from 'styled-components';
 
 import logo from '../../../assets/images/logo/my-project.png';
@@ -20,14 +20,14 @@ function Contact({ data }) {
         <GutterRow style={{ minHeight: '220px' }}>
           <List
             itemLayout="horizontal"
-            dataSource={_.get(data, 'contacts')}
+            dataSource={_get(data, 'contacts')}
             header="Danh sách thành viên trong dự án:"
             renderItem={contact => (
               <List.Item>
                 <List.Item.Meta
                   avatar={<Avatar src={logo} />}
                   title={contact.full_name}
-                  description={_.get(contact, 'type')}
+                  description={_get(contact, 'type')}
                 />
               </List.Item>
             )}
@@ -36,7 +36,7 @@ function Contact({ data }) {
       </Col>
       <Col lg={8} style={{ justifyContent: 'center', display: 'flex' }}>
         <img
-          src={_.get(data, 'image') || logo}
+          src={_get(data, 'image') || logo}
           width={220}
           alt=""
           className="vnk-logo"

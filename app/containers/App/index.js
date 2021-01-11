@@ -53,7 +53,7 @@ const App = () => (
       <PrivateLayout exact path={ROUTE.PROJECT} component={Projects} />
       <PrivateLayout exact path={ROUTE.COMPANY} component={Companys} />
       <PrivateLayout exact path={ROUTE.DASHBOARD} component={Dashboard} />
-      <PrivateLayout exact path={ROUTE.USER} component={KpiDay} />
+      <PrivateLayout exact path={ROUTE.USER} component={User} />
       <PrivateLayout exact path={ROUTE.KPI_DAY} component={KpiDay} />
       <PrivateLayout exact path={ROUTE.KPI_MONTH} component={KpiMonth} />
       <PrivateLayout
