@@ -69,7 +69,7 @@ export function Dashboard({ dashboards, onFetchDashboard }) {
       icon: 'kpi',
       color: Color.blue,
       title: 'KPI',
-      url: '',
+      url: ROUTE.KPI_DAY,
     },
     {
       icon: 'search',

@@ -32,23 +32,13 @@ export function* fetchLogin(actionData) {
       const getUserById = yield call(request, userUrl);
 
       if (getUserById) {
-        const { team_id: teamId } = getUserById;
-        const paramOrder = {
-          team_id: teamId,
-          active: true,
-          expire_date: { neq: null },
-        };
-        const order = yield call(fetchAxios, {
-          method: 'GET',
-          url: orderUrl,
-          headers: { 'Content-Type': 'application/json' },
-          responseType: 'json',
-          paramOrder,
-        });
+        const filter = `filter[where][user_id]=${userId}`;
+        const order = yield call(request, `${orderUrl}&${filter}`);
 
         if (order && _get(order, 'package')) {
           packageOrder = _get(order, 'package');
           const expireDate = moment(_get(order, 'expire_date'));
+
           if (expireDate.isValid()) {
             packageExpire = expireDate.diff(moment()) > 0;
           }

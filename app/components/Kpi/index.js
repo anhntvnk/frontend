@@ -129,7 +129,11 @@ function Kpi({ kpi, back }) {
                 <List.Item>
                   <Col lg={12}>
                     <CheckCircleOutlined
-                      style={{ fontSize: '24px', paddingRight: '8px' }}
+                      style={{
+                        fontSize: '24px',
+                        paddingRight: '8px',
+                        color: 'rgb(24, 144, 255)',
+                      }}
                     />
                     <b>
                       4. Chốt đơn hàng (<Point point="15" />)

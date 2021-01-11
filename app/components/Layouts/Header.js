@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import { Link, withRouter } from 'react-router-dom';
-import { Row, Col, Menu, Popover, Badge, List, Tabs } from 'antd';
+import { Row, Col, Menu, Popover, Badge, List } from 'antd';
 import { BellOutlined, RightOutlined } from '@ant-design/icons';
 import moment from 'moment';
 import { enquireScreen } from 'enquire-js';
@@ -86,6 +86,10 @@ class Header extends React.Component {
             return;
           }
 
+          if (item.isMobile && !this.state.isMobile) {
+            return;
+          }
+
           // eslint-disable-next-line consistent-return
           return (
             <Menu.Item
@@ -108,11 +112,11 @@ class Header extends React.Component {
   render() {
     const notifications = [
       {
-        title: 'New User is registered.',
+        title: 'Thông báo 1.',
         date: new Date(Date.now() - 10000000),
       },
       {
-        title: 'Application has been approved.',
+        title: 'Thông báo 2.',
         date: new Date(Date.now() - 50000000),
       },
     ];
@@ -140,9 +144,6 @@ class Header extends React.Component {
                     trigger="click"
                     key="notifications"
                     overlayClassName="notificationPopover"
-                    // getPopupContainer={() =>
-                    //   document.querySelector('#primaryLayout')
-                    // }
                     content={
                       <div className="notification">
                         <List
@@ -163,14 +164,6 @@ class Header extends React.Component {
                             </List.Item>
                           )}
                         />
-                        {/* {notifications.length ? (
-                          <div
-                            onClick={onAllNotificationsRead}
-                            className={styles.clearButton}
-                          >
-                            <Trans>Clear notifications</Trans>
-                          </div>
-                        ) : null} */}
                       </div>
                     }
                   >
@@ -205,7 +198,10 @@ class Header extends React.Component {
                         }
                       >
                         <Menu.Item key="persional-infomation">
-                          <Link to={ROUTE.USER}>Thông tin cá nhân</Link>
+                          <Link to={() => this.logoutAccount(history)}>
+                            <Link to={ROUTE.USER}>Thông tin cá nhân</Link>
+                            Thông tin cá nhân
+                          </Link>
                         </Menu.Item>
                         <Menu.Item key="change-password">
                           Đổi mật khẩu

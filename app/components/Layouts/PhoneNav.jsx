@@ -26,6 +26,7 @@ class PhoneNav extends React.PureComponent {
   };
 
   render() {
+    // eslint-disable-next-line react/prop-types
     const { children } = this.props;
 
     const { show } = this.state;

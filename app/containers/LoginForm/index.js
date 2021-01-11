@@ -8,21 +8,22 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { get as _get, isEmpty as _isEmpty } from 'lodash';
+import { isEmpty as _isEmpty } from 'lodash';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { useInjectReducer } from 'utils/injectReducer';
 import { useInjectSaga } from 'utils/injectSaga';
+import H1 from 'components/H1';
+import { Form, Input, Button, Checkbox } from 'antd';
+import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import reducer from './reducer';
 import saga from './saga';
 import { makeSelectErrorMessage, makeSelectLoginForm } from './selectors';
 import { loginForm } from './actions';
-import H1 from 'components/H1';
-import { Form, Input, Button, Checkbox } from 'antd';
-import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import routes from '../../constants/routes';
 import './styles.less';
+// eslint-disable-next-line import/order
 import { createStructuredSelector } from 'reselect';
 import { setUserSession } from '../../../services/auth';
 const key = 'loginForm';
@@ -37,30 +38,30 @@ export function LoginForm({ history, onLoginForm, user, errorMessage }) {
 
   useEffect(() => {
     if (!_isEmpty(user)) {
-      const { access_token, userId, packageExpire } = user;
-      if (access_token) {
+      const { access_token: accessToken, userId, packageExpire } = user;
+      if (accessToken) {
         if (!packageExpire) {
-          setValidateStatus({ validateStatus: "error" });
+          setValidateStatus({ validateStatus: 'error' });
           setFormItemLayout({
-            help: "Tài khoản đã hết hạn sử dụng đề nghị liên hệ hotline: 0927161161 để sử dụng tiếp dịch vụ!",
-            validateStatus: "error",
+            help:
+              'Tài khoản đã hết hạn sử dụng đề nghị liên hệ hotline: 0927161161 để sử dụng tiếp dịch vụ!',
+            validateStatus: 'error',
           });
           return;
         }
 
-        setUserSession(access_token, userId);
+        setUserSession(accessToken, userId);
         setFormItemLayout({});
         history.replace('/dashboard');
       }
     }
 
     if (errorMessage) {
-      setValidateStatus({ validateStatus: "error" });
+      setValidateStatus({ validateStatus: 'error' });
       setFormItemLayout({
-        help: "Đăng nhập không thành công!",
-        validateStatus: "error",
+        help: 'Đăng nhập không thành công!',
+        validateStatus: 'error',
       });
-      return;
     }
   });
 
@@ -157,7 +158,7 @@ const mapStateToProps = createStructuredSelector({
 
 export function mapDispatchToProps(dispatch) {
   return {
-    onLoginForm: (data) => dispatch(loginForm(data)),
+    onLoginForm: data => dispatch(loginForm(data)),
   };
 }
 

@@ -1,6 +1,5 @@
 import ROUTE from './routes';
-
-const isLogin = true;
+import { isLoggedIn } from '../../services/auth';
 
 export default [
   {
@@ -46,12 +45,28 @@ export default [
   //   key: 'packages',
   // },
   {
-    path: ROUTE.SETTING,
-    title: 'Cài Đặt',
-    key: 'settings',
-    label: {
-      iconClass: 'far fa-home-alt',
-    },
-    isLogin: !isLogin,
+    exact: true,
+    path: ROUTE.REGISTER,
+    title: 'Đổi mật khẩu',
+    key: 'changePassword',
+    isMobile: true,
+    isLogin: !isLoggedIn(),
   },
+  {
+    exact: true,
+    path: ROUTE.USER,
+    title: 'Thông tin cá nhân',
+    key: 'profile',
+    isMobile: true,
+    isLogin: !isLoggedIn(),
+  },
+  // {
+  //   path: ROUTE.SETTING,
+  //   title: 'Cài Đặt',
+  //   key: 'settings',
+  //   label: {
+  //     iconClass: 'far fa-home-alt',
+  //   },
+  //   isLogin: !isLoggedIn(),
+  // },
 ];

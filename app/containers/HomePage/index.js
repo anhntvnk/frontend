@@ -1,3 +1,4 @@
+/* eslint-disable global-require */
 /* eslint-disable react/no-unescaped-entities */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /*
@@ -6,20 +7,11 @@
  * This is the first thing users see of our App, at the '/' route
  */
 
-import React, { useEffect, memo } from 'react';
-import PropTypes from 'prop-types';
+import React, { memo } from 'react';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import { createStructuredSelector } from 'reselect';
 
-import { useInjectReducer } from 'utils/injectReducer';
-import { useInjectSaga } from 'utils/injectSaga';
-import {
-  makeSelectRepos,
-  makeSelectLoading,
-  makeSelectError,
-} from 'containers/App/selectors';
 import H1 from 'components/H1';
 import H3 from 'components/H3';
 import { Row, Col } from 'antd';
@@ -28,15 +20,9 @@ import {
   FileTextFilled,
   DribbbleSquareOutlined,
 } from '@ant-design/icons';
+import styled from 'styled-components';
 import CenteredSection from './CenteredSection';
-import { loadRepos } from '../App/actions';
-import { changeUsername } from './actions';
-import { makeSelectUsername } from './selectors';
-import reducer from './reducer';
-import saga from './saga';
 import homeApp from '../../assets/images/home-app.jpg';
-import appStore from '../../assets/images/app-store.png';
-import chPlay from '../../assets/images/ch-play.png';
 import info from '../../assets/images/feature/info.png';
 import next from '../../assets/images/feature/next.png';
 import scale from '../../assets/images/feature/scale.png';
@@ -44,20 +30,9 @@ import statchart from '../../assets/images/feature/statschart.png';
 import successReport from '../../assets/images/feature/success-report.png';
 import teacherIcon from '../../assets/images/feature/teacher-icon.png';
 import kpi from '../../assets/images/feature/kpi.jpg';
-import styled from 'styled-components';
 import './styles.less';
 
-const key = 'home';
-
-export function HomePage({ username, onSubmitForm }) {
-  useInjectReducer({ key, reducer });
-  useInjectSaga({ key, saga });
-
-  useEffect(() => {
-    // When initial state username is not null, submit the form to load repos
-    if (username && username.trim().length > 0) onSubmitForm();
-  }, []);
-
+export function HomePage() {
   return (
     <div>
       <Helmet>
@@ -129,10 +104,16 @@ export function HomePage({ username, onSubmitForm }) {
               </p>
               <Row className="app-mobile">
                 <Col sm={24} lg={12}>
-                  <img src={appStore} alt="App-store App My Project" />
+                  <img
+                    src={require('../../assets/images/app-store.png')}
+                    alt="App-store App My Project"
+                  />
                 </Col>
                 <Col sm={24} lg={12}>
-                  <img src={chPlay} alt="CH-play App My Project" />
+                  <img
+                    src={require('../../assets/images/ch-play.png')}
+                    alt="CH-play App My Project"
+                  />
                 </Col>
               </Row>
             </Col>
@@ -260,16 +241,22 @@ export function HomePage({ username, onSubmitForm }) {
             <hr className="vnk-line hr-feature" />
           </Col>
           <Col lg={6} xs={12}>
-            <BackgroudImg image={require('../../assets/images/home/register.jpg')} />
+            <BackgroudImg
+              image={require('../../assets/images/home/register.jpg')}
+            />
           </Col>
           <Col lg={6} xs={12}>
-            <BackgroudImg image={require('../../assets/images/home/home-page.jpg')} />
+            <BackgroudImg
+              image={require('../../assets/images/home/home-page.jpg')}
+            />
           </Col>
           <Col lg={6} xs={12}>
             <BackgroudImg image={require('../../assets/images/home/kpi.jpg')} />
           </Col>
           <Col lg={6} xs={12}>
-            <BackgroudImg image={require('../../assets/images/home/report.jpg')} />
+            <BackgroudImg
+              image={require('../../assets/images/home/report.jpg')}
+            />
           </Col>
         </Row>
 
@@ -277,22 +264,36 @@ export function HomePage({ username, onSubmitForm }) {
           <Col lg={24} className="highlights">
             <HeadLine>TRẢI NGHIỆM ỨNG DỤNG</HeadLine>
             <hr className="vnk-line hr-feature" />
-            <LadiParagraph>Hãy click hoặc quét mã QR xuống các biểu tượng dưới đây để tải ứng dụng My Project về điện thoại của bạn!</LadiParagraph>
+            <LadiParagraph>
+              Hãy click hoặc quét mã QR xuống các biểu tượng dưới đây để tải ứng
+              dụng My Project về điện thoại của bạn!
+            </LadiParagraph>
           </Col>
           <Col lg={12}>
-            <BackgroudQRCode float="right" image={require('../../assets/images/home/appstore-qrcode.jpg')} />
+            <BackgroudQRCode
+              float="right"
+              image={require('../../assets/images/home/appstore-qrcode.jpg')}
+            />
           </Col>
           <Col lg={12}>
-            <BackgroudQRCode image={require('../../assets/images/home/android-qrcode.png')} />
+            <BackgroudQRCode
+              image={require('../../assets/images/home/android-qrcode.png')}
+            />
           </Col>
           <Col lg={12}>
             <ImgDownload float="right">
-              <img src={appStore} alt="App-store App My Project" />
+              <img
+                src={require('../../assets/images/app-store.png')}
+                alt="App-store App My Project"
+              />
             </ImgDownload>
           </Col>
           <Col lg={12}>
             <ImgDownload>
-              <img src={chPlay} alt="Chplay App My Project" />
+              <img
+                src={require('../../assets/images/ch-play.png')}
+                alt="Chplay App My Project"
+              />
             </ImgDownload>
           </Col>
         </Row>
@@ -302,8 +303,11 @@ export function HomePage({ username, onSubmitForm }) {
 }
 
 const ImgDownload = styled.div`
-  float: ${props => props.float || ""};
+  float: ${props => props.float || ''};
   margin: 0px 30px 30px 30px;
+  @media screen and (max-width: 767px) {
+    margin: 0px 30px 30px 90px;
+  }
 `;
 
 const HeadLine = styled(H1)`
@@ -316,22 +320,22 @@ const HeadLine = styled(H1)`
 `;
 
 const LadiParagraph = styled.p`
-  font-family: "Open Sans", sans-serif;
+  font-family: 'Open Sans', sans-serif;
   color: rgb(89, 89, 89);
   font-size: 18px;
   margin: 30px auto;
   line-height: 1.6;
   width: 470px;
   @media screen and (max-width: 767px) {
-    width: 400px;
+    width: 370px;
     font-size: 15px;
     text-align: center;
   }
-`
+`;
 
 const BackgroudImg = styled.div`
-  box-shadow: 0px 0px 13px 0px rgba(0,0,0,1);
-  -webkit-box-shadow: 0px 0px 13px 0px rgba(0,0,0,1);
+  box-shadow: 0px 0px 13px 0px rgba(0, 0, 0, 1);
+  -webkit-box-shadow: 0px 0px 13px 0px rgba(0, 0, 0, 1);
   background-size: cover;
   background-attachment: scroll;
   background-origin: content-box;
@@ -352,7 +356,7 @@ const BackgroudImg = styled.div`
 
 const BackgroudQRCode = styled.div`
   background-image: url(${props => props.image});
-  float: ${props => props.float || ""};
+  float: ${props => props.float || ''};
   background-repeat: no-repeat;
   background-position: left top;
   background-size: cover;
@@ -361,33 +365,36 @@ const BackgroudQRCode = styled.div`
   height: 186.438px;
   width: 188.684px;
   margin: 30px;
+  @media screen and (max-width: 767px) {
+    display: none;
+  }
 `;
 
-HomePage.propTypes = {
-  onSubmitForm: PropTypes.func,
-  username: PropTypes.string,
-};
+// HomePage.propTypes = {
+//   onSubmitForm: PropTypes.func,
+//   username: PropTypes.string,
+// };
 
-const mapStateToProps = createStructuredSelector({
-  repos: makeSelectRepos(),
-  username: makeSelectUsername(),
-  loading: makeSelectLoading(),
-  error: makeSelectError(),
-});
+// const mapStateToProps = createStructuredSelector({
+//   repos: makeSelectRepos(),
+//   username: makeSelectUsername(),
+//   loading: makeSelectLoading(),
+//   error: makeSelectError(),
+// });
 
-export function mapDispatchToProps(dispatch) {
-  return {
-    onChangeUsername: evt => dispatch(changeUsername(evt.target.value)),
-    onSubmitForm: evt => {
-      if (evt !== undefined && evt.preventDefault) evt.preventDefault();
-      dispatch(loadRepos());
-    },
-  };
-}
+// export function mapDispatchToProps(dispatch) {
+//   return {
+//     onChangeUsername: evt => dispatch(changeUsername(evt.target.value)),
+//     onSubmitForm: evt => {
+//       if (evt !== undefined && evt.preventDefault) evt.preventDefault();
+//       dispatch(loadRepos());
+//     },
+//   };
+// }
 
 const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps,
+  null,
+  null,
 );
 
 export default compose(
