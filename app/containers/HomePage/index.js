@@ -44,6 +44,7 @@ import statchart from '../../assets/images/feature/statschart.png';
 import successReport from '../../assets/images/feature/success-report.png';
 import teacherIcon from '../../assets/images/feature/teacher-icon.png';
 import kpi from '../../assets/images/feature/kpi.jpg';
+import styled from 'styled-components';
 import './styles.less';
 
 const key = 'home';
@@ -254,12 +255,113 @@ export function HomePage({ username, onSubmitForm }) {
         </Row>
 
         <Row className="interface">
-          <Col sm={24} lg={10} />
+          <Col sm={24} lg={24} className="highlights">
+            <HeadLine>GIAO DIỆN TIẾNG VIỆT THÂN THIỆN</HeadLine>
+            <hr className="vnk-line hr-feature" />
+          </Col>
+          <Col lg={6} xs={12}>
+            <BackgroudImg image={require('../../assets/images/home/register.jpg')} />
+          </Col>
+          <Col lg={6} xs={12}>
+            <BackgroudImg image={require('../../assets/images/home/home-page.jpg')} />
+          </Col>
+          <Col lg={6} xs={12}>
+            <BackgroudImg image={require('../../assets/images/home/kpi.jpg')} />
+          </Col>
+          <Col lg={6} xs={12}>
+            <BackgroudImg image={require('../../assets/images/home/report.jpg')} />
+          </Col>
+        </Row>
+
+        <Row>
+          <Col lg={24} className="highlights">
+            <HeadLine>TRẢI NGHIỆM ỨNG DỤNG</HeadLine>
+            <hr className="vnk-line hr-feature" />
+            <LadiParagraph>Hãy click hoặc quét mã QR xuống các biểu tượng dưới đây để tải ứng dụng My Project về điện thoại của bạn!</LadiParagraph>
+          </Col>
+          <Col lg={12}>
+            <BackgroudQRCode float="right" image={require('../../assets/images/home/appstore-qrcode.jpg')} />
+          </Col>
+          <Col lg={12}>
+            <BackgroudQRCode image={require('../../assets/images/home/android-qrcode.png')} />
+          </Col>
+          <Col lg={12}>
+            <ImgDownload float="right">
+              <img src={appStore} alt="App-store App My Project" />
+            </ImgDownload>
+          </Col>
+          <Col lg={12}>
+            <ImgDownload>
+              <img src={chPlay} alt="Chplay App My Project" />
+            </ImgDownload>
+          </Col>
         </Row>
       </div>
     </div>
   );
 }
+
+const ImgDownload = styled.div`
+  float: ${props => props.float || ""};
+  margin: 0px 30px 30px 30px;
+`;
+
+const HeadLine = styled(H1)`
+  font-family: 'Open Sans', sans-serif;
+  color: rgb(33, 33, 33);
+  font-size: 24px;
+  letter-spacing: 2px;
+  line-height: 1.2;
+  text-align: center;
+`;
+
+const LadiParagraph = styled.p`
+  font-family: "Open Sans", sans-serif;
+  color: rgb(89, 89, 89);
+  font-size: 18px;
+  margin: 30px auto;
+  line-height: 1.6;
+  width: 470px;
+  @media screen and (max-width: 767px) {
+    width: 400px;
+    font-size: 15px;
+    text-align: center;
+  }
+`
+
+const BackgroudImg = styled.div`
+  box-shadow: 0px 0px 13px 0px rgba(0,0,0,1);
+  -webkit-box-shadow: 0px 0px 13px 0px rgba(0,0,0,1);
+  background-size: cover;
+  background-attachment: scroll;
+  background-origin: content-box;
+  background-image: url(${props => props.image});
+  background-position: center top;
+  background-repeat: no-repeat;
+  border-style: dashed;
+  border-color: rgb(0, 0, 0);
+  border-width: 0px;
+  border-radius: 10px;
+  height: 539px;
+  margin: 30px 0px;
+  @media screen and (max-width: 767px) {
+    height: 420px;
+    margin: 15px 0px;
+  }
+`;
+
+const BackgroudQRCode = styled.div`
+  background-image: url(${props => props.image});
+  float: ${props => props.float || ""};
+  background-repeat: no-repeat;
+  background-position: left top;
+  background-size: cover;
+  background-attachment: scroll;
+  background-origin: content-box;
+  height: 186.438px;
+  width: 188.684px;
+  margin: 30px;
+`;
 
 HomePage.propTypes = {
   onSubmitForm: PropTypes.func,

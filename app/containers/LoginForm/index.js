@@ -1,38 +1,72 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /*
- * HomePage
+ * LoginPage
  *
  * This is the first thing users see of our App, at the '/' route
  */
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { get as _get } from 'lodash';
+import PropTypes from 'prop-types';
+import { get as _get, isEmpty as _isEmpty } from 'lodash';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
+import { useInjectReducer } from 'utils/injectReducer';
+import { useInjectSaga } from 'utils/injectSaga';
+import reducer from './reducer';
+import saga from './saga';
+import { makeSelectErrorMessage, makeSelectLoginForm } from './selectors';
+import { loginForm } from './actions';
 import H1 from 'components/H1';
 import { Form, Input, Button, Checkbox } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
-import { postLogin } from '../../../services/auth';
 import routes from '../../constants/routes';
 import './styles.less';
+import { createStructuredSelector } from 'reselect';
+import { setUserSession } from '../../../services/auth';
+const key = 'loginForm';
 
 // eslint-disable-next-line react/prop-types
-export function LoginForm({ history }) {
+export function LoginForm({ history, onLoginForm, user, errorMessage }) {
+  useInjectReducer({ key, reducer });
+  useInjectSaga({ key, saga });
+
+  const [formItemLayout, setFormItemLayout] = useState({});
+  const [validateStatus, setValidateStatus] = useState({});
+
+  useEffect(() => {
+    if (!_isEmpty(user)) {
+      const { access_token, userId, packageExpire } = user;
+      if (access_token) {
+        if (!packageExpire) {
+          setValidateStatus({ validateStatus: "error" });
+          setFormItemLayout({
+            help: "Tài khoản đã hết hạn sử dụng đề nghị liên hệ hotline: 0927161161 để sử dụng tiếp dịch vụ!",
+            validateStatus: "error",
+          });
+          return;
+        }
+
+        setUserSession(access_token, userId);
+        setFormItemLayout({});
+        history.replace('/dashboard');
+      }
+    }
+
+    if (errorMessage) {
+      setValidateStatus({ validateStatus: "error" });
+      setFormItemLayout({
+        help: "Đăng nhập không thành công!",
+        validateStatus: "error",
+      });
+      return;
+    }
+  });
+
   const onFinish = async values => {
     const { email, password } = values;
-
-    const auth = await postLogin('user/login', { email, password });
-
-    const token = _get(auth, 'id', false);
-    if (token) {
-      history.replace('/dashboard');
-    } else {
-      const unauthorized = _get(auth, 'data.error', false);
-      // eslint-disable-next-line no-useless-return
-      if (unauthorized) return;
-    }
+    onLoginForm({ email, password });
   };
 
   return (
@@ -63,8 +97,7 @@ export function LoginForm({ history }) {
               message: 'Địa chỉ Email là bắt buộc!',
             },
           ]}
-          help={false}
-          // validateStatus="error"
+          {...validateStatus}
         >
           <Input
             prefix={<UserOutlined className="site-form-item-icon" />}
@@ -79,6 +112,7 @@ export function LoginForm({ history }) {
               message: 'Mật khẩu là bắt buộc!',
             },
           ]}
+          {...formItemLayout}
         >
           <Input.Password
             prefix={<LockOutlined className="site-form-item-icon" />}
@@ -111,23 +145,25 @@ export function LoginForm({ history }) {
 }
 
 LoginForm.propTypes = {
-  //   onFetchProject: PropTypes.func,
-  //   project: PropTypes.array,
+  onLoginForm: PropTypes.func,
+  user: PropTypes.object,
+  errorMessage: PropTypes.string,
 };
 
-// const mapStateToProps = createStructuredSelector({
-//   project: makeSelectLoginForm(),
-// });
+const mapStateToProps = createStructuredSelector({
+  user: makeSelectLoginForm(),
+  errorMessage: makeSelectErrorMessage(),
+});
 
-// export function mapDispatchToProps(dispatch) {
-//   return {
-//     onFetchProject: () => dispatch(loadLoginForm()),
-//   };
-// }
+export function mapDispatchToProps(dispatch) {
+  return {
+    onLoginForm: (data) => dispatch(loginForm(data)),
+  };
+}
 
 const withConnect = connect(
-  null,
-  null,
+  mapStateToProps,
+  mapDispatchToProps,
 );
 
 export default compose(withConnect)(LoginForm);

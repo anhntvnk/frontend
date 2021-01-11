@@ -11,7 +11,6 @@ import { Helmet } from 'react-helmet';
 import styled from 'styled-components';
 import { get as _get } from 'lodash';
 import { Switch, withRouter, Redirect } from 'react-router-dom';
-
 import HomePage from 'containers/HomePage/Loadable';
 import Dashboard from 'containers/Dashboard/Loadable';
 import Packages from 'containers/Packages/Loadable';

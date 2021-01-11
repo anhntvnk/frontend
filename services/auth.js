@@ -1,23 +1,39 @@
 import instance from 'axios';
+import API from '../app/constants/apis';
+
+const axiosMethod = {
+  baseURL: API.BASE_URL,
+  timeout: 5000,
+  validateStatus(status) {
+    return (status >= 200 && status < 300) || status === 403; // default
+  },
+  headers: { 'Content-Type': 'application/json' },
+};
 
 export const postLogin = (url, props) =>
   new Promise((resolve, reject) => {
     instance
-      .create({
-        baseURL: 'http://vnk.vn/api',
-        timeout: 5000,
-        validateStatus(status) {
-          return (status >= 200 && status < 300) || status === 403; // default
-        },
-        headers: { 'Content-Type': 'application/json' },
-      })
+      .create(axiosMethod)
       .post(url, props)
       .then(res => {
         const {
           data,
           data: { id, userId },
         } = res;
+        console.log(data);
+        const paramOrder = {
+          team_id: data.team_id,
+          active: true,
+          expire_date: { neq: null },
+        };
+        const order = instance
+          .create(axiosMethod)
+          .get(`order/findOne`, paramOrder)
+          .then(resp => {
+            resolve(resp);
+          });
 
+        console.log(order, 'order===');
         setUserSession(id, userId);
         resolve(data);
       })

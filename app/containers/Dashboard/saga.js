@@ -43,8 +43,6 @@ export function* getDataDashboard() {
         }})),
       );
 
-    console.log(repos);
-
     yield put(loadDashboardSuccess(repos));
   } catch (err) {
     yield put(loadDashboardError(err));

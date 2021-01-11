@@ -10,31 +10,36 @@ import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
+import { omit as _omit } from 'lodash';
 import H1 from 'components/H1';
 import { Form, Input, Button } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
-// import { createStructuredSelector } from 'reselect';
+import { createStructuredSelector } from 'reselect';
 
-// import { useInjectReducer } from 'utils/injectReducer';
-// import { useInjectSaga } from 'utils/injectSaga';
+import { useInjectReducer } from 'utils/injectReducer';
+import { useInjectSaga } from 'utils/injectSaga';
 // import { loadLoginForm } from './actions';
 // import { makeSelectLoginForm } from './selectors';
-// import reducer from './reducer';
-// import saga from './saga';
+import reducer from './reducer';
+import saga from './saga';
 import './styles.less';
+import { registerAccount } from './actions';
+import { makeSelectRegister } from './selectors';
 
 const key = 'register';
 
-export function Register() {
-  //   useInjectReducer({ key, reducer });
-  //   useInjectSaga({ key, saga });
+export function Register({ onRegister, user }) {
+    useInjectReducer({ key, reducer });
+    useInjectSaga({ key, saga });
 
   useEffect(() => {
-    // onFetchProject();
-  }, []);
+    if (user) {
+      console.log(user);
+    }
+  });
 
-  const onFinish = values => {
-    console.log('Received values of form: ', values);
+  const onFinish = formValues => {
+    onRegister(_omit(formValues, ['repassword']));
   };
 
   return (
@@ -54,11 +59,11 @@ export function Register() {
       >
         <H1 className="form-title">Đăng Ký</H1>
         <Form.Item
-          name="name"
+          name="full_name"
           rules={[
             {
               required: true,
-              message: 'Please input your Email!',
+              message: 'Họ và tên là bắt buộc!',
             },
           ]}
         >
@@ -68,25 +73,11 @@ export function Register() {
           />
         </Form.Item>
         <Form.Item
-          name="phone"
-          rules={[
-            {
-              required: true,
-              message: 'Please input your Email!',
-            },
-          ]}
-        >
-          <Input
-            prefix={<UserOutlined className="site-form-item-icon" />}
-            placeholder="Số điện thoại"
-          />
-        </Form.Item>
-        <Form.Item
           name="email"
           rules={[
             {
               required: true,
-              message: 'Please input your Email!',
+              message: 'Địa chỉ Email là bắt buộc!',
             },
           ]}
         >
@@ -96,11 +87,25 @@ export function Register() {
           />
         </Form.Item>
         <Form.Item
+          name="phone"
+          rules={[
+            {
+              required: true,
+              message: 'Số điện thoại là bắt buộc!',
+            },
+          ]}
+        >
+          <Input
+            prefix={<UserOutlined className="site-form-item-icon" />}
+            placeholder="Số điện thoại"
+          />
+        </Form.Item>
+        <Form.Item
           name="password"
           rules={[
             {
               required: true,
-              message: 'Please input your Password!',
+              message: 'Mật khẩu là bắt buộc!',
             },
           ]}
           hasFeedback
@@ -116,7 +121,7 @@ export function Register() {
           rules={[
             {
               required: true,
-              message: 'Please input your Password!',
+              message: 'Mật khẩu nhập lại là bắt buộc!',
             },
             ({ getFieldValue }) => ({
               validator(rule, value) {
@@ -125,7 +130,7 @@ export function Register() {
                 }
                 // eslint-disable-next-line prefer-promise-reject-errors
                 return Promise.reject(
-                  'The two passwords that you entered do not match!',
+                  'Mật khẩu nhập lại là không khớp!',
                 );
               },
             }),
@@ -154,23 +159,23 @@ export function Register() {
 }
 
 Register.propTypes = {
-  //   onFetchProject: PropTypes.func,
-  //   project: PropTypes.array,
+    onRegister: PropTypes.func,
+    user: PropTypes.array,
 };
 
-// const mapStateToProps = createStructuredSelector({
-//   project: makeSelectLoginForm(),
-// });
+const mapStateToProps = createStructuredSelector({
+  user: makeSelectRegister(),
+});
 
-// export function mapDispatchToProps(dispatch) {
-//   return {
-//     onFetchProject: () => dispatch(loadLoginForm()),
-//   };
-// }
+export function mapDispatchToProps(dispatch) {
+  return {
+    onRegister: (data) => dispatch(registerAccount(data)),
+  };
+}
 
 const withConnect = connect(
-  null,
-  null,
+  mapStateToProps,
+  mapDispatchToProps,
 );
 
 export default compose(withConnect)(Register);
