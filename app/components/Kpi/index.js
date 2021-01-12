@@ -1,8 +1,10 @@
+/* eslint-disable global-require */
 import React from 'react';
 import { get as _get } from 'lodash';
+import moment from 'moment';
 import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
-import { Card, Row, Col, Button, List } from 'antd';
+import { Card, Row, Col, Button, List, Avatar } from 'antd';
 import {
   CheckCircleOutlined,
   SmileTwoTone,
@@ -20,7 +22,9 @@ function Point({ point }) {
   );
 }
 
-function Kpi({ kpi, back }) {
+const { Meta } = Card;
+
+function Kpi({ kpi, Back }) {
   return (
     <KpiComponent>
       <Helmet>
@@ -31,44 +35,49 @@ function Kpi({ kpi, back }) {
         <Button
           type="primary"
           shape="round"
-          icon={<back />}
+          icon={<Back />}
           // onClick={() => history.goBack()}
         >
           Quay lại
         </Button>
-        <h1>Thông tin cá nhân</h1>
+        <h1>KPIs: Chấm lương ngày hôm nay</h1>
       </CenteredSectionWithBack>
       <KpiState>
-        <Row gutter={{ xs: 8, sm: 24, md: 24, lg: 16 }}>
+        <Row gutter={{ sm: 24, md: 24, lg: 16 }}>
           <Col lg={8} xs={24}>
             <h3>Thông tin cá nhân</h3>
             <CardStatus>
-              <Card
-                cover={
-                  <Status>
-                    <StatusItem>
-                      <img
-                        // eslint-disable-next-line global-require
-                        src={require('../../assets/images/globe/noavatar.png')}
-                        alt=""
-                      />
-                    </StatusItem>
-                  </Status>
-                }
-              >
-                <span>{_get(kpi, 'full_name')}</span>
+              <Card>
+                <Meta
+                  avatar={
+                    <Avatar
+                      src={require('../../assets/images/globe/noavatar.png')}
+                    />
+                  }
+                  description={
+                    <div>
+                      <p>
+                        Mã NV: <b>MYP{_get(kpi, 'id')}</b>
+                      </p>
+                      <p>
+                        Họ tên: <b>{_get(kpi, 'full_name')}</b>
+                      </p>
+                      <p>
+                        Chức vụ: <b>{_get(kpi, 'position')}</b>
+                      </p>
+                      <p>
+                        Ngày lương: <b>{moment().format('D/M/YYYY')}</b>
+                      </p>
+                    </div>
+                  }
+                />
               </Card>
             </CardStatus>
           </Col>
           <Col lg={16} xs={24}>
             <Profile>
               <h3>KPIs tháng </h3>
-              <List
-                size="small"
-                // header={<div>Header</div>}
-                // footer={<div>Footer</div>}
-                bordered
-              >
+              <List size="small" bordered>
                 <List.Item>
                   <Col lg={12}>
                     <PhoneTwoTone
@@ -152,18 +161,42 @@ function Kpi({ kpi, back }) {
               </List>
             </Profile>
           </Col>
+          <Col lg={24} xs={24}>
+            <Result>
+              <h3>Kết quả thực hiện </h3>
+              <List size="small" bordered>
+                <List.Item>
+                  <p>
+                    <b>Tổng:</b> (1x0 + 3x0 + 5x0 + 15x0)
+                  </p>
+                </List.Item>
+                <List.Item>
+                  <p style={{ color: 'blue' }}>
+                    Quy định mỗi ngày đạt 0 điểm sẽ được hưởng 0% lương KPIs: (0
+                    : 0) ={' '}
+                  </p>
+                </List.Item>
+                <List.Item>
+                  <p style={{ color: 'blue' }}>
+                    Hôm nay bạn được hưởng{' '}
+                    <span style={{ color: 'red' }}>%</span> lương KPIs
+                  </p>
+                </List.Item>
+              </List>
+            </Result>
+          </Col>
         </Row>
       </KpiState>
     </KpiComponent>
   );
 }
 
-const Profile = styled.div`
+const Result = styled.div`
   .ant-list {
     background: #fff;
   }
   .ant-list-bordered.ant-list-sm .ant-list-item {
-    padding: 14px 16px;
+    padding: 15px 0px 0px 15px;
   }
 
   .ant-btn-round.ant-btn-sm {
@@ -172,6 +205,35 @@ const Profile = styled.div`
     font-size: 14px;
     border-radius: 24px;
     margin-right: 15px;
+    @media only screen and (max-width: 767.99px) {
+      height: 18px;
+      font-size: 11px;
+    }
+  }
+`;
+const Profile = styled.div`
+  .ant-list {
+    background: #fff;
+  }
+
+  .ant-list-bordered.ant-list-sm .ant-list-item {
+    padding: 14px 16px;
+    @media only screen and (max-width: 767.99px) {
+      padding: 14px 2px;
+    }
+  }
+
+  .ant-btn-round.ant-btn-sm {
+    height: 26px;
+    padding: 0px 28px;
+    font-size: 14px;
+    border-radius: 24px;
+    margin-right: 15px;
+
+    @media only screen and (max-width: 767.99px) {
+      padding: 0px 10px;
+      margin-right: 6px;
+    }
   }
 `;
 
@@ -191,7 +253,7 @@ const CenteredSectionWithBack = styled.section`
 
   @media only screen and (max-width: 767.99px) {
     padding: 10px;
-    font-size: 8px;
+    font-size: 7px;
     margin: 30px 0px;
   }
 `;
@@ -237,57 +299,10 @@ const KpiState = styled.section`
 `;
 
 const KpiComponent = styled.div`
-  height: 500px;
+  height: 650px;
   dispay: block;
   max-width: 800px;
   margin: 30px auto;
-`;
-
-const Status = styled.section`
-  display: grid;
-  justify-content: ${props => props.flexCenter || 'flex-end'};
-  align-items: center;
-  text-align: center;
-  padding-top: ${props => (props.flexCenter ? '10px' : '20px')};
-  @media only screen and (max-width: 767.99px) {
-    padding-top: 16px;
-  }
-
-  span {
-    font-weight: 600;
-    font-size: 24px;
-  }
-`;
-
-const StatusItem = styled.div`
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  width: 126px;
-  height: 126px;
-  background: ${props => props.bgColor};
-  box-shadow: ${props =>
-    props.bgColor ? '0px 4px 4px rgba(0, 0, 0, 0.25)' : ''};
-  border-radius: 50%;
-  -moz-border-radius: 50%;
-  -webkit-border-radius: 50%;
-  h1 {
-    margin-bottom: 0;
-    font-size: 15px;
-    padding: 10px;
-  }
-
-  img {
-    height: 118px;
-    @media only screen and (max-width: 767.99px) {
-      height: 50px;
-    }
-  }
-
-  @media only screen and (max-width: 767.99px) {
-    width: ${props => (props.mobile ? '90px' : '50px')};
-    height: ${props => (props.mobile ? '90px' : '50px')};
-  }
 `;
 
 const CardStatus = styled.div`
@@ -296,6 +311,26 @@ const CardStatus = styled.div`
   @media only screen and (max-width: 767.99px) {
     margin-bottom: 0px;
     height: 160px;
+  }
+
+  .ant-avatar {
+    width: 80px;
+    height: 80px;
+  }
+
+  .ant-card-meta {
+    margin: 6px 0;
+  }
+
+  .ant-card-meta-avatar {
+    padding-right: 10px;
+  }
+
+  .ant-card-meta-description {
+    color: initial;
+    b {
+      color: blue;
+    }
   }
 
   .ant-card-bordered {
@@ -308,10 +343,6 @@ const CardStatus = styled.div`
     }
   }
   .ant-card-body {
-    text-align: center;
-    font-size: 15px;
-    font-weight: 500;
-    text-transform: uppercase;
     @media only screen and (max-width: 767.99px) {
       font-size: 12px;
       font-weight: 500;
@@ -322,7 +353,7 @@ const CardStatus = styled.div`
 
 Kpi.propTypes = {
   kpi: PropTypes.any,
-  back: PropTypes.any,
+  Back: PropTypes.any,
 };
 
 export default Kpi;

@@ -48,6 +48,7 @@ export function* fetchLogin(actionData) {
       yield put(
         loginFormSuccess({
           ...getUserById,
+          userId,
           access_token: token,
           packageOrder,
           packageExpire,

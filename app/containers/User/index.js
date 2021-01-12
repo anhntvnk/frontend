@@ -8,11 +8,12 @@
 import React, { useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 import { get as _get } from 'lodash';
+import moment from 'moment';
 import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import { Card, Row, Col, Button, List, Tabs } from 'antd';
+import { Card, Row, Col, Button, List, Tabs, Avatar } from 'antd';
 import { ArrowLeftOutlined } from '@ant-design/icons';
 import { createStructuredSelector } from 'reselect';
 import { useInjectReducer } from 'utils/injectReducer';
@@ -28,6 +29,7 @@ import { loadUserProfile } from './actions';
 const key = 'user';
 
 const { TabPane } = Tabs;
+const { Meta } = Card;
 
 export function User({ history, userProfile, onLoadUserProfile }) {
   useInjectReducer({ key, reducer });
@@ -64,19 +66,33 @@ export function User({ history, userProfile, onLoadUserProfile }) {
           <Col lg={8} xs={8}>
             <CardStatus>
               <Card
-                cover={
-                  <Status>
-                    <StatusItem>
-                      <img
-                        // eslint-disable-next-line global-require
-                        src={require('../../assets/images/globe/noavatar.png')}
-                        alt=""
-                      />
-                    </StatusItem>
-                  </Status>
-                }
+              // cover={
+              //   <Status>
+              //     <StatusItem>
+              //       <img
+              //         // eslint-disable-next-line global-require
+              //         src={require('../../assets/images/globe/noavatar.png')}
+              //         alt=""
+              //       />
+              //     </StatusItem>
+              //   </Status>
+              // }
               >
-                <span>{_get(userProfile, 'full_name')}</span>
+                <Meta
+                  avatar={
+                    <Avatar
+                      src={require('../../assets/images/globe/noavatar.png')}
+                    />
+                  }
+                  description={
+                    <div>
+                      <p>Mã NV: <b>MYP{_get(userProfile, 'id')}</b></p>
+                      <p>Họ tên: <b>{_get(userProfile, 'full_name')}</b></p>
+                      <p>Chức vụ: <b>{_get(userProfile, 'position')}</b></p>
+                      <p>Ngày lương: <b>{moment().format('Y/m/d')}</b></p>
+                    </div>
+                  }
+                />
               </Card>
             </CardStatus>
           </Col>
@@ -271,6 +287,22 @@ const CardStatus = styled.div`
     height: 160px;
   }
 
+  .ant-avatar {
+    width: 80px;
+    height: 80px;
+  }
+
+  .ant-card-meta-avatar {
+    padding-right: 10px;
+  }
+
+  .ant-card-meta-description {
+    color: initial;
+    b {
+      color: blue;
+    }
+  }
+
   .ant-card-bordered {
     border: 1px solid #d9d9d9;
     border-radius: 2px;
@@ -281,10 +313,6 @@ const CardStatus = styled.div`
     }
   }
   .ant-card-body {
-    text-align: center;
-    font-size: 15px;
-    font-weight: 500;
-    text-transform: uppercase;
     @media only screen and (max-width: 767.99px) {
       font-size: 12px;
       font-weight: 500;

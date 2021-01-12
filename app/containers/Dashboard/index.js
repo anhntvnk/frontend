@@ -128,7 +128,7 @@ export function Dashboard({ dashboards, onFetchDashboard }) {
 
 Dashboard.propTypes = {
   onFetchDashboard: PropTypes.func,
-  dashboards: PropTypes.array,
+  dashboards: PropTypes.any,
 };
 
 const mapStateToProps = createStructuredSelector({

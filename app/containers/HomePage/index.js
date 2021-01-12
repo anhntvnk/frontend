@@ -10,6 +10,7 @@
 import React, { memo } from 'react';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { compose } from 'redux';
 
 import H1 from 'components/H1';
@@ -104,16 +105,26 @@ export function HomePage() {
               </p>
               <Row className="app-mobile">
                 <Col sm={24} lg={12}>
-                  <img
-                    src={require('../../assets/images/app-store.png')}
-                    alt="App-store App My Project"
-                  />
+                  <a
+                    target="_black"
+                    href="https://itunes.apple.com/us/app/my-project/id1442049236?mt=8"
+                  >
+                    <img
+                      src={require('../../assets/images/app-store.png')}
+                      alt="App-store App My Project"
+                    />
+                  </a>
                 </Col>
                 <Col sm={24} lg={12}>
-                  <img
-                    src={require('../../assets/images/ch-play.png')}
-                    alt="CH-play App My Project"
-                  />
+                  <a
+                    target="_black"
+                    href="https://play.google.com/store/apps/details?id=vn.com.vnk.myp&hl=vi"
+                  >
+                    <img
+                      src={require('../../assets/images/ch-play.png')}
+                      alt="App-store App My Project"
+                    />
+                  </a>
                 </Col>
               </Row>
             </Col>

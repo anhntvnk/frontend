@@ -31,13 +31,16 @@ import { cleanText } from './utils';
 import reducer from './reducer';
 import saga from './saga';
 import logo from '../../assets/images/logo/my-project.png';
-import './styles.less';
 import { ROUTE } from '../../constants';
 
 const CompanyList = styled.section`
   dispay: block;
   background: #fff;
   padding: 20px;
+
+  .ant-table-cell > a {
+    color: #2f54eb;
+  }
 `;
 
 const key = 'companys';

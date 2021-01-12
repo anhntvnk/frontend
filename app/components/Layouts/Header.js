@@ -49,7 +49,7 @@ class Header extends React.Component {
       });
     });
 
-    if (!this.state.username) {
+    if (!this.state.username && isLoggedIn()) {
       axios
         .create({
           baseURL: API.BASE_URL,
@@ -71,7 +71,7 @@ class Header extends React.Component {
     }
   }
 
-  getMenuToRender = () => {
+  getMenuToRender = history => {
     // eslint-disable-next-line react/prop-types
     const { location } = this.props;
 
@@ -85,21 +85,27 @@ class Header extends React.Component {
           if (item.isLogin === false) {
             return;
           }
-
-          if (item.isMobile && !this.state.isMobile) {
-            return;
-          }
-
           // eslint-disable-next-line consistent-return
           return (
-            <Menu.Item
-              className={item.className ? item.className : ''}
-              key={item.key}
-            >
+            <Menu.Item className={item.className || ''} key={item.key}>
               <Link to={item.path}>{item.title}</Link>
             </Menu.Item>
           );
         })}
+        {this.state.isMobile && isLoggedIn() && (
+          <>
+            <Menu.Item key="persional-infomation">
+              <Link to={ROUTE.USER}>Thông tin cá nhân</Link>
+            </Menu.Item>
+            <Menu.Item key="change-password">Đổi mật khẩu</Menu.Item>
+            <Menu.Item
+              key="SignOut"
+              onClick={() => this.logoutAccount(history)}
+            >
+              Đăng Xuất
+            </Menu.Item>
+          </>
+        )}
       </Menu>
     );
   };
@@ -122,7 +128,7 @@ class Header extends React.Component {
     ];
     // eslint-disable-next-line react/prop-types
     const { location, history } = this.props;
-    const menu = this.getMenuToRender();
+    const menu = this.getMenuToRender(history);
     const module = location.pathname.replace(/(^\/|\/$)/g, '').split('/')[0];
     return (
       <>
@@ -198,10 +204,7 @@ class Header extends React.Component {
                         }
                       >
                         <Menu.Item key="persional-infomation">
-                          <Link to={() => this.logoutAccount(history)}>
-                            <Link to={ROUTE.USER}>Thông tin cá nhân</Link>
-                            Thông tin cá nhân
-                          </Link>
+                          <Link to={ROUTE.USER}>Thông tin cá nhân</Link>
                         </Menu.Item>
                         <Menu.Item key="change-password">
                           Đổi mật khẩu

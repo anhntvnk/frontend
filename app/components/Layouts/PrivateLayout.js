@@ -13,7 +13,7 @@ import { Route, Redirect } from 'react-router-dom';
 import { Layout } from 'antd';
 
 // Custom Components
-import VnkFooter from '../Footer';
+// import VnkFooter from '../Footer';
 import MypHeader from './Header';
 import { isLoggedIn } from '../../../services/auth';
 // Utilities, Constants & Styles
@@ -30,7 +30,7 @@ export default ({ component: Component, getComponent, ...remain }) => (
   <Route
     {...remain}
     render={props =>
-      // isLoggedIn() ? (
+      isLoggedIn() ? (
         <Layout>
           <MypHeader {...props} />
           <Content>
@@ -40,9 +40,9 @@ export default ({ component: Component, getComponent, ...remain }) => (
             <VnkFooter />
           </div> */}
         </Layout>
-      // ) : (
-      //   <Redirect to={ROUTE.LOGIN} />
-      // )
+      ) : (
+        <Redirect to={ROUTE.LOGIN} />
+      )
     }
   />
 );
