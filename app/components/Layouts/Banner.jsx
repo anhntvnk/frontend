@@ -203,7 +203,7 @@ export default function Banner({ isMobile }) {
                 to={routes.REGISTER}
                 className="btn-temp home-button"
               >
-                Đăng ký
+                Đăng Ký
               </Link>
               {isMobile && (
                 <Link className="btn-editor home-button" to="/login">

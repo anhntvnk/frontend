@@ -250,20 +250,20 @@ export function HomePage() {
             <HeadLine>GIAO DIỆN TIẾNG VIỆT THÂN THIỆN</HeadLine>
             <hr className="vnk-line hr-feature" />
           </Col>
-          <Col lg={6} xs={12}>
+          <Col lg={6} xs={24}>
             <BackgroudImg
               image={require('../../assets/images/home/register.jpg')}
             />
           </Col>
-          <Col lg={6} xs={12}>
+          <Col lg={6} xs={24}>
             <BackgroudImg
               image={require('../../assets/images/home/home-page.jpg')}
             />
           </Col>
-          <Col lg={6} xs={12}>
+          <Col lg={6} xs={24}>
             <BackgroudImg image={require('../../assets/images/home/kpi.jpg')} />
           </Col>
-          <Col lg={6} xs={12}>
+          <Col lg={6} xs={24}>
             <BackgroudImg
               image={require('../../assets/images/home/report.jpg')}
             />
@@ -325,7 +325,10 @@ export function HomePage() {
 const Container = styled(Row)`
   width: 1280px;
   margin: 0 auto;
-  padding: 80px 0;
+  margin-top: 30px;
+  @media screen and (max-width: 767px) {
+    width: auto;
+  }
 `;
 
 const ImgDownload = styled.div`
@@ -376,8 +379,8 @@ const BackgroudImg = styled.div`
   width: 305px;
   margin: 30px 0px;
   @media screen and (max-width: 767px) {
-    height: 420px;
-    margin: 15px 0px;
+    height: 500px;
+    margin: 15px auto;
   }
 `;
 
