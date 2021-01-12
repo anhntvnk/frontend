@@ -10,7 +10,6 @@
 import React, { memo } from 'react';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import { compose } from 'redux';
 
 import H1 from 'components/H1';
@@ -141,7 +140,7 @@ export function HomePage() {
           </Row>
         </div>
 
-        <Row className="page3 pd-tb myp-feature">
+        <Container className="myp-feature">
           <Col sm={24} lg={10}>
             <CenteredSection>
               <img
@@ -244,9 +243,9 @@ export function HomePage() {
               </Col>
             </Row>
           </Col>
-        </Row>
+        </Container>
 
-        <Row className="interface">
+        <Container className="interface">
           <Col sm={24} lg={24} className="highlights">
             <HeadLine>GIAO DIỆN TIẾNG VIỆT THÂN THIỆN</HeadLine>
             <hr className="vnk-line hr-feature" />
@@ -269,7 +268,7 @@ export function HomePage() {
               image={require('../../assets/images/home/report.jpg')}
             />
           </Col>
-        </Row>
+        </Container>
 
         <Row>
           <Col lg={24} className="highlights">
@@ -293,18 +292,28 @@ export function HomePage() {
           </Col>
           <Col lg={12}>
             <ImgDownload float="right">
-              <img
-                src={require('../../assets/images/app-store.png')}
-                alt="App-store App My Project"
-              />
+              <a
+                target="_black"
+                href="https://itunes.apple.com/us/app/my-project/id1442049236?mt=8"
+              >
+                <img
+                  src={require('../../assets/images/app-store.png')}
+                  alt="App-store App My Project"
+                />
+              </a>
             </ImgDownload>
           </Col>
           <Col lg={12}>
             <ImgDownload>
-              <img
-                src={require('../../assets/images/ch-play.png')}
-                alt="Chplay App My Project"
-              />
+              <a
+                target="_black"
+                href="https://play.google.com/store/apps/details?id=vn.com.vnk.myp&hl=vi"
+              >
+                <img
+                  src={require('../../assets/images/ch-play.png')}
+                  alt="Chplay App My Project"
+                />
+              </a>
             </ImgDownload>
           </Col>
         </Row>
@@ -312,6 +321,12 @@ export function HomePage() {
     </div>
   );
 }
+
+const Container = styled(Row)`
+  width: 1280px;
+  margin: 0 auto;
+  padding: 80px 0;
+`;
 
 const ImgDownload = styled.div`
   float: ${props => props.float || ''};
@@ -358,6 +373,7 @@ const BackgroudImg = styled.div`
   border-width: 0px;
   border-radius: 10px;
   height: 539px;
+  width: 305px;
   margin: 30px 0px;
   @media screen and (max-width: 767px) {
     height: 420px;
