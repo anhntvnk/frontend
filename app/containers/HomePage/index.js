@@ -141,7 +141,7 @@ export function HomePage() {
         </div>
 
         <Container className="myp-feature">
-          <Col sm={24} lg={10}>
+          <Col sm={12} lg={10}>
             <CenteredSection>
               <img
                 // width={280}
@@ -152,7 +152,7 @@ export function HomePage() {
               />
             </CenteredSection>
           </Col>
-          <Col sm={24} lg={14}>
+          <Col sm={12} lg={14}>
             <Row>
               <Col className="highlights">
                 <H1 className="vnk-headline">Tính năng nổi bật</H1>
@@ -160,7 +160,7 @@ export function HomePage() {
               </Col>
             </Row>
             <Row>
-              <Col sm={24} lg={12} className="flex">
+              <Col sm={12} lg={12} className="flex">
                 <img width={78} height={78} src={next} alt="progess" />
                 <div className="pd-r">
                   <H3 className="feature-title">1. Quy trình</H3>
@@ -245,25 +245,25 @@ export function HomePage() {
           </Col>
         </Container>
 
-        <Container className="interface">
-          <Col sm={24} lg={24} className="highlights">
+        <Container>
+          <Col xs={24} md={12} lg={24} className="highlights">
             <HeadLine>GIAO DIỆN TIẾNG VIỆT THÂN THIỆN</HeadLine>
             <hr className="vnk-line hr-feature" />
           </Col>
-          <Col lg={6} xs={12}>
+          <Col lg={6} xs={24}>
             <BackgroudImg
               image={require('../../assets/images/home/register.jpg')}
             />
           </Col>
-          <Col lg={6} xs={12}>
+          <Col lg={6} xs={24}>
             <BackgroudImg
               image={require('../../assets/images/home/home-page.jpg')}
             />
           </Col>
-          <Col lg={6} xs={12}>
+          <Col lg={6} xs={24}>
             <BackgroudImg image={require('../../assets/images/home/kpi.jpg')} />
           </Col>
-          <Col lg={6} xs={12}>
+          <Col lg={6} xs={24}>
             <BackgroudImg
               image={require('../../assets/images/home/report.jpg')}
             />
@@ -323,9 +323,12 @@ export function HomePage() {
 }
 
 const Container = styled(Row)`
-  width: 1280px;
+  max-width: 1280px;
   margin: 0 auto;
-  padding: 80px 0;
+  padding: 50px 0;
+  @media screen and (max-width: 767px) {
+    width: auto;
+  }
 `;
 
 const ImgDownload = styled.div`
@@ -376,8 +379,8 @@ const BackgroudImg = styled.div`
   width: 305px;
   margin: 30px 0px;
   @media screen and (max-width: 767px) {
-    height: 420px;
-    margin: 15px 0px;
+    height: 460px;
+    margin: 15px auto;
   }
 `;
 
