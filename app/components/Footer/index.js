@@ -53,14 +53,12 @@ function Footer() {
             />
             <ChatNow>
               <p>Chat với chúng tôi để được hỗ trợ ngay</p>
-              <Button>
-                <a
-                  target="_blank"
-                  href="https://m.me/718183361653935?ref=Default-Block"
-                >
-                  Chát Ngay
-                </a>
-              </Button>
+              <a
+                target="_blank"
+                href="https://m.me/718183361653935?ref=Default-Block"
+              >
+                Chát Ngay
+              </a>
             </ChatNow>
           </VnkAdress>
         </Col>
