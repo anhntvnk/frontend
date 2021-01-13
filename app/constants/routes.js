@@ -7,6 +7,7 @@ export default {
   SETTING: '/setting',
   LOGIN: '/login',
   REGISTER: '/register',
+  CHANGE_PASSWORD: '/change-password',
   PACKAGES: '/packages',
   REPORT: '/report',
   PROCEDURE: '/procedure',

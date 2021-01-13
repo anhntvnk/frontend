@@ -97,7 +97,9 @@ class Header extends React.Component {
             <Menu.Item key="persional-infomation">
               <Link to={ROUTE.USER}>Thông tin cá nhân</Link>
             </Menu.Item>
-            <Menu.Item key="change-password">Đổi mật khẩu</Menu.Item>
+            <Menu.Item key="change-password">
+              <Link to={ROUTE.CHANGE_PASSWORD}>Đổi mật khẩu</Link>
+            </Menu.Item>
             <Menu.Item
               key="SignOut"
               onClick={() => this.logoutAccount(history)}
@@ -207,7 +209,7 @@ class Header extends React.Component {
                           <Link to={ROUTE.USER}>Thông tin cá nhân</Link>
                         </Menu.Item>
                         <Menu.Item key="change-password">
-                          Đổi mật khẩu
+                          <Link to={ROUTE.CHANGE_PASSWORD}>Đổi mật khẩu</Link>
                         </Menu.Item>
                         <Menu.Item
                           key="SignOut"

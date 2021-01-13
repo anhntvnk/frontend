@@ -22,7 +22,6 @@ const companyReducer = (state = initialState, action) =>
   produce(state, draft => {
     switch (action.type) {
       case REGISTER_FORM_SUCCESS:
-        localStorage.setItem('user', action.response);
         draft.user = action.response;
         draft.errorMessage = '';
         break;

@@ -8,14 +8,14 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { isEmpty as _isEmpty } from 'lodash';
+import { isEmpty as _isEmpty, get as _get } from 'lodash';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { useInjectReducer } from 'utils/injectReducer';
 import { useInjectSaga } from 'utils/injectSaga';
 import H1 from 'components/H1';
-import { Form, Input, Button, Checkbox } from 'antd';
+import { Form, Input, Button, Checkbox, message } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import reducer from './reducer';
 import saga from './saga';
@@ -63,7 +63,12 @@ export function LoginForm({ history, onLoginForm, user, errorMessage }) {
         validateStatus: 'error',
       });
     }
-  });
+  }, [user, errorMessage]);
+
+  if (history.location.state) {
+    message.success(_get(history.location.state, 'successMessage', ''));
+    history.replace({ ...history.location, state: undefined });
+  }
 
   const onFinish = async values => {
     const { email, password } = values;

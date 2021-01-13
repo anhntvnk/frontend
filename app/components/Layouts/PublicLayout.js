@@ -33,7 +33,7 @@ export default ({ component: Component, getComponent, ...remain }) => (
       // eslint-disable-next-line react/prop-types
       const { location } = props;
       const module = location.pathname.replace(/(^\/|\/$)/g, '').split('/')[0];
-      const hasFooter = ['login', 'register', 'dashboard'];
+      const hasFooter = ['login', 'register', 'dashboard', 'change-password'];
 
       return (
         <Layout>

@@ -1,0 +1,47 @@
+@import '../../scss/_variables.less';
+
+.ant-layout-content {
+  .change-password-myp {
+    display: flex;
+    justify-content: center;
+    padding-top: 100px;
+    @media only screen and (max-width: 767.99px) {
+      display: block;
+      padding-top: initial;
+    }
+
+    .change-password-form {
+      width: 400px;
+
+      @media only screen and (max-width: 767.99px) {
+        margin: auto;
+        width: 350px;
+      }
+
+      @media only screen and (max-width: 320px) {
+        width: auto;
+      }
+
+      .form-title {
+        text-align: center;
+        margin-bottom: 16px;
+      }
+
+      .change-password-form-button {
+        width: 100%;
+        height: 40px;
+        border-radius: 4px;
+        font-size: 16px;
+      }
+
+      .ant-input {
+        padding: 5px;
+      }
+
+      ::placeholder {
+        font-size: 16px;
+        color: @text-black;
+      }
+    }
+  }
+}

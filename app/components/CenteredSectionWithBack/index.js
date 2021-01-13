@@ -1,8 +1,9 @@
+import { Row } from 'antd';
 import styled from 'styled-components';
 
-const CenteredSectionWithBack = styled.section`
+const CenteredSectionWithBack = styled(Row)`
   text-align: center;
-  margin: 50px 0px;
+  margin: 40px 0px;
   text-transform: uppercase;
   .ant-btn {
     display: flex;
@@ -17,7 +18,7 @@ const CenteredSectionWithBack = styled.section`
   @media only screen and (max-width: 767.99px) {
     padding: 10px;
     font-size: 8px;
-    margin: 30px 0px;
+    margin-top: 5px;
   }
 `;
 

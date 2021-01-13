@@ -24,6 +24,7 @@ import KpiDay from 'containers/Kpi/Day';
 import KpiMonth from 'containers/Kpi/Month';
 import LoginForm from 'containers/LoginForm/Loadable';
 import Register from 'containers/Register/Loadable';
+import ChangePassword from 'containers/ChangePassword/Loadable';
 import User from 'containers/User/Loadable';
 // import NotFoundPage from 'containers/NotFoundPage/Loadable';
 
@@ -49,6 +50,11 @@ const App = () => (
     <Switch>
       <PublicLayout exact path={ROUTE.LOGIN} component={LoginForm} />
       <PublicLayout exact path={ROUTE.REGISTER} component={Register} />
+      <PublicLayout
+        exact
+        path={ROUTE.CHANGE_PASSWORD}
+        component={ChangePassword}
+      />
       <PublicLayout exact path={ROUTE.HOMEPAGE} component={HomePage} />
       <PrivateLayout exact path={ROUTE.PACKAGES} component={Packages} />
       <PrivateLayout exact path={ROUTE.PROJECT} component={Projects} />

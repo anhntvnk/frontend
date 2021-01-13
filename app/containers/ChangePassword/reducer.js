@@ -1,6 +1,6 @@
 /* eslint-disable no-case-declarations */
 /*
- * CompanysReducer
+ * ChangePassword Reducer
  *
  * The reducer takes care of our data. Using actions, we can
  * update our application state. To add a new action,
@@ -9,14 +9,10 @@
  */
 
 import produce from 'immer';
-import {
-  CHANGE_STATE_PROCEDURE_ERROR,
-  CHANGE_STATE_PROCEDURE_SUCCESS,
-} from './constants';
+import { CHANGE_PASSWORD_ERROR, CHANGE_PASSWORD_SUCCESS } from './constants';
 
 // The initial state of the App
 export const initialState = {
-  company: [],
   successMessage: '',
   errorMessage: '',
 };
@@ -25,14 +21,14 @@ export const initialState = {
 const companyReducer = (state = initialState, action) =>
   produce(state, draft => {
     switch (action.type) {
-      case CHANGE_STATE_PROCEDURE_SUCCESS:
-        draft.successMessage = 'Chuysển trạng thái thành công !';
+      case CHANGE_PASSWORD_SUCCESS:
+        draft.successMessage =
+          'Thay đổi mật khẩu thành công, đăng nhập lại với mật khẩu mới để tiếp tục sử dụng!';
         break;
-      case CHANGE_STATE_PROCEDURE_ERROR:
-        draft.errorMessage = 'Đã có lỗi xảy ra !';
+      case CHANGE_PASSWORD_ERROR:
+        draft.errorMessage = action.response;
         break;
       default:
-        draft.company = initialState.company;
         draft.successMessage = initialState.successMessage;
         draft.errorMessage = initialState.errorMessage;
     }
