@@ -1,10 +1,8 @@
+/* eslint-disable global-require */
 import React from 'react';
 import { Card, Row, Col, Avatar, Button } from 'antd';
 import styled from 'styled-components';
 import { HomeOutlined, MailOutlined, PhoneOutlined } from '@ant-design/icons';
-import iso from '../../assets/images/vnk-iso.png';
-import chPlay from '../../assets/images/ch-play.png';
-import appStore from '../../assets/images/app-store.png';
 
 const { Meta } = Card;
 
@@ -74,12 +72,20 @@ function Footer() {
             </p>
             <p>
               <a className="logo" href="/">
-                <img src={appStore} alt="" className="vnk-download-app" />
+                <img
+                  src={require('../../assets/images/ch-play.png')}
+                  alt=""
+                  className="vnk-download-app"
+                />
               </a>
             </p>
             <p>
               <a className="logo" href="/">
-                <img src={chPlay} alt="" className="vnk-download-app" />
+                <img
+                  src={require('../../assets/images/app-store.png')}
+                  alt=""
+                  className="vnk-download-app"
+                />
               </a>
             </p>
 
@@ -115,7 +121,11 @@ function Footer() {
           <Col span={12}>@Copyright by MYP - Một sản phẩm của VNK</Col>
           <Col span={12}>
             <a className="logo" href="/">
-              <img src={iso} alt="VNK ISO" className="vnk-iso" />
+              <img
+                src={require('../../assets/images/vnk-iso.png')}
+                alt="VNK ISO"
+                className="vnk-iso"
+              />
             </a>
           </Col>
         </Copyright>
