@@ -10,7 +10,7 @@ import Avatar from 'react-avatar';
 import ROUTE from '../../constants/routes';
 import dataMenu from '../../constants/menu';
 import PhoneNav from './PhoneNav';
-import logo from '../../assets/images/logo/logo-update.png';
+import logo from '../../assets/images/logo/logo.png';
 import Banner from './Banner';
 import {
   isLoggedIn,

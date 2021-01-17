@@ -177,11 +177,9 @@ const Support = styled(Col)`
 
 const VnkAdress = styled(Card)`
   position: absolute;
-  top: -20px;
   height: 379px;
   background: #ffffff;
   box-shadow: 5px 5px 30px rgba(0, 0, 0, 0.25);
-  border-radius: 10px 10px 0px 0px !important;
 
   @media screen and (max-width: 767px) {
     height: auto;
@@ -235,13 +233,11 @@ const Info = styled(Row)`
 
 const Copyright = styled(Row)`
   display: flex;
-  justify-content: center;
+  width: 100%;
+  padding: 10px 0px;
   text-align: center;
   align-items: center;
-  position: relative;
-  top: -20px;
   border-top: 1px solid #fff;
-  width: 100%;
   background-color: #b7252c;
   .vnk-iso {
     width: 170px;

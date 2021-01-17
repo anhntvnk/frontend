@@ -4,7 +4,7 @@ import TweenOne from 'rc-tween-one';
 import { Link } from 'react-router-dom';
 import BannerAnim, { Element } from 'rc-banner-anim';
 import routes from '../../constants/routes';
-import logo from '../../assets/images/logo/my-project.png';
+import logo from '../../assets/images/logo/logo@2x.png';
 import { isLoggedIn } from '../../../services/auth';
 
 const { BgElement } = Element;

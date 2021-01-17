@@ -1,3 +1,4 @@
+/* eslint-disable global-require */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /*
  * ProjectPage
@@ -130,7 +131,15 @@ export function Companys({
               alignItems: 'center',
             }}
           >
-            <LikeFilled /> Thích
+            <img
+              width={32}
+              src={
+                _get(record, 'is_follow', false)
+                  ? require('../../assets/images/company/follow.png')
+                  : require('../../assets/images/company/unfollow.png')
+              }
+              alt=""
+            />
           </div>
         </Link>
       ),

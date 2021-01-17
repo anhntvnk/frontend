@@ -39,7 +39,6 @@ const AppWrapper = styled.div`
   display: flex;
   min-height: 100%;
   scroll-behavior: smooth;
-  -webkit-overflow-scrolling: touch;
 `;
 
 const App = () => (
