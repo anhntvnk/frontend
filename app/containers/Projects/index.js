@@ -7,13 +7,17 @@
  */
 
 import React, { useEffect, useState } from 'react';
-import { LikeFilled } from '@ant-design/icons';
 import { Link, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import { get as _get, omit as _omit, clone as _clone } from 'lodash';
+import {
+  get as _get,
+  omit as _omit,
+  clone as _clone,
+  has as _has,
+} from 'lodash';
 import { createStructuredSelector } from 'reselect';
 
 import { useInjectReducer } from 'utils/injectReducer';
@@ -91,7 +95,7 @@ export function Projects({
       onFollowProject(data);
     } else {
       // eslint-disable-next-line no-lonely-if
-      if (_.has(projectFl, 'parent_project_id')) {
+      if (_has(projectFl, 'parent_project_id')) {
         onUnFollowProject(_get(projectFl, 'id', ''));
       }
     }
@@ -208,12 +212,6 @@ export function Projects({
     dataSource: projectList || defaultProject,
     columns,
     loading: loading || isLoading,
-    // onChange: page => {
-    //   this.handleRefresh({
-    //     page: page.current,
-    //     pageSize: page.pageSize,
-    //   })
-    // },
     rowSelection: {
       selectedRowKeys,
       onChange: selectedRowKey => {
@@ -387,7 +385,7 @@ Projects.propTypes = {
   project: PropTypes.array,
   followedProjects: PropTypes.array,
   loading: PropTypes.bool,
-  location: PropTypes.array,
+  location: PropTypes.object,
   history: PropTypes.object,
 };
 

@@ -35,7 +35,7 @@ import { makeSelectProjects } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 import './styles.less';
-import { ROUTE } from '../../../constants';
+import { ENUMS, ROUTE } from '../../../constants';
 
 const key = 'projectDetails';
 const { TabPane } = Tabs;
@@ -75,7 +75,6 @@ export function ProjectDetails({ history, data }) {
   useInjectSaga({ key, saga });
 
   const [isMobile, setIsMobile] = useState(mobileScreen);
-
   useEffect(() => {
     enquireScreen(b => {
       setIsMobile({
@@ -101,7 +100,7 @@ export function ProjectDetails({ history, data }) {
           type="primary"
           shape="round"
           icon={<ArrowLeftOutlined />}
-          onClick={() => history.goBack()}
+          onClick={() => history.push(ROUTE.PROJECT)}
         >
           Quay lại
         </Button>
@@ -151,7 +150,9 @@ export function ProjectDetails({ history, data }) {
               </div>
             </div>
             <div className="status-icon">
-              <span>SÀNG LỌC</span>
+              <span>
+                {_get(ENUMS.STATE_LIST, `[${data.status_code}]`).label}
+              </span>
             </div>
           </div>
         </Col>

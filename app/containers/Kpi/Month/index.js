@@ -32,7 +32,6 @@ export function User({ history, userProfile, onLoadUserProfile }) {
   useInjectReducer({ key, reducer });
   useInjectSaga({ key, saga });
 
-  console.log(userProfile);
   useEffect(() => {
     onLoadUserProfile();
   }, []);

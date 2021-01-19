@@ -24,7 +24,6 @@ const companyReducer = (state = initialState, action) =>
       case LOGIN_FORM_SUCCESS:
         localStorage.setItem('user', action.response);
 
-        console.log(action.response);
         draft.user = action.response;
         draft.errorMessage = '';
         break;

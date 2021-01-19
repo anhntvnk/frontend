@@ -22,8 +22,6 @@ export function* changePassword(actionData) {
       data,
     });
 
-    console.log(response);
-
     yield put(changePasswordSuccess(response));
   } catch (err) {
     const errorCode = _get(err, 'response.data.error.code');

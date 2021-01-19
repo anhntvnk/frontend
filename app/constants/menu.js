@@ -1,7 +1,7 @@
 import ROUTE from './routes';
 import { isLoggedIn } from '../../services/auth';
 
-export default [
+const menu = [
   {
     exact: true,
     path: ROUTE.HOMEPAGE,
@@ -29,52 +29,15 @@ export default [
       iconClass: 'far fa-home-alt',
     },
   },
-  // {
-  //   exact: true,
-  //   path: '',
-  //   title: 'Thông Báo',
-  //   key: 'notify',
-  //   label: {
-  //     iconClass: 'far fa-home-alt',
-  //   },
-  // },
-  // {
-  //   exact: true,
-  //   path: ROUTE.PACKAGES,
-  //   title: 'Nâng Cấp MVP',
-  //   key: 'packages',
-  // },
-  // {
-  //   exact: true,
-  //   path: ROUTE.REGISTER,
-  //   title: 'Đổi mật khẩu',
-  //   key: 'changePassword',
-  //   isMobile: true,
-  //   isLogin: isLoggedIn(),
-  // },
-  // {
-  //   exact: true,
-  //   path: ROUTE.USER,
-  //   title: 'Thông tin cá nhân',
-  //   key: 'profile',
-  //   isMobile: true,
-  //   isLogin: isLoggedIn(),
-  // },
-  // {
-  //   exact: true,
-  //   path: '',
-  //   title: 'Đăng xuất',
-  //   key: 'logout',
-  //   isMobile: true,
-  //   isLogin: isLoggedIn(),
-  // },
-  // {
-  //   path: ROUTE.SETTING,
-  //   title: 'Cài Đặt',
-  //   key: 'settings',
-  //   label: {
-  //     iconClass: 'far fa-home-alt',
-  //   },
-  //   isLogin: !isLoggedIn(),
-  // },
 ];
+
+if (isLoggedIn) {
+  menu.push({
+    exact: true,
+    path: ROUTE.DASHBOARD,
+    title: 'Bảng Điều Khiển',
+    key: 'dashboard',
+  });
+}
+
+export default menu;

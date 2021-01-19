@@ -63,40 +63,37 @@ export function User({ history, userProfile, onLoadUserProfile }) {
       </CenteredSectionWithBack>
       <UserProfileState>
         <Row gutter={{ xs: 8, sm: 24, md: 24, lg: 16 }}>
-          <Col lg={8} xs={8}>
+          <Col lg={8} xs={24}>
             <CardStatus>
-              <Card
-              // cover={
-              //   <Status>
-              //     <StatusItem>
-              //       <img
-              //         // eslint-disable-next-line global-require
-              //         src={require('../../assets/images/globe/noavatar.png')}
-              //         alt=""
-              //       />
-              //     </StatusItem>
-              //   </Status>
-              // }
-              >
+              <Card>
                 <Meta
                   avatar={
                     <Avatar
+                      // eslint-disable-next-line global-require
                       src={require('../../assets/images/globe/noavatar.png')}
                     />
                   }
                   description={
                     <div>
-                      <p>Mã NV: <b>MYP{_get(userProfile, 'id')}</b></p>
-                      <p>Họ tên: <b>{_get(userProfile, 'full_name')}</b></p>
-                      <p>Chức vụ: <b>{_get(userProfile, 'position')}</b></p>
-                      <p>Ngày lương: <b>{moment().format('Y/m/d')}</b></p>
+                      <p>
+                        Mã NV: <b>MYP{_get(userProfile, 'id')}</b>
+                      </p>
+                      <p>
+                        Họ tên: <b>{_get(userProfile, 'full_name')}</b>
+                      </p>
+                      <p>
+                        Chức vụ: <b>{_get(userProfile, 'position')}</b>
+                      </p>
+                      <p>
+                        Ngày lương: <b>{moment().format('Y/m/d')}</b>
+                      </p>
                     </div>
                   }
                 />
               </Card>
             </CardStatus>
           </Col>
-          <Col lg={16} xs={16}>
+          <Col lg={16} xs={24}>
             <Tabs onChange={callback} type="card">
               <TabPane tab="Liên hệ" key="profile">
                 <Profile>

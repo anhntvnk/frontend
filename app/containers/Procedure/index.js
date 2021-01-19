@@ -78,7 +78,12 @@ export function Procedure({
           type="primary"
           shape="round"
           icon={<ArrowLeftOutlined />}
-          onClick={() => history.goBack()}
+          onClick={() =>
+            history.replace({
+              pathname: '/projects/details',
+              state: { data: projectDetail },
+            })
+          }
         >
           Quay lại
         </Button>

@@ -40,8 +40,18 @@ const mappingProject = (followedProjects, projectAvaiable) => {
   return listProject.map(project => Object.assign(project, { is_follow: _.get(project, 'is_follow', false) }))
 }
 
-const updateProjectFollows = (projects, projectID) => projects.map(project => project.id === projectID ? { ...project, is_follow: true } : project);
-const unFollowProject = (projects, projectID) => projects.map(project => project.id === projectID ? { ...project, is_follow: false } : project);
+
+const updateProjectFollows = (projects, projectID) =>
+  projects.map(project =>
+    project.id === projectID
+      ? { ...project, is_follow: true, parent_project_id: projectID }
+      : project,
+  );
+  
+const unFollowProject = (projects, projectID) =>
+  projects.map(project =>
+    project.id === projectID ? { ...project, is_follow: false } : project,
+  );
 
 /* eslint-disable default-case, no-param-reassign */
 const projectReducer = (state = initialState, action) =>

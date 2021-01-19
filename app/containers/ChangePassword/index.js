@@ -12,7 +12,7 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { omit as _omit } from 'lodash';
 import H1 from 'components/H1';
-import CenteredSectionWithBack from 'components/CenteredSectionWithBack';
+import styled from 'styled-components';
 import { Form, Input, Button } from 'antd';
 import { LockOutlined, ArrowLeftOutlined } from '@ant-design/icons';
 import { createStructuredSelector } from 'reselect';
@@ -166,6 +166,22 @@ export function ChangePassword({
     </div>
   );
 }
+
+const CenteredSectionWithBack = styled.section`
+  .ant-btn {
+    display: flex;
+    align-items: center;
+    @media only screen and (max-width: 767.99px) {
+      margin-top: 0;
+    }
+  }
+
+  @media only screen and (max-width: 767.99px) {
+    padding: 10px;
+    font-size: 8px;
+    margin-top: 5px;
+  }
+`;
 
 ChangePassword.propTypes = {
   history: PropTypes.any,
