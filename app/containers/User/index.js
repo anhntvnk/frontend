@@ -85,7 +85,7 @@ export function User({ history, userProfile, onLoadUserProfile }) {
                         Chức vụ: <b>{_get(userProfile, 'position')}</b>
                       </p>
                       <p>
-                        Ngày lương: <b>{moment().format('Y/m/d')}</b>
+                        Ngày lương: <b>{moment().format('D/M/YYYY')}</b>
                       </p>
                     </div>
                   }

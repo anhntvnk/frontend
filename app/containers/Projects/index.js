@@ -64,7 +64,7 @@ export function Projects({
     history.replace({ ...history.location, state: undefined });
   }
 
-  const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+  // const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const [projectList, setProjectList] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -114,6 +114,7 @@ export function Projects({
       dataIndex: 'name',
       key: 'name',
       sorter: (a, b) => a.name.length - b.name.length,
+      responsive: ['lg', 'md', 'xs'],
       render: (text, record) => (
         <Link
           to={{
@@ -128,10 +129,11 @@ export function Projects({
       ),
     },
     {
-      title: <div style={{ whiteSpace: 'nowrap' }}>Giá trị (USD)</div>,
+      title: 'Giá trị (USD)',
       dataIndex: 'cost',
-      width: 80,
+      width: 100,
       key: 'cost',
+      responsive: ['lg', 'md', 'xs'],
       sorter: (a, b) => a.cost - b.cost,
     },
     {
@@ -145,6 +147,7 @@ export function Projects({
       dataIndex: 'stage',
       key: 'stage',
       width: 150,
+      responsive: ['lg', 'md'],
     },
     {
       title: 'Trạng thái',
@@ -212,12 +215,12 @@ export function Projects({
     dataSource: projectList || defaultProject,
     columns,
     loading: loading || isLoading,
-    rowSelection: {
-      selectedRowKeys,
-      onChange: selectedRowKey => {
-        setSelectedRowKeys(selectedRowKey);
-      },
-    },
+    // rowSelection: {
+    //   selectedRowKeys,
+    //   onChange: selectedRowKey => {
+    //     setSelectedRowKeys(selectedRowKey);
+    //   },
+    // },
   };
 
   const onResetFields = () => {

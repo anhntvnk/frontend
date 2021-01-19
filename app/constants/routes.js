@@ -16,5 +16,6 @@ export default {
   COMPANY_DETAILS: '/company/details',
   PROJECT_ADDNEW: '/projects/add-new',
   KPI_DAY: '/kpi/day',
+  KPI_SETTINGS: '/kpi/settings',
   KPI_MONTH: '/kpi/montth',
 };

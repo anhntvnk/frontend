@@ -21,6 +21,7 @@ import Procedure from 'containers/Procedure';
 import Companys from 'containers/Companys/Loadable';
 import CompanyDetails from 'containers/Companys/Details';
 import KpiDay from 'containers/Kpi/Day';
+import Settings from 'containers/Kpi/Settings';
 import KpiMonth from 'containers/Kpi/Month';
 import LoginForm from 'containers/LoginForm/Loadable';
 import Register from 'containers/Register/Loadable';
@@ -61,6 +62,7 @@ const App = () => (
       <PrivateLayout exact path={ROUTE.DASHBOARD} component={Dashboard} />
       <PrivateLayout exact path={ROUTE.USER} component={User} />
       <PrivateLayout exact path={ROUTE.KPI_DAY} component={KpiDay} />
+      <PrivateLayout exact path={ROUTE.KPI_SETTINGS} component={Settings} />
       <PrivateLayout exact path={ROUTE.KPI_MONTH} component={KpiMonth} />
       <PrivateLayout
         exact

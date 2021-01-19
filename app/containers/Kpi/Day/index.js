@@ -20,9 +20,9 @@ import reducer from './reducer';
 import saga from './saga';
 import { loadUserProfile } from './actions';
 
-const key = 'user';
+const key = 'kpiDay';
 
-export function User({ history, userProfile, onLoadUserProfile }) {
+export function KpiByDay({ history, userProfile, onLoadUserProfile }) {
   useInjectReducer({ key, reducer });
   useInjectSaga({ key, saga });
 
@@ -34,7 +34,7 @@ export function User({ history, userProfile, onLoadUserProfile }) {
   return <KpiDay kpi={userProfile} Back={ArrowLeftOutlined} />;
 }
 
-User.propTypes = {
+KpiByDay.propTypes = {
   onLoadUserProfile: PropTypes.func,
   history: PropTypes.object,
   userProfile: PropTypes.object,
@@ -55,4 +55,4 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-export default compose(withConnect)(withRouter(User));
+export default compose(withConnect)(withRouter(KpiByDay));
