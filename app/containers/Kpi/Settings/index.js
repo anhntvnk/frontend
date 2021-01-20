@@ -6,9 +6,9 @@
  * This is the first thing users see of our App, at the '/' route
  */
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef, useReducer } from 'react';
 import { withRouter } from 'react-router-dom';
-import PropTypes from 'prop-types';
+import PropTypes, { element } from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { Helmet } from 'react-helmet';
@@ -47,39 +47,86 @@ export function Settings({ history, kpi, onLoadUserProfile }) {
   useInjectReducer({ key, reducer });
   useInjectSaga({ key, saga });
 
-  const initialValues = {
-    cuoc_goi: 1111,
-    lich_hen_gap: 0,
-    chao_gia: 0,
-    chot_don: 0,
+  const [formValues, setFommValues] = useReducer(
+    (state, newState) => ({...state, ...newState}),
+    {
+      cuoc_goi: 0,
+      lich_hen_gap: 0,
+      chao_gia: 0,
+      chot_don: 0,
+    }
+  );
+
+  const getFieldChange = evt => {
+    const name = evt.target.name;
+    const newValue = evt.target.value;
+    setFommValues({[name]: newValue});
   };
 
-  const getFieldChange = (fieldName, value) => {
-    const listKey = {
-      cuoc_goi: { cuoc_goi: value },
-      lich_hen_gap: { lich_hen_gap: value },
-      chao_gia: { chao_gia: value },
-      chot_don: { chot_don: value },
-    };
-
-    return listKey[`${fieldName}`];
-  };
-
-  const [formValues, setFommValues] = useState(initialValues);
-
-  useEffect(() => {
-    onLoadUserProfile();
-  }, []);
+  const elements = [
+    {
+      key: 'cuoc_goi',
+      label: 'Cuộc gọi',
+      iconElement: (
+        <>
+          <PhoneTwoTone style={{ fontSize: '24px', paddingRight: '8px' }} />
+          <b>
+            1. Cuộc gọi (<Point point="1" />)
+          </b>
+          {_get(kpi, 'phone')}
+        </>
+      ),
+    },
+    {
+      key: 'lich_hen_gap',
+      label: 'Lịch hẹn',
+      iconElement: (
+        <>
+          <SmileTwoTone style={{ fontSize: '24px', paddingRight: '8px' }} />
+          <b>
+            2. Lịch hẹn gặp (<Point point="3" />)
+          </b>
+          : {_get(kpi, 'phone')}
+        </>
+      ),
+    },
+    {
+      key: 'chao_gia',
+      label: 'Chào giá',
+      iconElement: (
+        <>
+          <ReconciliationTwoTone
+            style={{ fontSize: '24px', paddingRight: '8px' }}
+          />
+          <b>
+            3. Chào giá (<Point point="5" />)
+          </b>
+          : {_get(kpi, 'phone')}
+        </>
+      ),
+    },
+    {
+      key: 'chot_don',
+      label: 'Chốt đơn hàng',
+      iconElement: (
+        <>
+          <CheckCircleOutlined
+            style={{
+              fontSize: '24px',
+              paddingRight: '8px',
+              color: 'rgb(24, 144, 255)',
+            }}
+          />
+          <b>
+            4. Chốt đơn hàng (<Point point="15" />)
+          </b>
+          : {_get(kpi, 'phone')}
+        </>
+      ),
+    },
+  ];
 
   const onSettingsKPI = formValues => {};
-
-  const onFieldsChange = e => {
-    // eslint-disable-next-line radix
-    const fieldValues = getFieldChange(e.target.name, parseInt(e.target.value));
-    const data = Object.assign(formValues, fieldValues);
-
-    setFommValues(initialValues);
-  };
 
   return (
     <SettingsComponent>
@@ -136,78 +183,21 @@ export function Settings({ history, kpi, onLoadUserProfile }) {
               <Form name="validate_settings" onFinish={onSettingsKPI}>
                 <h3>TỰ ĐÁNH GIÁ KPIs: </h3>
                 <List size="small" bordered>
-                  <List.Item>
-                    <Col lg={12}>
-                      <PhoneTwoTone
-                        style={{ fontSize: '24px', paddingRight: '8px' }}
-                      />
-                      <b>
-                        1. Cuộc gọi (<Point point="1" />)
-                      </b>
-                      {_get(kpi, 'phone')}
-                    </Col>
-                    <Col lg={12}>
-                      <Form.Item>
-                        <Input name="cuoc_goi" onChange={onFieldsChange} /> Cuộc
-                        gọi
-                      </Form.Item>
-                    </Col>
-                  </List.Item>
-                  <List.Item>
-                    <Col lg={12}>
-                      <SmileTwoTone
-                        style={{ fontSize: '24px', paddingRight: '8px' }}
-                      />
-                      <b>
-                        2. Lịch hẹn gặp (<Point point="3" />)
-                      </b>
-                      : {_get(kpi, 'phone')}
-                    </Col>
-                    <Col lg={12}>
-                      <Form.Item>
-                        <Input name="lich_hen_gap" onChange={onFieldsChange} />
-                        &nbsp;Lịch hẹn
-                      </Form.Item>
-                    </Col>
-                  </List.Item>
-                  <List.Item>
-                    <Col lg={12}>
-                      <ReconciliationTwoTone
-                        style={{ fontSize: '24px', paddingRight: '8px' }}
-                      />
-                      <b>
-                        3. Chào giá (<Point point="5" />)
-                      </b>
-                      : {_get(kpi, 'phone')}
-                    </Col>
-                    <Col lg={12}>
-                      <Form.Item>
-                        <Input name="chao_gia" onChange={onFieldsChange} /> Chào
-                        giá
-                      </Form.Item>
-                    </Col>
-                  </List.Item>
-                  <List.Item>
-                    <Col lg={12}>
-                      <CheckCircleOutlined
-                        style={{
-                          fontSize: '24px',
-                          paddingRight: '8px',
-                          color: 'rgb(24, 144, 255)',
-                        }}
-                      />
-                      <b>
-                        4. Chốt đơn hàng (<Point point="15" />)
-                      </b>
-                      : {_get(kpi, 'phone')}
-                    </Col>
-                    <Col lg={12}>
-                      <Form.Item>
-                        <Input name="chot_don" onChange={onFieldsChange} /> Chốt
-                        đơn
-                      </Form.Item>
-                    </Col>
-                  </List.Item>
+                  {elements.map((element, i) => (
+                    <List.Item>
+                      <Col lg={12}>{element.iconElement}</Col>
+                      <Col lg={12}>
+                        <Form.Item>
+                          <Input
+                            key={element.key}
+                            name={element.key}
+                            onChange={getFieldChange}
+                          />
+                          &nbsp;{element.label}
+                        </Form.Item>
+                      </Col>
+                    </List.Item>
+                  ))}
                 </List>
               </Form>
             </Rate>
@@ -218,9 +208,8 @@ export function Settings({ history, kpi, onLoadUserProfile }) {
               <List size="small" bordered>
                 <List.Item>
                   <p>
-                    {console.log(formValues)}
-                    <b>Tổng:</b> (1x{formValues.cuoc_goi} + 3x
-                    {formValues.lich_hen_gap} + 5x{formValues.chao_gia} + 15x
+                    <b>Tổng:</b> (1&nbsp;x&nbsp;{formValues.cuoc_goi} + 3&nbsp;x&nbsp;
+                    {formValues.lich_hen_gap} + 5&nbsp;x&nbsp;{formValues.chao_gia} + 15&nbsp;x&nbsp;
                     {formValues.chot_don})
                   </p>
                 </List.Item>
