@@ -13,3 +13,30 @@
 export const LOAD_USER = 'vnk/User/LOAD_USER';
 export const LOAD_USER_SUCCESS = 'vnk/User/LOAD_USER_SUCCESS';
 export const LOAD_USER_ERROR = 'vnk/User/LOAD_USER_ERROR';
+
+export const stateDefault = {
+  kpiConfig: {
+    salary: 300000,
+    daily_score: 15,
+    date_count: 24,
+    bonus: 10,
+  },
+  kpiConfigToday: {
+    call: {
+      point: 1,
+      total: 10,
+    },
+    meet: {
+      point: 3,
+      total: 2,
+    },
+    offers: {
+      point: 5,
+      total: 0,
+    },
+    closeOrder: {
+      point: 15,
+      total: 1,
+    },
+  },
+};
