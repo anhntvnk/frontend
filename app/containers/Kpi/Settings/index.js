@@ -131,8 +131,8 @@ export function Settings({ history, kpi, onLoadUserProfile }) {
   return (
     <SettingsComponent>
       <Helmet>
-        <title>KPIs Tháng</title>
-        <meta name="description" content="Thông tin cá nhân" />
+        <title>KPIs</title>
+        <meta name="description" content="KPIs" />
       </Helmet>
       <CenteredSectionWithBack>
         <Button
@@ -232,8 +232,6 @@ export function Settings({ history, kpi, onLoadUserProfile }) {
       </KpiState>
     </SettingsComponent>
   );
-
-  // return <KpiDay kpi={userProfile} Back={ArrowLeftOutlined} />;
 }
 
 const Rate = styled.div`
