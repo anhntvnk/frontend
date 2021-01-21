@@ -192,8 +192,7 @@ export default function Banner({ isMobile }) {
           <p className="introduce" key="introduce">
             Cảm nhận của khách tham dự! Bạn sẽ được cung cấp một quy trình bán
             hàng tối ưu nhất, hướng dẫn chi tiết nhất để gia tăng doanh số ngay
-            lập tức khi sử dụng <b>My Project</b>. Hãy đăng ký vào form để được
-            chúng tôi tư vấn và hỗ trợ.
+            lập tức khi sử dụng <b>My Project</b>.
           </p>
           {!isLoggedIn() && (
             <div className="button-wrapper" key="button">

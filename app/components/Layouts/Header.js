@@ -1,10 +1,12 @@
+/* eslint-disable no-console */
 import React, { Fragment } from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import { get as _get } from 'lodash';
 import moment from 'moment';
+import styled from 'styled-components';
 import { Link, withRouter } from 'react-router-dom';
-import { Row, Col, Menu, Popover, Badge, List } from 'antd';
+import { Row, Col, Menu, Popover, Badge, List, Spin } from 'antd';
 import InfiniteScroll from 'react-infinite-scroller';
 import { BellOutlined, RightOutlined } from '@ant-design/icons';
 import { enquireScreen } from 'enquire-js';
@@ -22,26 +24,22 @@ import {
 } from '../../../services/auth';
 import './Header.less';
 import API from '../../constants/apis';
+import { Description } from '@material-ui/icons';
 
 let isMobile;
 enquireScreen(b => {
   isMobile = b;
 });
-
+const limit = 100;
 const { SubMenu } = Menu;
 
 class Header extends React.Component {
-  static contextTypes = {
-    router: PropTypes.object.isRequired,
-  };
-
   constructor(props) {
     super(props);
 
     this.state = {
       isMobile,
       username: '',
-      data: [],
       loading: false,
       hasMore: true,
       notifications: [],
@@ -84,12 +82,12 @@ class Header extends React.Component {
   mappingNotify = notifications =>
     notifications.map(notify => ({
       title: _get(notify, 'data.title'),
-      notification: _get(notify, 'notification'),
+      notification: _get(notify, 'data.notification'),
       date: moment(_get(notify, 'created')).fromNow(),
     }));
 
-  fetchNotify = callback => {
-    const filter = `filter[where][to]=${getUserId()}&filter[limit]=100`;
+  fetchNotify = (callback, skip = 0) => {
+    const filter = `filter[where][to]=${getUserId()}&filter[limit]=${limit}&filter[skip]=${skip}&filter[order]=created%20DESC`;
     axios
       .create({
         baseURL: API.BASE_URL,
@@ -101,35 +99,30 @@ class Header extends React.Component {
       })
       .get(`${API.BASE_URL}/notify?access_token=${getToken()}&&${filter}`)
       .then(response => {
+        console.log(response);
         callback(response);
       })
       .catch(e => console.log(e));
   };
 
-  handleInfiniteOnLoad = () => {
-    let { data } = this.state;
+  handleInfiniteOnLoad = page => {
+    const { notifications } = this.state;
     this.setState({
       loading: true,
     });
-    // if (data.length > 14) {
-    //   this.setState({
-    //     hasMore: false,
-    //     loading: false,
-    //   });
-    //   return;
-    // }
+
     this.fetchNotify(res => {
+      const data = notifications.concat(this.mappingNotify(_get(res, 'data')));
       this.setState({
-        notifications: this.mappingNotify(_get(res, 'data')),
+        notifications: data,
         loading: false,
       });
-    });
+    }, limit * page + 1);
   };
 
   getMenuToRender = history => {
     // eslint-disable-next-line react/prop-types
     const { location } = this.props;
-    console.log(this.state.notifications);
 
     const menuMode = this.state.isMobile ? 'inline' : 'horizontal';
     const module = location.pathname.replace(/(^\/|\/$)/g, '').split('/')[0]; // .slice(0, -1).join('/');
@@ -205,7 +198,7 @@ class Header extends React.Component {
                         key="notifications"
                         overlayClassName="notificationPopover"
                         content={
-                          <div className="notification">
+                          <Notification>
                             <InfiniteScroll
                               initialLoad={false}
                               pageStart={0}
@@ -226,17 +219,47 @@ class Header extends React.Component {
                                 renderItem={item => (
                                   <List.Item className="notificationItem">
                                     <List.Item.Meta
-                                      title={item.title}
-                                      description={item.date}
+                                      avatar={
+                                        <Avatar
+                                          size={14}
+                                          // eslint-disable-next-line global-require
+                                          src={require('../../assets/images/tabs/tab-notify-active.png')}
+                                        />
+                                      }
+                                      title={
+                                        <TitleNotify>
+                                          <span>{_get(item, 'title', '')}</span>
+                                          <span className="notifyTime">
+                                            {_get(item, 'date', '')}
+                                          </span>
+                                        </TitleNotify>
+                                      }
+                                      description={
+                                        <DescriptionNotify
+                                          isUpdate={
+                                            // eslint-disable-next-line prettier/prettier
+                                            _get(item, 'notification.id') ===
+                                            'project_status_need_update'
+                                          }
+                                        >
+                                          {_get(item, 'notification.body')}
+                                        </DescriptionNotify>
+                                      }
                                     />
                                     <RightOutlined
                                       style={{ fontSize: 10, color: '#ccc' }}
                                     />
                                   </List.Item>
                                 )}
-                              />
+                              >
+                                {this.state.loading && this.state.hasMore && (
+                                  <Loading>
+                                    <Spin />
+                                  </Loading>
+                                )}
+                              </List>
                             </InfiniteScroll>
-                          </div>
+                          </Notification>
                         }
                       >
                         <Badge
@@ -292,5 +315,49 @@ class Header extends React.Component {
     );
   }
 }
+
+const Notification = styled.div`
+  border: 1px solid #e8e8e8;
+  border-radius: 4px;
+  overflow: auto;
+  height: 300px;
+  width: 320px;
+
+  .notificationItem {
+    transition: all 0.3s;
+    padding: 12px 8px;
+    cursor: pointer;
+  }
+  .clearButton {
+    text-align: center;
+    height: 48px;
+    line-height: 48px;
+    cursor: pointer;
+  }
+`;
+
+const TitleNotify = styled.div`
+  .notifyTime {
+    float: right;
+    color: rgba(0, 0, 0, 0.45);
+    font-size: 12px;
+  }
+`;
+
+const Loading = styled.div`
+  position: absolute;
+  bottom: 40px;
+  width: 100%;
+  text-align: center;
+`;
+
+const DescriptionNotify = styled.div`
+  color: ${props => (props.isUpdate ? '#d0021b' : '#4fba6f')};
+`;
+
+Header.propTypes = {
+  location: PropTypes.object,
+  history: PropTypes.object,
+};
 
 export default withRouter(Header);
