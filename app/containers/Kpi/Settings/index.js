@@ -6,13 +6,18 @@
  * This is the first thing users see of our App, at the '/' route
  */
 
-import React, { useEffect, useState, useRef, useReducer } from 'react';
+import React, { useReducer } from 'react';
 import { withRouter } from 'react-router-dom';
-import PropTypes, { element } from 'prop-types';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { Helmet } from 'react-helmet';
-import { get as _get } from 'lodash';
+import {
+  get as _get,
+  mapKeys as _mapKeys,
+  join as _join,
+  round as _round,
+} from 'lodash';
 import moment from 'moment';
 import {
   ArrowLeftOutlined,
@@ -30,6 +35,7 @@ import { makeSelectUserProfille } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 import { loadUserProfile } from './actions';
+import { stateDefault } from './constants';
 
 const key = 'settings';
 const { Meta } = Card;
@@ -43,24 +49,28 @@ function Point({ point }) {
   );
 }
 
-export function Settings({ history, kpi, onLoadUserProfile }) {
+export function Settings({ history, kpi }) {
   useInjectReducer({ key, reducer });
   useInjectSaga({ key, saga });
 
   const [formValues, setFommValues] = useReducer(
-    (state, newState) => ({...state, ...newState}),
+    (state, newState) => ({ ...state, ...newState }),
     {
       cuoc_goi: 0,
       lich_hen_gap: 0,
       chao_gia: 0,
       chot_don: 0,
-    }
+    },
   );
 
   const getFieldChange = evt => {
-    const name = evt.target.name;
+    const { name } = evt.target;
     const newValue = evt.target.value;
-    setFommValues({[name]: newValue});
+    setFommValues({ [name]: newValue });
+  };
+
+  const onSettingsKPI = data => {
+    console.log(data);
   };
 
   const elements = [
@@ -126,7 +136,25 @@ export function Settings({ history, kpi, onLoadUserProfile }) {
     },
   ];
 
-  const onSettingsKPI = formValues => {};
+  const scores = {
+    cuoc_goi: 1,
+    lich_hen_gap: 3,
+    chao_gia: 5,
+    chot_don_hang: 15,
+  };
+
+  let total = 0;
+  const values = [];
+
+  _mapKeys(scores, (score, k) => {
+    total += _get(formValues, k, 0) * score;
+    values.push(`${score}x${_get(formValues, k, 0) || 0}`);
+    return key;
+  });
+
+  const dailyScore = _get(stateDefault, 'kpiConfig.daily_score', 0);
+  const kpiDaily = _round(total / dailyScore, 2);
+  const result = _round((total / dailyScore) * 100, 0);
 
   return (
     <SettingsComponent>
@@ -146,89 +174,104 @@ export function Settings({ history, kpi, onLoadUserProfile }) {
         <h1>KPIs: Chấm lương ngày hôm nay</h1>
       </CenteredSectionWithBack>
       <KpiState>
-        <Row gutter={{ sm: 24, md: 24, lg: 16 }}>
-          <Col lg={8} xs={24}>
-            <h3>Thông tin cá nhân</h3>
-            <CardStatus>
-              <Card>
-                <Meta
-                  avatar={
-                    <Avatar
-                      // eslint-disable-next-line global-require
-                      src={require('../../../assets/images/globe/noavatar.png')}
-                    />
-                  }
-                  description={
-                    <div>
-                      <p>
-                        Mã NV: <b>MYP{_get(kpi, 'id')}</b>
-                      </p>
-                      <p>
-                        Họ tên: <b>{_get(kpi, 'full_name')}</b>
-                      </p>
-                      <p>
-                        Chức vụ: <b>{_get(kpi, 'position')}</b>
-                      </p>
-                      <p>
-                        Ngày lương: <b>{moment().format('D/M/YYYY')}</b>
-                      </p>
-                    </div>
-                  }
-                />
-              </Card>
-            </CardStatus>
-          </Col>
-          <Col lg={16} xs={24}>
-            <Rate>
-              <Form name="validate_settings" onFinish={onSettingsKPI}>
+        <Form name="validate_settings" onFinish={onSettingsKPI}>
+          <Row gutter={{ sm: 24, md: 24, lg: 16 }}>
+            <Col lg={8} xs={24}>
+              <h3>Thông tin cá nhân</h3>
+              <CardStatus>
+                <Card>
+                  <Meta
+                    avatar={
+                      <Avatar
+                        // eslint-disable-next-line global-require
+                        src={require('../../../assets/images/globe/noavatar.png')}
+                      />
+                    }
+                    description={
+                      <div>
+                        <p>
+                          Mã NV: <b>MYP{_get(kpi, 'id')}</b>
+                        </p>
+                        <p>
+                          Họ tên: <b>{_get(kpi, 'full_name')}</b>
+                        </p>
+                        <p>
+                          Chức vụ: <b>{_get(kpi, 'position')}</b>
+                        </p>
+                        <p>
+                          Ngày lương: <b>{moment().format('D/M/YYYY')}</b>
+                        </p>
+                      </div>
+                    }
+                  />
+                </Card>
+              </CardStatus>
+            </Col>
+            <Col lg={16} xs={24}>
+              <Rate>
                 <h3>TỰ ĐÁNH GIÁ KPIs: </h3>
                 <List size="small" bordered>
-                  {elements.map((element, i) => (
+                  {elements.map(el => (
                     <List.Item>
-                      <Col lg={12}>{element.iconElement}</Col>
+                      <Col lg={12}>{el.iconElement}</Col>
                       <Col lg={12}>
                         <Form.Item>
                           <Input
-                            key={element.key}
-                            name={element.key}
+                            key={el.key}
+                            name={el.key}
                             onChange={getFieldChange}
                           />
-                          &nbsp;{element.label}
+                          &nbsp;{el.label}
                         </Form.Item>
                       </Col>
                     </List.Item>
                   ))}
                 </List>
-              </Form>
-            </Rate>
-          </Col>
-          <Col lg={24} xs={24}>
-            <Result>
-              <h3>Kết quả thực hiện </h3>
-              <List size="small" bordered>
-                <List.Item>
-                  <p>
-                    <b>Tổng:</b> (1&nbsp;x&nbsp;{formValues.cuoc_goi} + 3&nbsp;x&nbsp;
-                    {formValues.lich_hen_gap} + 5&nbsp;x&nbsp;{formValues.chao_gia} + 15&nbsp;x&nbsp;
-                    {formValues.chot_don})
-                  </p>
-                </List.Item>
-                <List.Item>
-                  <p style={{ color: 'blue' }}>
-                    Quy định mỗi ngày đạt 0 điểm sẽ được hưởng 0% lương KPIs: (0
-                    : 0) ={' '}
-                  </p>
-                </List.Item>
-                <List.Item>
-                  <p style={{ color: 'blue' }}>
-                    Hôm nay bạn được hưởng{' '}
-                    <span style={{ color: 'red' }}>%</span> lương KPIs
-                  </p>
-                </List.Item>
-              </List>
-            </Result>
-          </Col>
-        </Row>
+              </Rate>
+            </Col>
+            <Col lg={24} xs={24}>
+              <Result>
+                <h3>Kết quả thực hiện </h3>
+                <List size="small" bordered>
+                  <List.Item>
+                    <p style={{ color: '#5f5c5c' }}>
+                      <b>Tổng:</b> ({_join(values, ' + ')}) ={' '}
+                      <span style={{ color: '#f90909' }}>{total}</span>
+                      <span style={{ color: '#417505' }}>&nbsp;Điểm</span>
+                    </p>
+                  </List.Item>
+                  <List.Item>
+                    <p style={{ color: '2b5eec' }}>
+                      Quy định mỗi ngày đạt {dailyScore} điểm sẽ hưởng{' '}
+                      {total === 0 ? 0 : 100}% lương
+                    </p>
+                  </List.Item>
+                  <List.Item>
+                    <p>
+                      KPIs: ({total} : {dailyScore}) = {kpiDaily}
+                    </p>
+                  </List.Item>
+                  <List.Item>
+                    <p style={{ color: 'blue' }}>
+                      Hôm nay bạn được hưởng
+                      <span style={{ color: '#f90909' }}> {result}%</span> lương
+                      KPIs
+                    </p>
+                  </List.Item>
+                </List>
+                <Form.Item style={{ marginTop: '20px' }}>
+                  <Button
+                    type="primary"
+                    htmlType="submit"
+                    className="update-kpi"
+                  >
+                    Lưu Lại
+                  </Button>
+                </Form.Item>
+              </Result>
+            </Col>
+          </Row>
+        </Form>
       </KpiState>
     </SettingsComponent>
   );
