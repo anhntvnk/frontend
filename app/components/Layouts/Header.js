@@ -24,7 +24,6 @@ import {
 } from '../../../services/auth';
 import './Header.less';
 import API from '../../constants/apis';
-import { Description } from '@material-ui/icons';
 
 let isMobile;
 enquireScreen(b => {
@@ -43,6 +42,7 @@ class Header extends React.Component {
       loading: false,
       hasMore: true,
       notifications: [],
+      visiblePopover: {},
     };
   }
 
@@ -77,6 +77,12 @@ class Header extends React.Component {
         this.setState({ notifications: this.mappingNotify(_get(res, 'data')) });
       });
     }
+  }
+
+  componentWillReceiveProps() {
+    this.setState({
+      visiblePopover: {},
+    });
   }
 
   mappingNotify = notifications =>
@@ -146,6 +152,9 @@ class Header extends React.Component {
             <Menu.Item key="persional-infomation">
               <Link to={ROUTE.USER}>Thông tin cá nhân</Link>
             </Menu.Item>
+            <Menu.Item key="kpi-settings">
+              <Link to={ROUTE.KPI_SETTINGS}>Tự đánh giá KPIs</Link>
+            </Menu.Item>
             <Menu.Item key="change-password">
               <Link to={ROUTE.CHANGE_PASSWORD}>Đổi mật khẩu</Link>
             </Menu.Item>
@@ -164,6 +173,33 @@ class Header extends React.Component {
   logoutAccount = history => {
     removeUserSession();
     history.push('/');
+  };
+
+  getProjectDetail = (history, projectID) => {
+    axios
+      .create({
+        baseURL: API.BASE_URL,
+        timeout: 5000,
+        validateStatus(status) {
+          return (status >= 200 && status < 300) || status === 403; // default
+        },
+        headers: { 'Content-Type': 'application/json' },
+      })
+      .get(`${API.BASE_URL}/project/${projectID}?access_token=${getToken()}`)
+      .then(response => {
+        if (response) {
+          this.setState({
+            visiblePopover: { visible: false },
+          });
+          history.push({
+            pathname: ROUTE.PROJECT_DETAILS,
+            state: {
+              data: _get(response, 'data'),
+            },
+          });
+        }
+      })
+      .catch(e => console.log(e));
   };
 
   render() {
@@ -197,6 +233,7 @@ class Header extends React.Component {
                         trigger="click"
                         key="notifications"
                         overlayClassName="notificationPopover"
+                        {...this.state.visiblePopover}
                         content={
                           <Notification>
                             <InfiniteScroll
@@ -217,7 +254,15 @@ class Header extends React.Component {
                                   ),
                                 }}
                                 renderItem={item => (
-                                  <List.Item className="notificationItem">
+                                  <List.Item
+                                    className="notificationItem"
+                                    onClick={() =>
+                                      this.getProjectDetail(
+                                        history,
+                                        _get(item, 'notification.idDetect'),
+                                      )
+                                    }
+                                  >
                                     <List.Item.Meta
                                       avatar={
                                         <Avatar
@@ -291,6 +336,11 @@ class Header extends React.Component {
                         >
                           <Menu.Item key="persional-infomation">
                             <Link to={ROUTE.USER}>Thông tin cá nhân</Link>
+                          </Menu.Item>
+                          <Menu.Item key="kpi-settings">
+                            <Link to={ROUTE.KPI_SETTINGS}>
+                              Tự đánh giá KPIs
+                            </Link>
                           </Menu.Item>
                           <Menu.Item key="change-password">
                             <Link to={ROUTE.CHANGE_PASSWORD}>Đổi mật khẩu</Link>

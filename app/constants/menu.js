@@ -31,7 +31,7 @@ const menu = [
   },
 ];
 
-if (isLoggedIn) {
+if (isLoggedIn()) {
   menu.push({
     exact: true,
     path: ROUTE.DASHBOARD,

@@ -167,7 +167,7 @@ export function Settings({ history, kpi }) {
           type="primary"
           shape="round"
           icon={<ArrowLeftOutlined />}
-          // onClick={() => history.goBack()}
+          onClick={() => history.goBack()}
         >
           Quay lại
         </Button>

@@ -31,7 +31,7 @@ export function KpiByDay({ history, userProfile, onLoadUserProfile }) {
     onLoadUserProfile();
   }, []);
 
-  return <KpiDay kpi={userProfile} Back={ArrowLeftOutlined} />;
+  return <KpiDay history={history} kpi={userProfile} Back={ArrowLeftOutlined} />;
 }
 
 KpiByDay.propTypes = {

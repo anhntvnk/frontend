@@ -24,7 +24,7 @@ function Point({ point }) {
 
 const { Meta } = Card;
 
-function Kpi({ kpi, Back }) {
+function Kpi({ kpi, history, Back }) {
   return (
     <KpiComponent>
       <Helmet>
@@ -36,7 +36,7 @@ function Kpi({ kpi, Back }) {
           type="primary"
           shape="round"
           icon={<Back />}
-          // onClick={() => history.goBack()}
+          onClick={() => history.goBack()}
         >
           Quay lại
         </Button>
@@ -92,9 +92,7 @@ function Kpi({ kpi, Back }) {
                     <Button type="primary" shape="round" size="small">
                       20
                     </Button>
-                    <Button shape="round" size="small">
-                      Cuộc gọi
-                    </Button>
+                    <Text>Cuộc gọi</Text>
                   </Col>
                 </List.Item>
                 <List.Item>
@@ -111,9 +109,7 @@ function Kpi({ kpi, Back }) {
                     <Button type="primary" shape="round" size="small">
                       20
                     </Button>
-                    <Button shape="round" size="small">
-                      Lịch hẹn
-                    </Button>
+                    <Text>Lịch hẹn</Text>
                   </Col>
                 </List.Item>
                 <List.Item>
@@ -130,9 +126,7 @@ function Kpi({ kpi, Back }) {
                     <Button type="primary" shape="round" size="small">
                       20
                     </Button>
-                    <Button shape="round" size="small">
-                      Chào giá
-                    </Button>
+                    <Text>Chào giá</Text>
                   </Col>
                 </List.Item>
                 <List.Item>
@@ -153,9 +147,7 @@ function Kpi({ kpi, Back }) {
                     <Button type="primary" shape="round" size="small">
                       20
                     </Button>
-                    <Button shape="round" size="small">
-                      Chốt đơn
-                    </Button>
+                    <Text>Chốt đơn</Text>
                   </Col>
                 </List.Item>
               </List>
@@ -351,8 +343,21 @@ const CardStatus = styled.div`
   }
 `;
 
+const Text = styled.span`
+  height: 26px;
+  padding: 0px 28px;
+  font-size: 14px;
+  border-radius: 24px;
+  margin-right: 15px;
+  @media only screen and (max-width: 767.99px) {
+    padding: 0px 10px;
+    margin-right: 6px;
+  }
+`;
+
 Kpi.propTypes = {
   kpi: PropTypes.any,
+  history: PropTypes.any,
   Back: PropTypes.any,
 };
 
