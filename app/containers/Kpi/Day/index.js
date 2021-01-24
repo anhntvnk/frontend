@@ -15,38 +15,37 @@ import { createStructuredSelector } from 'reselect';
 import { useInjectReducer } from 'utils/injectReducer';
 import { useInjectSaga } from 'utils/injectSaga';
 import KpiDay from 'components/Kpi';
-import { makeSelectUserProfille } from './selectors';
+import { makeSelectKPIs } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
-import { loadUserProfile } from './actions';
+import { loadKPI } from './actions';
 
 const key = 'kpiDay';
 
-export function KpiByDay({ history, userProfile, onLoadUserProfile }) {
+export function KpiByDay({ history, kpis, onLoadKPIs }) {
   useInjectReducer({ key, reducer });
   useInjectSaga({ key, saga });
 
-  console.log(userProfile);
   useEffect(() => {
-    onLoadUserProfile();
+    onLoadKPIs();
   }, []);
 
-  return <KpiDay history={history} kpi={userProfile} Back={ArrowLeftOutlined} />;
+  return <KpiDay history={history} kpi={kpis} Back={ArrowLeftOutlined} />;
 }
 
 KpiByDay.propTypes = {
-  onLoadUserProfile: PropTypes.func,
+  onLoadKPIs: PropTypes.func,
   history: PropTypes.object,
-  userProfile: PropTypes.object,
+  kpis: PropTypes.any,
 };
 
 const mapStateToProps = createStructuredSelector({
-  userProfile: makeSelectUserProfille(),
+  kpis: makeSelectKPIs(),
 });
 
 export function mapDispatchToProps(dispatch) {
   return {
-    onLoadUserProfile: () => dispatch(loadUserProfile()),
+    onLoadKPIs: () => dispatch(loadKPI()),
   };
 }
 

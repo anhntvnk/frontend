@@ -1,6 +1,6 @@
 /* eslint-disable no-case-declarations */
 /*
- * CompanysReducer
+ * KPIsReducer
  *
  * The reducer takes care of our data. Using actions, we can
  * update our application state. To add a new action,
@@ -9,23 +9,23 @@
  */
 
 import produce from 'immer';
-import { LOAD_USER_SUCCESS } from './constants';
+import { LOAD_KPI_SUCCESS } from './constants';
 
 // The initial state of the App
 export const initialState = {
-  userProfile: [],
+  kpis: [],
 };
 
 /* eslint-disable default-case, no-param-reassign */
-const userReducer = (state = initialState, action) =>
+const kpisReducer = (state = initialState, action) =>
   produce(state, draft => {
     switch (action.type) {
-      case LOAD_USER_SUCCESS:
-        draft.userProfile = action.response;
+      case LOAD_KPI_SUCCESS:
+        draft.kpis = action.response;
         break;
       default:
-        draft.userProfile = initialState.userProfile;
+        draft.kpis = initialState.kpis;
     }
   });
 
-export default userReducer;
+export default kpisReducer;

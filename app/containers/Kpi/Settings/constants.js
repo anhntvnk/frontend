@@ -10,9 +10,12 @@
  * export const YOUR_ACTION_CONSTANT = 'yourproject/YourContainer/YOUR_ACTION_CONSTANT';
  */
 
-export const LOAD_USER = 'vnk/User/LOAD_USER';
-export const LOAD_USER_SUCCESS = 'vnk/User/LOAD_USER_SUCCESS';
-export const LOAD_USER_ERROR = 'vnk/User/LOAD_USER_ERROR';
+export const LOAD_KPI = 'vnk/KPI/Settings/LOAD_KPI';
+export const LOAD_KPI_SUCCESS = 'vnk/KPI/Settings/LOAD_KPI_SUCCESS';
+export const LOAD_KPI_ERROR = 'vnk/KPI/Settings/LOAD_KPI_ERROR';
+export const UPDATE_KPI = 'vnk/KPI/Settings/UPDATE_KPI';
+export const UPDATE_KPI_SUCCESS = 'vnk/KPI/Settings/UPDATE_KPI_SUCCESS';
+export const UPDATE_KPI_ERROR = 'vnk/KPI/Settings/UPDATE_KPI_ERROR';
 
 export const stateDefault = {
   kpiConfig: {

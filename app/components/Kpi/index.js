@@ -1,6 +1,12 @@
 /* eslint-disable global-require */
 import React from 'react';
-import { get as _get } from 'lodash';
+import {
+  get as _get,
+  mapKeys as _mapKeys,
+  join as _join,
+  round as _round,
+  isNaN as _isNaN,
+} from 'lodash';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
@@ -12,6 +18,7 @@ import {
   PhoneTwoTone,
 } from '@ant-design/icons';
 import styled from 'styled-components';
+import { stateDefault } from '../../containers/Kpi/Settings/constants';
 
 // eslint-disable-next-line react/prop-types
 function Point({ point }) {
@@ -25,6 +32,25 @@ function Point({ point }) {
 const { Meta } = Card;
 
 function Kpi({ kpi, history, Back }) {
+  const scores = {
+    cuoc_goi: 1,
+    lich_hen_gap: 3,
+    chao_gia: 5,
+    chot_don_hang: 15,
+  };
+
+  let total = 0;
+  const values = [];
+
+  _mapKeys(scores, (score, k) => {
+    total += _get(kpi, k, 0) * score;
+    values.push(`${score}x${_get(kpi, k, 0) || 0}`);
+  });
+
+  const dailyScore = _get(stateDefault, 'kpiConfig.daily_score', 0);
+  const kpiDaily = _round(total / dailyScore, 2);
+  const result = _round((total / dailyScore) * 100, 0);
+
   return (
     <KpiComponent>
       <Helmet>
@@ -84,13 +110,13 @@ function Kpi({ kpi, history, Back }) {
                       style={{ fontSize: '24px', paddingRight: '8px' }}
                     />
                     <b>
-                      1. Cuộc gọi (<Point point="1" />)
+                      1. Cuộc gọi (<Point point="1" />
+                      ):
                     </b>
-                    {_get(kpi, 'phone')}
                   </Col>
                   <Col lg={12}>
                     <Button type="primary" shape="round" size="small">
-                      20
+                      {_get(kpi, 'cuoc_goi')}
                     </Button>
                     <Text>Cuộc gọi</Text>
                   </Col>
@@ -101,13 +127,13 @@ function Kpi({ kpi, history, Back }) {
                       style={{ fontSize: '24px', paddingRight: '8px' }}
                     />
                     <b>
-                      2. Lịch hẹn gặp (<Point point="3" />)
+                      2. Lịch hẹn gặp (<Point point="3" />
+                      ):
                     </b>
-                    : {_get(kpi, 'phone')}
                   </Col>
                   <Col lg={12}>
                     <Button type="primary" shape="round" size="small">
-                      20
+                      {_get(kpi, 'lich_hen_gap')}
                     </Button>
                     <Text>Lịch hẹn</Text>
                   </Col>
@@ -118,13 +144,13 @@ function Kpi({ kpi, history, Back }) {
                       style={{ fontSize: '24px', paddingRight: '8px' }}
                     />
                     <b>
-                      3. Chào giá (<Point point="5" />)
+                      3. Chào giá (<Point point="5" />
+                      ):
                     </b>
-                    : {_get(kpi, 'phone')}
                   </Col>
                   <Col lg={12}>
                     <Button type="primary" shape="round" size="small">
-                      20
+                      {_get(kpi, 'chao_gia')}
                     </Button>
                     <Text>Chào giá</Text>
                   </Col>
@@ -139,13 +165,13 @@ function Kpi({ kpi, history, Back }) {
                       }}
                     />
                     <b>
-                      4. Chốt đơn hàng (<Point point="15" />)
+                      4. Chốt đơn hàng (<Point point="15" />
+                      ):
                     </b>
-                    : {_get(kpi, 'phone')}
                   </Col>
                   <Col lg={12}>
                     <Button type="primary" shape="round" size="small">
-                      20
+                      {_get(kpi, 'chot_don_hang')}
                     </Button>
                     <Text>Chốt đơn</Text>
                   </Col>
@@ -158,20 +184,33 @@ function Kpi({ kpi, history, Back }) {
               <h3>Kết quả thực hiện </h3>
               <List size="small" bordered>
                 <List.Item>
+                  <p style={{ color: '#5f5c5c' }}>
+                    <b>Tổng:</b> ({_join(values, ' + ')}) ={' '}
+                    <span style={{ color: '#f90909' }}>{total}</span>
+                    <span style={{ color: '#417505' }}>&nbsp;Điểm</span>
+                  </p>
+                </List.Item>
+                <List.Item>
+                  <p style={{ color: '2b5eec' }}>
+                    Quy định mỗi ngày đạt{' '}
+                    <span style={{ color: '#f90909' }}>{dailyScore}</span> điểm
+                    sẽ hưởng {total === 0 ? 0 : 100}% lương
+                  </p>
+                </List.Item>
+                <List.Item>
                   <p>
-                    <b>Tổng:</b> (1x0 + 3x0 + 5x0 + 15x0)
+                    KPIs: ({total} : {dailyScore}) ={' '}
+                    {_isNaN(kpiDaily) ? '' : kpiDaily}
                   </p>
                 </List.Item>
                 <List.Item>
                   <p style={{ color: 'blue' }}>
-                    Quy định mỗi ngày đạt 0 điểm sẽ được hưởng 0% lương KPIs: (0
-                    : 0) ={' '}
-                  </p>
-                </List.Item>
-                <List.Item>
-                  <p style={{ color: 'blue' }}>
-                    Hôm nay bạn được hưởng{' '}
-                    <span style={{ color: 'red' }}>%</span> lương KPIs
+                    Hôm nay bạn được hưởng
+                    <span style={{ color: '#f90909' }}>
+                      {' '}
+                      {_isNaN(result) || dailyScore === 0 ? '' : result}%
+                    </span>{' '}
+                    lương KPIs
                   </p>
                 </List.Item>
               </List>
@@ -226,6 +265,10 @@ const Profile = styled.div`
       padding: 0px 10px;
       margin-right: 6px;
     }
+  }
+
+  .ant-btn {
+    cursor: auto;
   }
 `;
 

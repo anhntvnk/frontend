@@ -6,7 +6,7 @@
  * This is the first thing users see of our App, at the '/' route
  */
 
-import React, { useReducer } from 'react';
+import React, { useReducer, useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -17,6 +17,8 @@ import {
   mapKeys as _mapKeys,
   join as _join,
   round as _round,
+  isNaN as _isNaN,
+  isEmpty as _isEmpty,
 } from 'lodash';
 import moment from 'moment';
 import {
@@ -29,15 +31,26 @@ import {
 import { createStructuredSelector } from 'reselect';
 import { useInjectReducer } from 'utils/injectReducer';
 import { useInjectSaga } from 'utils/injectSaga';
-import { Input, Form, Card, Row, Col, Button, List, Avatar } from 'antd';
+import {
+  Input,
+  Form,
+  Card,
+  Row,
+  Col,
+  Button,
+  List,
+  Avatar,
+  message,
+} from 'antd';
 import styled from 'styled-components';
-import { makeSelectUserProfille } from './selectors';
+import { makeSelectKPISettings, makeSelectKPISettingsMsg } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
-import { loadUserProfile } from './actions';
+import { loadKPI, updateKPI } from './actions';
 import { stateDefault } from './constants';
+import { getUserId } from '../../../../services/auth';
 
-const key = 'settings';
+const key = 'kpiSettings';
 const { Meta } = Card;
 
 // eslint-disable-next-line react/prop-types
@@ -49,9 +62,25 @@ function Point({ point }) {
   );
 }
 
-export function Settings({ history, kpi }) {
+export function Settings({
+  history,
+  kpi,
+  successMsg,
+  onUpdateKPI,
+  onLoadKPIs,
+}) {
   useInjectReducer({ key, reducer });
   useInjectSaga({ key, saga });
+
+  useEffect(() => {
+    onLoadKPIs();
+  }, []);
+
+  useEffect(() => {
+    if (successMsg) {
+      message.success('Thiết lập KPIs hôm nay thành công!');
+    }
+  }, [successMsg]);
 
   const [formValues, setFommValues] = useReducer(
     (state, newState) => ({ ...state, ...newState }),
@@ -65,12 +94,22 @@ export function Settings({ history, kpi }) {
 
   const getFieldChange = evt => {
     const { name } = evt.target;
-    const newValue = evt.target.value;
-    setFommValues({ [name]: newValue });
+    const newValue = parseInt(evt.target.value || '0', 10);
+    const regex = /^[0-9\b]+$/;
+    if (newValue === '' || regex.test(newValue)) {
+      setFommValues({ [name]: newValue });
+    }
   };
 
-  const onSettingsKPI = data => {
-    console.log(data);
+  const onSettingsKPI = () => {
+    let newKPI;
+    if (!_isEmpty(kpi)) {
+      newKPI = Object.assign(kpi, formValues);
+    } else {
+      newKPI = { ...formValues, user_id: getUserId() };
+    }
+
+    onUpdateKPI(newKPI);
   };
 
   const elements = [
@@ -219,6 +258,7 @@ export function Settings({ history, kpi }) {
                           <Input
                             key={el.key}
                             name={el.key}
+                            value={_get(formValues, el.key, 5)}
                             onChange={getFieldChange}
                           />
                           &nbsp;{el.label}
@@ -248,14 +288,18 @@ export function Settings({ history, kpi }) {
                   </List.Item>
                   <List.Item>
                     <p>
-                      KPIs: ({total} : {dailyScore}) = {kpiDaily}
+                      KPIs: ({total} : {dailyScore}) ={' '}
+                      {_isNaN(kpiDaily) ? '' : kpiDaily}
                     </p>
                   </List.Item>
                   <List.Item>
                     <p style={{ color: 'blue' }}>
                       Hôm nay bạn được hưởng
-                      <span style={{ color: '#f90909' }}> {result}%</span> lương
-                      KPIs
+                      <span style={{ color: '#f90909' }}>
+                        {' '}
+                        {_isNaN(result) || dailyScore === 0 ? '' : result}%
+                      </span>{' '}
+                      lương KPIs
                     </p>
                   </List.Item>
                 </List>
@@ -447,18 +491,22 @@ const Result = styled.div`
 `;
 
 Settings.propTypes = {
-  onLoadUserProfile: PropTypes.func,
+  onUpdateKPI: PropTypes.func,
+  onLoadKPIs: PropTypes.any,
   history: PropTypes.object,
-  kpi: PropTypes.object,
+  kpi: PropTypes.any,
+  successMsg: PropTypes.bool,
 };
 
 const mapStateToProps = createStructuredSelector({
-  kpi: makeSelectUserProfille(),
+  kpi: makeSelectKPISettings(),
+  successMsg: makeSelectKPISettingsMsg(),
 });
 
 export function mapDispatchToProps(dispatch) {
   return {
-    onLoadUserProfile: () => dispatch(loadUserProfile()),
+    onUpdateKPI: data => dispatch(updateKPI(data)),
+    onLoadKPIs: () => dispatch(loadKPI()),
   };
 }
 

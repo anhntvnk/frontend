@@ -15,24 +15,24 @@
  *    }
  */
 
-import { LOAD_USER, LOAD_USER_SUCCESS, LOAD_USER_ERROR } from './constants';
+import { LOAD_KPI, LOAD_KPI_SUCCESS, LOAD_KPI_ERROR } from './constants';
 
-export function loadUserProfile() {
+export function loadKPI() {
   return {
-    type: LOAD_USER,
+    type: LOAD_KPI,
   };
 }
 
-export function loadUserProfileSuccess(response) {
+export function loadKPISuccess(response) {
   return {
-    type: LOAD_USER_SUCCESS,
+    type: LOAD_KPI_SUCCESS,
     response,
   };
 }
 
-export function loadUserProfileError(error) {
+export function loadKPIError(error) {
   return {
-    type: LOAD_USER_ERROR,
+    type: LOAD_KPI_ERROR,
     error,
   };
 }

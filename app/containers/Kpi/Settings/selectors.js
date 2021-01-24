@@ -1,16 +1,21 @@
 /**
- * user selectors
+ * kpis settings selectors
  */
 
 import { createSelector } from 'reselect';
 import { initialState } from './reducer';
 
-const select = state => state.user || initialState;
+const select = state => state.kpiSettings || initialState;
 
-const makeSelectUserProfille = () =>
+const makeSelectKPISettings = () =>
   createSelector(
     select,
-    state => state.userProfile,
+    state => state.kpis,
+  );
+const makeSelectKPISettingsMsg = () =>
+  createSelector(
+    select,
+    state => state.successMsg,
   );
 
-export { select, makeSelectUserProfille };
+export { select, makeSelectKPISettings, makeSelectKPISettingsMsg };

@@ -1,16 +1,16 @@
 /**
- * user selectors
+ * kpis selectors
  */
 
 import { createSelector } from 'reselect';
 import { initialState } from './reducer';
 
-const select = state => state.user || initialState;
+const select = state => state.kpiDay || initialState;
 
-const makeSelectUserProfille = () =>
+const makeSelectKPIs = () =>
   createSelector(
     select,
-    state => state.userProfile,
+    state => state.kpis,
   );
 
-export { select, makeSelectUserProfille };
+export { select, makeSelectKPIs };

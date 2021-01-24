@@ -9,22 +9,28 @@
  */
 
 import produce from 'immer';
-import { LOAD_USER_SUCCESS } from './constants';
+import { LOAD_KPI_SUCCESS, UPDATE_KPI_SUCCESS } from './constants';
 
 // The initial state of the App
 export const initialState = {
-  userProfile: [],
+  kpis: [],
+  successMsg: false,
 };
 
 /* eslint-disable default-case, no-param-reassign */
 const userReducer = (state = initialState, action) =>
   produce(state, draft => {
     switch (action.type) {
-      case LOAD_USER_SUCCESS:
-        draft.userProfile = action.response;
+      case LOAD_KPI_SUCCESS:
+        draft.kpis = action.response;
+        break;
+      case UPDATE_KPI_SUCCESS:
+        draft.kpis = action.response;
+        draft.successMsg = true;
         break;
       default:
-        draft.userProfile = initialState.userProfile;
+        draft.kpis = initialState.kpis;
+        draft.successMsg = initialState.successMsg;
     }
   });
 
