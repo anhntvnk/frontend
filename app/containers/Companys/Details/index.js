@@ -103,7 +103,7 @@ export function CompanyDetails({ history, data }) {
         {!isMobile && (
           <Col className="group-item" lg={24} md={24}>
             <BoxDetail>
-              <span className="description">Dự án:</span>
+              <span className="description">Tên Công Ty:</span>
               <p className="company-name">{_get(data, 'name', '')}</p>
               <span className="description">
                 <span>Ngày thành lập:&nbsp;</span>

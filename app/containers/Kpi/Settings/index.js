@@ -258,7 +258,10 @@ export function Settings({
                           <Input
                             key={el.key}
                             name={el.key}
-                            value={_get(formValues, el.key, 5)}
+                            value={
+                              _get(formValues, el.key, 0) ||
+                              _get(kpi, el.key, 0)
+                            }
                             onChange={getFieldChange}
                           />
                           &nbsp;{el.label}
