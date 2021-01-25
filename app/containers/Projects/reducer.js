@@ -10,7 +10,8 @@
  */
 
 import produce from 'immer';
-import * as _ from 'lodash';
+import { filter as _filter, concat as _concat, includes as _includes, get as _get } from 'lodash';
+import moment from 'moment';
 import {
   LOAD_PROJECTS,
   LOAD_PROJECTS_SUCCESS,
@@ -27,17 +28,19 @@ export const initialState = {
   followedProjects: [],
 };
 
-const mappingProject = (followedProjects, projectAvaiable) => {
+const mappingProject = response => {
+  const { followedProjects, projectAvaiable, timeShowProject } = response;
   const getIdFollowedProjects = followedProjects.map(
     fl => fl.parent_project_id,
   );
 
+  const projectShow = _filter(projectAvaiable, item => moment(item.last_modified).isSameOrAfter(timeShowProject));
   const listProject =
     followedProjects.length > 0
-      ? _.concat(followedProjects, _.filter(projectAvaiable, item => !_.includes(getIdFollowedProjects, item.id)))
+      ? _concat(followedProjects, _filter(projectShow, item => !_includes(getIdFollowedProjects, item.id)))
       : projectAvaiable;
 
-  return listProject.map(project => Object.assign(project, { is_follow: _.get(project, 'is_follow', false) }))
+  return listProject.map(project => Object.assign(project, { is_follow: _get(project, 'is_follow', false) }))
 }
 
 
@@ -62,7 +65,7 @@ const projectReducer = (state = initialState, action) =>
         draft.loading = true;
         break;
       case LOAD_PROJECTS_SUCCESS:
-        draft.project = mappingProject(response.followedProjects, response.projectAvaiable);
+        draft.project = mappingProject(response);
         draft.followedProjects = response.followedProjects;
         draft.loading = false;
         break;

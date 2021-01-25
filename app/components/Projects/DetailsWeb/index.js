@@ -34,10 +34,18 @@ function DetailsWeb({ data }) {
             </span>
           </GutterRow>
         </Col>
-        <Col lg={8} style={{ justifyContent: 'center', display: 'flex' }}>
+        <Col
+          lg={8}
+          style={{
+            justifyContent: 'center',
+            display: 'flex',
+            alignItems: 'center',
+          }}
+        >
           <img
             src={_get(data, 'image') || logo}
             width={220}
+            height={220}
             alt=""
             className="vnk-logo"
           />

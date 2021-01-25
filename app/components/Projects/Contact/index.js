@@ -38,6 +38,7 @@ function Contact({ data }) {
         <img
           src={_get(data, 'image') || logo}
           width={220}
+          height={220}
           alt=""
           className="vnk-logo"
         />

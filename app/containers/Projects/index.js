@@ -215,12 +215,6 @@ export function Projects({
     dataSource: projectList || defaultProject,
     columns,
     loading: loading || isLoading,
-    // rowSelection: {
-    //   selectedRowKeys,
-    //   onChange: selectedRowKey => {
-    //     setSelectedRowKeys(selectedRowKey);
-    //   },
-    // },
   };
 
   const onResetFields = () => {

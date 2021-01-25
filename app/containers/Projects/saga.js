@@ -11,6 +11,7 @@ import {
   unFollowSuccess,
 } from 'containers/Projects/actions';
 
+import moment from 'moment';
 import request, { fetchAxios } from 'utils/request';
 import { LOAD_PROJECTS, CHANGE_FOLLOW, UN_FOLLOW } from './constants';
 import API from '../../constants/apis';
@@ -20,21 +21,23 @@ export function* getProjectsAvaiable() {
   // Select username from store
 
   const filter = `filter[where][user_id]=${getUserId()}`;
-
-  // const filter = 'filter[order]=last_modified%20DESC';
-  const followedProjectsURL = `${
-    API.BASE_URL
-  }/FollowedProjects?access_token=${getToken}&${filter}`;
-  const projectAvaiableURL = `${
-    API.BASE_URL
-  }/user/get-available-projects/${getUserId()}?access_token=${getToken()}`;
+  const userUrl = `${API.BASE_URL}/user/${getUserId()}?access_token=${getToken()}`;
+  const followedProjectsURL = `${API.BASE_URL}/FollowedProjects?access_token=${getToken()}&${filter}`;
 
   try {
-    // Call our request helper (see 'utils/request')
+    const getUserById = yield call(request, userUrl);
+
+    let timeShowProject = moment().subtract(6, 'months').format('YYYY-MM-DD');
+    if (getUserById) {
+      timeShowProject = moment(getUserById.created).subtract(6, 'months').format('YYYY-MM-DD');
+    }
+
+    const projectAvaiableURL = `${API.BASE_URL}/user/get-available-projects/${getUserId()}?access_token=${getToken()}`;
+
     const followedProjects = yield call(request, followedProjectsURL);
     const projectAvaiable = yield call(request, projectAvaiableURL);
 
-    yield put(loadProjectSuccess({ followedProjects, projectAvaiable }));
+    yield put(loadProjectSuccess({ followedProjects, projectAvaiable, timeShowProject }));
   } catch (err) {
     yield put(loadProjectsError(err));
   }
