@@ -62,7 +62,7 @@ export function Dashboard({ dashboards, onFetchDashboard }) {
       icon: 'workday',
       color: Color.green,
       title: 'Công việc hàng ngày',
-      // number: 2781,
+      url: ROUTE.NOTES,
       url: '',
     },
     {

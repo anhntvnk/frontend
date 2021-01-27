@@ -18,4 +18,5 @@ export default {
   KPI_DAY: '/kpi/day',
   KPI_SETTINGS: '/kpi/settings',
   KPI_MONTH: '/kpi/montth',
+  NOTES: '/notes',
 };
