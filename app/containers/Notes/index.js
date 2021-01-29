@@ -1,12 +1,10 @@
-/* eslint-disable dot-notation */
-/* eslint-disable jsx-a11y/anchor-is-valid */
 /*
- * Settings KPI Page
+ * Notes Page
  *
  * This is the first thing users see of our App, at the '/' route
  */
 
-import React, { useReducer, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -19,52 +17,30 @@ import { isEmpty as _isEmpty, get as _get } from 'lodash';
 import { createStructuredSelector } from 'reselect';
 import { useInjectReducer } from 'utils/injectReducer';
 import { useInjectSaga } from 'utils/injectSaga';
-import { Card, Button } from 'antd';
+import { Button, Modal } from 'antd';
 import styled from 'styled-components';
 import { makeSelectNotes } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
-import { getNotes } from './actions';
+import { getNotes, updateNotes } from './actions';
 import '!style-loader!css-loader!react-big-calendar/lib/css/react-big-calendar.css';
 
 const key = 'notes';
-const { Meta } = Card;
 const localizer = momentLocalizer(moment);
 
-// const eventsMockup = [
-//   {
-//     id: 0,
-//     title: 'Board meeting',
-//     start: new Date(2021, 0, 29, 9, 0, 0),
-//     end: new Date(2021, 0, 29, 13, 0, 0),
-//   },
-//   {
-//     id: 1,
-//     title: 'MS training',
-//     allDay: true,
-//     start: new Date(2021, 0, 29, 14, 0, 0),
-//     end: new Date(2021, 0, 29, 16, 30, 0),
-//   },
-//   {
-//     id: 2,
-//     title: 'Team lead meeting',
-//     start: new Date(2021, 0, 29, 8, 30, 0),
-//     end: new Date(2021, 0, 29, 12, 30, 0),
-//   },
-//   {
-//     id: 11,
-//     title: 'Birthday Party',
-//     start: new Date(2021, 0, 30, 7, 0, 0),
-//     end: new Date(2021, 0, 30, 10, 30, 0),
-//   },
-// ];
-
 // eslint-disable-next-line react/prop-types
-export function Notes({ history, notes, successMsg, onFetchNotes }) {
+export function Notes({
+  history,
+  notes,
+  successMsg,
+  onFetchNotes,
+  onUpdateNotes,
+}) {
   useInjectReducer({ key, reducer });
   useInjectSaga({ key, saga });
 
   const [events, setEvents] = useState(notes);
+  const [isDurty, setIsDurty] = useState(false);
 
   useEffect(() => {
     onFetchNotes();
@@ -76,26 +52,9 @@ export function Notes({ history, notes, successMsg, onFetchNotes }) {
     }
   }, [notes]);
 
-  // useEffect(() => {
-  //   if (!_isEmpty(notes)) {
-  //     const {
-  //       custom: { notes: notesByUser },
-  //     } = notes;
-
-  //     const mappingNotes = notesByUser.map(note => ({
-  //       id: _get(note, 'key'),
-  //       title: _get(note, 'content'),
-  //       start: _get(note, 'start') || _get(note, 'day'),
-  //       end: _get(note, 'end') || _get(note, 'day'),
-  //       allDay: _get(note, 'allDay') || false,
-  //     }));
-
-  //     setEvents(mappingNotes);
-  //   }
-  // }, [notes]);
-
   const handleSelect = ({ start, end }) => {
-    const title = window.prompt('New Event name');
+    // eslint-disable-next-line no-alert
+    const title = window.prompt('Nội dung');
 
     if (title) {
       const newEvents = [
@@ -106,10 +65,20 @@ export function Notes({ history, notes, successMsg, onFetchNotes }) {
           title,
         },
       ];
-
+      setIsDurty(true);
       setEvents(newEvents);
     }
   };
+
+  const openEvents = event => {
+    modalShowTitle(event);
+  };
+
+  function modalShowTitle(event) {
+    Modal.success({
+      content: event.title,
+    });
+  }
 
   return (
     <NotesComponent>
@@ -136,8 +105,18 @@ export function Notes({ history, notes, successMsg, onFetchNotes }) {
         endAccessor="end"
         style={{ height: 500 }}
         onSelectSlot={handleSelect}
-        // onSelectEvent={event => alert(event.title)}
+        onSelectEvent={openEvents}
       />
+
+      <StyledButton
+        type="primary"
+        onClick={() => {
+          onUpdateNotes(events);
+        }}
+        disabled={!isDurty}
+      >
+        Lưu lại
+      </StyledButton>
     </NotesComponent>
   );
 }
@@ -170,9 +149,15 @@ const NotesComponent = styled.div`
   margin: auto;
 `;
 
+const StyledButton = styled(Button)`
+  float: right;
+  margin: 20px 0px 50px 0px;
+`;
+
 Notes.propTypes = {
   history: PropTypes.object,
   onFetchNotes: PropTypes.func,
+  onUpdateNotes: PropTypes.func,
   notes: PropTypes.any,
   // successMsg: PropTypes.bool,
 };
@@ -184,7 +169,7 @@ const mapStateToProps = createStructuredSelector({
 
 export function mapDispatchToProps(dispatch) {
   return {
-    // onUpdateKPI: data => dispatch(updateKPI(data)),
+    onUpdateNotes: data => dispatch(updateNotes(data)),
     onFetchNotes: () => dispatch(getNotes()),
   };
 }

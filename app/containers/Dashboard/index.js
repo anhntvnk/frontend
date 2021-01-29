@@ -63,7 +63,6 @@ export function Dashboard({ dashboards, onFetchDashboard }) {
       color: Color.green,
       title: 'Công việc hàng ngày',
       url: ROUTE.NOTES,
-      url: '',
     },
     {
       icon: 'kpi',

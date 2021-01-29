@@ -13,3 +13,6 @@
 export const GET_NOTES = 'vnk/Notes/GET_NOTES';
 export const GET_NOTES_SUCCESS = 'vnk/Notes/GET_NOTES_SUCCESS';
 export const GET_NOTES_ERROR = 'vnk/Notes/GET_NOTES_ERROR';
+export const UPDATE_NOTES = 'vnk/Notes/UPDATE_NOTES';
+export const UPDATE_NOTES_SUCCESS = 'vnk/Notes/UPDATE_NOTES_SUCCESS';
+export const UPDATE_NOTES_ERROR = 'vnk/Notes/UPDATE_NOTES_ERROR';

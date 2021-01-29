@@ -105,7 +105,6 @@ class Header extends React.Component {
       })
       .get(`${API.BASE_URL}/notify?access_token=${getToken()}&&${filter}`)
       .then(response => {
-        console.log(response);
         callback(response);
       })
       .catch(e => console.log(e));
@@ -147,6 +146,11 @@ class Header extends React.Component {
             </Menu.Item>
           );
         })}
+        {isLoggedIn() && (
+          <Menu.Item key="dashboard">
+            <Link to={ROUTE.DASHBOARD}>Bảng Điều Khiển</Link>
+          </Menu.Item>
+        )}
         {this.state.isMobile && isLoggedIn() && (
           <>
             <Menu.Item key="persional-infomation">
@@ -249,9 +253,7 @@ class Header extends React.Component {
                                 itemLayout="horizontal"
                                 dataSource={this.state.notifications}
                                 locale={{
-                                  emptyText: (
-                                    <>You have viewed all notifications.</>
-                                  ),
+                                  emptyText: <>Không có thông báo!</>,
                                 }}
                                 renderItem={item => (
                                   <List.Item

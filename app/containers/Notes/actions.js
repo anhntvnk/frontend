@@ -1,5 +1,5 @@
 /*
- * KPIs day Actions
+ * Notes day Actions
  *
  * Actions change things in your application
  * Since this boilerplate uses a uni-directional data flow, specifically redux,
@@ -31,6 +31,27 @@ export function getNotesSuccess(response) {
 }
 
 export function getNotesError(error) {
+  return {
+    type: GET_NOTES_ERROR,
+    error,
+  };
+}
+
+export function updateNotes(data) {
+  return {
+    type: GET_NOTES,
+    data,
+  };
+}
+
+export function updateNotesSuccess(response) {
+  return {
+    type: GET_NOTES_SUCCESS,
+    response,
+  };
+}
+
+export function updateNotesErrors(error) {
   return {
     type: GET_NOTES_ERROR,
     error,

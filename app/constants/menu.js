@@ -31,13 +31,4 @@ const menu = [
   },
 ];
 
-if (isLoggedIn()) {
-  menu.push({
-    exact: true,
-    path: ROUTE.DASHBOARD,
-    title: 'Bảng Điều Khiển',
-    key: 'dashboard',
-  });
-}
-
 export default menu;
