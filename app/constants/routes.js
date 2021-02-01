@@ -9,7 +9,6 @@ export default {
   REGISTER: '/register',
   CHANGE_PASSWORD: '/change-password',
   PACKAGES: '/packages',
-  REPORT: '/report',
   PROCEDURE: '/procedure',
   USER: '/user',
   PROJECT_DETAILS: '/projects/details',
@@ -19,4 +18,5 @@ export default {
   KPI_SETTINGS: '/kpi/settings',
   KPI_MONTH: '/kpi/montth',
   NOTES: '/notes',
+  REPORTS: '/reports',
 };

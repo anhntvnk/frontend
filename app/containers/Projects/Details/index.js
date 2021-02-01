@@ -173,7 +173,7 @@ export function ProjectDetails({ history, data }) {
               <DynamicForm data={data} />
             </TabPane>
             <TabPane tab="Giao việc" key="4">
-              Giao việc
+              Đang cập nhật...
             </TabPane>
           </Tabs>
         </Col>

@@ -132,29 +132,7 @@ export function AddProject({
         name="myp_add_project"
         layout="vertical"
         className="add-project-form"
-        initialValues={{
-          name: 'C99-test',
-          address: 'Hà Nội',
-          city: 'HN',
-          code: 'C99-VAI',
-          cost: '5436546',
-          country: 'Vietnam',
-          description: 'Automotic',
-          district: 'Thanh Oai',
-          image: '',
-          startX: '',
-          finishX: '',
-          floor_area: '500',
-          floor_count: '32434',
-          nha_thau_chinh: 'tuân anh',
-          nha_thau_phu: 'thúy nga',
-          note: 'note',
-          owner: 'Tuấn Anh',
-          sort_name: 'C99',
-          status: 'gfdgfd',
-          version: 'v1',
-          version_description: 'version 1',
-        }}
+        // initialValues={}
         onFinish={onFinish}
       >
         <Row gutter={{ xs: 8, sm: 24, md: 24, lg: 32 }}>
@@ -193,12 +171,12 @@ export function AddProject({
                         },
                       ]}
                     >
-                      <Input placeholder="Loại dự án:" />
+                      <Input />
                     </Form.Item>
                   </Col>
                   <Col lg={12} sm={24} xs={24}>
                     <Form.Item label="Viết tắt:" name="sort_name">
-                      <Input placeholder="Viết tắt:" />
+                      <Input />
                     </Form.Item>
                   </Col>
                 </Row>

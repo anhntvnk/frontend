@@ -1,14 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Card } from 'antd';
+import { Card, message } from 'antd';
 import { Link } from 'react-router-dom';
 import CountUp from 'react-countup';
 import iconMap from '../../utils/iconMap';
 import './numberCard.less';
 
-function NumberCard({ icon, color, title, number, countUp, url }) {
+function NumberCard({ icon, color, title, number, countUp, url, show }) {
   return (
-    <Link to={url}>
+    <Link
+      to={url}
+      onClick={() => {
+        if (!show && icon === 'report') {
+          message.warning('Bạn không có quyền xem chức năng này!');
+        }
+      }}
+    >
       <Card className="numberCard" bordered={false} bodyStyle={{ padding: 10 }}>
         <span className="iconWarp" style={{ color }}>
           {iconMap[icon]}
@@ -41,6 +48,7 @@ NumberCard.propTypes = {
   url: PropTypes.string,
   number: PropTypes.number,
   countUp: PropTypes.object,
+  show: PropTypes.bool,
 };
 
 export default NumberCard;

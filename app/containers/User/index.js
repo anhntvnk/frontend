@@ -7,7 +7,7 @@
 
 import React, { useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
-import { get as _get } from 'lodash';
+import { get as _get, upperCase } from 'lodash';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
@@ -35,13 +35,12 @@ export function User({ history, userProfile, onLoadUserProfile }) {
   useInjectReducer({ key, reducer });
   useInjectSaga({ key, saga });
 
-  console.log(userProfile);
   useEffect(() => {
     onLoadUserProfile();
   }, []);
 
-  const callback = value => {
-    console.log(value);
+  const callback = () => {
+    // console.log(value);
   };
 
   return (
@@ -138,14 +137,19 @@ export function User({ history, userProfile, onLoadUserProfile }) {
                         <b>Ghi chú</b>: {_get(userProfile, 'note')}
                       </Col>
                     </List.Item>
+                    <List.Item>
+                      <Col lg={24} style={{ textTransform: 'capitalize' }}>
+                        <b>Gói dịch vụ</b>: {_get(userProfile, 'package')}
+                      </Col>
+                    </List.Item>
                   </List>
                 </Profile>
               </TabPane>
               <TabPane tab="Giao việc" key="2">
-                Content of Tab Pane 2
+                Đang cập nhật...
               </TabPane>
               <TabPane tab="Ghi chú" key="3">
-                Content of Tab Pane 3
+                Đang cập nhật...
               </TabPane>
             </Tabs>
           </Col>

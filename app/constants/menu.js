@@ -4,8 +4,8 @@ import { isLoggedIn } from '../../services/auth';
 const menu = [
   {
     exact: true,
-    path: ROUTE.HOMEPAGE,
-    title: 'Trang Chủ',
+    path: !isLoggedIn() ? ROUTE.HOMEPAGE : ROUTE.DASHBOARD,
+    title: !isLoggedIn() ? 'Trang Chủ' : 'Bảng điều khiển',
     key: 'home',
     label: {
       iconClass: 'far fa-home-alt',

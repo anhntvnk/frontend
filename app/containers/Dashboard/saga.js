@@ -25,6 +25,7 @@ export function* getDataDashboard() {
   const countCompanyFollowed = `${API.BASE_URL}/user/${getUserId()}/companies/count?access_token=${getToken()}`;
   const countProjectsFollowed = `${API.BASE_URL}/FollowedProjects?access_token=${getToken}&${filter}`;
   const countProject = `${API.BASE_URL}/user/get-available-projects/${getUserId()}?access_token=${getToken()}`;
+  const user = `${API.BASE_URL}/user/${getUserId()}?access_token=${getToken()}`;
 
   try {
     const  repos = yield axios
@@ -33,6 +34,7 @@ export function* getDataDashboard() {
         axios.get(countCompanyFollowed),
         axios.get(countProjectsFollowed),
         axios.get(countProject),
+        axios.get(user),
       ])
       .then(
         axios.spread((...responses) => ({ dashboard: {
@@ -40,6 +42,7 @@ export function* getDataDashboard() {
           countCompanyFollowed: getDataResponse(responses[1]).count,
           countProjectsFollowed: getDataResponse(responses[2]).length,
           countProject: getDataResponse(responses[3]).length,
+          user: getDataResponse(responses[4]),
         }})),
       );
 

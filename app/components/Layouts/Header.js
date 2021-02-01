@@ -39,6 +39,7 @@ class Header extends React.Component {
     this.state = {
       isMobile,
       username: '',
+      menus: dataMenu,
       loading: false,
       hasMore: true,
       notifications: [],
@@ -75,6 +76,10 @@ class Header extends React.Component {
 
       this.fetchNotify(res => {
         this.setState({ notifications: this.mappingNotify(_get(res, 'data')) });
+      });
+
+      this.setState({
+        menus: dataMenu,
       });
     }
   }
@@ -135,7 +140,7 @@ class Header extends React.Component {
 
     return (
       <Menu mode={menuMode} selectedKeys={[activeMenuItem]} id="nav" key="nav">
-        {dataMenu.map(item => {
+        {this.state.menus.map(item => {
           if (item.isLogin === false) {
             return;
           }
@@ -146,11 +151,6 @@ class Header extends React.Component {
             </Menu.Item>
           );
         })}
-        {isLoggedIn() && (
-          <Menu.Item key="dashboard">
-            <Link to={ROUTE.DASHBOARD}>Bảng Điều Khiển</Link>
-          </Menu.Item>
-        )}
         {this.state.isMobile && isLoggedIn() && (
           <>
             <Menu.Item key="persional-infomation">

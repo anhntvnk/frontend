@@ -149,18 +149,12 @@ export function Companys({
     dataSource: companyData || defaultCompany,
     columns,
     loading: loading || isLoading,
-    // onChange: page => {
-    //   this.handleRefresh({
-    //     page: page.current,
-    //     pageSize: page.pageSize,
-    //   })
+    // rowSelection: {
+    //   selectedRowKeys,
+    //   onChange: selectedRowKey => {
+    //     setSelectedRowKeys(selectedRowKey);
+    //   },
     // },
-    rowSelection: {
-      selectedRowKeys,
-      onChange: selectedRowKey => {
-        setSelectedRowKeys(selectedRowKey);
-      },
-    },
   };
 
   const onFollow = (isFollow, companyId) => {

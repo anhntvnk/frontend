@@ -11,6 +11,7 @@ import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
+import { get as _get } from 'lodash';
 import { createStructuredSelector } from 'reselect';
 
 import { useInjectReducer } from 'utils/injectReducer';
@@ -40,6 +41,7 @@ export function Dashboard({ dashboards, onFetchDashboard }) {
     countCompanyFollowed,
     countProject,
     countProjectsFollowed,
+    user,
   } = dashboards;
 
   const Color = {
@@ -99,10 +101,20 @@ export function Dashboard({ dashboards, onFetchDashboard }) {
       url: ROUTE.COMPANY,
     },
     {
+      icon: 'profile',
+      color: Color.peach,
+      title: 'Thông tin cá nhân',
+      url: ROUTE.USER,
+    },
+    {
       icon: 'report',
       color: Color.purple,
       title: 'Báo cáo',
-      url: ROUTE.REPORT,
+      url:
+        _get(user, 'saleteam_position') === 'SALE_MANAGER'
+          ? ROUTE.REPORTS
+          : '#',
+      show: _get(user, 'saleteam_position') === 'SALE_MANAGER',
     },
   ];
 

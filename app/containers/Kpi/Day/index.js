@@ -30,6 +30,12 @@ export function KpiByDay({ history, kpis, onLoadKPIs }) {
     onLoadKPIs();
   }, []);
 
+  // useEffect(() => {
+  //   if (!kpis) {
+  //     message.success('Thiết lập KPIs hôm nay thành công!');
+  //   }
+  // }, [kpis]);
+
   return <KpiDay history={history} kpi={kpis} Back={ArrowLeftOutlined} />;
 }
 

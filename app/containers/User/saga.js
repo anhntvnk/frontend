@@ -10,14 +10,19 @@ import { LOAD_USER } from './constants';
 import { getToken, getUserId } from '../../../services/auth';
 
 export function* fetchProfile() {
-  // eslint-disable-next-line prettier/prettier
   const url = `${API.BASE_URL}/user/${getUserId()}?access_token=${getToken()}`;
 
   try {
     const response = yield call(request, url);
 
+    const orderUrl = `${API.BASE_URL}/order/findOne?access_token=${getToken()}`;
+    const filter = `filter[where][user_id]=${getUserId()}`;
+    const order = yield call(request, `${orderUrl}&${filter}`);
+
+    const data = { ...response, package: order.package || '' };
+
     if (response) {
-      yield put(loadUserProfileSuccess(response));
+      yield put(loadUserProfileSuccess(data));
     } else {
       yield put(loadUserProfileError('Đã có lỗi xảy ra !'));
     }

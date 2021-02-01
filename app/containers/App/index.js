@@ -28,6 +28,7 @@ import Register from 'containers/Register/Loadable';
 import ChangePassword from 'containers/ChangePassword/Loadable';
 import User from 'containers/User/Loadable';
 import Notes from 'containers/Notes/Loadable';
+import Reports from 'containers/Reports/Loadable';
 // import NotFoundPage from 'containers/NotFoundPage/Loadable';
 
 import { PrivateLayout, PublicLayout } from '../../components/Layouts';
@@ -66,6 +67,7 @@ const App = () => (
       <PrivateLayout exact path={ROUTE.KPI_SETTINGS} component={Settings} />
       <PrivateLayout exact path={ROUTE.KPI_MONTH} component={KpiMonth} />
       <PrivateLayout exact path={ROUTE.NOTES} component={Notes} />
+      <PrivateLayout exact path={ROUTE.REPORTS} component={Reports} />
       <PrivateLayout
         exact
         path={ROUTE.COMPANY}

@@ -3,6 +3,7 @@ import QueueAnim from 'rc-queue-anim';
 import TweenOne from 'rc-tween-one';
 import { Link } from 'react-router-dom';
 import BannerAnim, { Element } from 'rc-banner-anim';
+import styled from 'styled-components';
 import routes from '../../constants/routes';
 import logo from '../../assets/images/logo/logo@2x.png';
 import { isLoggedIn } from '../../../services/auth';
@@ -189,11 +190,13 @@ export default function Banner({ isMobile }) {
             <i key="bottom" className="horizontal bottom" /> */}
             <img key="img" alt="logo" src={logo} />
           </QueueAnim>
-          <p className="introduce" key="introduce">
-            Cảm nhận của khách tham dự! Bạn sẽ được cung cấp một quy trình bán
-            hàng tối ưu nhất, hướng dẫn chi tiết nhất để gia tăng doanh số ngay
-            lập tức khi sử dụng <b>My Project</b>.
-          </p>
+          <Introduce>
+            <p style={{ fontWeight: 600 }}>Save Time More Project</p>
+            <p>
+              Giúp bạn có nhiều dự án hơn với thời gian ít hơn cùng{' '}
+              <b>My Project</b>.
+            </p>
+          </Introduce>
           {!isLoggedIn() && (
             <div className="button-wrapper" key="button">
               <Link
@@ -216,3 +219,18 @@ export default function Banner({ isMobile }) {
     </BannerAnim>
   );
 }
+
+const Introduce = styled.div`
+  // background: #b7252c;
+  font-family: -apple-system, BlinkMacSystemFont, segoe ui, Roboto,
+    helvetica neue, Arial, noto sans, sans-serif, apple color emoji,
+    segoe ui emoji, segoe ui symbol, noto color emoji;
+  font-size: 16px;
+  line-height: 32px;
+  font-weight: 400;
+  max-width: 557px;
+  margin: 80px auto 64px;
+  @media screen and (max-width: 767px) {
+    margin: 15px auto 50px;
+  }
+`;

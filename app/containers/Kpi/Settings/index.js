@@ -82,13 +82,24 @@ export function Settings({
     }
   }, [successMsg]);
 
+  useEffect(() => {
+    if (kpi) {
+      setFommValues({
+        cuoc_goi: _get(kpi, 'cuoc_goi'),
+        lich_hen_gap: _get(kpi, 'lich_hen_gap'),
+        chao_gia: _get(kpi, 'chao_gia'),
+        chot_don_hang: _get(kpi, 'chot_don_hang'),
+      });
+    }
+  }, [kpi]);
+
   const [formValues, setFommValues] = useReducer(
     (state, newState) => ({ ...state, ...newState }),
     {
       cuoc_goi: 0,
       lich_hen_gap: 0,
       chao_gia: 0,
-      chot_don: 0,
+      chot_don_hang: 0,
     },
   );
 
@@ -122,7 +133,6 @@ export function Settings({
           <b>
             1. Cuộc gọi (<Point point="1" />)
           </b>
-          {_get(kpi, 'phone')}
         </>
       ),
     },
@@ -135,7 +145,6 @@ export function Settings({
           <b>
             2. Lịch hẹn gặp (<Point point="3" />)
           </b>
-          : {_get(kpi, 'phone')}
         </>
       ),
     },
@@ -150,12 +159,11 @@ export function Settings({
           <b>
             3. Chào giá (<Point point="5" />)
           </b>
-          : {_get(kpi, 'phone')}
         </>
       ),
     },
     {
-      key: 'chot_don',
+      key: 'chot_don_hang',
       label: 'Chốt đơn hàng',
       iconElement: (
         <>
@@ -169,7 +177,6 @@ export function Settings({
           <b>
             4. Chốt đơn hàng (<Point point="15" />)
           </b>
-          : {_get(kpi, 'phone')}
         </>
       ),
     },
@@ -251,7 +258,7 @@ export function Settings({
                 <h3>TỰ ĐÁNH GIÁ KPIs: </h3>
                 <List size="small" bordered>
                   {elements.map(el => (
-                    <List.Item>
+                    <List.Item key={el.key}>
                       <Col lg={12}>{el.iconElement}</Col>
                       <Col lg={12}>
                         <Form.Item>

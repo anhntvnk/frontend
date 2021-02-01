@@ -23,4 +23,5 @@ export default {
   user: <UserOutlined />,
   api: <ApiOutlined />,
   search: <SearchOutlined />,
+  profile: <UserOutlined />,
 };

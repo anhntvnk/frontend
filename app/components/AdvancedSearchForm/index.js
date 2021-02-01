@@ -4,6 +4,8 @@ import { Form, Row, Col, Input, Button, Select, DatePicker } from 'antd';
 import locale from 'antd/es/date-picker/locale/vi_VN';
 import './styles.less';
 import { citys, stages, types } from './constants';
+import { Link } from 'react-router-dom';
+import routes from '../../constants/routes';
 
 const { Option } = Select;
 
@@ -186,7 +188,14 @@ const AdvancedSearchForm = ({
         </Col>
       </Row>
       <Row>
-        <Col span={24} style={{ textAlign: 'right' }}>
+        <Col span={12} style={{ textAlign: 'left' }}>
+          <Link component="a" toHash={false} to={routes.PROJECT_ADDNEW}>
+            <Button style={{ marginLeft: '5px' }} type="primary">
+              Thêm dự án
+            </Button>
+          </Link>
+        </Col>
+        <Col span={12} style={{ textAlign: 'right' }}>
           <Button type="primary" htmlType="submit">
             Tìm kiếm
           </Button>
