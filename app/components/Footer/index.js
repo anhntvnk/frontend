@@ -52,13 +52,8 @@ function Footer() {
               }}
             />
             <ChatNow>
-              <p>Chat với chúng tôi để được hỗ trợ ngay</p>
-              <a
-                target="_blank"
-                href="https://m.me/718183361653935?ref=Default-Block"
-              >
-                Chát Ngay
-              </a>
+              <p>Nếu bạn cần gia tăng doanh số?</p>
+              <p>Tôi xin sẵn sàng phục vụ bạn!</p>
             </ChatNow>
           </VnkAdress>
         </Col>
@@ -93,10 +88,10 @@ function Footer() {
             <p>
               <span>Hotline: 091 280 89 96</span>
             </p>
-            <p>
+            <p style={{ display: 'flex', alignItems: 'center' }}>
               <MailOutlined />
               &ensp;
-              <span>Email: cskh@vnk.com.vn</span>
+              <span>Email: crm@myp.vn</span>
             </p>
           </Card>
         </Support>
@@ -116,7 +111,7 @@ function Footer() {
           </Card>
         </Chairman>
         <Copyright>
-          <Col span={12}>@Copyright by MYP - Một sản phẩm của VNK</Col>
+          <Col span={12}>@Copyright by MYP - Một sản phầm của MYP</Col>
           <Col span={12}>
             <a className="logo" href="/">
               <img
@@ -134,7 +129,7 @@ function Footer() {
 
 const ChatNow = styled.div`
   text-align: center;
-  margin-top: 20px;
+  margin-top: 50px;
 
   .ant-btn,
   .ant-btn:hover,

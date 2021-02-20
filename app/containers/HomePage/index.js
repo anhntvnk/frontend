@@ -11,6 +11,7 @@ import React, { memo } from 'react';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
+import MessengerCustomerChat from 'react-messenger-customer-chat';
 
 import H1 from 'components/H1';
 import H3 from 'components/H3';
@@ -316,6 +317,11 @@ export function HomePage() {
               </a>
             </ImgDownload>
           </Col>
+
+          <MessengerCustomerChat
+            pageId="718183361653935"
+            appId="814098585836431"
+          />
         </Row>
       </div>
     </div>
