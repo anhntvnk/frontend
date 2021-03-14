@@ -18,6 +18,8 @@ import {
   PhoneTwoTone,
 } from '@ant-design/icons';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
+import ROUTE from '../../constants/routes';
 import { stateDefault } from '../../containers/Kpi/Settings/constants';
 
 // eslint-disable-next-line react/prop-types
@@ -102,7 +104,15 @@ function Kpi({ kpi, history, Back }) {
           </Col>
           <Col lg={16} xs={24}>
             <Profile>
-              <h3>KPIs tháng </h3>
+              <StyledKpis>
+                <h3>KPIs</h3>
+                <Button
+                  type="primary"
+                  // shape="round"
+                >
+                  <Link to={ROUTE.KPI_SETTINGS}>Tự đánh giá KPIs</Link>
+                </Button>
+              </StyledKpis>
               <List size="small" bordered>
                 <List.Item>
                   <Col lg={12}>
@@ -267,8 +277,10 @@ const Profile = styled.div`
     }
   }
 
-  .ant-btn {
-    cursor: auto;
+  .ant-list {
+    .ant-btn {
+      cursor: auto;
+    }
   }
 `;
 
@@ -396,6 +408,11 @@ const Text = styled.span`
     padding: 0px 10px;
     margin-right: 6px;
   }
+`;
+
+const StyledKpis = styled.div`
+  display: flex;
+  justify-content: space-between;
 `;
 
 Kpi.propTypes = {

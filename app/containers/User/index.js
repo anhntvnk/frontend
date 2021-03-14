@@ -7,7 +7,7 @@
 
 import React, { useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
-import { get as _get, upperCase } from 'lodash';
+import { get as _get } from 'lodash';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
@@ -38,10 +38,6 @@ export function User({ history, userProfile, onLoadUserProfile }) {
   useEffect(() => {
     onLoadUserProfile();
   }, []);
-
-  const callback = () => {
-    // console.log(value);
-  };
 
   return (
     <UserProfile>
@@ -93,15 +89,10 @@ export function User({ history, userProfile, onLoadUserProfile }) {
             </CardStatus>
           </Col>
           <Col lg={16} xs={24}>
-            <Tabs onChange={callback} type="card">
+            <Tabs type="card">
               <TabPane tab="Liên hệ" key="profile">
                 <Profile>
-                  <List
-                    size="small"
-                    // header={<div>Header</div>}
-                    // footer={<div>Footer</div>}
-                    bordered
-                  >
+                  <List size="small" bordered>
                     <List.Item>
                       <Col lg={12}>
                         <b>Mobile</b>: {_get(userProfile, 'phone')}
@@ -138,8 +129,14 @@ export function User({ history, userProfile, onLoadUserProfile }) {
                       </Col>
                     </List.Item>
                     <List.Item>
-                      <Col lg={24} style={{ textTransform: 'capitalize' }}>
+                      <Col lg={12} style={{ textTransform: 'capitalize' }}>
                         <b>Gói dịch vụ</b>: {_get(userProfile, 'package')}
+                      </Col>
+                      <Col lg={12} style={{ textTransform: 'capitalize' }}>
+                        <b>Ngày hết hạn</b>:{' '}
+                        {moment(_get(userProfile, 'expireDate')).format(
+                          'D/M/YYYY',
+                        )}
                       </Col>
                     </List.Item>
                   </List>
@@ -231,53 +228,6 @@ const UserProfile = styled.div`
   dispay: block;
   max-width: 800px;
   margin: 30px auto;
-`;
-
-const Status = styled.section`
-  display: grid;
-  justify-content: ${props => props.flexCenter || 'flex-end'};
-  align-items: center;
-  text-align: center;
-  padding-top: ${props => (props.flexCenter ? '10px' : '20px')};
-  @media only screen and (max-width: 767.99px) {
-    padding-top: 16px;
-  }
-
-  span {
-    font-weight: 600;
-    font-size: 24px;
-  }
-`;
-
-const StatusItem = styled.div`
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  width: 126px;
-  height: 126px;
-  background: ${props => props.bgColor};
-  box-shadow: ${props =>
-    props.bgColor ? '0px 4px 4px rgba(0, 0, 0, 0.25)' : ''};
-  border-radius: 50%;
-  -moz-border-radius: 50%;
-  -webkit-border-radius: 50%;
-  h1 {
-    margin-bottom: 0;
-    font-size: 15px;
-    padding: 10px;
-  }
-
-  img {
-    height: 118px;
-    @media only screen and (max-width: 767.99px) {
-      height: 50px;
-    }
-  }
-
-  @media only screen and (max-width: 767.99px) {
-    width: ${props => (props.mobile ? '90px' : '50px')};
-    height: ${props => (props.mobile ? '90px' : '50px')};
-  }
 `;
 
 const CardStatus = styled.div`

@@ -14,7 +14,6 @@ import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { Avatar } from 'antd';
-import { LikeFilled } from '@ant-design/icons';
 import { createStructuredSelector } from 'reselect';
 
 import { useInjectReducer } from 'utils/injectReducer';
@@ -62,7 +61,6 @@ export function Companys({
   const defaultCompany =
     copmpanyType === 'company-follow' ? companyFollows : companys;
 
-  const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const [companyData, setCompanyData] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -149,12 +147,6 @@ export function Companys({
     dataSource: companyData || defaultCompany,
     columns,
     loading: loading || isLoading,
-    // rowSelection: {
-    //   selectedRowKeys,
-    //   onChange: selectedRowKey => {
-    //     setSelectedRowKeys(selectedRowKey);
-    //   },
-    // },
   };
 
   const onFollow = (isFollow, companyId) => {

@@ -15,9 +15,9 @@ import { Layout } from 'antd';
 // Custom Components
 import VnkFooter from '../Footer';
 import MypHeader from './Header';
-// import { isLoggedIn } from '../../../services/auth';
+import { menuPrivate, menus } from '../../constants/menu';
+import { isLoggedIn } from '../../../services/auth';
 // Utilities, Constants & Styles
-// import { ROUTE } from '../../constants';
 import '../../scss/components/layouts/layouts.less';
 import './static/index.less';
 
@@ -34,10 +34,11 @@ export default ({ component: Component, getComponent, ...remain }) => (
       const { location } = props;
       const module = location.pathname.replace(/(^\/|\/$)/g, '').split('/')[0];
       const hasFooter = ['login', 'register', 'dashboard', 'change-password'];
+      const menuLogin = !isLoggedIn() ? menus : menuPrivate;
 
       return (
         <Layout>
-          <MypHeader {...remain} />
+          <MypHeader {...remain} menus={menuLogin} />
           <Content>
             {getComponent ? getComponent({ props }) : <Component {...props} />}
           </Content>

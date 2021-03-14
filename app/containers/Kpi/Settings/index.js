@@ -217,7 +217,7 @@ export function Settings({
         >
           Quay lại
         </Button>
-        <h1>KPIs: Chấm lương ngày hôm nay</h1>
+        <h1>Tự đánh giá KPIs ngày hôm nay</h1>
       </CenteredSectionWithBack>
       <KpiState>
         <Form name="validate_settings" onFinish={onSettingsKPI}>

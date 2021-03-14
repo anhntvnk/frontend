@@ -12,7 +12,6 @@ import { BellOutlined, RightOutlined } from '@ant-design/icons';
 import { enquireScreen } from 'enquire-js';
 import Avatar from 'react-avatar';
 import ROUTE from '../../constants/routes';
-import dataMenu from '../../constants/menu';
 import PhoneNav from './PhoneNav';
 import logo from '../../assets/images/logo/logo.png';
 import Banner from './Banner';
@@ -39,7 +38,6 @@ class Header extends React.Component {
     this.state = {
       isMobile,
       username: '',
-      menus: dataMenu,
       loading: false,
       hasMore: true,
       notifications: [],
@@ -76,10 +74,6 @@ class Header extends React.Component {
 
       this.fetchNotify(res => {
         this.setState({ notifications: this.mappingNotify(_get(res, 'data')) });
-      });
-
-      this.setState({
-        menus: dataMenu,
       });
     }
   }
@@ -130,7 +124,7 @@ class Header extends React.Component {
     }, limit * page + 1);
   };
 
-  getMenuToRender = history => {
+  getMenuToRender = (history, menus) => {
     // eslint-disable-next-line react/prop-types
     const { location } = this.props;
 
@@ -140,7 +134,7 @@ class Header extends React.Component {
 
     return (
       <Menu mode={menuMode} selectedKeys={[activeMenuItem]} id="nav" key="nav">
-        {this.state.menus.map(item => {
+        {menus.map(item => {
           if (item.isLogin === false) {
             return;
           }
@@ -208,8 +202,8 @@ class Header extends React.Component {
 
   render() {
     // eslint-disable-next-line react/prop-typesnotifications
-    const { location, history } = this.props;
-    const menu = this.getMenuToRender(history);
+    const { location, history, menus } = this.props;
+    const menu = this.getMenuToRender(history, menus);
     const module = location.pathname.replace(/(^\/|\/$)/g, '').split('/')[0];
     return (
       <>
@@ -410,6 +404,7 @@ const DescriptionNotify = styled.div`
 Header.propTypes = {
   location: PropTypes.object,
   history: PropTypes.object,
+  menus: PropTypes.object,
 };
 
 export default withRouter(Header);

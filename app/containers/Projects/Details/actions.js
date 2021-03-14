@@ -19,6 +19,9 @@ import {
   LOAD_PROJECT_DETAILS,
   LOAD_PROJECT_DETAILS_SUCCESS,
   LOAD_PROJECT_DETAILS_ERROR,
+  ADD_PROJECT_CONTACT,
+  ADD_PROJECT_CONTACT_SUCCESS,
+  ADD_PROJECT_CONTACT_ERROR,
 } from './constants';
 
 /**
@@ -57,6 +60,46 @@ export function loadProjectDetailsSuccess(response) {
 export function loadProjectDetailsError(error) {
   return {
     type: LOAD_PROJECT_DETAILS_ERROR,
+    error,
+  };
+}
+
+/**
+ * Load the repositories, this action starts the request saga
+ *
+ * @return {object} An action object with a type of LOAD_PROJECT_DETAILS
+ */
+export function addProjectContact(data) {
+  return {
+    type: ADD_PROJECT_CONTACT,
+    data,
+  };
+}
+
+/**
+ * Dispatched when the repositories are loaded by the request saga
+ *
+ * @param  {array} repos The repository data
+ *
+ * @return {object}
+ */
+export function addProjectContactSuccess(response) {
+  return {
+    type: ADD_PROJECT_CONTACT_SUCCESS,
+    response,
+  };
+}
+
+/**
+ * Dispatched when loading the repositories fails
+ *
+ * @param  {object} error The error
+ *
+ * @return {object}       An action object with a type of LOAD_PROJECT_DETAILS_ERROR passing the error
+ */
+export function addProjectContactError(error) {
+  return {
+    type: ADD_PROJECT_CONTACT_ERROR,
     error,
   };
 }

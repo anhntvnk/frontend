@@ -11,15 +11,14 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { Helmet } from 'react-helmet';
 import { ArrowLeftOutlined } from '@ant-design/icons';
-import { Calendar, momentLocalizer } from 'react-big-calendar';
+import { Calendar, Views, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
-import { isEmpty as _isEmpty, get as _get } from 'lodash';
 import { createStructuredSelector } from 'reselect';
 import { useInjectReducer } from 'utils/injectReducer';
 import { useInjectSaga } from 'utils/injectSaga';
 import { Button, Modal } from 'antd';
 import styled from 'styled-components';
-import { makeSelectNotes } from './selectors';
+import { makeSelectNotes, makeSelectUserData } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 import { getNotes, updateNotes } from './actions';
@@ -32,6 +31,7 @@ const localizer = momentLocalizer(moment);
 export function Notes({
   history,
   notes,
+  userData,
   successMsg,
   onFetchNotes,
   onUpdateNotes,
@@ -65,6 +65,7 @@ export function Notes({
           title,
         },
       ];
+
       setIsDurty(true);
       setEvents(newEvents);
     }
@@ -100,7 +101,9 @@ export function Notes({
       <Calendar
         selectable
         localizer={localizer}
+        culture="ar-AE"
         events={events || notes}
+        defaultView={Views.WEEK}
         startAccessor="start"
         endAccessor="end"
         style={{ height: 500 }}
@@ -111,7 +114,8 @@ export function Notes({
       <StyledButton
         type="primary"
         onClick={() => {
-          onUpdateNotes(events);
+          Object.assign(userData.custom.notes, events);
+          // onUpdateNotes(events);
         }}
         disabled={!isDurty}
       >
@@ -159,12 +163,13 @@ Notes.propTypes = {
   onFetchNotes: PropTypes.func,
   onUpdateNotes: PropTypes.func,
   notes: PropTypes.any,
+  userData: PropTypes.object,
   // successMsg: PropTypes.bool,
 };
 
 const mapStateToProps = createStructuredSelector({
   notes: makeSelectNotes(),
-  // successMsg: makeSelectKPISettingsMsg(),
+  userData: makeSelectUserData(),
 });
 
 export function mapDispatchToProps(dispatch) {

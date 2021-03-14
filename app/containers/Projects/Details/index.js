@@ -13,7 +13,7 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import moment from 'moment';
 import { get as _get } from 'lodash';
-import { Row, Col, Tabs, Button } from 'antd';
+import { Row, Col, Tabs, Button, message } from 'antd';
 import {
   ScheduleTwoTone,
   HomeTwoTone,
@@ -28,10 +28,11 @@ import CenteredSectionWithBack from 'components/CenteredSectionWithBack';
 import ProjectDetailsMobile from 'components/Projects/DetailsMobile';
 import ProjectDetailsWeb from 'components/Projects/DetailsWeb';
 import DynamicForm from 'components/Projects/DynamicForm';
-import Contact from 'components/Projects/Contact';
+import { Contact, ContactModal } from 'components/Projects/Contact';
 import H2 from 'components/H2';
 import styled from 'styled-components';
-import { makeSelectProjects } from './selectors';
+import { makeSelectSuccessMsg } from './selectors';
+import { addProjectContact } from './actions';
 import reducer from './reducer';
 import saga from './saga';
 import './styles.less';
@@ -70,11 +71,19 @@ enquireScreen(b => {
   mobileScreen = b;
 });
 
-export function ProjectDetails({ history, data }) {
+export function ProjectDetails({
+  history,
+  data,
+  successMsg,
+  addContactProject,
+}) {
   useInjectReducer({ key, reducer });
   useInjectSaga({ key, saga });
 
   const [isMobile, setIsMobile] = useState(mobileScreen);
+  const [visible, setVisible] = useState(false);
+  const [projectDetails, setProjectDetails] = useState([]);
+
   useEffect(() => {
     enquireScreen(b => {
       setIsMobile({
@@ -83,10 +92,34 @@ export function ProjectDetails({ history, data }) {
     });
   }, []);
 
+  useEffect(() => {
+    if (successMsg) {
+      message.success('Thêm người liên hệ thành công!');
+      history.replace({ ...history.location, state: { data: projectDetails } });
+    }
+  }, [successMsg, projectDetails]);
+
   const changeStatus = project => {
     history.push(ROUTE.PROCEDURE, {
       data: project,
     });
+  };
+
+  const onCreate = formValues => {
+    const { contacts } = data;
+
+    const contact = {
+      ...formValues,
+      company_id: '',
+      contact_index: contacts ? contacts.length : 0,
+    };
+
+    const newContacts = contacts ? contacts.concat(contact) : [contact];
+
+    const project = { ...data, contacts: newContacts };
+    addContactProject(project);
+    setProjectDetails(project);
+    setVisible(false);
   };
 
   return (
@@ -167,7 +200,7 @@ export function ProjectDetails({ history, data }) {
               )}
             </TabPane>
             <TabPane tab="Người liên hệ" key="2">
-              <Contact data={data} />
+              <Contact data={data} setVisible={setVisible} />
             </TabPane>
             <TabPane tab="Ghi chú" key="3">
               <DynamicForm data={data} />
@@ -178,28 +211,37 @@ export function ProjectDetails({ history, data }) {
           </Tabs>
         </Col>
       </Row>
+      <ContactModal
+        visible={visible}
+        onCreate={onCreate}
+        onCancel={() => {
+          setVisible(false);
+        }}
+      />
     </Details>
   );
 }
 
 ProjectDetails.propTypes = {
+  successMsg: PropTypes.bool,
   history: PropTypes.object,
   data: PropTypes.object,
+  addContactProject: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
-  projectDetails: makeSelectProjects(),
+  successMsg: makeSelectSuccessMsg(),
 });
 
-// export function mapDispatchToProps(dispatch) {
-//   return {
-//     onFetchProjectDetails: projectId => dispatch(loadProjectDetails(projectId)),
-//   };
-// }
+export function mapDispatchToProps(dispatch) {
+  return {
+    addContactProject: data => dispatch(addProjectContact(data)),
+  };
+}
 
 const withConnect = connect(
   mapStateToProps,
-  null,
+  mapDispatchToProps,
 );
 
 export default compose(withConnect)(withRouter(ProjectDetails));

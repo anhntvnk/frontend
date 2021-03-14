@@ -19,7 +19,11 @@ export function* fetchProfile() {
     const filter = `filter[where][user_id]=${getUserId()}`;
     const order = yield call(request, `${orderUrl}&${filter}`);
 
-    const data = { ...response, package: order.package || '' };
+    const data = {
+      ...response,
+      package: order.package || '',
+      expireDate: order.expire_date || '',
+    };
 
     if (response) {
       yield put(loadUserProfileSuccess(data));

@@ -7,10 +7,10 @@ import { initialState } from './reducer';
 
 const selectProjects = state => state.projectDetails || initialState;
 
-const makeSelectProjects = () =>
+const makeSelectSuccessMsg = () =>
   createSelector(
     selectProjects,
-    state => state.projectDetails,
+    state => state.successMsg,
   );
 
-export { makeSelectProjects };
+export { makeSelectSuccessMsg };

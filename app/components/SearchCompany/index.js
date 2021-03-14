@@ -74,10 +74,10 @@ const SearchCompany = ({
               }
             >
               <Option key="all-company" value={0}>
-                Toàn bộ dự án
+                Toàn bộ công ty
               </Option>
               <Option key="company-follow" value={1}>
-                Dự án đang theo dõi
+                Công ty đang theo dõi
               </Option>
             </Select>
           </Form.Item>

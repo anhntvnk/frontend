@@ -13,13 +13,13 @@ import { Route, Redirect } from 'react-router-dom';
 import { Layout } from 'antd';
 
 // Custom Components
-// import VnkFooter from '../Footer';
 import MypHeader from './Header';
 import { isLoggedIn } from '../../../services/auth';
 // Utilities, Constants & Styles
 import { ROUTE } from '../../constants';
 import '../../scss/components/layouts/layouts.less';
 import './static/index.less';
+import { menuPrivate } from '../../constants/menu';
 
 const { Content } = Layout;
 
@@ -32,13 +32,10 @@ export default ({ component: Component, getComponent, ...remain }) => (
     render={props =>
       isLoggedIn() ? (
         <Layout>
-          <MypHeader {...props} />
+          <MypHeader {...props} menus={menuPrivate} />
           <Content>
             {getComponent ? getComponent({ props }) : <Component {...props} />}
           </Content>
-          {/* <div className="vnk-footer">
-            <VnkFooter />
-          </div> */}
         </Layout>
       ) : (
         <Redirect to={ROUTE.LOGIN} />

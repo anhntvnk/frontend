@@ -15,7 +15,12 @@
  *    }
  */
 
-import { GET_NOTES, GET_NOTES_SUCCESS, GET_NOTES_ERROR } from './constants';
+import {
+  GET_NOTES,
+  GET_NOTES_SUCCESS,
+  GET_NOTES_ERROR,
+  UPDATE_NOTES,
+} from './constants';
 
 export function getNotes() {
   return {
@@ -39,7 +44,7 @@ export function getNotesError(error) {
 
 export function updateNotes(data) {
   return {
-    type: GET_NOTES,
+    type: UPDATE_NOTES,
     data,
   };
 }

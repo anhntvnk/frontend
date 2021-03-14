@@ -12,10 +12,10 @@ const makeSelectNotes = () =>
     select,
     state => state.notes,
   );
-// const makeSelectKPISettingsMsg = () =>
-//   createSelector(
-//     select,
-//     state => state.successMsg,
-//   );
+const makeSelectUserData = () =>
+  createSelector(
+    select,
+    state => state.userData,
+  );
 
-export { select, makeSelectNotes };
+export { select, makeSelectNotes, makeSelectUserData };

@@ -29,8 +29,8 @@ import { makeSelectRegister } from './selectors';
 const key = 'register';
 
 export function Register({ onRegister, user }) {
-    useInjectReducer({ key, reducer });
-    useInjectSaga({ key, saga });
+  useInjectReducer({ key, reducer });
+  useInjectSaga({ key, saga });
 
   useEffect(() => {
     if (user) {
@@ -129,9 +129,7 @@ export function Register({ onRegister, user }) {
                   return Promise.resolve();
                 }
                 // eslint-disable-next-line prefer-promise-reject-errors
-                return Promise.reject(
-                  'Mật khẩu nhập lại là không khớp!',
-                );
+                return Promise.reject('Mật khẩu nhập lại là không khớp!');
               },
             }),
           ]}
@@ -159,8 +157,8 @@ export function Register({ onRegister, user }) {
 }
 
 Register.propTypes = {
-    onRegister: PropTypes.func,
-    user: PropTypes.array,
+  onRegister: PropTypes.func,
+  user: PropTypes.array,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -169,7 +167,7 @@ const mapStateToProps = createStructuredSelector({
 
 export function mapDispatchToProps(dispatch) {
   return {
-    onRegister: (data) => dispatch(registerAccount(data)),
+    onRegister: data => dispatch(registerAccount(data)),
   };
 }
 

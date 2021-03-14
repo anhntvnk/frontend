@@ -21,7 +21,8 @@ import { getToken, getUserId } from '../../../services/auth';
 
 export function* getCompanys() {
   // get all company
-  const reqCompany = `${API.BASE_URL}/company`;
+  // eslint-disable-next-line prettier/prettier
+  const reqCompany = `${API.BASE_URL}/company?filter[order]=latest_update%20ASC`;
   const reqCompanyFollow = `${API.BASE_URL}/user/${getUserId()}/companies`;
 
   try {

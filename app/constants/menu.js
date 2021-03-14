@@ -1,11 +1,10 @@
 import ROUTE from './routes';
-import { isLoggedIn } from '../../services/auth';
 
-const menu = [
+const menus = [
   {
     exact: true,
-    path: !isLoggedIn() ? ROUTE.HOMEPAGE : ROUTE.DASHBOARD,
-    title: !isLoggedIn() ? 'Trang Chủ' : 'Bảng điều khiển',
+    path: ROUTE.HOMEPAGE,
+    title: 'Trang Chủ',
     key: 'home',
     label: {
       iconClass: 'far fa-home-alt',
@@ -31,4 +30,34 @@ const menu = [
   },
 ];
 
-export default menu;
+const menuPrivate = [
+  {
+    exact: true,
+    path: ROUTE.DASHBOARD,
+    title: 'Bảng điều khiển',
+    key: 'dashboard',
+    label: {
+      iconClass: 'far fa-home-alt',
+    },
+  },
+  {
+    exact: true,
+    path: ROUTE.COMPANY,
+    title: 'Công Ty',
+    key: 'companys',
+    label: {
+      iconClass: 'far fa-home-alt',
+    },
+  },
+  {
+    exact: true,
+    path: ROUTE.PROJECT,
+    title: 'Dự Án',
+    key: 'projects',
+    label: {
+      iconClass: 'far fa-home-alt',
+    },
+  },
+];
+
+export { menus, menuPrivate };

@@ -15,6 +15,7 @@ import { GET_NOTES_SUCCESS } from './constants';
 // The initial state of the App
 export const initialState = {
   notes: [],
+  userData: {},
   successMsg: false,
 };
 
@@ -36,9 +37,11 @@ const notesReducer = (state = initialState, action) =>
           response: {
             custom: { notes },
           },
+          response,
         } = action;
         if (!_isEmpty(notes)) {
           draft.notes = mappingNotes(notes);
+          draft.userData = response;
         } else {
           draft.notes = [];
         }

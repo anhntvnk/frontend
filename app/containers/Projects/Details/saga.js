@@ -3,26 +3,29 @@
  */
 
 import { call, put, takeLatest } from 'redux-saga/effects';
-import request from 'utils/request';
-import { loadProjectDetailsSuccess, loadProjectDetailsError } from './actions';
+import { fetchAxios } from 'utils/request';
+import { addProjectContactError, addProjectContactSuccess } from './actions';
 import API from '../../../constants/apis';
 
-import { LOAD_PROJECT_DETAILS } from './constants';
-import { getToken } from '../../../../services/auth';
+import { ADD_PROJECT_CONTACT } from './constants';
+// import { getToken } from '../../../../services/auth';
 
-export function* getProjectDetails(actionData) {
-  const { projectID } = actionData;
-
-  const requestURL = `${
-    API.BASE_URL
-  }/project/${projectID}?access_token=${getToken()}`;
+export function* addProjectContact(actionData) {
+  const { data } = actionData;
+  const url = `${API.BASE_URL}/FollowedProjects/${data.id}`;
 
   try {
-    const repos = yield call(request, requestURL);
+    const response = yield call(fetchAxios, {
+      method: 'put',
+      url,
+      headers: { 'Content-Type': 'application/json' },
+      responseType: 'json',
+      data,
+    });
 
-    yield put(loadProjectDetailsSuccess(repos));
+    yield put(addProjectContactSuccess(response));
   } catch (err) {
-    yield put(loadProjectDetailsError(err));
+    yield put(addProjectContactError(err));
   }
 }
 
@@ -33,5 +36,5 @@ export default function* projectDetails() {
   // By using `takeLatest` only the result of the latest API call is applied.
   // It returns task descriptor (just like fork) so we can continue execution
   // It will be cancelled automatically on component unmount
-  yield takeLatest(LOAD_PROJECT_DETAILS, getProjectDetails);
+  yield takeLatest(ADD_PROJECT_CONTACT, addProjectContact);
 }
