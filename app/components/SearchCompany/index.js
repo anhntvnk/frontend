@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { Form, Row, Col, Input, Button, Select } from 'antd';
 import { citys } from './constants';
 import './styles.less';
+import routes from '../../constants/routes';
+import { Link } from 'react-router-dom';
 
 const { Option } = Select;
 
@@ -84,7 +86,14 @@ const SearchCompany = ({
         </Col>
       </Row>
       <Row>
-        <Col span={24} style={{ textAlign: 'right' }}>
+        <Col span={12} style={{ textAlign: 'left' }}>
+          <Link component="a" toHash={false} to={routes.COMPANY_ADDNEW}>
+            <Button style={{ marginLeft: '5px' }} type="primary">
+              Thêm Công Ty
+            </Button>
+          </Link>
+        </Col>
+        <Col span={12} style={{ textAlign: 'right' }}>
           <Button type="primary" htmlType="submit">
             Tìm kiếm
           </Button>

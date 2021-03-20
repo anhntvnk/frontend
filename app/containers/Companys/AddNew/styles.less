@@ -1,0 +1,164 @@
+@import '../../../scss/_variables.less';
+
+.add-company {
+  max-width: 1200px;
+  display: block;
+  margin: 50px auto;
+
+  @media only screen and (max-width: 767.99px) {
+    section {
+      margin: auto;
+    }
+    .status-box {
+      margin: 15px auto;
+    }
+    .company-name {
+      order: 2;
+      margin: 15px;
+    }
+    // padding: 20px 10px;
+    margin: 20px auto;
+  }
+
+  .title {
+    text-transform: uppercase;
+  }
+  .group-item {
+    background: #ffffff;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 20px;
+    @media only screen and (max-width: 767.99px) {
+      margin-bottom: 15px;
+    }
+  }
+
+  .ant-form-item {
+    margin-bottom: 12px;
+
+    .ant-upload {
+      background-image: url('../../../assets/images/home/img2.png');
+      background-repeat: no-repeat, repeat;
+      background-position: center;
+      height: 245px;
+    }
+  }
+
+  .status {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding-right: 20px;
+    height: 178px;
+    background: #ffffff;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+
+    .calendar {
+      display: flex;
+      align-items: center;
+      padding: 10px;
+
+      .anticon-schedule, .anticon-home {
+        font-size: 16px;
+        padding-right: 5px;
+      }
+    }
+
+    .status-icon {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      width: 126px;
+      height: 126px;
+      background: #e8f96c;
+      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+      border-radius: 50%;
+      -moz-border-radius: 50%;
+      -webkit-border-radius: 50%;
+
+      span {
+        font-size: 16px;
+        line-height: 38px;
+        color: #131313;
+        font-weight: bold;
+        text-align: center;
+      }
+    }
+  }
+
+  .ant-upload {
+    background: transparent;
+    border: none;
+
+    .btn-upload {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: auto;
+      width: 100px;
+      height: 40px;
+      color: red !important;
+      background: rgba(255, 255, 255, 0.8);
+      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+      border-radius: 60px;
+    }
+  }
+
+  .ant-picker {
+    width: 100%;
+    ::placeholder {
+      font-size: 16px;
+      color: @text-black;
+    }
+  }
+
+  ::placeholder {
+    font-size: 16px;
+    color: @text-black;
+  }
+  /* CSS for mobile */
+  .pd-none {
+    padding-right: initial !important;
+    @media only screen and (max-width: 767.99px) {
+      padding: initial !important;
+    }
+  }
+
+  .padding-none {
+    @media only screen and (max-width: 767.99px) {
+      padding: initial !important;
+    }
+  }
+
+  .input-padding {
+    @media only screen and (max-width: 767.99px) {
+      padding: 0px 6px;
+    }
+  }
+
+  .padding-10 {
+    @media only screen and (max-width: 767.99px) {
+      padding: 10px !important;
+    }
+  }
+
+  .marrgin-b15 {
+    @media only screen and (max-width: 767.99px) {
+      margin-bottom: 10px !important;
+    }
+  }
+
+  .mobile-mr {
+    @media only screen and (max-width: 767.99px) {
+      margin: 15px;
+    }
+  }
+
+  .mobile-mrauto {
+    @media only screen and (max-width: 767.99px) {
+      margin: auto;
+    }
+  }
+}

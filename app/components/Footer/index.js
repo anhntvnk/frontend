@@ -1,6 +1,6 @@
 /* eslint-disable global-require */
 import React from 'react';
-import { Card, Row, Col, Avatar, Button } from 'antd';
+import { Card, Row, Col, Avatar } from 'antd';
 import styled from 'styled-components';
 import { HomeOutlined, MailOutlined, PhoneOutlined } from '@ant-design/icons';
 
@@ -29,16 +29,14 @@ function Footer() {
                     <PhoneOutlined />
                     &ensp;
                     <span>
-                      <a href="tel: support@vnk.com.vn">0912808996</a>
+                      <a href="tel: 0912808996">0912808996</a>
                     </span>
                   </p>
                   <p>
                     <MailOutlined />
                     &ensp;
                     <span>
-                      <a href="mailto: support@vnk.com.vn">
-                        support@vnk.com.vn
-                      </a>
+                      <a href="mailto: crm@myp.vn">crm@myp.vn</a>
                     </span>
                   </p>
                 </>

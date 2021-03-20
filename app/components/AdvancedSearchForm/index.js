@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { Form, Row, Col, Input, Button, Select, DatePicker } from 'antd';
 import locale from 'antd/es/date-picker/locale/vi_VN';
 import './styles.less';
-import { citys, stages, types } from './constants';
 import { Link } from 'react-router-dom';
+import { citys, stages, types } from './constants';
 import routes from '../../constants/routes';
 
 const { Option } = Select;

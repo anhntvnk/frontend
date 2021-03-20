@@ -20,6 +20,7 @@ import ProjectAddNew from 'containers/Projects/AddNew';
 import Procedure from 'containers/Procedure';
 import Companys from 'containers/Companys/Loadable';
 import CompanyDetails from 'containers/Companys/Details';
+import CompanyAddNew from 'containers/Companys/AddNew';
 import KpiDay from 'containers/Kpi/Day';
 import Settings from 'containers/Kpi/Settings';
 import KpiMonth from 'containers/Kpi/Month';
@@ -138,6 +139,11 @@ const App = () => (
         exact
         path={ROUTE.PROJECT_ADDNEW}
         getComponent={() => <ProjectAddNew />}
+      />
+      <PrivateLayout
+        exact
+        path={ROUTE.COMPANY_ADDNEW}
+        getComponent={() => <CompanyAddNew />}
       />
     </Switch>
     <GlobalStyle />

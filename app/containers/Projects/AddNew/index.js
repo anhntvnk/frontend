@@ -109,20 +109,19 @@ export function AddProject({
 
       setFileList(files);
     },
-    beforeUpload: file => {
+    beforeUpload: file =>
       // console.log(file);
       // this.setState(state => ({
       //   fileList: [...state.fileList, file],
       // }));
-      return false;
-    },
+      false,
   };
 
   return (
     <div className="add-project">
       <Helmet>
-        <title>Đăng Ký Tài Khoản My Project</title>
-        <meta name="description" content="Đăng Ký Tài Khoản My Project" />
+        <title>Thêm dự án mới</title>
+        <meta name="description" content="Thêm dự án mới" />
       </Helmet>
       <CenteredSection>
         <H2 className="title">Thêm mới dự án</H2>

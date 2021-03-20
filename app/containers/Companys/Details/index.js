@@ -79,6 +79,8 @@ export function CompanyDetails({ history, data }) {
     });
   }, []);
 
+  console.log(_get(data, 'contacts', ''));
+
   return (
     <Details className="company-details">
       <Helmet>
@@ -115,16 +117,18 @@ export function CompanyDetails({ history, data }) {
           <>
             <Col className="group-item" lg={16} md={24}>
               <BoxDetail>
-                <span>
-                  <span className="description">Liên hệ:&nbsp;</span>
-                  {_get(data, 'contacts', '').map(ct => (
-                    <>
-                      <p className="contact-name">
-                        {_get(ct, 'name', '')} ({_get(ct, 'position', '')})
-                      </p>
-                    </>
-                  ))}
-                </span>
+                {_get(data, 'contacts', '').length > 0 && (
+                  <span>
+                    <span className="description">Liên hệ:&nbsp;</span>
+                    {_get(data, 'contacts', '').map(ct => (
+                      <>
+                        <p className="contact-name">
+                          {_get(ct, 'name', '')} ({_get(ct, 'position', '')})
+                        </p>
+                      </>
+                    ))}
+                  </span>
+                )}
                 <span>
                   <span className="description">Giám đốc:&nbsp;</span>
                   <p>{_get(data, 'manager', '')}</p>
@@ -153,18 +157,24 @@ export function CompanyDetails({ history, data }) {
             </Col>
             <Col className="group-item" lg={24}>
               <BoxDetail>
-                <span>
-                  <span className="description">Số điện thoại:&nbsp;</span>
-                  <p>{_get(data, 'phone', '')}</p>
-                </span>
-                <span>
-                  <span className="description">Địa chỉ Email:&nbsp;</span>
-                  <p>{_get(data, 'email', '')}</p>
-                </span>
-                <span>
-                  <span className="description">Trang web:&nbsp;</span>
-                  <p>{_get(data, 'website', '')}</p>
-                </span>
+                {_get(data, 'phone', '') && (
+                  <span>
+                    <span className="description">Số điện thoại:&nbsp;</span>
+                    <p>{_get(data, 'phone', '')}</p>
+                  </span>
+                )}
+                {_get(data, 'email', '') && (
+                  <span>
+                    <span className="description">Địa chỉ Email:&nbsp;</span>
+                    <p>{_get(data, 'email', '')}</p>
+                  </span>
+                )}
+                {_get(data, 'website', '') && (
+                  <span>
+                    <span className="description">Trang web:&nbsp;</span>
+                    <p>{_get(data, 'website', '')}</p>
+                  </span>
+                )}
                 <span>
                   <span className="description">Cập nhật mới nhất:&nbsp;</span>
                   <p>
@@ -173,16 +183,20 @@ export function CompanyDetails({ history, data }) {
                     )}
                   </p>
                 </span>
-                <span>
-                  <span className="description">Ghi chú cá nhân:&nbsp;</span>
-                  <p>{_get(data, 'note', '')}</p>
-                </span>
-                <span>
-                  <span className="description">
-                    Dự án liên quan tới công ty:&nbsp;
+                {_get(data, 'note', '') && (
+                  <span>
+                    <span className="description">Ghi chú cá nhân:&nbsp;</span>
+                    <p>{_get(data, 'note', '')}</p>
                   </span>
-                  <p>{_get(data, 'description', '')}</p>
-                </span>
+                )}
+                {_get(data, 'description', '') && (
+                  <span>
+                    <span className="description">
+                      Dự án liên quan tới công ty:&nbsp;
+                    </span>
+                    <p>{_get(data, 'description', '')}</p>
+                  </span>
+                )}
               </BoxDetail>
             </Col>
           </>

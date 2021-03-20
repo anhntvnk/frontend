@@ -13,7 +13,7 @@ import { get as _get } from 'lodash';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import { Avatar } from 'antd';
+import { Avatar, message } from 'antd';
 import { createStructuredSelector } from 'reselect';
 
 import { useInjectReducer } from 'utils/injectReducer';
@@ -46,6 +46,7 @@ const CompanyList = styled.section`
 const key = 'companys';
 export function Companys({
   location,
+  history,
   companys,
   companyFollows,
   onFetchCompany,
@@ -55,6 +56,11 @@ export function Companys({
 }) {
   useInjectReducer({ key, reducer });
   useInjectSaga({ key, saga });
+
+  if (history.location.state) {
+    message.success(_get(history.location.state, 'successMessage', ''));
+    history.replace({ ...history.location, state: undefined });
+  }
 
   // set project default with project all or project follow
   const copmpanyType = location.search.replace(/(^\/|\/$)/g, '').split('?')[1];
@@ -232,6 +238,7 @@ Companys.propTypes = {
   companyFollows: PropTypes.array,
   location: PropTypes.object,
   loading: PropTypes.bool,
+  history: PropTypes.object,
 };
 
 const mapStateToProps = createStructuredSelector({

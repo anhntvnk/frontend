@@ -26,12 +26,18 @@ function DetailsWeb({ data }) {
             </span>
             <span>
               <span className="description">Nhà thầu chính:&nbsp;</span>
-              <p>{_get(data, 'nha_thau_chinh', '') || 'Không có dữ liệu'}</p>
+              <p style={{ whiteSpace: 'pre-wrap' }}>
+                {_get(data, 'nha_thau_chinh', '')}
+              </p>
             </span>
-            <span>
-              <span className="description">Nhà thầu phụ:&nbsp;</span>
-              <p>{_get(data, 'nha_thau_phu', '') || 'Không có dữ liệu'}</p>
-            </span>
+            {_get(data, 'nha_thau_phu', '') && (
+              <span>
+                <span className="description">Nhà thầu phụ:&nbsp;</span>
+                <p style={{ whiteSpace: 'pre-wrap' }}>
+                  {_get(data, 'nha_thau_phu', '')}
+                </p>
+              </span>
+            )}
           </GutterRow>
         </Col>
         <Col
@@ -110,35 +116,45 @@ function DetailsWeb({ data }) {
         </Col>
       </Row>
       <Row gutter={16} className="pd-bottom">
-        <Col lg={24}>
-          <GutterRow>
-            <span className="description">Địa chỉ:&nbsp;</span>
-            <span>{_get(data, 'address', '')}</span>
-          </GutterRow>
-        </Col>
+        {_get(data, 'address', '') && (
+          <Col lg={24}>
+            <GutterRow>
+              <span className="description">Địa chỉ:&nbsp;</span>
+              <span>{_get(data, 'address', '')}</span>
+            </GutterRow>
+          </Col>
+        )}
       </Row>
       <Row gutter={16} className="pd-bottom">
-        <Col lg={12}>
-          <GutterRow>
-            <span className="description">Phiên bản:&nbsp;</span>
-            <span>{_get(data, 'version', '')}</span>
-          </GutterRow>
-        </Col>
-        <Col lg={12}>
-          <GutterRow>
-            <span className="description">Mô tả phiên bản:&nbsp;</span>
-            <span>{_get(data, 'version_description', '')}</span>
-          </GutterRow>
-        </Col>
+        {_get(data, 'version', '') && (
+          <Col lg={12}>
+            <GutterRow>
+              <span className="description">Phiên bản:&nbsp;</span>
+              <span>{_get(data, 'version', '')}</span>
+            </GutterRow>
+          </Col>
+        )}
+        {_get(data, 'version_description', '') && (
+          <Col lg={12}>
+            <GutterRow>
+              <span className="description">Mô tả phiên bản:&nbsp;</span>
+              <span>{_get(data, 'version_description', '')}</span>
+            </GutterRow>
+          </Col>
+        )}
       </Row>
-      <Row gutter={16} className="pd-bottom">
-        <Col lg={24}>
-          <GutterRow>
-            <p className="description">Ghi chú:</p>
-            <span>{_get(data, 'note', '')}</span>
-          </GutterRow>
-        </Col>
-      </Row>
+      {_get(data, 'note', '') && (
+        <Row gutter={16} className="pd-bottom">
+          <Col lg={24}>
+            <GutterRow>
+              <p className="description">Ghi chú:</p>
+              <span style={{ whiteSpace: 'pre-wrap' }}>
+                {_get(data, 'note', '')}
+              </span>
+            </GutterRow>
+          </Col>
+        </Row>
+      )}
     </>
   );
 }

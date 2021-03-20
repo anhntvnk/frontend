@@ -13,6 +13,7 @@ export default {
   USER: '/user',
   PROJECT_DETAILS: '/projects/details',
   COMPANY_DETAILS: '/company/details',
+  COMPANY_ADDNEW: '/company/add-new',
   PROJECT_ADDNEW: '/projects/add-new',
   KPI_DAY: '/kpi/day',
   KPI_SETTINGS: '/kpi/settings',
