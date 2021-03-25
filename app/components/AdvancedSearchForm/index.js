@@ -36,6 +36,17 @@ const AdvancedSearchForm = ({
           xl={{ span: 8 }}
           md={{ span: 8 }}
           sm={{ span: 24 }}
+          key="name"
+        >
+          <Form.Item name="name" label="Tên dự án">
+            <Input />
+          </Form.Item>
+        </Col>
+        <Col
+          {...ColProps}
+          xl={{ span: 8 }}
+          md={{ span: 8 }}
+          sm={{ span: 24 }}
           key="owner"
         >
           <Form.Item name="owner" label="Chủ sở hữu">

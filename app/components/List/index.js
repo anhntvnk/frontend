@@ -15,6 +15,7 @@ class List extends PureComponent {
         bordered
         loading={loading}
         scroll={{ x: 900 }}
+        locale={{ emptyText: 'Không tìm thấy dữ liệu !' }}
         simple
         rowKey={record => record.id}
       />

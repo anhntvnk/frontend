@@ -223,6 +223,7 @@ export function Projects({
 
   const searchProjects = advSearch => {
     const {
+      name: filterName,
       owner: filterOwner,
       contractors: filterNTC,
       subcontractors: filterNTP,
@@ -245,6 +246,17 @@ export function Projects({
         owner.indexOf(cleanText(filterOwner)) === -1
       ) {
         addToList = false;
+      }
+
+      if (addToList) {
+        const projectName = item.name ? cleanText(item.name) : '';
+
+        if (
+          typeof filterName !== 'undefined' &&
+          projectName.indexOf(cleanText(filterName)) === -1
+        ) {
+          addToList = false;
+        }
       }
 
       if (addToList) {
