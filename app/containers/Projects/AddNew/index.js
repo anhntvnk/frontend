@@ -11,6 +11,7 @@ import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
+import axios from 'axios';
 import {
   Form,
   Input,
@@ -29,7 +30,7 @@ import { useInjectSaga } from 'utils/injectSaga';
 import H2 from 'components/H2';
 import CenteredSection from 'components/CenteredSection';
 import ROUTE from '../../../constants/routes';
-import { addProject } from './actions';
+import { addProject, uploadImage } from './actions';
 import { successMessageSelector, errorSelector } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
@@ -64,7 +65,13 @@ export function AddProject({
   }, [errorMgs]);
 
   const onFinish = values => {
-    const data = Object.assign(values, { status_code: 1 });
+    const formData = new FormData();
+    formData.append('file', fileList[0].originFileObj);
+
+    const data = {
+      project: Object.assign(values, { status_code: 1 }),
+      formData,
+    };
     addNewProject(data);
   };
 
@@ -83,14 +90,10 @@ export function AddProject({
 
   const props = {
     onRemove: file => {
-      // this.setState(state => {
-      //   const index = state.fileList.indexOf(file);
-      //   const newFileList = state.fileList.slice();
-      //   newFileList.splice(index, 1);
-      //   return {
-      //     fileList: newFileList,
-      //   };
-      // });
+      const index = fileList.indexOf(file);
+      const newFileList = fileList.slice();
+      newFileList.splice(index, 1);
+      setFileList(newFileList);
     },
     onChange: info => {
       let files = [...info.fileList];
@@ -109,12 +112,9 @@ export function AddProject({
 
       setFileList(files);
     },
-    beforeUpload: file =>
-      // console.log(file);
-      // this.setState(state => ({
-      //   fileList: [...state.fileList, file],
-      // }));
-      false,
+    beforeUpload: () => {
+      return false;
+    },
   };
 
   return (
@@ -134,7 +134,7 @@ export function AddProject({
         // initialValues={}
         onFinish={onFinish}
       >
-        <Row gutter={{ xs: 8, sm: 24, md: 24, lg: 32 }}>
+        {/* <Row gutter={{ xs: 8, sm: 24, md: 24, lg: 32 }}>
           <Col className="group-item project-name padding-10" lg={16} sm={24}>
             <Row>
               <Col lg={24} sm={24} span={24}>
@@ -198,10 +198,10 @@ export function AddProject({
               </div>
             </div>
           </Col>
-        </Row>
+        </Row> */}
 
         <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-          <Col className="group-item mobile-mr" sm={24} lg={16}>
+          {/* <Col className="group-item mobile-mr" sm={24} lg={16}>
             <Row>
               <Col className="input-padding" xs={24}>
                 <Input.Group size="large">
@@ -232,7 +232,7 @@ export function AddProject({
                 </Form.Item>
               </Input.Group>
             </Row>
-          </Col>
+          </Col> */}
 
           <Col lg={8} xs={24}>
             <Form.Item>
@@ -246,7 +246,7 @@ export function AddProject({
                   {...props}
                   fileList={fileList}
                   // action="/upload.do"
-                  name="image"
+                  name="file"
                 >
                   <div className="btn-upload">
                     <p>Tải ảnh lên</p>
@@ -257,7 +257,7 @@ export function AddProject({
           </Col>
         </Row>
 
-        <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
+        {/* <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
           <Col className="group-item mobile-mr" lg={8} md={16} xs={22}>
             <Row>
               <Col className="input-padding" lg={24} xs={24}>
@@ -419,7 +419,7 @@ export function AddProject({
               </Form.Item>
             </Input.Group>
           </Col>
-        </Row>
+        </Row> */}
 
         <Form.Item className="register-form-button">
           <Button type="primary" htmlType="submit">

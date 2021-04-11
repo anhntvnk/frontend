@@ -11,6 +11,7 @@ import React, { memo } from 'react';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
+import { FormattedMessage } from 'react-intl';
 import MessengerCustomerChat from 'react-messenger-customer-chat';
 
 import H1 from 'components/H1';
@@ -22,6 +23,8 @@ import {
   DribbbleSquareOutlined,
 } from '@ant-design/icons';
 import styled from 'styled-components';
+import messages from './messages';
+import LocaleToggle from '../LocaleToggle';
 import CenteredSection from './CenteredSection';
 import homeApp from '../../assets/images/home-app.jpg';
 import info from '../../assets/images/feature/info.png';
@@ -43,11 +46,12 @@ export function HomePage() {
       <div className="vnk-homepage">
         <CenteredSection>
           <H1 className="vnk-headline">
-            KHÔNG CHỈ LÀ CẬP NHẬT THÔNG TIN DỰ ÁN
+            <FormattedMessage {...messages.mypIntroduceHeader} />
           </H1>
 
           <hr className="vnk-line" />
         </CenteredSection>
+        <LocaleToggle />
 
         <Row className="page1">
           <Col sm={24} lg={12}>

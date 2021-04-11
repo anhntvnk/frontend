@@ -1,9 +1,9 @@
 {
   "myp.components.Header.features": "",
   "myp.components.Header.home": "",
-  "myp.containers.HomePage.myp_introduce.header": "NOT ONLY PROJECT INFORMATION UPDATE",
+  "myp.containers.HomePage.myp_introduce.header": "KHÔNG CHỈ LÀ CẬP NHẬT THÔNG TIN DỰ ÁN",
   "myp.containers.HomePage.myp_introduce.message": "Ein skalierendes, offline-first Fundament mit der besten DX und einem Fokus auf Performance und bewährte Methoden",
   "myp.containers.NotFoundPage.header": "Seite nicht gefunden.",
-  "myp.containers.LocaleToggle.vi": "Vietnamese",
-  "myp.containers.LocaleToggle.en": "English"
+  "myp.containers.LocaleToggle.vi": "Tiếng Việt",
+  "myp.containers.LocaleToggle.en": "Tiếng Anh"
 }

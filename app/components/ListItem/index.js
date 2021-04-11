@@ -130,9 +130,6 @@ export function ListItem({ data }) {
                 showSizeChanger: true,
                 defaultPageSize: 9,
                 pageSizeOptions: [9, 20, 50, 100],
-                // onChange: page => {
-                //   console.log(page);
-                // },
                 responsive: true,
               }}
               dataSource={projectList}

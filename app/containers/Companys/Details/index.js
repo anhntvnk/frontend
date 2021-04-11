@@ -79,8 +79,6 @@ export function CompanyDetails({ history, data }) {
     });
   }, []);
 
-  console.log(_get(data, 'contacts', ''));
-
   return (
     <Details className="company-details">
       <Helmet>

@@ -15,16 +15,24 @@ export function* addProject(actionData) {
 
   try {
     // Call our request helper (see 'utils/request')
-    // Call our request helper (see 'utils/request')
-    const response = yield call(fetchAxios, {
+    const uploadImage = yield call(fetchAxios, {
       method: 'post',
-      url: requestURL,
+      url: 'http://localhost:3000/file-upload',
       headers: { 'Content-Type': 'application/json' },
       responseType: 'json',
       data,
     });
 
-    yield put(addProjectSuccess(response));
+    if (uploadImage && uploadImage.filename) {
+      const response = yield call(fetchAxios, {
+        method: 'post',
+        url: requestURL,
+        headers: { 'Content-Type': 'application/json' },
+        responseType: 'json',
+        data,
+      });
+      yield put(addProjectSuccess(response));
+    }
   } catch (err) {
     yield put(addProjectError(err));
   }

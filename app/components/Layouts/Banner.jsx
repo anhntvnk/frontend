@@ -2,11 +2,13 @@ import React from 'react';
 import QueueAnim from 'rc-queue-anim';
 import TweenOne from 'rc-tween-one';
 import { Link } from 'react-router-dom';
+import { FormattedMessage } from 'react-intl';
 import BannerAnim, { Element } from 'rc-banner-anim';
 import styled from 'styled-components';
 import routes from '../../constants/routes';
 import logo from '../../assets/images/logo/logo@2x.png';
 import { isLoggedIn } from '../../../services/auth';
+import messages from './messages';
 
 const { BgElement } = Element;
 
@@ -191,10 +193,14 @@ export default function Banner({ isMobile }) {
             <img key="img" alt="logo" src={logo} />
           </QueueAnim>
           <Introduce>
-            <p style={{ fontWeight: 600 }}>Save Time More Project</p>
+            <p style={{ fontWeight: 600 }}>
+              <FormattedMessage {...messages.bannerTitle} />
+            </p>
             <p>
-              Giúp bạn có nhiều dự án hơn với thời gian ít hơn cùng{' '}
-              <b>My Project</b>.
+              <FormattedMessage
+                {...messages.bannerMessage}
+                values={{ myProject: <b>My Project</b> }}
+              />
             </p>
           </Introduce>
           {!isLoggedIn() && (
@@ -205,11 +211,11 @@ export default function Banner({ isMobile }) {
                 to={routes.REGISTER}
                 className="btn-temp home-button"
               >
-                Đăng Ký
+                <FormattedMessage {...messages.register} />
               </Link>
               {isMobile && (
                 <Link className="btn-editor home-button" to="/login">
-                  Đăng Nhập
+                  <FormattedMessage {...messages.signIn} />
                 </Link>
               )}
             </div>
