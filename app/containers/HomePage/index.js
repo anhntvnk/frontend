@@ -66,32 +66,30 @@ export function HomePage() {
           </Col>
           <Col sm={24} lg={12}>
             <H3 className="box-title">
-              Các dự án đang theo dõi được lưu vào Trang chủ
+              <FormattedMessage {...messages.myIntroTitle} />
             </H3>
             <p className="vnk-paragraph">
-              Tất cả các thông tin dự án bạn đang quan tâm bao gồm cả trạng
-              thái, tiến trình ra sao sẽ được truy cập một cách đơn giản trên
-              Trang chủ
+              <FormattedMessage {...messages.myIntroSubTitle} />
             </p>
             <p className="vnk-paragraph">
               <CaretRightFilled />
-              Việc thêm dự án mới rất thuận tiện vì được ưu tiên.
+              <FormattedMessage {...messages.myIntroText1} />
             </p>
             <p className="vnk-paragraph">
               <CaretRightFilled />
-              Thêm các công ty mới cũng thuận tiện không kém.
+              <FormattedMessage {...messages.myIntroText2} />
             </p>
             <p className="vnk-paragraph">
               <CaretRightFilled />
-              Tiến trình làm việc của dự án được nêu bật
+              <FormattedMessage {...messages.myIntroText3} />
             </p>
             <p className="vnk-paragraph">
               <CaretRightFilled />
-              Bổ sung dễ dàng nhiệm vụ làm việc
+              <FormattedMessage {...messages.myIntroText4} />
             </p>
             <p className="vnk-paragraph">
               <CaretRightFilled />
-              Thanh tìm kiếm giúp bạn tiết kiệm thời gian.
+              <FormattedMessage {...messages.myIntroText5} />
             </p>
           </Col>
         </Row>
@@ -99,13 +97,18 @@ export function HomePage() {
         <div className="page2">
           <Row className="content">
             <Col sm={24} lg={12} className="myp-software">
-              <H1 className="vnk-headline title ">Phần Mềm My Project</H1>
+              <H1 className="vnk-headline title ">
+                {' '}
+                <FormattedMessage {...messages.myBanner2Title} />
+              </H1>
               <p className="vnk-paragraph ">
-                Tiết kiệm thời gian và gia tăng số lượng dự án cho bạn!
+                <FormattedMessage {...messages.myBanner2Msg} />
               </p>
-              <p className="vnk-paragraph ">"Save Time More Project"</p>
               <p className="vnk-paragraph ">
-                Tải App My Project trên kho ứng dụng
+                "<FormattedMessage {...messages.myProjectSaveTime} />"
+              </p>
+              <p className="vnk-paragraph ">
+                <FormattedMessage {...messages.myBanner2DownApp} />
               </p>
               <Row className="app-mobile">
                 <Col sm={24} lg={12}>
@@ -160,7 +163,9 @@ export function HomePage() {
           <Col sm={12} lg={14}>
             <Row>
               <Col className="highlights">
-                <H1 className="vnk-headline">Tính năng nổi bật</H1>
+                <H1 className="vnk-headline">
+                  <FormattedMessage {...messages.myFunction} />
+                </H1>
                 <hr className="vnk-line hr-feature" />
               </Col>
             </Row>
@@ -168,67 +173,77 @@ export function HomePage() {
               <Col sm={12} lg={12} className="flex">
                 <img width={78} height={78} src={next} alt="progess" />
                 <div className="pd-r">
-                  <H3 className="feature-title">1. Quy trình</H3>
+                  <H3 className="feature-title">
+                    <FormattedMessage {...messages.myFunctionSubTitle1} />
+                  </H3>
                   <span className="vnk-paragraph feature">
-                    Nó sẽ giúp bạn có được một quy trình bán hàng dự án hiệu
-                    quả!
+                    <FormattedMessage {...messages.myFunctionMsg1} />
                   </span>
                 </div>
               </Col>
               <Col sm={24} lg={12} className="flex">
                 <img width={78} height={78} src={statchart} alt="statchart" />
                 <div className="pd-r">
-                  <H3 className="feature-title">5. Đo KPI</H3>
+                  <H3 className="feature-title">
+                    <FormattedMessage {...messages.myFunctionSubTitle5} />
+                  </H3>
                   <span className="vnk-paragraph feature">
-                    Nó sẽ giúp bạn biết được hôm nay mình có được thu nhập bao
-                    nhiêu.
+                    <FormattedMessage {...messages.myFunctionMsg5} />
                   </span>
                 </div>
               </Col>
               <Col sm={24} lg={12} className="flex">
                 <img width={78} height={78} src={scale} alt="statchart" />
                 <div className="pd-r">
-                  <H3 className="feature-title">2. Đo Lường</H3>
+                  <H3 className="feature-title">
+                    <FormattedMessage {...messages.myFunctionSubTitle2} />
+                  </H3>
                   <span className="vnk-paragraph feature">
-                    Nó sẽ giúp bạn biết được hôm nay mình có được thu nhập bao
-                    nhiêu.
+                    <FormattedMessage {...messages.myFunctionMsg2} />
                   </span>
                 </div>
               </Col>
               <Col sm={24} lg={12} className="flex">
                 <img width={78} height={78} src={teacherIcon} alt="statchart" />
                 <div className="pd-r">
-                  <H3 className="feature-title">6. Giao việc</H3>
+                  <H3 className="feature-title">
+                    <FormattedMessage {...messages.myFunctionSubTitle6} />
+                  </H3>
                   <span className="vnk-paragraph feature">
-                    Nó sẽ giúp bạn giao việc được cho đội nhóm của mình.
+                    <FormattedMessage {...messages.myFunctionMsg6} />
                   </span>
                 </div>
               </Col>
               <Col sm={24} lg={12} className="flex">
                 <FileTextFilled />
                 <div className="pd-r">
-                  <H3 className="feature-title">3. Công việc</H3>
+                  <H3 className="feature-title">
+                    <FormattedMessage {...messages.myFunctionSubTitle3} />
+                  </H3>
                   <span className="vnk-paragraph feature">
-                    Nó sẽ giúp bạn quản lý được các công việc bản thân phải làm.
+                    <FormattedMessage {...messages.myFunctionMsg3} />
                   </span>
                 </div>
               </Col>
               <Col sm={24} lg={12} className="flex">
                 <DribbbleSquareOutlined />
                 <div className="pd-r">
-                  <H3 className="feature-title">7. Quảng Bá</H3>
+                  <H3 className="feature-title">
+                    <FormattedMessage {...messages.myFunctionSubTitle7} />
+                  </H3>
                   <span className="vnk-paragraph feature">
-                    Nó sẽ giúp bạn quảng bá được thông tin công ty của các bạn.
+                    <FormattedMessage {...messages.myFunctionMsg7} />
                   </span>
                 </div>
               </Col>
               <Col sm={24} lg={12} className="flex">
                 <img width={78} height={78} src={info} alt="statchart" />
                 <div className="pd-r">
-                  <H3 className="feature-title">5. Thông tin</H3>
+                  <H3 className="feature-title">
+                    <FormattedMessage {...messages.myFunctionSubTitle4} />
+                  </H3>
                   <span className="vnk-paragraph feature">
-                    Nó sẽ giúp bạn có được thông tin các dự án mà không phải tốn
-                    công sức.
+                    <FormattedMessage {...messages.myFunctionMsg4} />
                   </span>
                 </div>
               </Col>
@@ -240,9 +255,11 @@ export function HomePage() {
                   alt="statchart"
                 />
                 <div className="pd-r">
-                  <H3 className="feature-title">8. Doanh số</H3>
+                  <H3 className="feature-title">
+                    <FormattedMessage {...messages.myFunctionSubTitle8} />
+                  </H3>
                   <span className="vnk-paragraph feature">
-                    Nó sẽ giúp bạn dự đoán và gia tăng thu nhập khi sử dụng.
+                    <FormattedMessage {...messages.myFunctionMsg8} />
                   </span>
                 </div>
               </Col>
@@ -252,7 +269,9 @@ export function HomePage() {
 
         <Container>
           <Col xs={24} md={12} lg={24} className="highlights">
-            <HeadLine>GIAO DIỆN TIẾNG VIỆT THÂN THIỆN</HeadLine>
+            <HeadLine>
+              <FormattedMessage {...messages.myLanguage} />
+            </HeadLine>
             <hr className="vnk-line hr-feature" />
           </Col>
           <Col lg={6} xs={24}>
@@ -277,11 +296,12 @@ export function HomePage() {
 
         <Row>
           <Col lg={24} className="highlights">
-            <HeadLine>TRẢI NGHIỆM ỨNG DỤNG</HeadLine>
+            <HeadLine>
+              <FormattedMessage {...messages.myExperience} />
+            </HeadLine>
             <hr className="vnk-line hr-feature" />
             <LadiParagraph>
-              Hãy click hoặc quét mã QR xuống các biểu tượng dưới đây để tải ứng
-              dụng My Project về điện thoại của bạn!
+              <FormattedMessage {...messages.myExperienceMsg} />
             </LadiParagraph>
           </Col>
           <Col lg={12}>
