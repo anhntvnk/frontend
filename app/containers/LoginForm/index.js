@@ -11,6 +11,7 @@ import PropTypes from 'prop-types';
 import { isEmpty as _isEmpty, get as _get } from 'lodash';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
+import { FormattedMessage } from 'react-intl';
 import { compose } from 'redux';
 import { useInjectReducer } from 'utils/injectReducer';
 import { useInjectSaga } from 'utils/injectSaga';
@@ -26,6 +27,7 @@ import './styles.less';
 // eslint-disable-next-line import/order
 import { createStructuredSelector } from 'reselect';
 import { setUserSession } from '../../../services/auth';
+import messages from './messages';
 const key = 'loginForm';
 
 // eslint-disable-next-line react/prop-types
@@ -90,7 +92,9 @@ export function LoginForm({ history, onLoginForm, user, errorMessage }) {
         }}
         onFinish={onFinish}
       >
-        <H1 className="form-title">Đăng Nhập</H1>
+        <H1 className="form-title">
+          <FormattedMessage {...messages.myFormTitle} />
+        </H1>
         <Form.Item
           name="email"
           rules={[
@@ -107,7 +111,7 @@ export function LoginForm({ history, onLoginForm, user, errorMessage }) {
         >
           <Input
             prefix={<UserOutlined className="site-form-item-icon" />}
-            placeholder="Địa chỉ Email"
+            placeholder={<FormattedMessage {...messages.myFormInputEmail} />}
           />
         </Form.Item>
         <Form.Item
@@ -123,7 +127,7 @@ export function LoginForm({ history, onLoginForm, user, errorMessage }) {
           <Input.Password
             prefix={<LockOutlined className="site-form-item-icon" />}
             type="password"
-            placeholder="Mật khẩu"
+            placeholder={<FormattedMessage {...messages.myFormInputPwd} />}
           />
         </Form.Item>
 
@@ -138,11 +142,13 @@ export function LoginForm({ history, onLoginForm, user, errorMessage }) {
         </Form.Item>
         <Form.Item>
           <Form.Item name="remember" valuePropName="" noStyle>
-            <Checkbox className="vnk-remember">Lưu mật khẩu</Checkbox>
+            <Checkbox className="vnk-remember">
+              <FormattedMessage {...messages.myFormSavePwd} />
+            </Checkbox>
           </Form.Item>
 
           <Link className="login-form-forgot" to={routes.REGISTER}>
-            Chưa là thành viên? Đăng ký
+            <FormattedMessage {...messages.myFormSignUp} />
           </Link>
         </Form.Item>
       </Form>

@@ -26,4 +26,8 @@ export default defineMessages({
     id: `${scope}.register.message`,
     defaultMessage: 'Đăng Ký',
   },
+  logOut: {
+    id: `${scope}.logOut.message`,
+    defaultMessage: 'Đăng Xuất',
+  },
 });

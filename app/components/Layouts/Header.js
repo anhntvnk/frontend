@@ -8,9 +8,11 @@ import styled from 'styled-components';
 import { Link, withRouter } from 'react-router-dom';
 import { Row, Col, Menu, Popover, Badge, List, Spin } from 'antd';
 import InfiniteScroll from 'react-infinite-scroller';
+import { FormattedMessage } from 'react-intl';
 import { BellOutlined, RightOutlined } from '@ant-design/icons';
 import { enquireScreen } from 'enquire-js';
 import Avatar from 'react-avatar';
+import LocaleToggle from '../../containers/LocaleToggle';
 import ROUTE from '../../constants/routes';
 import PhoneNav from './PhoneNav';
 import logo from '../../assets/images/logo/logo.png';
@@ -23,6 +25,7 @@ import {
 } from '../../../services/auth';
 import './Header.less';
 import API from '../../constants/apis';
+import messages from './messages';
 
 let isMobile;
 enquireScreen(b => {
@@ -222,7 +225,7 @@ class Header extends React.Component {
                   {menu}
                   {!isLoggedIn() ? (
                     <Link className="btn-login" to="/login">
-                      Đăng Nhập
+                      <FormattedMessage {...messages.signIn} />
                     </Link>
                   ) : (
                     <>
@@ -345,12 +348,13 @@ class Header extends React.Component {
                             key="SignOut"
                             onClick={() => this.logoutAccount(history)}
                           >
-                            Đăng Xuất
+                            <FormattedMessage {...messages.logOut} />
                           </Menu.Item>
                         </SubMenu>
                       </Menu>
                     </>
                   )}
+                  <LocaleToggle />
                 </div>
               </Col>
             )}

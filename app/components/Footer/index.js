@@ -3,7 +3,8 @@ import React from 'react';
 import { Card, Row, Col, Avatar } from 'antd';
 import styled from 'styled-components';
 import { HomeOutlined, MailOutlined, PhoneOutlined } from '@ant-design/icons';
-
+import { FormattedMessage } from 'react-intl';
+import messages from './messages';
 const { Meta } = Card;
 
 function Footer() {
@@ -23,7 +24,9 @@ function Footer() {
                   <p>
                     <HomeOutlined />
                     &ensp;
-                    <span>Số 88 Láng Hạ, Đống Đa, Hà Nội</span>
+                    <span>
+                      <FormattedMessage {...messages.address} />
+                    </span>
                   </p>
                   <p>
                     <PhoneOutlined />
@@ -50,8 +53,12 @@ function Footer() {
               }}
             />
             <ChatNow>
-              <p>Nếu bạn cần gia tăng doanh số?</p>
-              <p>Tôi xin sẵn sàng phục vụ bạn!</p>
+              <p>
+                <FormattedMessage {...messages.footerMsg1} />
+              </p>
+              <p>
+                <FormattedMessage {...messages.footerMsg2} />
+              </p>
             </ChatNow>
           </VnkAdress>
         </Col>
@@ -59,7 +66,9 @@ function Footer() {
           {/* <Card title="Card title">Card content</Card> */}
           <Card bordered={false}>
             <p>
-              <span className="sp-title">TẢI ỨNG DỤNG MY PROJECT</span>
+              <span className="sp-title">
+                <FormattedMessage {...messages.footerDown} />
+              </span>
             </p>
             <p>
               <a className="logo" href="/">
@@ -81,7 +90,9 @@ function Footer() {
             </p>
 
             <p>
-              <span className="sp-title">HỖ TRỢ KHÁCH HÀNG</span>
+              <span className="sp-title">
+                <FormattedMessage {...messages.footerSupport} />
+              </span>
             </p>
             <p>
               <span>Hotline: 091 280 89 96</span>
@@ -109,7 +120,9 @@ function Footer() {
           </Card>
         </Chairman>
         <Copyright>
-          <Col span={12}>@Copyright by MYP - Một sản phầm của MYP</Col>
+          <Col span={12}>
+            <FormattedMessage {...messages.footerCopyright} />
+          </Col>
           <Col span={12}>
             <a className="logo" href="/">
               <img

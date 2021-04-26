@@ -24,7 +24,6 @@ import {
 } from '@ant-design/icons';
 import styled from 'styled-components';
 import messages from './messages';
-import LocaleToggle from '../LocaleToggle';
 import CenteredSection from './CenteredSection';
 import homeApp from '../../assets/images/home-app.jpg';
 import info from '../../assets/images/feature/info.png';
@@ -51,7 +50,6 @@ export function HomePage() {
 
           <hr className="vnk-line" />
         </CenteredSection>
-        <LocaleToggle />
 
         <Row className="page1">
           <Col sm={24} lg={12}>

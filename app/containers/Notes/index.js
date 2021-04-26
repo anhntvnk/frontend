@@ -12,6 +12,7 @@ import { compose } from 'redux';
 import { Helmet } from 'react-helmet';
 import { ArrowLeftOutlined } from '@ant-design/icons';
 import { Calendar, Views, momentLocalizer } from 'react-big-calendar';
+import { FormattedMessage } from 'react-intl';
 import moment from 'moment';
 import { createStructuredSelector } from 'reselect';
 import { useInjectReducer } from 'utils/injectReducer';
@@ -23,6 +24,7 @@ import reducer from './reducer';
 import saga from './saga';
 import { getNotes, updateNotes } from './actions';
 import '!style-loader!css-loader!react-big-calendar/lib/css/react-big-calendar.css';
+import messages from './messages';
 
 const key = 'notes';
 const localizer = momentLocalizer(moment);
@@ -54,7 +56,9 @@ export function Notes({
 
   const handleSelect = ({ start, end }) => {
     // eslint-disable-next-line no-alert
-    const title = window.prompt('Nội dung');
+    const title = window.prompt(
+      <FormattedMessage {...messages.myNotePrompt} />,
+    );
 
     if (title) {
       const newEvents = [
@@ -94,9 +98,11 @@ export function Notes({
           icon={<ArrowLeftOutlined />}
           onClick={() => history.goBack()}
         >
-          Quay lại
+          <FormattedMessage {...messages.myNotebtnBack} />
         </Button>
-        <h1>Công việc hàng ngày</h1>
+        <h1>
+          <FormattedMessage {...messages.myNoteTitle} />
+        </h1>
       </CenteredSectionWithBack>
       <Calendar
         selectable
@@ -119,7 +125,7 @@ export function Notes({
         }}
         disabled={!isDurty}
       >
-        Lưu lại
+        <FormattedMessage {...messages.myNotebtnSave} />
       </StyledButton>
     </NotesComponent>
   );

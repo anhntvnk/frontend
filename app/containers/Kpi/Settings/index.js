@@ -12,6 +12,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { Helmet } from 'react-helmet';
+import { FormattedMessage } from 'react-intl';
 import {
   get as _get,
   mapKeys as _mapKeys,
@@ -49,6 +50,7 @@ import saga from './saga';
 import { loadKPI, updateKPI } from './actions';
 import { stateDefault } from './constants';
 import { getUserId } from '../../../../services/auth';
+import messages from '../../../components/Kpi/messages';
 
 const key = 'kpiSettings';
 const { Meta } = Card;
@@ -57,7 +59,10 @@ const { Meta } = Card;
 function Point({ point }) {
   return (
     <span style={{ color: 'red' }}>
-      {point} <span style={{ color: 'blue' }}>Điểm</span>
+      {point}{' '}
+      <span style={{ color: 'blue' }}>
+        <FormattedMessage {...messages.myKPIresultScore} />
+      </span>
     </span>
   );
 }
@@ -78,7 +83,7 @@ export function Settings({
 
   useEffect(() => {
     if (successMsg) {
-      message.success('Thiết lập KPIs hôm nay thành công!');
+      message.success(<FormattedMessage {...messages.myKPIsuccessMsg} />);
     }
   }, [successMsg]);
 
@@ -126,45 +131,48 @@ export function Settings({
   const elements = [
     {
       key: 'cuoc_goi',
-      label: 'Cuộc gọi',
+      label: <FormattedMessage {...messages.myKPIevlCall} />,
       iconElement: (
         <>
           <PhoneTwoTone style={{ fontSize: '24px', paddingRight: '8px' }} />
           <b>
-            1. Cuộc gọi (<Point point="1" />)
+            1. <FormattedMessage {...messages.myKPIevlCall} /> (
+            <Point point="1" />)
           </b>
         </>
       ),
     },
     {
       key: 'lich_hen_gap',
-      label: 'Lịch hẹn',
+      label: <FormattedMessage {...messages.myKPIevlSchedule} />,
       iconElement: (
         <>
           <SmileTwoTone style={{ fontSize: '24px', paddingRight: '8px' }} />
           <b>
-            2. Lịch hẹn gặp (<Point point="3" />)
+            2. <FormattedMessage {...messages.myKPIevlSchedule} /> (
+            <Point point="3" />)
           </b>
         </>
       ),
     },
     {
       key: 'chao_gia',
-      label: 'Chào giá',
+      label: <FormattedMessage {...messages.myKPIevlPrice} />,
       iconElement: (
         <>
           <ReconciliationTwoTone
             style={{ fontSize: '24px', paddingRight: '8px' }}
           />
           <b>
-            3. Chào giá (<Point point="5" />)
+            3. <FormattedMessage {...messages.myKPIevlPrice} /> (
+            <Point point="5" />)
           </b>
         </>
       ),
     },
     {
       key: 'chot_don_hang',
-      label: 'Chốt đơn hàng',
+      label: <FormattedMessage {...messages.myKPIevlOrder} />,
       iconElement: (
         <>
           <CheckCircleOutlined
@@ -175,7 +183,8 @@ export function Settings({
             }}
           />
           <b>
-            4. Chốt đơn hàng (<Point point="15" />)
+            4. <FormattedMessage {...messages.myKPIevlOrder} /> (
+            <Point point="15" />)
           </b>
         </>
       ),
@@ -215,15 +224,19 @@ export function Settings({
           icon={<ArrowLeftOutlined />}
           onClick={() => history.goBack()}
         >
-          Quay lại
+          <FormattedMessage {...messages.myKPIbtnBack} />
         </Button>
-        <h1>Tự đánh giá KPIs ngày hôm nay</h1>
+        <h1>
+          <FormattedMessage {...messages.myKPIevlToday} />
+        </h1>
       </CenteredSectionWithBack>
       <KpiState>
         <Form name="validate_settings" onFinish={onSettingsKPI}>
           <Row gutter={{ sm: 24, md: 24, lg: 16 }}>
             <Col lg={8} xs={24}>
-              <h3>Thông tin cá nhân</h3>
+              <h3>
+                <FormattedMessage {...messages.myKPIprofile} />
+              </h3>
               <CardStatus>
                 <Card>
                   <Meta
@@ -236,16 +249,24 @@ export function Settings({
                     description={
                       <div>
                         <p>
-                          Mã NV: <b>MYP{_get(kpi, 'id')}</b>
+                          <FormattedMessage
+                            {...messages.myKPIprofileAccessCode}
+                          />{' '}
+                          <b>MYP{_get(kpi, 'id')}</b>
                         </p>
                         <p>
-                          Họ tên: <b>{_get(kpi, 'full_name')}</b>
+                          <FormattedMessage {...messages.myKPIprofileName} />{' '}
+                          <b>{_get(kpi, 'full_name')}</b>
                         </p>
                         <p>
-                          Chức vụ: <b>{_get(kpi, 'position')}</b>
+                          <FormattedMessage
+                            {...messages.myKPIprofilePosition}
+                          />{' '}
+                          <b>{_get(kpi, 'position')}</b>
                         </p>
                         <p>
-                          Ngày lương: <b>{moment().format('D/M/YYYY')}</b>
+                          <FormattedMessage {...messages.myKPIprofileSalary} />{' '}
+                          <b>{moment().format('D/M/YYYY')}</b>
                         </p>
                       </div>
                     }
@@ -255,7 +276,9 @@ export function Settings({
             </Col>
             <Col lg={16} xs={24}>
               <Rate>
-                <h3>TỰ ĐÁNH GIÁ KPIs: </h3>
+                <h3>
+                  <FormattedMessage {...messages.myKPIevl} />:{' '}
+                </h3>
                 <List size="small" bordered>
                   {elements.map(el => (
                     <List.Item key={el.key}>
@@ -281,35 +304,48 @@ export function Settings({
             </Col>
             <Col lg={24} xs={24}>
               <Result>
-                <h3>Kết quả thực hiện </h3>
+                <h3>
+                  <FormattedMessage {...messages.myKPIresult} />
+                </h3>
                 <List size="small" bordered>
                   <List.Item>
                     <p style={{ color: '#5f5c5c' }}>
-                      <b>Tổng:</b> ({_join(values, ' + ')}) ={' '}
+                      <b>
+                        <FormattedMessage {...messages.myKPIresultSum} />:
+                      </b>{' '}
+                      ({_join(values, ' + ')}) ={' '}
                       <span style={{ color: '#f90909' }}>{total}</span>
-                      <span style={{ color: '#417505' }}>&nbsp;Điểm</span>
+                      <span style={{ color: '#417505' }}>
+                        &nbsp;
+                        <FormattedMessage {...messages.myKPIresultScore} />
+                      </span>
                     </p>
                   </List.Item>
                   <List.Item>
                     <p style={{ color: '2b5eec' }}>
-                      Quy định mỗi ngày đạt {dailyScore} điểm sẽ hưởng{' '}
-                      {total === 0 ? 0 : 100}% lương
+                      <FormattedMessage {...messages.myKPIresultRule} />{' '}
+                      {dailyScore}{' '}
+                      <FormattedMessage {...messages.myKPIresultEnjoy} />{' '}
+                      {total === 0 ? 0 : 100}%{' '}
+                      <FormattedMessage {...messages.myKPIresultSalary} />
                     </p>
                   </List.Item>
                   <List.Item>
                     <p>
-                      KPIs: ({total} : {dailyScore}) ={' '}
+                      <FormattedMessage {...messages.myKPIresultKPIs} />: (
+                      {total} : {dailyScore}) ={' '}
                       {_isNaN(kpiDaily) ? '' : kpiDaily}
                     </p>
                   </List.Item>
                   <List.Item>
                     <p style={{ color: 'blue' }}>
-                      Hôm nay bạn được hưởng
+                      <FormattedMessage {...messages.myKPIresultToday} />
                       <span style={{ color: '#f90909' }}>
                         {' '}
                         {_isNaN(result) || dailyScore === 0 ? '' : result}%
                       </span>{' '}
-                      lương KPIs
+                      <FormattedMessage {...messages.myKPIresultSalary} />{' '}
+                      <FormattedMessage {...messages.myKPIresultKPIs} />
                     </p>
                   </List.Item>
                 </List>
@@ -319,7 +355,7 @@ export function Settings({
                     htmlType="submit"
                     className="update-kpi"
                   >
-                    Lưu Lại
+                    <FormattedMessage {...messages.myKPIbtnSave} />
                   </Button>
                 </Form.Item>
               </Result>

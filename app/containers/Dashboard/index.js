@@ -13,6 +13,7 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { get as _get } from 'lodash';
 import { createStructuredSelector } from 'reselect';
+import { FormattedMessage } from 'react-intl';
 
 import { useInjectReducer } from 'utils/injectReducer';
 import { useInjectSaga } from 'utils/injectSaga';
@@ -20,6 +21,7 @@ import { Row, Col } from 'antd';
 import { ROUTE } from '../../constants';
 import { loadDashboard } from './actions';
 import { makeSelectDashboard } from './selectors';
+import messages from './messages';
 // import { Page } from 'components';
 import NumberCard from './numberCard';
 import reducer from './reducer';
@@ -63,53 +65,53 @@ export function Dashboard({ dashboards, onFetchDashboard }) {
     {
       icon: 'workday',
       color: Color.green,
-      title: 'Công việc hàng ngày',
+      title: <FormattedMessage {...messages.myDashBoardJob} />,
       url: ROUTE.NOTES,
     },
     {
       icon: 'kpi',
       color: Color.blue,
-      title: 'KPI',
+      title: <FormattedMessage {...messages.myDashBoardKPI} />,
       url: ROUTE.KPI_DAY,
     },
     {
       icon: 'search',
       color: Color.yellow,
-      title: 'tìm kiếm dự án',
+      title: <FormattedMessage {...messages.myDashBoardSearch} />,
       number: countProject,
       url: ROUTE.PROJECT,
     },
     {
       icon: 'project-follow',
       color: Color.red,
-      title: 'Danh mục dự án đang theo',
+      title: <FormattedMessage {...messages.myDashBoardCateProj} />,
       number: countProjectsFollowed,
       url: `${ROUTE.PROJECT}?project-follow`,
     },
     {
       icon: 'search',
       color: Color.grey,
-      title: 'tìm kiếm công ty',
+      title: <FormattedMessage {...messages.myDashBoardSearchComp} />,
       number: countCompany,
       url: ROUTE.COMPANY,
     },
     {
       icon: 'company',
       color: Color.vnk,
-      title: 'danh mục công ty đang theo',
+      title: <FormattedMessage {...messages.myDashBoardCateComp} />,
       number: countCompanyFollowed,
       url: ROUTE.COMPANY,
     },
     {
       icon: 'profile',
       color: Color.peach,
-      title: 'Thông tin cá nhân',
+      title: <FormattedMessage {...messages.myDashBoardProfile} />,
       url: ROUTE.USER,
     },
     {
       icon: 'report',
       color: Color.purple,
-      title: 'Báo cáo',
+      title: <FormattedMessage {...messages.myDashBoardReport} />,
       url:
         _get(user, 'saleteam_position') === 'SALE_MANAGER'
           ? ROUTE.REPORTS
