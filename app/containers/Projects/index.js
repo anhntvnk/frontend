@@ -19,6 +19,7 @@ import {
   has as _has,
 } from 'lodash';
 import { createStructuredSelector } from 'reselect';
+import { FormattedMessage } from 'react-intl';
 
 import { useInjectReducer } from 'utils/injectReducer';
 import { useInjectSaga } from 'utils/injectSaga';
@@ -40,6 +41,7 @@ import reducer from './reducer';
 import saga from './saga';
 import logo from '../../assets/images/logo/my-project.png';
 import './styles.less';
+import messages from './messages';
 
 const key = 'projects';
 
@@ -103,14 +105,14 @@ export function Projects({
 
   const columns = [
     {
-      title: 'Ảnh',
+      title: <FormattedMessage {...messages.myProjImage} />,
       dataIndex: 'image',
       key: 'image',
       responsive: ['lg', 'md'],
       render: text => <Avatar style={{ marginLeft: 8 }} src={text || logo} />,
     },
     {
-      title: 'Tên dự án',
+      title: <FormattedMessage {...messages.myProjName} />,
       dataIndex: 'name',
       key: 'name',
       sorter: (a, b) => a.name.length - b.name.length,
@@ -129,7 +131,7 @@ export function Projects({
       ),
     },
     {
-      title: 'Giá trị (USD)',
+      title: <FormattedMessage {...messages.myProjValue} />,
       dataIndex: 'cost',
       width: 100,
       key: 'cost',
@@ -137,20 +139,20 @@ export function Projects({
       sorter: (a, b) => a.cost - b.cost,
     },
     {
-      title: 'Địa chỉ',
+      title: <FormattedMessage {...messages.myProjAddress} />,
       dataIndex: 'address',
       key: 'address',
       render: (text, record) => `${text} - ${record.city}`,
     },
     {
-      title: 'Giai đoạn',
+      title: <FormattedMessage {...messages.myProjPeriod} />,
       dataIndex: 'stage',
       key: 'stage',
       width: 150,
       responsive: ['lg', 'md'],
     },
     {
-      title: 'Trạng thái',
+      title: <FormattedMessage {...messages.myProjStatus} />,
       dataIndex: 'status_code',
       key: 'status_code',
       render: statusCode => {
@@ -163,7 +165,7 @@ export function Projects({
       },
     },
     {
-      title: 'Ngày cập nhật',
+      title: <FormattedMessage {...messages.myProjUpdate} />,
       dataIndex: 'last_modified',
       key: 'last_modified',
       sorter: (a, b) =>
@@ -175,7 +177,7 @@ export function Projects({
       ),
     },
     {
-      title: 'Theo dõi',
+      title: <FormattedMessage {...messages.myProjFollow} />,
       dataIndex: 'id',
       key: 'follow',
       render: (id, record) => (

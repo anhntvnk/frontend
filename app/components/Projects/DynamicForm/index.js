@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Row, Col, Form, Input, Button, Space } from 'antd';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
+import { FormattedMessage } from 'react-intl';
+import messages from './messages';
 
 function DynamicForm({ data }) {
   const onFinish = values => {
@@ -28,11 +30,17 @@ function DynamicForm({ data }) {
                       rules={[
                         {
                           required: true,
-                          message: 'Tiêu đề không được để trống!',
+                          message: (
+                            <FormattedMessage {...messages.myNoteTitleReq} />
+                          ),
                         },
                       ]}
                     >
-                      <Input placeholder="Nhập tiêu đề" />
+                      <Input
+                        placeholder={
+                          <FormattedMessage {...messages.myNoteInputTitle} />
+                        }
+                      />
                     </Form.Item>
                     <Form.Item
                       {...field}
@@ -41,11 +49,17 @@ function DynamicForm({ data }) {
                       rules={[
                         {
                           required: true,
-                          message: 'Nội dung không được để trống!',
+                          message: (
+                            <FormattedMessage {...messages.myNoteContentReq} />
+                          ),
                         },
                       ]}
                     >
-                      <Input placeholder="Nhập nội dung" />
+                      <Input
+                        placeholder={
+                          <FormattedMessage {...messages.myNoteInputContent} />
+                        }
+                      />
                     </Form.Item>
                     <MinusCircleOutlined onClick={() => remove(field.name)} />
                   </Space>
@@ -58,7 +72,7 @@ function DynamicForm({ data }) {
                     block
                     icon={<PlusOutlined />}
                   >
-                    Thêm ghi chú
+                    <FormattedMessage {...messages.myNoteAdd} />
                   </Button>
                 </Form.Item>
               </>

@@ -1,8 +1,10 @@
 import React from 'react';
+import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 import { Row, Col, Avatar, Button, Collapse } from 'antd';
 import { get as _get } from 'lodash';
 import styled from 'styled-components';
+import messages from './messages';
 
 import logo from '../../../assets/images/logo/my-project.png';
 
@@ -16,7 +18,9 @@ function Contact({ data, setVisible }) {
           <GutterRow style={{ minHeight: '220px' }}>
             <StyledHeader>
               <span>
-                <b>Danh sách thành viên trong dự án:</b>
+                <b>
+                  <FormattedMessage {...messages.myContactList} />
+                </b>
               </span>
               {_get(data, 'is_follow') && (
                 <Button
@@ -50,18 +54,29 @@ function Contact({ data, setVisible }) {
                     <StyledContentMeta>
                       <StyledContent>
                         <span>
-                          <b>Địa chỉ email:</b> {contact.email}
+                          <b>
+                            <FormattedMessage {...messages.myContactEmail} />
+                          </b>{' '}
+                          {contact.email}
                         </span>
                         <span>
-                          <b>Vị trí: </b> {contact.position}
+                          <b>
+                            <FormattedMessage {...messages.myContactPosition} />
+                          </b>{' '}
+                          {contact.position}
                         </span>
                       </StyledContent>
                       <StyledContent>
                         <span>
-                          <b>Số điện thoại:</b> {contact.phone}
+                          <b>
+                            <FormattedMessage {...messages.myContactPhone} />
+                          </b>{' '}
+                          {contact.phone}
                         </span>
                         <span>
-                          <b>Địa chỉ (nhà): </b>
+                          <b>
+                            <FormattedMessage {...messages.myContactAddress} />
+                          </b>
                           {contact.address}
                         </span>
                       </StyledContent>
@@ -70,7 +85,9 @@ function Contact({ data, setVisible }) {
                 </Collapse>
               ))
             ) : (
-              <p>Không có dữ liệu!</p>
+              <p>
+                <FormattedMessage {...messages.myContactNoData} />
+              </p>
             )}
           </GutterRow>
         </Col>

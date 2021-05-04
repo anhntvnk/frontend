@@ -1,4 +1,5 @@
 import React from 'react';
+import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 import { Row, Col } from 'antd';
 import styled from 'styled-components';
@@ -6,6 +7,7 @@ import moment from 'moment';
 import { get as _get } from 'lodash';
 
 import logo from '../../../assets/images/logo/my-project.png';
+import messages from './messages';
 
 const GutterRow = styled.section`
   padding: 20px;
@@ -21,18 +23,27 @@ function DetailsWeb({ data }) {
         <Col lg={16}>
           <GutterRow style={{ minHeight: '220px' }}>
             <span>
-              <span className="description">Chủ sở hữu:&nbsp;</span>
+              <span className="description">
+                <FormattedMessage {...messages.myDetailWebOwner} />
+                &nbsp;
+              </span>
               <p>{_get(data, 'owner', '')}</p>
             </span>
             <span>
-              <span className="description">Nhà thầu chính:&nbsp;</span>
+              <span className="description">
+                <FormattedMessage {...messages.myDetailWebContractor} />
+                &nbsp;
+              </span>
               <p style={{ whiteSpace: 'pre-wrap' }}>
                 {_get(data, 'nha_thau_chinh', '')}
               </p>
             </span>
             {_get(data, 'nha_thau_phu', '') && (
               <span>
-                <span className="description">Nhà thầu phụ:&nbsp;</span>
+                <span className="description">
+                  <FormattedMessage {...messages.myDetailWebSubContractor} />
+                  &nbsp;
+                </span>
                 <p style={{ whiteSpace: 'pre-wrap' }}>
                   {_get(data, 'nha_thau_phu', '')}
                 </p>
@@ -60,34 +71,55 @@ function DetailsWeb({ data }) {
       <Row gutter={16} className="pd-bottom">
         <Col lg={8}>
           <GutterRow>
-            <span className="description">Số hiệu dự án:&nbsp;</span>
+            <span className="description">
+              <FormattedMessage {...messages.myDetailWebProjNum} />
+              &nbsp;
+            </span>
             <span>{_get(data, 'code', '')}</span>
             <div>
-              <span className="description">Chi tiết trạng thái:&nbsp;</span>
+              <span className="description">
+                <FormattedMessage {...messages.myDetailWebStatus} />
+                &nbsp;
+              </span>
               <span>{_get(data, 'status', 'Không có dữ liệu')}</span>
             </div>
           </GutterRow>
         </Col>
         <Col lg={8}>
           <GutterRow>
-            <span className="description">Giá trị:&nbsp;</span>
+            <span className="description">
+              <FormattedMessage {...messages.myDetailWebValue} />
+              &nbsp;
+            </span>
             <span>$ {_get(data, 'cost', '')}m</span>
             <span style={{ float: 'right' }}>
-              <span className="description">Số sàn:&nbsp;</span>
+              <span className="description">
+                <FormattedMessage {...messages.myDetailWebFloorNum} />
+                &nbsp;
+              </span>
               <span>{_get(data, 'floor_count', '')}</span>
             </span>
             <div>
-              <span className="description">Diện tích:&nbsp;</span>
+              <span className="description">
+                <FormattedMessage {...messages.myDetailWebArea} />
+                &nbsp;
+              </span>
               <span>{_get(data, 'floor_area', '')} m2</span>
             </div>
           </GutterRow>
         </Col>
         <Col lg={8}>
           <GutterRow>
-            <span className="description">Khởi công:&nbsp;</span>
+            <span className="description">
+              <FormattedMessage {...messages.myDetailWebStart} />
+              &nbsp;
+            </span>
             <span>{moment(_get(data, 'start', '')).format('DD/MM/YYYY')}</span>
             <div>
-              <span className="description">Hoàn công:&nbsp;</span>
+              <span className="description">
+                <FormattedMessage {...messages.myDetailWebComplete} />
+                &nbsp;
+              </span>
               <span>
                 {moment(_get(data, 'finish', '')).format('DD/MM/YYYY')}
               </span>
@@ -98,19 +130,30 @@ function DetailsWeb({ data }) {
       <Row gutter={16} className="pd-bottom">
         <Col lg={8}>
           <GutterRow>
-            <span className="description">Quốc gia:&nbsp;</span>
-            <span>Việt Nam</span>
+            <span className="description">
+              <FormattedMessage {...messages.myDetailWebNation} />
+              &nbsp;
+            </span>
+            <span>
+              <FormattedMessage {...messages.myDetailWebVietNam} />
+            </span>
           </GutterRow>
         </Col>
         <Col lg={8}>
           <GutterRow>
-            <span className="description">Tỉnh thành:&nbsp;</span>
+            <span className="description">
+              <FormattedMessage {...messages.myDetailWebProvince} />
+              &nbsp;
+            </span>
             <span>{_get(data, 'city', '')}</span>
           </GutterRow>
         </Col>
         <Col lg={8}>
           <GutterRow>
-            <span className="description">Quận huyện:&nbsp;</span>
+            <span className="description">
+              <FormattedMessage {...messages.myDetailWebDistrict} />
+              &nbsp;
+            </span>
             <span>{_get(data, 'district', '')}</span>
           </GutterRow>
         </Col>
@@ -119,7 +162,10 @@ function DetailsWeb({ data }) {
         {_get(data, 'address', '') && (
           <Col lg={24}>
             <GutterRow>
-              <span className="description">Địa chỉ:&nbsp;</span>
+              <span className="description">
+                <FormattedMessage {...messages.myDetailWebAddress} />
+                &nbsp;
+              </span>
               <span>{_get(data, 'address', '')}</span>
             </GutterRow>
           </Col>
@@ -129,7 +175,10 @@ function DetailsWeb({ data }) {
         {_get(data, 'version', '') && (
           <Col lg={12}>
             <GutterRow>
-              <span className="description">Phiên bản:&nbsp;</span>
+              <span className="description">
+                <FormattedMessage {...messages.myDetailWebVersion} />
+                &nbsp;
+              </span>
               <span>{_get(data, 'version', '')}</span>
             </GutterRow>
           </Col>
@@ -137,7 +186,10 @@ function DetailsWeb({ data }) {
         {_get(data, 'version_description', '') && (
           <Col lg={12}>
             <GutterRow>
-              <span className="description">Mô tả phiên bản:&nbsp;</span>
+              <span className="description">
+                <FormattedMessage {...messages.myDetailWebVersionDescribe} />
+                &nbsp;
+              </span>
               <span>{_get(data, 'version_description', '')}</span>
             </GutterRow>
           </Col>
@@ -147,7 +199,9 @@ function DetailsWeb({ data }) {
         <Row gutter={16} className="pd-bottom">
           <Col lg={24}>
             <GutterRow>
-              <p className="description">Ghi chú:</p>
+              <p className="description">
+                <FormattedMessage {...messages.myDetailWebNote} />
+              </p>
               <span style={{ whiteSpace: 'pre-wrap' }}>
                 {_get(data, 'note', '')}
               </span>

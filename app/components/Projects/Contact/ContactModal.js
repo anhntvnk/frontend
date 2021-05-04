@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Modal, Form, Input } from 'antd';
+import { FormattedMessage } from 'react-intl';
+import messages from './messages';
 
 function ContactModal({ visible, onCreate, onCancel }) {
   const [form] = Form.useForm();
@@ -26,11 +28,13 @@ function ContactModal({ visible, onCreate, onCancel }) {
       <Form form={form} layout="vertical" name="form_in_modal">
         <Form.Item
           name="full_name"
-          label="Tên đầy đủ"
+          label={<FormattedMessage {...messages.myContactModalFullName} />}
           rules={[
             {
               required: true,
-              message: 'Họ và tên là bắt buộc!',
+              message: (
+                <FormattedMessage {...messages.myContactModalFullNameReq} />
+              ),
             },
           ]}
         >
@@ -38,11 +42,11 @@ function ContactModal({ visible, onCreate, onCancel }) {
         </Form.Item>
         <Form.Item
           name="position"
-          label="Chức danh"
+          label={<FormattedMessage {...messages.modalPosition} />}
           rules={[
             {
               required: true,
-              message: 'Chức danh là bắt buộc!',
+              message: <FormattedMessage {...messages.modalPositionReq} />,
             },
           ]}
         >

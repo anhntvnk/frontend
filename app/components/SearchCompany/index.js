@@ -1,10 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Form, Row, Col, Input, Button, Select } from 'antd';
+import { Link } from 'react-router-dom';
+import { FormattedMessage } from 'react-intl';
+import messages from './messages';
 import { citys } from './constants';
 import './styles.less';
 import routes from '../../constants/routes';
-import { Link } from 'react-router-dom';
 
 const { Option } = Select;
 
@@ -37,7 +39,10 @@ const SearchCompany = ({
           sm={{ span: 24 }}
           key="name"
         >
-          <Form.Item name="name" label="Tên công ty">
+          <Form.Item
+            name="name"
+            label={<FormattedMessage {...messages.myCompanySearchName} />}
+          >
             <Input />
           </Form.Item>
         </Col>
@@ -48,10 +53,15 @@ const SearchCompany = ({
           sm={{ span: 24 }}
           key="citys"
         >
-          <Form.Item name="citys" label="Thành phố">
+          <Form.Item
+            name="citys"
+            label={<FormattedMessage {...messages.myCompanySearchCity} />}
+          >
             <Select
               showSearch
-              placeholder="Chọn thành phố"
+              placeholder={
+                <FormattedMessage {...messages.myCompanySelectCity} />
+              }
               optionFilterProp="children"
               filterOption={(input, option) =>
                 option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
@@ -66,7 +76,11 @@ const SearchCompany = ({
           </Form.Item>
         </Col>
         <Col {...ColProps} xl={{ span: 8 }} md={{ span: 8 }} sm={{ span: 24 }}>
-          <Form.Item name="" key="project-type" label="Công ty">
+          <Form.Item
+            name=""
+            key="project-type"
+            label={<FormattedMessage {...messages.myCompanySearchCompany} />}
+          >
             <Select
               onChange={onChangeProject}
               defaultValue={copmpanyType === 'company-follow' ? 1 : 0}
@@ -76,10 +90,10 @@ const SearchCompany = ({
               }
             >
               <Option key="all-company" value={0}>
-                Toàn bộ công ty
+                <FormattedMessage {...messages.myCompanyAll} />
               </Option>
               <Option key="company-follow" value={1}>
-                Công ty đang theo dõi
+                <FormattedMessage {...messages.myCompanyFollow} />
               </Option>
             </Select>
           </Form.Item>
@@ -89,13 +103,13 @@ const SearchCompany = ({
         <Col span={12} style={{ textAlign: 'left' }}>
           <Link component="a" toHash={false} to={routes.COMPANY_ADDNEW}>
             <Button style={{ marginLeft: '5px' }} type="primary">
-              Thêm Công Ty
+              <FormattedMessage {...messages.myCompanyBtnAdd} />
             </Button>
           </Link>
         </Col>
         <Col span={12} style={{ textAlign: 'right' }}>
           <Button type="primary" htmlType="submit">
-            Tìm kiếm
+            <FormattedMessage {...messages.myCompanyBtnSearch} />
           </Button>
           <Button
             style={{ margin: '0 8px' }}
@@ -104,7 +118,7 @@ const SearchCompany = ({
               onResetFields();
             }}
           >
-            Xóa bộ lọc
+            <FormattedMessage {...messages.myCompanyBtnClear} />
           </Button>
         </Col>
       </Row>

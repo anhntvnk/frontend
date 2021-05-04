@@ -11,6 +11,7 @@ import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
+import { FormattedMessage } from 'react-intl';
 import moment from 'moment';
 import { get as _get } from 'lodash';
 import { Row, Col, Tabs, Button, message } from 'antd';
@@ -37,6 +38,7 @@ import reducer from './reducer';
 import saga from './saga';
 import './styles.less';
 import { ENUMS, ROUTE } from '../../../constants';
+import messages from './messages';
 
 const key = 'projectDetails';
 const { TabPane } = Tabs;
@@ -135,9 +137,11 @@ export function ProjectDetails({
           icon={<ArrowLeftOutlined />}
           onClick={() => history.push(ROUTE.PROJECT)}
         >
-          Quay lại
+          <FormattedMessage {...messages.myProjDetailBtnBack} />
         </Button>
-        <H2>Chi tiết Công Ty</H2>
+        <H2>
+          <FormattedMessage {...messages.myProjDetailTitle} />
+        </H2>
       </CenteredSectionWithBack>
 
       <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 16 }}>
@@ -146,10 +150,15 @@ export function ProjectDetails({
             <Row>
               <Col className="group-item" lg={24} md={24}>
                 <BoxDetail>
-                  <span className="description">Dự án:</span>
+                  <span className="description">
+                    <FormattedMessage {...messages.myProjDetailProj} />
+                  </span>
                   <p className="project-name">{_get(data, 'name', '')}</p>
                   <span className="description">
-                    <span>Cập nhật mới:&nbsp;</span>
+                    <span>
+                      <FormattedMessage {...messages.myProjDetailUpdate} />
+                      &nbsp;
+                    </span>
                     <span>
                       {moment(_get(data, 'last_modified', '')).format(
                         'DD/MM/YYYY',
@@ -169,7 +178,10 @@ export function ProjectDetails({
                 <ScheduleTwoTone /> {moment().format('DD/MM/YYYY')}
               </div>
               <div className="calendar">
-                <HomeTwoTone /> <b>Việt Nam</b>
+                <HomeTwoTone />{' '}
+                <b>
+                  <FormattedMessage {...messages.myProjDetailHome} />
+                </b>
               </div>
               <div className="calendar">
                 <Button
@@ -178,7 +190,7 @@ export function ProjectDetails({
                   size="large"
                   onClick={() => changeStatus(data)}
                 >
-                  Chuyển trạng thái
+                  <FormattedMessage {...messages.myProjDetailStatus} />
                 </Button>
               </div>
             </div>
@@ -192,20 +204,32 @@ export function ProjectDetails({
         <Col lg={24} className="menu-tab">
           <Tabs defaultActiveKey="1" type="card" size="small">
             {/* Tab Tổng Quan */}
-            <TabPane tab="Tổng quan" key="1">
+            <TabPane
+              tab={<FormattedMessage {...messages.myProjDetailOverview} />}
+              key="1"
+            >
               {!isMobile ? (
                 <ProjectDetailsWeb data={data} />
               ) : (
                 <ProjectDetailsMobile data={data} />
               )}
             </TabPane>
-            <TabPane tab="Người liên hệ" key="2">
+            <TabPane
+              tab={<FormattedMessage {...messages.myProjDetailContact} />}
+              key="2"
+            >
               <Contact data={data} setVisible={setVisible} />
             </TabPane>
-            <TabPane tab="Ghi chú" key="3">
+            <TabPane
+              tab={<FormattedMessage {...messages.myProjDetailNote} />}
+              key="3"
+            >
               <DynamicForm data={data} />
             </TabPane>
-            <TabPane tab="Giao việc" key="4">
+            <TabPane
+              tab={<FormattedMessage {...messages.myProjDetailAssign} />}
+              key="4"
+            >
               Đang cập nhật...
             </TabPane>
           </Tabs>

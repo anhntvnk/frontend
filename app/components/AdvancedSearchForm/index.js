@@ -1,4 +1,5 @@
 import React from 'react';
+import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 import { Form, Row, Col, Input, Button, Select, DatePicker } from 'antd';
 import locale from 'antd/es/date-picker/locale/vi_VN';
@@ -6,6 +7,7 @@ import './styles.less';
 import { Link } from 'react-router-dom';
 import { citys, stages, types } from './constants';
 import routes from '../../constants/routes';
+import messages from './messages';
 
 const { Option } = Select;
 
@@ -38,7 +40,10 @@ const AdvancedSearchForm = ({
           sm={{ span: 24 }}
           key="name"
         >
-          <Form.Item name="name" label="Tên dự án">
+          <Form.Item
+            name="name"
+            label={<FormattedMessage {...messages.myFormProjName} />}
+          >
             <Input />
           </Form.Item>
         </Col>
@@ -49,7 +54,10 @@ const AdvancedSearchForm = ({
           sm={{ span: 24 }}
           key="owner"
         >
-          <Form.Item name="owner" label="Chủ sở hữu">
+          <Form.Item
+            name="owner"
+            label={<FormattedMessage {...messages.myFormOwner} />}
+          >
             <Input />
           </Form.Item>
         </Col>
@@ -60,7 +68,10 @@ const AdvancedSearchForm = ({
           sm={{ span: 24 }}
           key="contractors"
         >
-          <Form.Item name="contractors" label="Nhà thầu chính">
+          <Form.Item
+            name="contractors"
+            label={<FormattedMessage {...messages.myFormContractor} />}
+          >
             <Input />
           </Form.Item>
         </Col>
@@ -71,7 +82,10 @@ const AdvancedSearchForm = ({
           sm={{ span: 24 }}
           key="subcontractors"
         >
-          <Form.Item name="subcontractors" label="Nhà thầu phụ">
+          <Form.Item
+            name="subcontractors"
+            label={<FormattedMessage {...messages.myFormSubContractor} />}
+          >
             <Input />
           </Form.Item>
         </Col>
@@ -82,11 +96,14 @@ const AdvancedSearchForm = ({
           sm={{ span: 24 }}
           key="month_of_commencement"
         >
-          <Form.Item name="month_of_commencement" label="Tháng khởi công">
+          <Form.Item
+            name="month_of_commencement"
+            label={<FormattedMessage {...messages.myFormStartMonth} />}
+          >
             <DatePicker
               style={{ width: '100%' }}
               picker="month"
-              placeholder="Chọn tháng"
+              placeholder={<FormattedMessage {...messages.myFormSelectMonth} />}
             />
           </Form.Item>
         </Col>
@@ -97,12 +114,15 @@ const AdvancedSearchForm = ({
           sm={{ span: 24 }}
           key="month_of_completion"
         >
-          <Form.Item name="month_of_completion" label="Tháng hoàn công">
+          <Form.Item
+            name="month_of_completion"
+            label={<FormattedMessage {...messages.myFormComplMonth} />}
+          >
             <DatePicker
               style={{ width: '100%' }}
               locale={locale}
               picker="month"
-              placeholder="Chọn tháng"
+              placeholder={<FormattedMessage {...messages.myFormSelectMonth} />}
             />
           </Form.Item>
         </Col>
@@ -113,10 +133,13 @@ const AdvancedSearchForm = ({
           sm={{ span: 24 }}
           key="citys"
         >
-          <Form.Item name="citys" label="Thành phố">
+          <Form.Item
+            name="citys"
+            label={<FormattedMessage {...messages.myFormCity} />}
+          >
             <Select
               showSearch
-              placeholder="Chọn thành phố"
+              placeholder={<FormattedMessage {...messages.myFormSelectCity} />}
               optionFilterProp="children"
               filterOption={(input, option) =>
                 option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
@@ -137,10 +160,13 @@ const AdvancedSearchForm = ({
           sm={{ span: 24 }}
           key="type"
         >
-          <Form.Item name="type" label="Loại hình">
+          <Form.Item
+            name="type"
+            label={<FormattedMessage {...messages.myFormType} />}
+          >
             <Select
               showSearch
-              placeholder="Chọn loại hình"
+              placeholder={<FormattedMessage {...messages.myFormSelectType} />}
               optionFilterProp="children"
               filterOption={(input, option) =>
                 option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
@@ -161,10 +187,14 @@ const AdvancedSearchForm = ({
           sm={{ span: 24 }}
           key="stage"
         >
-          <Form.Item name="stage" key="stage-item" label="Giai đoạn">
+          <Form.Item
+            name="stage"
+            key="stage-item"
+            label={<FormattedMessage {...messages.myFormPeriod} />}
+          >
             <Select
               showSearch
-              placeholder="Chọn giai đoạn"
+              placeholder={<FormattedMessage {...messages.myFormPeriod} />}
               optionFilterProp="children"
               filterOption={(input, option) =>
                 option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
@@ -179,7 +209,11 @@ const AdvancedSearchForm = ({
           </Form.Item>
         </Col>
         <Col {...ColProps} xl={{ span: 8 }} md={{ span: 8 }} sm={{ span: 24 }}>
-          <Form.Item name="" key="project-type" label="Dự án">
+          <Form.Item
+            name=""
+            key="project-type"
+            label={<FormattedMessage {...messages.myFormProject} />}
+          >
             <Select
               onChange={onChangeProject}
               defaultValue={projectType === 'project-follow' ? 1 : 0}
@@ -189,10 +223,10 @@ const AdvancedSearchForm = ({
               }
             >
               <Option key="all-project" value={0}>
-                Toàn bộ dự án
+                {<FormattedMessage {...messages.myFormFullProjects} />}
               </Option>
               <Option key="project-follow" value={1}>
-                Dự án đang theo dõi
+                {<FormattedMessage {...messages.myFormFollowProj} />}
               </Option>
             </Select>
           </Form.Item>
@@ -202,13 +236,13 @@ const AdvancedSearchForm = ({
         <Col span={12} style={{ textAlign: 'left' }}>
           <Link component="a" toHash={false} to={routes.PROJECT_ADDNEW}>
             <Button style={{ marginLeft: '5px' }} type="primary">
-              Thêm dự án
+              {<FormattedMessage {...messages.myFormBtnAddProj} />}
             </Button>
           </Link>
         </Col>
         <Col span={12} style={{ textAlign: 'right' }}>
           <Button type="primary" htmlType="submit">
-            Tìm kiếm
+            {<FormattedMessage {...messages.myFormBtnSearch} />}
           </Button>
           <Button
             style={{ margin: '0 8px' }}
@@ -217,7 +251,7 @@ const AdvancedSearchForm = ({
               onResetFields();
             }}
           >
-            Xóa bộ lọc
+            {<FormattedMessage {...messages.myFormBtnDelete} />}
           </Button>
         </Col>
       </Row>
