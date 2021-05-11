@@ -73,7 +73,9 @@ const projectReducer = (state = initialState, action) =>
         draft.loading = false;
         break;
       case CHANGE_FOLLOW_SUCCESS:
-        draft.project = updateProjectFollows(state.project, response.parent_project_id);
+        const newProject = updateProjectFollows(state.project, response.parent_project_id);
+        console.log(newProject, 'newProject');
+        draft.project = newProject;
         break;
       case UN_FOLLOW_SUCCESS:
         draft.project = unFollowProject(state.project, response.id);

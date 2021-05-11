@@ -16,6 +16,7 @@ import styled from 'styled-components';
 import { Form, Input, Button } from 'antd';
 import { LockOutlined, ArrowLeftOutlined } from '@ant-design/icons';
 import { createStructuredSelector } from 'reselect';
+import { FormattedMessage } from 'react-intl';
 
 import { useInjectReducer } from 'utils/injectReducer';
 import { useInjectSaga } from 'utils/injectSaga';
@@ -26,6 +27,7 @@ import { makeSelectErrorMessage, makeSelectSuccessMessage } from './selectors';
 import ROUTE from '../../constants/routes';
 import { removeUserSession } from '../../../services/auth';
 import './styles.less';
+import messages from './messages';
 
 const key = 'changePassword';
 
@@ -78,7 +80,7 @@ export function ChangePassword({
           icon={<ArrowLeftOutlined />}
           onClick={() => history.goBack()}
         >
-          Quay lại
+          <FormattedMessage {...messages.myPasswordTitle} />
         </Button>
       </CenteredSectionWithBack>
 
@@ -90,13 +92,16 @@ export function ChangePassword({
         }}
         onFinish={onFinish}
       >
-        <H1 className="form-title">Đổi mật khẩu</H1>
+        <H1 className="form-title">
+          {' '}
+          <FormattedMessage {...messages.myPasswordTitle} />
+        </H1>
         <Form.Item
           name="oldPassword"
           rules={[
             {
               required: true,
-              message: 'Mật khẩu cũ là bắt buộc!',
+              message: <FormattedMessage {...messages.myPasswordRuleOld} />,
             },
           ]}
           hasFeedback
@@ -106,7 +111,7 @@ export function ChangePassword({
           <Input.Password
             prefix={<LockOutlined className="site-form-item-icon" />}
             type="password"
-            placeholder="Nhập mật khẩu cũ"
+            placeholder={<FormattedMessage {...messages.myPasswordOld} />}
           />
         </Form.Item>
         <Form.Item
@@ -114,7 +119,7 @@ export function ChangePassword({
           rules={[
             {
               required: true,
-              message: 'Mật khẩu mới là bắt buộc!',
+              message: <FormattedMessage {...messages.myPasswordRuleNew} />,
             },
           ]}
           hasFeedback
@@ -123,7 +128,7 @@ export function ChangePassword({
           <Input.Password
             prefix={<LockOutlined className="site-form-item-icon" />}
             type="password"
-            placeholder="Nhập mật khẩu mới"
+            placeholder={<FormattedMessage {...messages.myPasswordNew} />}
           />
         </Form.Item>
         <Form.Item
@@ -131,7 +136,7 @@ export function ChangePassword({
           rules={[
             {
               required: true,
-              message: 'Mật khẩu nhập lại là bắt buộc!',
+              message: <FormattedMessage {...messages.myPasswordNewTurnRule} />,
             },
             ({ getFieldValue }) => ({
               validator(rule, value) {
@@ -139,7 +144,9 @@ export function ChangePassword({
                   return Promise.resolve();
                 }
                 // eslint-disable-next-line prefer-promise-reject-errors
-                return Promise.reject('Mật khẩu nhập lại là không khớp!');
+                return Promise.reject(
+                  <FormattedMessage {...messages.myPasswordNotMatch} />,
+                );
               },
             }),
           ]}
@@ -149,7 +156,7 @@ export function ChangePassword({
           <Input.Password
             prefix={<LockOutlined className="site-form-item-icon" />}
             type="repassword"
-            placeholder="Nhập lại mật khẩu mới"
+            placeholder={<FormattedMessage {...messages.myPasswordNewTurn} />}
           />
         </Form.Item>
 
@@ -159,7 +166,7 @@ export function ChangePassword({
             htmlType="submit"
             className="change-password-form-button"
           >
-            Lưu Lại
+            <FormattedMessage {...messages.myPasswordBtnSave} />
           </Button>
         </Form.Item>
       </Form>

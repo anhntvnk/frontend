@@ -15,6 +15,7 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { Avatar, message } from 'antd';
 import { createStructuredSelector } from 'reselect';
+import { FormattedMessage } from 'react-intl';
 
 import { useInjectReducer } from 'utils/injectReducer';
 import { useInjectSaga } from 'utils/injectSaga';
@@ -32,6 +33,7 @@ import reducer from './reducer';
 import saga from './saga';
 import logo from '../../assets/images/logo/my-project.png';
 import { ROUTE } from '../../constants';
+import messages from '../../components/SearchCompany/messages';
 
 const CompanyList = styled.section`
   dispay: block;
@@ -82,14 +84,14 @@ export function Companys({
 
   const columns = [
     {
-      title: 'Ảnh',
+      title: <FormattedMessage {...messages.myCompanyImage} />,
       dataIndex: 'image',
       key: 'image',
       responsive: ['lg', 'md'],
       render: text => <Avatar style={{ marginLeft: 8 }} src={text || logo} />,
     },
     {
-      title: 'Tên công ty',
+      title: <FormattedMessage {...messages.myCompanySearchName} />,
       dataIndex: 'name',
       key: 'name',
       responsive: ['lg', 'md', 'xs'],
@@ -107,14 +109,14 @@ export function Companys({
       ),
     },
     {
-      title: 'Địa chỉ',
+      title: <FormattedMessage {...messages.myCompanyAddress} />,
       dataIndex: 'office_address',
       key: 'office_address',
       render: (address, record) =>
         `${address} ${record.district} - ${record.city}`,
     },
     {
-      title: 'Theo dõi',
+      title: <FormattedMessage {...messages.myCompanyStatus} />,
       dataIndex: 'id',
       key: 'follow',
       render: (id, record) => (

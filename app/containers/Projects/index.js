@@ -212,6 +212,7 @@ export function Projects({
       ),
     },
   ];
+  console.log(projectList, 'projectList');
 
   const listProps = {
     dataSource: projectList || defaultProject,

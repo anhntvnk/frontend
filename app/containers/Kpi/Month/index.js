@@ -12,6 +12,7 @@ import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
+import { FormattedMessage } from 'react-intl';
 import { Card, Row, Col, Button, List, Tabs } from 'antd';
 import { ArrowLeftOutlined } from '@ant-design/icons';
 import { createStructuredSelector } from 'reselect';
@@ -23,6 +24,7 @@ import { makeSelectUserProfille } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 import { loadUserProfile } from './actions';
+import messages from '../../../components/Kpi/messages';
 
 const key = 'user';
 
@@ -53,9 +55,11 @@ export function User({ history, userProfile, onLoadUserProfile }) {
           icon={<ArrowLeftOutlined />}
           onClick={() => history.goBack()}
         >
-          Quay lại
+          <FormattedMessage {...messages.myKPIMonthBtnBack} />
         </Button>
-        <H1>Thông tin cá nhân</H1>
+        <H1>
+          <FormattedMessage {...messages.myKPIprofile} />
+        </H1>
       </CenteredSectionWithBack>
       <UserProfileState>
         <Row gutter={{ xs: 8, sm: 24, md: 24, lg: 16 }}>

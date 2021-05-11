@@ -100,4 +100,8 @@ export default defineMessages({
     id: `${scope}.my_KPI.successMsg`,
     defaultMessage: 'Thiết lập KPIs hôm nay thành công!',
   },
+  myKPIMonthBtnBack: {
+    id: `${scope}.my_KPI_month.btnBack`,
+    defaultMessage: 'Quay lại',
+  },
 });

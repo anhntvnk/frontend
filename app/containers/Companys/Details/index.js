@@ -17,6 +17,7 @@ import { Row, Col, Button } from 'antd';
 import { ArrowLeftOutlined } from '@ant-design/icons';
 import { createStructuredSelector } from 'reselect';
 import { enquireScreen } from 'enquire-js';
+import { FormattedMessage } from 'react-intl';
 
 import { useInjectReducer } from 'utils/injectReducer';
 import { useInjectSaga } from 'utils/injectSaga';
@@ -29,6 +30,7 @@ import reducer from './reducer';
 import saga from './saga';
 import './styles.less';
 import logo from '../../../assets/images/logo/my-project.png';
+import messages from '../../../components/SearchCompany/messages';
 
 const key = 'companyDetails';
 const Details = styled.section`
@@ -92,19 +94,26 @@ export function CompanyDetails({ history, data }) {
           icon={<ArrowLeftOutlined />}
           onClick={() => history.goBack()}
         >
-          Quay lại
+          <FormattedMessage {...messages.myCompanyDetailBtnBack} />
         </Button>
-        <H2>Chi tiết Công Ty</H2>
+        <H2>
+          <FormattedMessage {...messages.myCompanyDetailTitle} />
+        </H2>
       </CenteredSectionWithBack>
 
       <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 8 }}>
         {!isMobile && (
           <Col className="group-item" lg={24} md={24}>
             <BoxDetail>
-              <span className="description">Tên Công Ty:</span>
+              <span className="description">
+                <FormattedMessage {...messages.myCompanySearchName} />:
+              </span>
               <p className="company-name">{_get(data, 'name', '')}</p>
               <span className="description">
-                <span>Ngày thành lập:&nbsp;</span>
+                <span>
+                  <FormattedMessage {...messages.myCompanyDetailFoundation} />
+                  &nbsp;
+                </span>
                 <span>{_get(data, 'date', '')}</span>
               </span>
             </BoxDetail>
@@ -117,7 +126,10 @@ export function CompanyDetails({ history, data }) {
               <BoxDetail>
                 {_get(data, 'contacts', '').length > 0 && (
                   <span>
-                    <span className="description">Liên hệ:&nbsp;</span>
+                    <span className="description">
+                      <FormattedMessage {...messages.myCompanyDetailContact} />
+                      &nbsp;
+                    </span>
                     {_get(data, 'contacts', '').map(ct => (
                       <>
                         <p className="contact-name">
@@ -128,18 +140,29 @@ export function CompanyDetails({ history, data }) {
                   </span>
                 )}
                 <span>
-                  <span className="description">Giám đốc:&nbsp;</span>
+                  <span className="description">
+                    <FormattedMessage {...messages.myCompanyDetailDirector} />
+                    &nbsp;
+                  </span>
                   <p>{_get(data, 'manager', '')}</p>
                 </span>
                 <span>
-                  <span className="description">Địa chỉ văn phòng:&nbsp;</span>
+                  <span className="description">
+                    <FormattedMessage
+                      {...messages.myCompanyDetailOfficeAddress}
+                    />
+                    &nbsp;
+                  </span>
                   <p>
                     {_get(data, 'office_address', '')}{' '}
                     {_get(data, 'district', '')}
                   </p>
                 </span>
                 <span>
-                  <span className="description">Thành phố (Tỉnh):&nbsp;</span>
+                  <span className="description">
+                    <FormattedMessage {...messages.myCompanyDetailCity} />
+                    &nbsp;
+                  </span>
                   <p>{_get(data, 'city', '')}</p>
                 </span>
               </BoxDetail>
@@ -157,24 +180,36 @@ export function CompanyDetails({ history, data }) {
               <BoxDetail>
                 {_get(data, 'phone', '') && (
                   <span>
-                    <span className="description">Số điện thoại:&nbsp;</span>
+                    <span className="description">
+                      <FormattedMessage {...messages.myCompanyDetailPhone} />
+                      &nbsp;
+                    </span>
                     <p>{_get(data, 'phone', '')}</p>
                   </span>
                 )}
                 {_get(data, 'email', '') && (
                   <span>
-                    <span className="description">Địa chỉ Email:&nbsp;</span>
+                    <span className="description">
+                      <FormattedMessage {...messages.myCompanyDetailEmail} />
+                      &nbsp;
+                    </span>
                     <p>{_get(data, 'email', '')}</p>
                   </span>
                 )}
                 {_get(data, 'website', '') && (
                   <span>
-                    <span className="description">Trang web:&nbsp;</span>
+                    <span className="description">
+                      <FormattedMessage {...messages.myCompanyDetailWeb} />
+                      &nbsp;
+                    </span>
                     <p>{_get(data, 'website', '')}</p>
                   </span>
                 )}
                 <span>
-                  <span className="description">Cập nhật mới nhất:&nbsp;</span>
+                  <span className="description">
+                    <FormattedMessage {...messages.myCompanyDetailUpdate} />
+                    &nbsp;
+                  </span>
                   <p>
                     {moment(_get(data, 'latest_update', '')).format(
                       'DD/MM/YYYY',
@@ -183,14 +218,18 @@ export function CompanyDetails({ history, data }) {
                 </span>
                 {_get(data, 'note', '') && (
                   <span>
-                    <span className="description">Ghi chú cá nhân:&nbsp;</span>
+                    <span className="description">
+                      <FormattedMessage {...messages.myCompanyDetailProj} />
+                      &nbsp;
+                    </span>
                     <p>{_get(data, 'note', '')}</p>
                   </span>
                 )}
                 {_get(data, 'description', '') && (
                   <span>
                     <span className="description">
-                      Dự án liên quan tới công ty:&nbsp;
+                      <FormattedMessage {...messages.myCompanyDetailProj} />
+                      &nbsp;
                     </span>
                     <p>{_get(data, 'description', '')}</p>
                   </span>

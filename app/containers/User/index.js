@@ -18,6 +18,7 @@ import { ArrowLeftOutlined } from '@ant-design/icons';
 import { createStructuredSelector } from 'reselect';
 import { useInjectReducer } from 'utils/injectReducer';
 import { useInjectSaga } from 'utils/injectSaga';
+import { FormattedMessage } from 'react-intl';
 import styled from 'styled-components';
 import H1 from 'components/H1';
 import { makeSelectUserProfille } from './selectors';
@@ -25,6 +26,7 @@ import reducer from './reducer';
 import saga from './saga';
 import './styles.less';
 import { loadUserProfile } from './actions';
+import messages from './messages';
 
 const key = 'user';
 
@@ -52,9 +54,11 @@ export function User({ history, userProfile, onLoadUserProfile }) {
           icon={<ArrowLeftOutlined />}
           onClick={() => history.goBack()}
         >
-          Quay lại
+          <FormattedMessage {...messages.myProfileaBtnBack} />
         </Button>
-        <H1>Thông tin cá nhân</H1>
+        <H1>
+          <FormattedMessage {...messages.myProfiletTitle} />
+        </H1>
       </CenteredSectionWithBack>
       <UserProfileState>
         <Row gutter={{ xs: 8, sm: 24, md: 24, lg: 16 }}>
@@ -71,16 +75,20 @@ export function User({ history, userProfile, onLoadUserProfile }) {
                   description={
                     <div>
                       <p>
-                        Mã NV: <b>MYP{_get(userProfile, 'id')}</b>
+                        <FormattedMessage {...messages.myProfileId} />{' '}
+                        <b>MYP{_get(userProfile, 'id')}</b>
                       </p>
                       <p>
-                        Họ tên: <b>{_get(userProfile, 'full_name')}</b>
+                        <FormattedMessage {...messages.myProfileName} />{' '}
+                        <b>{_get(userProfile, 'full_name')}</b>
                       </p>
                       <p>
-                        Chức vụ: <b>{_get(userProfile, 'position')}</b>
+                        <FormattedMessage {...messages.myProfilePosition} />{' '}
+                        <b>{_get(userProfile, 'position')}</b>
                       </p>
                       <p>
-                        Ngày lương: <b>{moment().format('D/M/YYYY')}</b>
+                        <FormattedMessage {...messages.myProfileSalary} />{' '}
+                        <b>{moment().format('D/M/YYYY')}</b>
                       </p>
                     </div>
                   }
@@ -90,7 +98,10 @@ export function User({ history, userProfile, onLoadUserProfile }) {
           </Col>
           <Col lg={16} xs={24}>
             <Tabs type="card">
-              <TabPane tab="Liên hệ" key="profile">
+              <TabPane
+                tab={<FormattedMessage {...messages.myProfileContact} />}
+                key="profile"
+              >
                 <Profile>
                   <List size="small" bordered>
                     <List.Item>
@@ -108,32 +119,57 @@ export function User({ history, userProfile, onLoadUserProfile }) {
                     </List.Item>
                     <List.Item>
                       <Col lg={24}>
-                        <b>Địa chỉ (officee)</b>:{' '}
+                        <b>
+                          <FormattedMessage
+                            {...messages.myProfileAddressOffice}
+                          />
+                        </b>{' '}
                         {_get(userProfile, 'address_office')}
                       </Col>
                     </List.Item>
                     <List.Item>
                       <Col lg={12}>
-                        <b>Địa chỉ (nhà)</b>: {_get(userProfile, 'address')}
+                        <b>
+                          <FormattedMessage
+                            {...messages.myProfileAddressHome}
+                          />
+                        </b>{' '}
+                        {_get(userProfile, 'address')}
                       </Col>
                       <Col lg={12}>
-                        <b>Thành phố</b>: {_get(userProfile, 'city')}
+                        <b>
+                          <FormattedMessage {...messages.myProfileCity} />
+                        </b>{' '}
+                        {_get(userProfile, 'city')}
                       </Col>
                     </List.Item>
                     <List.Item>
                       <Col lg={12}>
-                        <b>Công ty</b>: {_get(userProfile, 'company')}
+                        <b>
+                          <FormattedMessage {...messages.myProfiletCompany} />
+                        </b>{' '}
+                        {_get(userProfile, 'company')}
                       </Col>
                       <Col lg={12}>
-                        <b>Ghi chú</b>: {_get(userProfile, 'note')}
+                        <b>
+                          <FormattedMessage {...messages.myProfileNote} />:
+                        </b>{' '}
+                        {_get(userProfile, 'note')}
                       </Col>
                     </List.Item>
                     <List.Item>
                       <Col lg={12} style={{ textTransform: 'capitalize' }}>
-                        <b>Gói dịch vụ</b>: {_get(userProfile, 'package')}
+                        <b>
+                          <FormattedMessage {...messages.myProfileService} />
+                        </b>{' '}
+                        {_get(userProfile, 'package')}
                       </Col>
                       <Col lg={12} style={{ textTransform: 'capitalize' }}>
-                        <b>Ngày hết hạn</b>:{' '}
+                        <b>
+                          <FormattedMessage
+                            {...messages.myProfiletitleEndDate}
+                          />
+                        </b>{' '}
                         {moment(_get(userProfile, 'expireDate')).format(
                           'D/M/YYYY',
                         )}
@@ -142,11 +178,17 @@ export function User({ history, userProfile, onLoadUserProfile }) {
                   </List>
                 </Profile>
               </TabPane>
-              <TabPane tab="Giao việc" key="2">
-                Đang cập nhật...
+              <TabPane
+                tab={<FormattedMessage {...messages.myProfileAssign} />}
+                key="2"
+              >
+                <FormattedMessage {...messages.myProfileUpdating} />
               </TabPane>
-              <TabPane tab="Ghi chú" key="3">
-                Đang cập nhật...
+              <TabPane
+                tab={<FormattedMessage {...messages.myProfileNote} />}
+                key="3"
+              >
+                <FormattedMessage {...messages.myProfileUpdating} />
               </TabPane>
             </Tabs>
           </Col>
