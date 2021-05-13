@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Form, Row, Col, Input, Button, Select } from 'antd';
 import { Link } from 'react-router-dom';
-import { FormattedMessage } from 'react-intl';
+import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import messages from './messages';
 import { citys } from './constants';
 import './styles.less';
@@ -15,6 +15,7 @@ const SearchCompany = ({
   onResetFields,
   onChangeProject,
   copmpanyType,
+  intl,
 }) => {
   const [form] = Form.useForm();
 
@@ -59,9 +60,9 @@ const SearchCompany = ({
           >
             <Select
               showSearch
-              placeholder={
-                <FormattedMessage {...messages.myCompanySelectCity} />
-              }
+              placeholder={intl.formatMessage({
+                ...messages.myCompanySelectCity,
+              })}
               optionFilterProp="children"
               filterOption={(input, option) =>
                 option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
@@ -131,6 +132,7 @@ SearchCompany.propTypes = {
   onChangeProject: PropTypes.func,
   onResetFields: PropTypes.func,
   copmpanyType: PropTypes.string,
+  intl: intlShape.isRequired,
 };
 
-export default SearchCompany;
+export default injectIntl(SearchCompany);

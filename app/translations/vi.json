@@ -6,6 +6,7 @@
   "myp.containers.HomePage.register.message": "Đăng kí",
   "myp.containers.HomePage.signIn.message": "Đăng Nhập",
   "myp.containers.HomePage.logOut.message": "Đăng xuất",
+  "myp.containers.HomePage.banner.title": "Save Time More Project",
   "myp.containers.HomePage.banner.message": "Giúp bạn có nhiều dự án hơn với thời gian ít hơn cùng {myProject}",
   "myp.containers.HomePage.myp_introduce.header": "KHÔNG CHỈ LÀ CẬP NHẬT THÔNG TIN DỰ ÁN",
   "myp.containers.HomePage.myp_introduce.title": "Các dự án đang theo dõi được lưu vào Trang chủ",

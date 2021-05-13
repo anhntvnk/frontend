@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Row, Col, Form, Input, Button, Space } from 'antd';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
-import { FormattedMessage } from 'react-intl';
+import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import messages from './messages';
 
-function DynamicForm({ data }) {
+function DynamicForm({ data, intl }) {
   const onFinish = values => {
     console.log('Received values of form:', values);
   };
@@ -37,9 +37,9 @@ function DynamicForm({ data }) {
                       ]}
                     >
                       <Input
-                        placeholder={
-                          <FormattedMessage {...messages.myNoteInputTitle} />
-                        }
+                        placeholder={intl.formatMessage({
+                          ...messages.myNoteInputTitle,
+                        })}
                       />
                     </Form.Item>
                     <Form.Item
@@ -56,9 +56,9 @@ function DynamicForm({ data }) {
                       ]}
                     >
                       <Input
-                        placeholder={
-                          <FormattedMessage {...messages.myNoteInputContent} />
-                        }
+                        placeholder={intl.formatMessage({
+                          ...messages.myNoteInputContent,
+                        })}
                       />
                     </Form.Item>
                     <MinusCircleOutlined onClick={() => remove(field.name)} />
@@ -99,6 +99,7 @@ function DynamicForm({ data }) {
 
 DynamicForm.propTypes = {
   data: PropTypes.any,
+  intl: intlShape.required,
 };
 
-export default DynamicForm;
+export default injectIntl(DynamicForm);

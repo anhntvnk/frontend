@@ -1,5 +1,5 @@
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
+import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 import { Form, Row, Col, Input, Button, Select, DatePicker } from 'antd';
 import locale from 'antd/es/date-picker/locale/vi_VN';
@@ -16,6 +16,7 @@ const AdvancedSearchForm = ({
   onResetFields,
   onChangeProject,
   projectType,
+  intl,
 }) => {
   const [form] = Form.useForm();
 
@@ -103,7 +104,9 @@ const AdvancedSearchForm = ({
             <DatePicker
               style={{ width: '100%' }}
               picker="month"
-              placeholder={<FormattedMessage {...messages.myFormSelectMonth} />}
+              placeholder={intl.formatMessage({
+                ...messages.myFormSelectMonth,
+              })}
             />
           </Form.Item>
         </Col>
@@ -122,7 +125,9 @@ const AdvancedSearchForm = ({
               style={{ width: '100%' }}
               locale={locale}
               picker="month"
-              placeholder={<FormattedMessage {...messages.myFormSelectMonth} />}
+              placeholder={intl.formatMessage({
+                ...messages.myFormSelectMonth,
+              })}
             />
           </Form.Item>
         </Col>
@@ -139,7 +144,9 @@ const AdvancedSearchForm = ({
           >
             <Select
               showSearch
-              placeholder={<FormattedMessage {...messages.myFormSelectCity} />}
+              placeholder={intl.formatMessage({
+                ...messages.myFormSelectCity,
+              })}
               optionFilterProp="children"
               filterOption={(input, option) =>
                 option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
@@ -166,7 +173,9 @@ const AdvancedSearchForm = ({
           >
             <Select
               showSearch
-              placeholder={<FormattedMessage {...messages.myFormSelectType} />}
+              placeholder={intl.formatMessage({
+                ...messages.myFormSelectType,
+              })}
               optionFilterProp="children"
               filterOption={(input, option) =>
                 option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
@@ -194,7 +203,9 @@ const AdvancedSearchForm = ({
           >
             <Select
               showSearch
-              placeholder={<FormattedMessage {...messages.myFormPeriod} />}
+              placeholder={intl.formatMessage({
+                ...messages.myFormPeriod,
+              })}
               optionFilterProp="children"
               filterOption={(input, option) =>
                 option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
@@ -264,6 +275,7 @@ AdvancedSearchForm.propTypes = {
   onChangeProject: PropTypes.func,
   onResetFields: PropTypes.func,
   projectType: PropTypes.string,
+  intl: intlShape.required,
 };
 
-export default AdvancedSearchForm;
+export default injectIntl(AdvancedSearchForm);

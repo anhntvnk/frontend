@@ -16,7 +16,7 @@ import styled from 'styled-components';
 import { Form, Input, Button } from 'antd';
 import { LockOutlined, ArrowLeftOutlined } from '@ant-design/icons';
 import { createStructuredSelector } from 'reselect';
-import { FormattedMessage } from 'react-intl';
+import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 
 import { useInjectReducer } from 'utils/injectReducer';
 import { useInjectSaga } from 'utils/injectSaga';
@@ -36,6 +36,7 @@ export function ChangePassword({
   onChangePassword,
   successMessage,
   errorMessage,
+  intl,
 }) {
   useInjectReducer({ key, reducer });
   useInjectSaga({ key, saga });
@@ -111,7 +112,9 @@ export function ChangePassword({
           <Input.Password
             prefix={<LockOutlined className="site-form-item-icon" />}
             type="password"
-            placeholder={<FormattedMessage {...messages.myPasswordOld} />}
+            placeholder={intl.formatMessage({
+              ...messages.myPasswordOld,
+            })}
           />
         </Form.Item>
         <Form.Item
@@ -128,7 +131,9 @@ export function ChangePassword({
           <Input.Password
             prefix={<LockOutlined className="site-form-item-icon" />}
             type="password"
-            placeholder={<FormattedMessage {...messages.myPasswordNew} />}
+            placeholder={intl.formatMessage({
+              ...messages.myPasswordNew,
+            })}
           />
         </Form.Item>
         <Form.Item
@@ -156,7 +161,9 @@ export function ChangePassword({
           <Input.Password
             prefix={<LockOutlined className="site-form-item-icon" />}
             type="repassword"
-            placeholder={<FormattedMessage {...messages.myPasswordNewTurn} />}
+            placeholder={intl.formatMessage({
+              ...messages.myPasswordNewTurn,
+            })}
           />
         </Form.Item>
 
@@ -195,6 +202,7 @@ ChangePassword.propTypes = {
   onChangePassword: PropTypes.func,
   successMessage: PropTypes.string,
   errorMessage: PropTypes.string,
+  intl: intlShape.required,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -213,4 +221,4 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-export default compose(withConnect)(ChangePassword);
+export default compose(withConnect)(injectIntl(ChangePassword));

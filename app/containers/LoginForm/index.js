@@ -6,12 +6,12 @@
  */
 
 import React, { useState, useEffect } from 'react';
+import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { isEmpty as _isEmpty, get as _get } from 'lodash';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
-import { FormattedMessage } from 'react-intl';
 import { compose } from 'redux';
 import { useInjectReducer } from 'utils/injectReducer';
 import { useInjectSaga } from 'utils/injectSaga';
@@ -31,7 +31,7 @@ import messages from './messages';
 const key = 'loginForm';
 
 // eslint-disable-next-line react/prop-types
-export function LoginForm({ history, onLoginForm, user, errorMessage }) {
+export function LoginForm({ history, intl, onLoginForm, user, errorMessage }) {
   useInjectReducer({ key, reducer });
   useInjectSaga({ key, saga });
 
@@ -111,7 +111,7 @@ export function LoginForm({ history, onLoginForm, user, errorMessage }) {
         >
           <Input
             prefix={<UserOutlined className="site-form-item-icon" />}
-            placeholder={<FormattedMessage {...messages.myFormInputEmail} />}
+            placeholder={intl.formatMessage({ ...messages.myFormInputEmail })}
           />
         </Form.Item>
         <Form.Item
@@ -127,7 +127,7 @@ export function LoginForm({ history, onLoginForm, user, errorMessage }) {
           <Input.Password
             prefix={<LockOutlined className="site-form-item-icon" />}
             type="password"
-            placeholder={<FormattedMessage {...messages.myFormInputPwd} />}
+            placeholder={intl.formatMessage({ ...messages.myFormInputPwd })}
           />
         </Form.Item>
 
@@ -160,6 +160,7 @@ LoginForm.propTypes = {
   onLoginForm: PropTypes.func,
   user: PropTypes.object,
   errorMessage: PropTypes.string,
+  intl: intlShape.required,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -178,4 +179,4 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-export default compose(withConnect)(LoginForm);
+export default compose(withConnect)(injectIntl(LoginForm));

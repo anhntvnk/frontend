@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const Wrapper = styled.div`
-  padding: 2px;
+  margin-left: 15px;
   select {
     color: #fff;
     option {

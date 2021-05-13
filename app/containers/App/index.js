@@ -7,6 +7,7 @@
  */
 
 import React from 'react';
+import ReactGA from 'react-ga';
 import { Helmet } from 'react-helmet';
 import styled from 'styled-components';
 import { get as _get } from 'lodash';
@@ -35,6 +36,18 @@ import Reports from 'containers/Reports/Loadable';
 import { PrivateLayout, PublicLayout } from '../../components/Layouts';
 import GlobalStyle from '../../global-styles';
 import { ROUTE } from '../../constants';
+
+console.log(
+  process.env.REACT_APP_TRACKING_ID,
+  'process.env.REACT_APP_TRACKING_ID',
+);
+ReactGA.initialize('UA-38870597-10', {
+  debug: true,
+  titleCase: false,
+  // gaOptions: {
+  //   userId: 123
+  // }
+});
 
 const AppWrapper = styled.div`
   max-width: 100%;
