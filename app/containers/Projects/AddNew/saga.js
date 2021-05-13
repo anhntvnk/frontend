@@ -9,30 +9,33 @@ import { addProjectSuccess, addProjectError } from './actions';
 import API from '../../../constants/apis';
 
 export function* addProject(actionData) {
-  const { data } = actionData;
+  const {
+    data: { formData, project },
+  } = actionData;
 
-  const requestURL = `${API.BASE_URL}/project`;
-
+  const requestURL = `${API.BASE_URL}/FollowedProjects`;
   try {
-    // Call our request helper (see 'utils/request')
-    const uploadImage = yield call(fetchAxios, {
-      method: 'post',
-      url: 'http://localhost:3000/file-upload',
-      headers: { 'Content-Type': 'application/json' },
-      responseType: 'json',
-      data,
-    });
-
-    if (uploadImage && uploadImage.filename) {
-      const response = yield call(fetchAxios, {
+    if (formData) {
+      const uploadImage = yield call(fetchAxios, {
         method: 'post',
-        url: requestURL,
+        url: 'http://vnk.vn/file-upload',
         headers: { 'Content-Type': 'application/json' },
         responseType: 'json',
-        data,
+        data: formData,
       });
-      yield put(addProjectSuccess(response));
+      if (uploadImage && uploadImage.link) {
+        project.image = uploadImage.link;
+      }
     }
+    // Call our request helper (see 'utils/request')
+    const response = yield call(fetchAxios, {
+      method: 'post',
+      url: requestURL,
+      headers: { 'Content-Type': 'application/json' },
+      responseType: 'json',
+      data: project,
+    });
+    yield put(addProjectSuccess(response));
   } catch (err) {
     yield put(addProjectError(err));
   }

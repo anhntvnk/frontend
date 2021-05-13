@@ -142,7 +142,7 @@ export function Projects({
       title: <FormattedMessage {...messages.myProjAddress} />,
       dataIndex: 'address',
       key: 'address',
-      render: (text, record) => `${text} - ${record.city}`,
+      render: (text, record) => text && text + record.city && `-${record.city}`,
     },
     {
       title: <FormattedMessage {...messages.myProjPeriod} />,

@@ -37,18 +37,6 @@ import { PrivateLayout, PublicLayout } from '../../components/Layouts';
 import GlobalStyle from '../../global-styles';
 import { ROUTE } from '../../constants';
 
-console.log(
-  process.env.REACT_APP_TRACKING_ID,
-  'process.env.REACT_APP_TRACKING_ID',
-);
-ReactGA.initialize('UA-38870597-10', {
-  debug: true,
-  titleCase: false,
-  // gaOptions: {
-  //   userId: 123
-  // }
-});
-
 const AppWrapper = styled.div`
   max-width: 100%;
   margin: 0;
