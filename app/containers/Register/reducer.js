@@ -9,28 +9,37 @@
  */
 
 import produce from 'immer';
-import { REGISTER_FORM_ERROR, REGISTER_FORM_SUCCESS } from './constants';
+import {
+  REGISTER_FORM,
+  REGISTER_FORM_ERROR,
+  REGISTER_FORM_SUCCESS,
+} from './constants';
 
 // The initial state of the App
 export const initialState = {
-  user: {},
-  errorMessage: '',
+  isLoading: false,
+  statusResponse: '',
 };
 
 /* eslint-disable default-case, no-param-reassign */
 const companyReducer = (state = initialState, action) =>
   produce(state, draft => {
     switch (action.type) {
+      case REGISTER_FORM:
+        draft.statusResponse = '';
+        draft.isLoading = true;
+        break;
       case REGISTER_FORM_SUCCESS:
-        draft.user = action.response;
-        draft.errorMessage = '';
+        draft.statusResponse = 'success';
+        draft.isLoading = false;
         break;
       case REGISTER_FORM_ERROR:
-        draft.errorMessage = 'Đăng nhập không thành công!';
+        draft.statusResponse = 'error';
+        draft.isLoading = false;
         break;
       default:
-        draft.user = initialState.user;
-        draft.errorMessage = initialState.errorMessage;
+        draft.isLoading = initialState.isLoading;
+        draft.statusResponse = initialState.statusResponse;
     }
   });
 

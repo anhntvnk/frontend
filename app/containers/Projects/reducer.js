@@ -40,7 +40,8 @@ const mappingProject = response => {
       ? _concat(followedProjects, _filter(projectShow, item => !_includes(getIdFollowedProjects, item.id)))
       : projectAvaiable;
 
-  return listProject.map(project => Object.assign(project, { is_follow: _get(project, 'is_follow', false) }))
+  const result = listProject.map(project => Object.assign(project, { is_follow: _get(project, 'is_follow', false) }))
+  return result.sort((x, y) => y.is_follow - x.is_follow);
 }
 
 
@@ -74,7 +75,6 @@ const projectReducer = (state = initialState, action) =>
         break;
       case CHANGE_FOLLOW_SUCCESS:
         const newProject = updateProjectFollows(state.project, response.parent_project_id);
-        console.log(newProject, 'newProject');
         draft.project = newProject;
         break;
       case UN_FOLLOW_SUCCESS:

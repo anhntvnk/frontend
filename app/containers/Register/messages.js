@@ -60,4 +60,25 @@ export default defineMessages({
     id: `${scope}.repassword.math`,
     defaultMessage: 'Mật khẩu nhập lại không khớp!',
   },
+  myProjRegisterError: {
+    id: `${scope}.error`,
+    defaultMessage: 'Đã xảy ra lỗi!',
+  },
+  myProjRegisterErrorContent: {
+    id: `${scope}.error.content`,
+    defaultMessage: 'Đăng ký tài khoản không thành công, vui long thử lại sau!',
+  },
+  myProjRegisterSuccess: {
+    id: `${scope}.success`,
+    defaultMessage: 'Đăng ký thành công!',
+  },
+  myProjRegisterSuccessContent: {
+    id: `${scope}.content`,
+    defaultMessage:
+      'MYP cảm ơn bạn đã đăng ký sử dụng My Project - Ứng dụng cung cấp thông tin và quản lý dự án!',
+  },
+  myProjGoToLogin: {
+    id: `${scope}.nextLogin`,
+    defaultMessage: 'Đi tới trang Đăng Nhập',
+  },
 });

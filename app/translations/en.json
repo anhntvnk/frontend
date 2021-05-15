@@ -291,6 +291,11 @@
   "myp.containers.Register.password.req": "Password is required!",
   "myp.containers.Register.repassword.req": "Re-entering the password is required!",
   "myp.containers.Register.repassword.math": "Re-entered password does not match!",
+  "myp.containers.Register.error": "An error occurred!",
+  "myp.containers.Register.error.content": "Account registration failed, please try again later!",
+  "myp.containers.Register.success": "Sign Up Success!",
+  "myp.containers.Register.content": "MYP thank you for signing up to use My Project - Project management and information application!",
+  "myp.containers.Register.nextLogin": "Go to the Login Page",
 
   "myp.components.Footer.address": "88 Lang Ha, Dong Da, Ha Noi",
   "myp.components.Footer.msg1": "Need to increase sales?",

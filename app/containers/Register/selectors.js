@@ -7,15 +7,15 @@ import { initialState } from './reducer';
 
 const select = state => state.register || initialState;
 
-const makeSelectRegister = () =>
+const makeSelectRegisterLoading = () =>
   createSelector(
     select,
-    state => state.user,
+    state => state.isLoading,
   );
-const makeSelectErrorMessage = () =>
+const makeSelectStatusResponse = () =>
   createSelector(
     select,
-    state => state.errorMessage,
+    state => state.statusResponse,
   );
 
-export { select, makeSelectRegister, makeSelectErrorMessage };
+export { select, makeSelectRegisterLoading, makeSelectStatusResponse };

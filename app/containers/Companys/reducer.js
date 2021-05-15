@@ -26,16 +26,16 @@ export const initialState = {
 const mappingCompany = (companys, companyFollows) => {
   const companyFollowId = companyFollows.map(cp => cp.id);
 
-  const newCompanys = companys
-    .map(company =>
-      Object.assign(company, {
-        is_follow: _includes(companyFollowId, company.id),
-      }),
-    )
-    .sort((a, b) => b.is_follow - a.is_follow);
+  const newCompanys = companys.map(company =>
+    Object.assign(company, {
+      is_follow: _includes(companyFollowId, company.id),
+    }),
+  );
 
   // remove company same name is duplicate
-  return [...new Map(newCompanys.map(item => [item.name, item])).values()];
+  return [...new Map(newCompanys.map(item => [item.name, item])).values()].sort(
+    (a, b) => b.is_follow - a.is_follow,
+  );
 };
 
 /* eslint-disable default-case, no-param-reassign */
