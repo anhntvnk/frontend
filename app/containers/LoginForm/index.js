@@ -40,7 +40,13 @@ export function LoginForm({ history, intl, onLoginForm, user, errorMessage }) {
 
   useEffect(() => {
     if (!_isEmpty(user)) {
-      const { access_token: accessToken, userId, packageExpire } = user;
+      const {
+        access_token: accessToken,
+        userId,
+        packageOrder,
+        packageExpire,
+      } = user;
+      console.log(user);
       if (accessToken) {
         if (!packageExpire) {
           setValidateStatus({ validateStatus: 'error' });
@@ -52,7 +58,7 @@ export function LoginForm({ history, intl, onLoginForm, user, errorMessage }) {
           return;
         }
 
-        setUserSession(accessToken, userId);
+        setUserSession(accessToken, userId, packageOrder);
         setFormItemLayout({});
         history.replace('/dashboard');
       }

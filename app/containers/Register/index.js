@@ -5,7 +5,7 @@
  * This is the first thing users see of our App, at the '/' route
  */
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
@@ -15,11 +15,11 @@ import H1 from 'components/H1';
 import { Form, Input, Button } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { createStructuredSelector } from 'reselect';
+import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 
 import { useInjectReducer } from 'utils/injectReducer';
 import { useInjectSaga } from 'utils/injectSaga';
-// import { loadLoginForm } from './actions';
-// import { makeSelectLoginForm } from './selectors';
+import messages from './messages';
 import reducer from './reducer';
 import saga from './saga';
 import './styles.less';
@@ -28,15 +28,9 @@ import { makeSelectRegister } from './selectors';
 
 const key = 'register';
 
-export function Register({ onRegister, user }) {
+export function Register({ onRegister, intl }) {
   useInjectReducer({ key, reducer });
   useInjectSaga({ key, saga });
-
-  useEffect(() => {
-    if (user) {
-      console.log(user);
-    }
-  });
 
   const onFinish = formValues => {
     onRegister(_omit(formValues, ['repassword']));
@@ -45,8 +39,17 @@ export function Register({ onRegister, user }) {
   return (
     <div className="register-myp">
       <Helmet>
-        <title>Đăng Ký Tài Khoản My Project</title>
-        <meta name="description" content="Đăng Ký Tài Khoản My Project" />
+        <title>
+          {intl.formatMessage({
+            ...messages.myProjMeta,
+          })}
+        </title>
+        <meta
+          name="description"
+          content={intl.formatMessage({
+            ...messages.myProjMeta,
+          })}
+        />
       </Helmet>
 
       <Form
@@ -57,19 +60,25 @@ export function Register({ onRegister, user }) {
         }}
         onFinish={onFinish}
       >
-        <H1 className="form-title">Đăng Ký</H1>
+        <H1 className="form-title">
+          <FormattedMessage {...messages.myProjRegister} />
+        </H1>
         <Form.Item
           name="full_name"
           rules={[
             {
               required: true,
-              message: 'Họ và tên là bắt buộc!',
+              message: intl.formatMessage({
+                ...messages.myProjNameReq,
+              }),
             },
           ]}
         >
           <Input
             prefix={<UserOutlined className="site-form-item-icon" />}
-            placeholder="Họ tên"
+            placeholder={intl.formatMessage({
+              ...messages.myProjName,
+            })}
           />
         </Form.Item>
         <Form.Item
@@ -77,13 +86,17 @@ export function Register({ onRegister, user }) {
           rules={[
             {
               required: true,
-              message: 'Địa chỉ Email là bắt buộc!',
+              message: intl.formatMessage({
+                ...messages.myProjEmailReq,
+              }),
             },
           ]}
         >
           <Input
             prefix={<UserOutlined className="site-form-item-icon" />}
-            placeholder="Điạ chỉ Email"
+            placeholder={intl.formatMessage({
+              ...messages.myProjEmail,
+            })}
           />
         </Form.Item>
         <Form.Item
@@ -91,13 +104,17 @@ export function Register({ onRegister, user }) {
           rules={[
             {
               required: true,
-              message: 'Số điện thoại là bắt buộc!',
+              message: intl.formatMessage({
+                ...messages.myProjPhoneReq,
+              }),
             },
           ]}
         >
           <Input
             prefix={<UserOutlined className="site-form-item-icon" />}
-            placeholder="Số điện thoại"
+            placeholder={intl.formatMessage({
+              ...messages.myProjPhone,
+            })}
           />
         </Form.Item>
         <Form.Item
@@ -105,7 +122,9 @@ export function Register({ onRegister, user }) {
           rules={[
             {
               required: true,
-              message: 'Mật khẩu là bắt buộc!',
+              message: intl.formatMessage({
+                ...messages.myProjPasswordReq,
+              }),
             },
           ]}
           hasFeedback
@@ -113,7 +132,9 @@ export function Register({ onRegister, user }) {
           <Input.Password
             prefix={<LockOutlined className="site-form-item-icon" />}
             type="password"
-            placeholder="Mật khẩu"
+            placeholder={intl.formatMessage({
+              ...messages.myProjPassword,
+            })}
           />
         </Form.Item>
         <Form.Item
@@ -121,7 +142,9 @@ export function Register({ onRegister, user }) {
           rules={[
             {
               required: true,
-              message: 'Mật khẩu nhập lại là bắt buộc!',
+              message: intl.formatMessage({
+                ...messages.myProjRePasswordReq,
+              }),
             },
             ({ getFieldValue }) => ({
               validator(rule, value) {
@@ -129,7 +152,11 @@ export function Register({ onRegister, user }) {
                   return Promise.resolve();
                 }
                 // eslint-disable-next-line prefer-promise-reject-errors
-                return Promise.reject('Mật khẩu nhập lại là không khớp!');
+                return Promise.reject(
+                  intl.formatMessage({
+                    ...messages.myProjRePasswordMath,
+                  }),
+                );
               },
             }),
           ]}
@@ -138,7 +165,9 @@ export function Register({ onRegister, user }) {
           <Input.Password
             prefix={<LockOutlined className="site-form-item-icon" />}
             type="repassword"
-            placeholder="Điền lại mật khẩu"
+            placeholder={intl.formatMessage({
+              ...messages.myProjRepassword,
+            })}
           />
         </Form.Item>
 
@@ -148,7 +177,7 @@ export function Register({ onRegister, user }) {
             htmlType="submit"
             className="register-form-button"
           >
-            Đăng Ký
+            <FormattedMessage {...messages.myProjRegister} />
           </Button>
         </Form.Item>
       </Form>
@@ -158,7 +187,7 @@ export function Register({ onRegister, user }) {
 
 Register.propTypes = {
   onRegister: PropTypes.func,
-  user: PropTypes.array,
+  intl: intlShape.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -176,4 +205,4 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-export default compose(withConnect)(Register);
+export default compose(withConnect)(injectIntl(Register));

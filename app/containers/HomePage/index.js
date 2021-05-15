@@ -11,7 +11,7 @@ import React, { memo } from 'react';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import { FormattedMessage } from 'react-intl';
+import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import MessengerCustomerChat from 'react-messenger-customer-chat';
 
 import H1 from 'components/H1';
@@ -35,12 +35,22 @@ import teacherIcon from '../../assets/images/feature/teacher-icon.png';
 import kpi from '../../assets/images/feature/kpi.jpg';
 import './styles.less';
 
-export function HomePage() {
+// eslint-disable-next-line react/prop-types
+export function HomePage({ intl }) {
   return (
     <div>
       <Helmet>
-        <title>Trang Chủ</title>
-        <meta name="description" content="Trang Chủ" />
+        <title>
+          {intl.formatMessage({
+            ...messages.mypIntroduceHome,
+          })}
+        </title>
+        <meta
+          name="description"
+          content={intl.formatMessage({
+            ...messages.mypIntroduceHome,
+          })}
+        />
       </Helmet>
       <div className="vnk-homepage">
         <CenteredSection>
@@ -450,6 +460,10 @@ const BackgroudQRCode = styled.div`
 //   };
 // }
 
+HomePage.prototype = {
+  intl: intlShape.isRequired,
+};
+
 const withConnect = connect(
   null,
   null,
@@ -458,4 +472,4 @@ const withConnect = connect(
 export default compose(
   withConnect,
   memo,
-)(HomePage);
+)(injectIntl(HomePage));

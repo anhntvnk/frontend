@@ -21,17 +21,24 @@ import {
   DatePicker,
   message,
 } from 'antd';
-import { ScheduleTwoTone, HomeTwoTone } from '@ant-design/icons';
+import {
+  ScheduleTwoTone,
+  HomeTwoTone,
+  ArrowLeftOutlined,
+} from '@ant-design/icons';
 import { createStructuredSelector } from 'reselect';
 import moment from 'moment';
 import { useInjectReducer } from 'utils/injectReducer';
 import { useInjectSaga } from 'utils/injectSaga';
+import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import H2 from 'components/H2';
 import CenteredSection from 'components/CenteredSection';
+import styled from 'styled-components';
 import ROUTE from '../../../constants/routes';
 import { addProject } from './actions';
 import { successMessageSelector, errorSelector } from './selectors';
 import reducer from './reducer';
+import messages from './messages';
 import saga from './saga';
 import './styles.less';
 
@@ -43,6 +50,7 @@ export function AddProject({
   successMessage,
   errorMgs,
   addNewProject,
+  intl,
 }) {
   useInjectReducer({ key, reducer });
   useInjectSaga({ key, saga });
@@ -125,8 +133,18 @@ export function AddProject({
         <title>Thêm dự án mới</title>
         <meta name="description" content="Thêm dự án mới" />
       </Helmet>
-      <CenteredSection>
-        <H2 className="title">Thêm mới dự án</H2>
+      <CenteredSection style={{ display: 'flex' }}>
+        <Button
+          type="primary"
+          shape="round"
+          icon={<ArrowLeftOutlined />}
+          onClick={() => history.goBack()}
+        >
+          <FormattedMessage {...messages.myProjAddNewBtnBack} />
+        </Button>
+        <H2 style={{ margin: 'auto' }} className="title">
+          <FormattedMessage {...messages.myProjAddNewTitle} />
+        </H2>
       </CenteredSection>
 
       <Form
@@ -143,12 +161,14 @@ export function AddProject({
                 <Input.Group size="large">
                   <Form.Item
                     size="large"
-                    label="Tên dự án"
+                    label={<FormattedMessage {...messages.myProjAddNewName} />}
                     name="name"
                     rules={[
                       {
                         required: true,
-                        message: 'Tên dự án là bắt buộc!',
+                        message: (
+                          <FormattedMessage {...messages.myProjAddNewNameReq} />
+                        ),
                       },
                     ]}
                   >
@@ -164,11 +184,17 @@ export function AddProject({
                   <Col lg={12} sm={24} xs={24}>
                     <Form.Item
                       name="description"
-                      label="Loại dự án"
+                      label={
+                        <FormattedMessage {...messages.myProjAddNewType} />
+                      }
                       rules={[
                         {
                           required: true,
-                          message: 'Loại dự án là bắt buộc!',
+                          message: (
+                            <FormattedMessage
+                              {...messages.myProjAddNewTypeReq}
+                            />
+                          ),
                         },
                       ]}
                     >
@@ -176,7 +202,12 @@ export function AddProject({
                     </Form.Item>
                   </Col>
                   <Col lg={12} sm={24} xs={24}>
-                    <Form.Item label="Viết tắt:" name="sort_name">
+                    <Form.Item
+                      label={
+                        <FormattedMessage {...messages.myProjAddNewAcronym} />
+                      }
+                      name="sort_name"
+                    >
                       <Input />
                     </Form.Item>
                   </Col>
@@ -192,12 +223,17 @@ export function AddProject({
                   <ScheduleTwoTone /> {moment().format('DD/MM/YYYY')}
                 </div>
                 <div className="calendar">
-                  <HomeTwoTone /> <b>Việt Nam</b>
+                  <HomeTwoTone />{' '}
+                  <b>
+                    <FormattedMessage {...messages.myProjAddNewVn} />
+                  </b>
                 </div>
               </div>
-              <div className="status-icon">
-                <span>SÀNG LỌC</span>
-              </div>
+              <StyledStatusIcon>
+                <span>
+                  <FormattedMessage {...messages.myProjAddNewScreening} />
+                </span>
+              </StyledStatusIcon>
             </div>
           </Col>
         </Row>
@@ -208,12 +244,14 @@ export function AddProject({
               <Col className="input-padding" xs={24}>
                 <Input.Group size="large">
                   <Form.Item
-                    label="Chủ sở hữu"
+                    label={<FormattedMessage {...messages.myProjAddNewOwner} />}
                     name="owner"
                     rules={[
                       {
                         required: true,
-                        message: 'Chủ sở hữu!',
+                        message: (
+                          <FormattedMessage {...messages.myProjAddNewOwner} />
+                        ),
                       },
                     ]}
                   >
@@ -223,13 +261,25 @@ export function AddProject({
               </Col>
 
               <Input.Group size="large" className="input-padding">
-                <Form.Item name="nha_thau_chinh" label="Nhà thầu chính">
+                <Form.Item
+                  name="nha_thau_chinh"
+                  label={
+                    <FormattedMessage {...messages.myProjAddNewContractors} />
+                  }
+                >
                   <Input name="nha_thau_chinh" />
                 </Form.Item>
               </Input.Group>
 
               <Input.Group size="large" className="input-padding">
-                <Form.Item name="nha_thau_phu" label="Nhà thầu phụ">
+                <Form.Item
+                  name="nha_thau_phu"
+                  label={
+                    <FormattedMessage
+                      {...messages.myProjAddNewSubContractors}
+                    />
+                  }
+                >
                   <Input name="nha_thau_phu" />
                 </Form.Item>
               </Input.Group>
@@ -241,7 +291,9 @@ export function AddProject({
               <Form.Item name="image" getValueFromEvent={normFile} noStyle>
                 <Upload.Dragger {...props} fileList={fileList} name="file">
                   <div className="btn-upload">
-                    <p>Tải ảnh lên</p>
+                    <p>
+                      <FormattedMessage {...messages.myProjAddNewUploadImg} />
+                    </p>
                   </div>
                 </Upload.Dragger>
               </Form.Item>
@@ -256,12 +308,18 @@ export function AddProject({
                 <Input.Group size="large">
                   <Form.Item
                     size="large"
-                    label="Số hiệu dự án"
+                    label={
+                      <FormattedMessage {...messages.myProjAddNewNumber} />
+                    }
                     name="code"
                     rules={[
                       {
                         required: true,
-                        message: 'Số hiệu dự án là bắt buộc!',
+                        message: (
+                          <FormattedMessage
+                            {...messages.myProjAddNewNumberReq}
+                          />
+                        ),
                       },
                     ]}
                   >
@@ -273,7 +331,11 @@ export function AddProject({
             <Row>
               <Col className="input-padding" lg={24} xs={24}>
                 <Input.Group size="large">
-                  <Form.Item size="large" label="Diện tích" name="floor_area">
+                  <Form.Item
+                    size="large"
+                    label={<FormattedMessage {...messages.myProjAddNewArea} />}
+                    name="floor_area"
+                  >
                     <Input name="floor_area" />
                   </Form.Item>
                 </Input.Group>
@@ -284,7 +346,9 @@ export function AddProject({
                 <Input.Group size="large">
                   <Form.Item
                     size="large"
-                    label="Chi tiết trạng thái"
+                    label={
+                      <FormattedMessage {...messages.myProjAddNewStatus} />
+                    }
                     name="status"
                   >
                     <Input name="status" />
@@ -295,35 +359,55 @@ export function AddProject({
           </Col>
           <Col className="pd-none mobile-mrauto" lg={8} md={16} xs={22}>
             <Input.Group size="large" className="group-item">
-              <Form.Item size="large" label="Giá trị" name="cost">
+              <Form.Item
+                size="large"
+                label={<FormattedMessage {...messages.myProjAddNewValue} />}
+                name="cost"
+              >
                 <Input name="cost" />
               </Form.Item>
             </Input.Group>
 
             <Input.Group size="large" className="group-item">
-              <Form.Item size="large" label="Khởi công" name="startX">
+              <Form.Item
+                size="large"
+                label={<FormattedMessage {...messages.myProjAddNewStart} />}
+                name="startX"
+              >
                 <DatePicker
                   size="large"
                   picker="month"
                   disabledDate={disabledDate}
-                  placeholder="Chọn ngày khởi công"
+                  placeholder={intl.formatMessage({
+                    ...messages.myProjAddNewStartDate,
+                  })}
                 />
               </Form.Item>
             </Input.Group>
           </Col>
           <Col className="mobile-mrauto padding-none" lg={8} xs={22}>
             <Input.Group size="large" className="group-item">
-              <Form.Item size="large" label="Số sàn" name="floor_count">
+              <Form.Item
+                size="large"
+                label={<FormattedMessage {...messages.myProjAddNewFloor} />}
+                name="floor_count"
+              >
                 <Input name="floor_count" />
               </Form.Item>
             </Input.Group>
             <Input.Group size="large" className="group-item">
-              <Form.Item size="large" label="Hoàn công" name="finishX">
+              <Form.Item
+                size="large"
+                label={<FormattedMessage {...messages.myProjAddNewComplete} />}
+                name="finishX"
+              >
                 <DatePicker
                   size="large"
                   picker="month"
                   disabledDate={disabledDate}
-                  placeholder="Chọn ngày hoàn công"
+                  placeholder={intl.formatMessage({
+                    ...messages.myProjAddNewCompleteDate,
+                  })}
                 />
               </Form.Item>
             </Input.Group>
@@ -337,21 +421,33 @@ export function AddProject({
             xs={22}
           >
             <Input.Group size="large">
-              <Form.Item size="large" label="Quốc gia" name="country">
+              <Form.Item
+                size="large"
+                label={<FormattedMessage {...messages.myProjAddNewNation} />}
+                name="country"
+              >
                 <Input name="country" />
               </Form.Item>
             </Input.Group>
           </Col>
           <Col className="pd-none mobile-mrauto" lg={8} xs={22}>
             <Input.Group size="large" className="group-item">
-              <Form.Item size="large" label="Tỉnh thành" name="city">
+              <Form.Item
+                size="large"
+                label={<FormattedMessage {...messages.myProjAddNewProvince} />}
+                name="city"
+              >
                 <Input name="city" />
               </Form.Item>
             </Input.Group>
           </Col>
           <Col className="mobile-mrauto padding-none" lg={8} xs={22}>
             <Input.Group size="large" className="group-item">
-              <Form.Item size="large" label="Quận Huyện" name="district">
+              <Form.Item
+                size="large"
+                label={<FormattedMessage {...messages.myProjAddNewDistrict} />}
+                name="district"
+              >
                 <Input name="district" />
               </Form.Item>
             </Input.Group>
@@ -365,7 +461,11 @@ export function AddProject({
             xs={22}
           >
             <Input.Group size="large">
-              <Form.Item size="large" label="Địa chỉ" name="address">
+              <Form.Item
+                size="large"
+                label={<FormattedMessage {...messages.myProjAddNewAddress} />}
+                name="address"
+              >
                 <Input name="address" value="Thanh Oai" />
               </Form.Item>
             </Input.Group>
@@ -379,7 +479,11 @@ export function AddProject({
             xs={22}
           >
             <Input.Group size="large">
-              <Form.Item size="large" label="Phiên bản" name="version">
+              <Form.Item
+                size="large"
+                label={<FormattedMessage {...messages.myProjAddNewVersion} />}
+                name="version"
+              >
                 <Input name="version" />
               </Form.Item>
             </Input.Group>
@@ -388,7 +492,9 @@ export function AddProject({
             <Input.Group size="large" className="group-item">
               <Form.Item
                 size="large"
-                label="Mô tả phiên bản"
+                label={
+                  <FormattedMessage {...messages.myProjAddNewVersionDes} />
+                }
                 name="version_description"
               >
                 <Input name="version_description" />
@@ -403,7 +509,11 @@ export function AddProject({
             xs={22}
           >
             <Input.Group size="large">
-              <Form.Item size="large" label="Ghi chú" name="note">
+              <Form.Item
+                size="large"
+                label={<FormattedMessage {...messages.myProjAddNewNote} />}
+                name="note"
+              >
                 <TextArea
                   autoSize={{ minRows: 3, maxRows: 5 }}
                   value="C99-test"
@@ -415,7 +525,7 @@ export function AddProject({
 
         <Form.Item className="register-form-button">
           <Button type="primary" htmlType="submit">
-            Đăng dự án
+            <FormattedMessage {...messages.myProjAddNewBtn} />
           </Button>
         </Form.Item>
       </Form>
@@ -423,11 +533,33 @@ export function AddProject({
   );
 }
 
+const StyledStatusIcon = styled.div`
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 126px;
+  height: 126px;
+  background: #e8f96c;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 50%;
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+
+  span {
+    font-size: 16px;
+    line-height: 38px;
+    color: #131313;
+    font-weight: bold;
+    text-align: center;
+  }
+`;
+
 AddProject.propTypes = {
   addNewProject: PropTypes.func,
   successMessage: PropTypes.string,
   errorMgs: PropTypes.string,
   history: PropTypes.object,
+  intl: intlShape.required,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -446,4 +578,4 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-export default compose(withConnect)(withRouter(AddProject));
+export default compose(withConnect)(withRouter(injectIntl(AddProject)));

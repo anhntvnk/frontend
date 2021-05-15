@@ -24,4 +24,40 @@ export default defineMessages({
     id: `${scope}.company`,
     defaultMessage: 'Công Ty',
   },
+  enumProject: {
+    id: `${scope}.project`,
+    defaultMessage: 'Dự án',
+  },
+  enumCheck: {
+    id: `${scope}.check`,
+    defaultMessage: 'Sàng lọc',
+  },
+  enumCall: {
+    id: `${scope}.call`,
+    defaultMessage: 'Gọi điện',
+  },
+  enumIntroduce: {
+    id: `${scope}.introduce`,
+    defaultMessage: 'Giới thiệu',
+  },
+  enumIntroduceCompany: {
+    id: `${scope}.introduce_company`,
+    defaultMessage: 'Giới thiệu về công ty (USP)',
+  },
+  enumSolution: {
+    id: `${scope}.solutioon`,
+    defaultMessage: 'Thuyết trình giải pháp',
+  },
+  enumOffers: {
+    id: `${scope}.offers`,
+    defaultMessage: 'Chào giá',
+  },
+  enumPriceNegotiation: {
+    id: `${scope}.priceNegotiation`,
+    defaultMessage: 'Thương thảo giá',
+  },
+  enumNegotiation: {
+    id: `${scope}.negotiation`,
+    defaultMessage: 'Thương thảo hợp đồng',
+  },
 });

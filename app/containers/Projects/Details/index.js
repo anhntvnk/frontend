@@ -68,6 +68,32 @@ const BoxDetail = styled.section`
   padding: 20px;
 `;
 
+const StyledStatusIcon = styled.div`
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 126px;
+  height: 126px;
+  padding: 5px;
+  background: ${props => props['status-color']};
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 50%;
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  @media only screen and (max-width: 768px) {
+    width: 90px;
+    height: 90px;
+  }
+
+  span {
+    font-size: 16px;
+    line-height: 38px;
+    color: #131313;
+    font-weight: bold;
+    text-align: center;
+  }
+`;
+
 let mobileScreen;
 enquireScreen(b => {
   mobileScreen = b;
@@ -194,11 +220,15 @@ export function ProjectDetails({
                 </Button>
               </div>
             </div>
-            <div className="status-icon">
+            <StyledStatusIcon
+              status-color={
+                _get(ENUMS.STATE_LIST, `[${data.status_code}]`).color
+              }
+            >
               <span>
                 {_get(ENUMS.STATE_LIST, `[${data.status_code}]`).label}
               </span>
-            </div>
+            </StyledStatusIcon>
           </div>
         </Col>
         <Col lg={24} className="menu-tab">

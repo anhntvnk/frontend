@@ -12,6 +12,10 @@ export default defineMessages({
     id: `${scope}.myp_introduce.header`,
     defaultMessage: 'KHÔNG CHỈ LÀ CẬP NHẬT THÔNG TIN DỰ ÁN',
   },
+  mypIntroduceHome: {
+    id: `${scope}.myp_introduce.home`,
+    defaultMessage: 'Trang Chủ',
+  },
   myIntroTitle: {
     id: `${scope}.myp_introduce.title`,
     defaultMessage: 'Các dự án đang theo dõi được lưu vào Trang chủ',

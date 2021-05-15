@@ -20,11 +20,13 @@ import { useInjectReducer } from 'utils/injectReducer';
 import { useInjectSaga } from 'utils/injectSaga';
 import styled from 'styled-components';
 import H1 from 'components/H1';
+import { injectIntl, intlShape } from 'react-intl';
 import { ENUMS } from '../../constants';
 import { updateStateProcedure } from './actions';
 import { makeSelectErrorMessage, makeSelectSuccessMessage } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
+import messages from './messages';
 import './styles.less';
 import projectImg from '../../assets/images/home/p-2.png';
 
@@ -36,6 +38,7 @@ export function Procedure({
   successMessage,
   errorMessage,
   onUpdateStatus,
+  intl,
 }) {
   useInjectReducer({ key, reducer });
   useInjectSaga({ key, saga });
@@ -70,8 +73,17 @@ export function Procedure({
   return (
     <ProcedureComponent>
       <Helmet>
-        <title>Quy trình Quản lý dự án</title>
-        <meta name="description" content="Quy trình Quản lý dự án" />
+        <title>
+          {intl.formatMessage({
+            ...messages.myProjMeta,
+          })}
+        </title>
+        <meta
+          name="description"
+          content={intl.formatMessage({
+            ...messages.myProjMeta,
+          })}
+        />
       </Helmet>
       <CenteredSection>
         <Button
@@ -85,9 +97,15 @@ export function Procedure({
             })
           }
         >
-          Quay lại
+          {intl.formatMessage({
+            ...messages.myProjBack,
+          })}
         </Button>
-        <H1>Quy trình Quản lý dự án</H1>
+        <H1>
+          {intl.formatMessage({
+            ...messages.myProjMeta,
+          })}
+        </H1>
       </CenteredSection>
       <ProcedureState>
         <Row gutter={{ xs: 8, sm: 24, md: 24, lg: 32 }}>
@@ -121,30 +139,38 @@ export function Procedure({
           <Row>
             <Col lg={8} xs={8}>
               <Status flexCenter="center">
-                <span>{taskCurrent.status_code}</span>
+                <span className="status-change">{taskCurrent.status_code}</span>
                 <StatusItem bgColor={taskCurrent.color} mobile>
-                  <h1 style={{ color: taskCurrent.colorText }}>
-                    {taskCurrent.name}
-                  </h1>
+                  <h2 style={{ color: taskCurrent.colorText }}>
+                    {taskCurrent.i18nlabel}
+                  </h2>
                 </StatusItem>
               </Status>
             </Col>
             <Col className="btn-change-status" lg={8} xs={8}>
               <Popconfirm
                 placement="top"
-                title="Bạn có muốn chuyển trạng thái không ?"
+                title={intl.formatMessage({
+                  ...messages.myProjChangeStatus,
+                })}
                 onConfirm={() => comfirmChangeTask(data)}
                 okText="Yes"
                 cancelText="No"
               >
-                <Button>Chuyển trạng thái</Button>
+                <Button>
+                  {intl.formatMessage({
+                    ...messages.myProjStatus,
+                  })}
+                </Button>
               </Popconfirm>
             </Col>
             <Col lg={8} xs={8}>
               <Status flexCenter="center">
-                <span>{nextTask.status_code}</span>
+                <span className="status-change">{nextTask.status_code}</span>
                 <StatusItem bgColor={nextTask.color} mobile>
-                  <h1 style={{ color: nextTask.colorText }}>{nextTask.name}</h1>
+                  <h2 style={{ color: nextTask.colorText }}>
+                    {nextTask.i18nlabel}
+                  </h2>
                 </StatusItem>
               </Status>
             </Col>
@@ -153,11 +179,11 @@ export function Procedure({
           <Row>
             <Col lg={24} xs={24}>
               <Status flexCenter="center">
-                <span>{taskCurrent.status_code}</span>
+                <span className="status-change">{taskCurrent.status_code}</span>
                 <StatusItem bgColor={taskCurrent.color} mobile>
-                  <h1 style={{ color: taskCurrent.colorText }}>
-                    {taskCurrent.name}
-                  </h1>
+                  <h2 style={{ color: taskCurrent.colorText }}>
+                    {taskCurrent.i18nlabel}
+                  </h2>
                 </StatusItem>
               </Status>
             </Col>
@@ -236,7 +262,7 @@ const Status = styled.section`
     padding-top: 16px;
   }
 
-  span {
+  .status-change {
     font-weight: 600;
     font-size: 24px;
   }
@@ -255,6 +281,13 @@ const StatusItem = styled.div`
   -moz-border-radius: 50%;
   -webkit-border-radius: 50%;
   h1 {
+    margin-bottom: 0;
+    font-weight: 600;
+    font-size: 24px;
+    padding: 10px;
+  }
+
+  h2 {
     margin-bottom: 0;
     font-size: 15px;
     padding: 10px;
@@ -304,6 +337,7 @@ Procedure.propTypes = {
   history: PropTypes.object,
   successMessage: PropTypes.string,
   errorMessage: PropTypes.string,
+  intl: intlShape.Required,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -322,4 +356,4 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-export default compose(withConnect)(withRouter(Procedure));
+export default compose(withConnect)(withRouter(injectIntl(Procedure)));

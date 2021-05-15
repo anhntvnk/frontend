@@ -19,6 +19,11 @@ const GlobalStyle = createGlobalStyle`
   label {
     line-height: 1.5em;
   }
+
+  .ant-btn-round {
+    display: flex;
+    align-items: center;
+  }
 `;
 
 export default GlobalStyle;

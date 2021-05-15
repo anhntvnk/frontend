@@ -3,6 +3,9 @@ export const getToken = () => sessionStorage.getItem('token') || null;
 
 export const getUserId = () => sessionStorage.getItem('userId') || null;
 
+export const getPackageOrder = () =>
+  sessionStorage.getItem('packageOrder') || null;
+
 export const isLoggedIn = () => !!getToken();
 // remove the token and user from the session storage
 export const removeUserSession = () => {
@@ -11,7 +14,8 @@ export const removeUserSession = () => {
 };
 
 // set the token and user from the session storage
-export const setUserSession = (token, userId) => {
+export const setUserSession = (token, userId, packageOrder) => {
   sessionStorage.setItem('token', token);
   sessionStorage.setItem('userId', userId);
+  sessionStorage.setItem('packageOrder', packageOrder);
 };

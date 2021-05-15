@@ -112,8 +112,18 @@ export function Companys({
       title: <FormattedMessage {...messages.myCompanyAddress} />,
       dataIndex: 'office_address',
       key: 'office_address',
-      render: (address, record) =>
-        `${address} ${record.district} - ${record.city}`,
+      render: (address, record) => {
+        if (address && record.district && record.city) {
+          return `${address} ${record.district} - ${record.city}`;
+        }
+
+        return (
+          address &&
+          address + record.district &&
+          record.district + record.city &&
+          record.city
+        );
+      },
     },
     {
       title: <FormattedMessage {...messages.myCompanyStatus} />,

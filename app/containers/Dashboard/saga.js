@@ -3,15 +3,15 @@
  * Gets the repositories of the user from Github
  */
 
-import { call, put, takeLatest } from 'redux-saga/effects';
-import request, { checkStatus, resData } from 'utils/request';
+import { put, takeLatest } from 'redux-saga/effects';
+import { checkStatus, resData } from 'utils/request';
 import axios from 'axios';
 import { loadDashboardSuccess, loadDashboardError } from './actions';
 import API from '../../constants/apis';
-import { getToken, getUserId } from '../../../services/auth';
-
+import { getToken, getUserId, getPackageOrder } from '../../../services/auth';
 import { LOAD_DATA_DASHBOARD } from './constants';
 
+const PACKAGE_ORDER = 'basic';
 
 const getDataResponse = (response) => {
   let res = checkStatus(response);
@@ -38,7 +38,7 @@ export function* getDataDashboard() {
       ])
       .then(
         axios.spread((...responses) => ({ dashboard: {
-          countCompany: getDataResponse(responses[0]).count,
+          countCompany: getPackageOrder() !== PACKAGE_ORDER ? getDataResponse(responses[0]).count : 0 ,
           countCompanyFollowed: getDataResponse(responses[1]).count,
           countProjectsFollowed: getDataResponse(responses[2]).length,
           countProject: getDataResponse(responses[3]).length,

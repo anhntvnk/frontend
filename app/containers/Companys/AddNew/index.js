@@ -23,6 +23,7 @@ import {
   Select,
   Space,
 } from 'antd';
+import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import { createStructuredSelector } from 'reselect';
 import { useInjectReducer } from 'utils/injectReducer';
@@ -37,6 +38,7 @@ import { successMessageSelector, errorSelector } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 import './styles.less';
+import messages from './messages';
 
 const key = 'addCompany';
 const { Option } = Select;
@@ -47,6 +49,7 @@ export function AddCompany({
   successMessage,
   errorMgs,
   addNewCompany,
+  intl,
 }) {
   useInjectReducer({ key, reducer });
   useInjectSaga({ key, saga });
@@ -97,7 +100,9 @@ export function AddCompany({
         <meta name="description" content="Thêm mới công ty" />
       </Helmet>
       <CenteredSection>
-        <H2 className="title">Thêm mới công ty</H2>
+        <H2 className="title">
+          <FormattedMessage {...messages.myCompanyAddNewTitle} />
+        </H2>
       </CenteredSection>
 
       <CompanyContainer>
@@ -115,12 +120,18 @@ export function AddCompany({
                   <Input.Group size="large">
                     <Form.Item
                       size="large"
-                      label="Tên Công Ty"
+                      label={
+                        <FormattedMessage {...messages.myCompanyAddNewName} />
+                      }
                       name="name"
                       rules={[
                         {
                           required: true,
-                          message: 'Tên Công Ty là bắt buộc!',
+                          message: (
+                            <FormattedMessage
+                              {...messages.myCompanyAddNewNameReq}
+                            />
+                          ),
                         },
                       ]}
                     >
@@ -134,7 +145,14 @@ export function AddCompany({
                 <Input.Group size="large">
                   <Row gutter={8}>
                     <Col lg={12} sm={24} xs={24}>
-                      <Form.Item label="Viết tắt:" name="short_name">
+                      <Form.Item
+                        label={
+                          <FormattedMessage
+                            {...messages.myCompanyAddNewAcronym}
+                          />
+                        }
+                        name="short_name"
+                      >
                         <Input />
                       </Form.Item>
                     </Col>
@@ -162,28 +180,44 @@ export function AddCompany({
                               name={[field.name, 'name']}
                               fieldKey={[field.fieldKey, 'name']}
                             >
-                              <Input placeholder="Tên đầy đủ" />
+                              <Input
+                                placeholder={intl.formatMessage({
+                                  ...messages.myCompanyAddNewFullName,
+                                })}
+                              />
                             </Form.Item>
                             <Form.Item
                               {...field}
                               name={[field.name, 'position']}
                               fieldKey={[field.fieldKey, 'position']}
                             >
-                              <Input placeholder="Vị trí" />
+                              <Input
+                                placeholder={intl.formatMessage({
+                                  ...messages.myCompanyAddNewPosition,
+                                })}
+                              />
                             </Form.Item>
                             <Form.Item
                               {...field}
                               name={[field.name, 'phone']}
                               fieldKey={[field.fieldKey, 'phone']}
                             >
-                              <Input placeholder="Số điện thoại" />
+                              <Input
+                                placeholder={intl.formatMessage({
+                                  ...messages.myCompanyAddNewPhone,
+                                })}
+                              />
                             </Form.Item>
                             <Form.Item
                               {...field}
                               name={[field.name, 'email']}
                               fieldKey={[field.fieldKey, 'email']}
                             >
-                              <Input placeholder="Địa chỉ Email" />
+                              <Input
+                                placeholder={intl.formatMessage({
+                                  ...messages.myCompanyAddNewEmail,
+                                })}
+                              />
                             </Form.Item>
                             <MinusCircleOutlined
                               onClick={() => remove(field.name)}
@@ -203,7 +237,9 @@ export function AddCompany({
                             block
                             icon={<PlusOutlined />}
                           >
-                            Thêm người liên hệ
+                            <FormattedMessage
+                              {...messages.myCompanyAddNewContact}
+                            />
                           </Button>
                         </Form.Item>
                       </>
@@ -215,12 +251,20 @@ export function AddCompany({
                 <Col className="input-padding" lg={12} sm={24} xs={24}>
                   <Input.Group size="large">
                     <Form.Item
-                      label="Giám Đốc"
+                      label={
+                        <FormattedMessage
+                          {...messages.myCompanyAddNewDirector}
+                        />
+                      }
                       name="manager"
                       rules={[
                         {
                           required: true,
-                          message: 'Giám đốc là bắt buộc!',
+                          message: (
+                            <FormattedMessage
+                              {...messages.myCompanyAddNewDirectorReq}
+                            />
+                          ),
                         },
                       ]}
                     >
@@ -230,10 +274,19 @@ export function AddCompany({
                 </Col>
                 <Col className="input-padding" lg={12} sm={24} xs={24}>
                   <Input.Group size="large" className="input-padding">
-                    <Form.Item name="date" label="Ngày Thành Lập">
+                    <Form.Item
+                      name="date"
+                      label={
+                        <FormattedMessage
+                          {...messages.myCompanyAddNewStartDate}
+                        />
+                      }
+                    >
                       <DatePicker
                         size="large"
-                        placeholder="Chọn ngày thành lập"
+                        placeholder={intl.formatMessage({
+                          ...messages.myCompanyAddNewSelectStartDate,
+                        })}
                       />
                     </Form.Item>
                   </Input.Group>
@@ -251,7 +304,9 @@ export function AddCompany({
               <Input.Group size="large">
                 <Form.Item
                   size="large"
-                  label="Địa Chỉ Văn Phòng"
+                  label={
+                    <FormattedMessage {...messages.myCompanyAddNewAddress} />
+                  }
                   name="office_address"
                 >
                   <Input name="office_address" />
@@ -282,10 +337,15 @@ export function AddCompany({
             </Col> */}
             <Col className="pd-none mobile-mrauto" lg={8} xs={22}>
               <Input.Group size="large" className="group-item">
-                <Form.Item name="city" label="Tỉnh Thành">
+                <Form.Item
+                  name="city"
+                  label={<FormattedMessage {...messages.myCompanyAddNewCity} />}
+                >
                   <Select
                     showSearch
-                    placeholder="Chọn thành phố"
+                    placeholder={intl.formatMessage({
+                      ...messages.myCompanyAddNewSelectCity,
+                    })}
                     optionFilterProp="children"
                     filterOption={(input, option) =>
                       option.children
@@ -311,21 +371,37 @@ export function AddCompany({
               xs={22}
             >
               <Input.Group size="large">
-                <Form.Item size="large" label="Trang Web" name="website">
+                <Form.Item
+                  size="large"
+                  label={<FormattedMessage {...messages.myCompanyAddNewWeb} />}
+                  name="website"
+                >
                   <Input name="website" />
                 </Form.Item>
               </Input.Group>
             </Col>
             <Col className="pd-none mobile-mrauto" lg={8} xs={22}>
               <Input.Group size="large" className="group-item">
-                <Form.Item size="large" label="Số Điện Thoại" name="phone">
+                <Form.Item
+                  size="large"
+                  label={
+                    <FormattedMessage {...messages.myCompanyAddPhoneNum} />
+                  }
+                  name="phone"
+                >
                   <Input name="phone" />
                 </Form.Item>
               </Input.Group>
             </Col>
             <Col className="pd-none mobile-mrauto" lg={8} xs={22}>
               <Input.Group size="large" className="group-item">
-                <Form.Item size="large" label="Địa chỉ Email" name="email">
+                <Form.Item
+                  size="large"
+                  label={
+                    <FormattedMessage {...messages.myCompanyAddEmailAdr} />
+                  }
+                  name="email"
+                >
                   <Input name="email" />
                 </Form.Item>
               </Input.Group>
@@ -339,7 +415,11 @@ export function AddCompany({
               xs={22}
             >
               <Input.Group size="large">
-                <Form.Item size="large" label="Ghi Chú Cá Nhân" name="note">
+                <Form.Item
+                  size="large"
+                  label={<FormattedMessage {...messages.myCompanyAddNote} />}
+                  name="note"
+                >
                   <TextArea autoSize={{ minRows: 3, maxRows: 5 }} />
                 </Form.Item>
               </Input.Group>
@@ -348,7 +428,7 @@ export function AddCompany({
 
           <Form.Item className="register-form-button">
             <Button type="primary" htmlType="submit">
-              Đăng Công Ty
+              <FormattedMessage {...messages.myCompanyAddBtn} />
             </Button>
           </Form.Item>
         </Form>
@@ -369,6 +449,7 @@ AddCompany.propTypes = {
   successMessage: PropTypes.string,
   errorMgs: PropTypes.string,
   history: PropTypes.object,
+  intl: intlShape.required,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -387,4 +468,4 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-export default compose(withConnect)(withRouter(AddCompany));
+export default compose(withConnect)(withRouter(injectIntl(AddCompany)));

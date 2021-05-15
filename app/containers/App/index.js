@@ -7,7 +7,6 @@
  */
 
 import React from 'react';
-import ReactGA from 'react-ga';
 import { Helmet } from 'react-helmet';
 import styled from 'styled-components';
 import { get as _get } from 'lodash';

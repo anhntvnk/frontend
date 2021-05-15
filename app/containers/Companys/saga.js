@@ -17,8 +17,9 @@ import {
   followCompanysError,
 } from './actions';
 import API from '../../constants/apis';
-import { getToken, getUserId } from '../../../services/auth';
+import { getToken, getUserId, getPackageOrder } from '../../../services/auth';
 
+const PACKAGE_ORDER = 'basic';
 export function* getCompanys() {
   // get all company
   // eslint-disable-next-line prettier/prettier
@@ -28,8 +29,11 @@ export function* getCompanys() {
   try {
     const companys = yield call(request, reqCompany);
     const companyFollows = yield call(request, reqCompanyFollow);
-
-    yield put(loadCompanySuccess({ companys, companyFollows }));
+    const companyByPackage =
+      getPackageOrder() !== PACKAGE_ORDER ? companys : [];
+    yield put(
+      loadCompanySuccess({ companys: companyByPackage, companyFollows }),
+    );
   } catch (err) {
     yield put(loadCompanysError(err));
   }

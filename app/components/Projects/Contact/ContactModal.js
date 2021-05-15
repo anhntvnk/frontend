@@ -1,17 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Modal, Form, Input } from 'antd';
-import { FormattedMessage } from 'react-intl';
+import { injectIntl, intlShape } from 'react-intl';
 import messages from './messages';
 
-function ContactModal({ visible, onCreate, onCancel }) {
+function ContactModal({ visible, onCreate, onCancel, intl }) {
   const [form] = Form.useForm();
   return (
     <Modal
       visible={visible}
-      title="Thêm người liên hệ"
-      okText="Lưu lại"
-      cancelText="Thoát"
+      title={intl.formatMessage({
+        ...messages.myContactModalTitle,
+      })}
+      okText={intl.formatMessage({
+        ...messages.myContactModalBtnOK,
+      })}
+      cancelText={intl.formatMessage({
+        ...messages.myContactModalBtnExit,
+      })}
       onCancel={onCancel}
       onOk={() => {
         form
@@ -28,13 +34,15 @@ function ContactModal({ visible, onCreate, onCancel }) {
       <Form form={form} layout="vertical" name="form_in_modal">
         <Form.Item
           name="full_name"
-          label={<FormattedMessage {...messages.myContactModalFullName} />}
+          label={intl.formatMessage({
+            ...messages.myContactModalFullName,
+          })}
           rules={[
             {
               required: true,
-              message: (
-                <FormattedMessage {...messages.myContactModalFullNameReq} />
-              ),
+              message: intl.formatMessage({
+                ...messages.myContactModalFullNameReq,
+              }),
             },
           ]}
         >
@@ -42,11 +50,15 @@ function ContactModal({ visible, onCreate, onCancel }) {
         </Form.Item>
         <Form.Item
           name="position"
-          label={<FormattedMessage {...messages.modalPosition} />}
+          label={intl.formatMessage({
+            ...messages.myContactModalPosition,
+          })}
           rules={[
             {
               required: true,
-              message: <FormattedMessage {...messages.modalPositionReq} />,
+              message: intl.formatMessage({
+                ...messages.myContactModalPositionReq,
+              }),
             },
           ]}
         >
@@ -58,7 +70,9 @@ function ContactModal({ visible, onCreate, onCancel }) {
           rules={[
             {
               required: true,
-              message: 'Số điện thoại là bắt buộc!',
+              message: intl.formatMessage({
+                ...messages.myContactModalPhoneReq,
+              }),
             },
           ]}
         >
@@ -70,19 +84,36 @@ function ContactModal({ visible, onCreate, onCancel }) {
           rules={[
             {
               type: 'email',
-              message: 'Địa chỉ email không hợp lệ!',
+              message: intl.formatMessage({
+                ...messages.myContactModalEmailReq,
+              }),
             },
           ]}
         >
           <Input name="email" />
         </Form.Item>
-        <Form.Item name="type" label="Vai trò">
+        <Form.Item
+          name="type"
+          label={intl.formatMessage({
+            ...messages.myContactModalRole,
+          })}
+        >
           <Input name="type" />
         </Form.Item>
-        <Form.Item name="company" label="Công Ty">
+        <Form.Item
+          name="company"
+          label={intl.formatMessage({
+            ...messages.myContactModalCompany,
+          })}
+        >
           <Input name="company" />
         </Form.Item>
-        <Form.Item name="address" label="Địa chỉ (nhà)">
+        <Form.Item
+          name="address"
+          label={intl.formatMessage({
+            ...messages.myContactModalAddress,
+          })}
+        >
           <Input name="address" />
         </Form.Item>
       </Form>
@@ -94,6 +125,7 @@ ContactModal.propTypes = {
   visible: PropTypes.bool,
   onCreate: PropTypes.func,
   onCancel: PropTypes.func,
+  intl: intlShape.isRequired,
 };
 
-export default ContactModal;
+export default injectIntl(ContactModal);

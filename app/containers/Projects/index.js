@@ -142,7 +142,14 @@ export function Projects({
       title: <FormattedMessage {...messages.myProjAddress} />,
       dataIndex: 'address',
       key: 'address',
-      render: (text, record) => text && text + record.city && `-${record.city}`,
+      // eslint-disable-next-line consistent-return
+      render: (text, record) => {
+        if (record.city && text) {
+          return `${text} - ${record.city}`;
+        }
+
+        return text && text + record.city && record.city;
+      },
     },
     {
       title: <FormattedMessage {...messages.myProjPeriod} />,
@@ -212,7 +219,6 @@ export function Projects({
       ),
     },
   ];
-  console.log(projectList, 'projectList');
 
   const listProps = {
     dataSource: projectList || defaultProject,
