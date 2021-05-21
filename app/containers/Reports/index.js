@@ -17,26 +17,20 @@ import { ArrowLeftOutlined } from '@ant-design/icons';
 import { createStructuredSelector } from 'reselect';
 import { useInjectReducer } from 'utils/injectReducer';
 import { useInjectSaga } from 'utils/injectSaga';
+import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { Button } from 'antd';
 import styled from 'styled-components';
-import { ENUMS } from '../../constants';
 import { makeSelectReports } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
+import messages from './messages';
 import { getReports } from './actions';
 import '!style-loader!css-loader!react-big-calendar/lib/css/react-big-calendar.css';
 
 const key = 'reports';
 
-const headerCost = [
-  ['Element', 'Giá trị dự án đang theo dõi triệu USD', { role: 'style' }],
-];
-const headerCount = [
-  ['Element', 'Số lượng dự án đang theo dõi', { role: 'style' }],
-];
-
 // eslint-disable-next-line react/prop-types
-export function Reports({ history, reports, onFetchReports }) {
+export function Reports({ history, reports, onFetchReports, intl }) {
   useInjectReducer({ key, reducer });
   useInjectSaga({ key, saga });
 
@@ -46,21 +40,146 @@ export function Reports({ history, reports, onFetchReports }) {
     onFetchReports();
   }, []);
 
+  const headerCost = [
+    [
+      'Element',
+      intl.formatMessage({
+        ...messages.projectFollows,
+      }),
+      { role: 'style' },
+    ],
+  ];
+  const headerCount = [
+    [
+      'Element',
+      intl.formatMessage({
+        ...messages.projectFollowsCount,
+      }),
+      { role: 'style' },
+    ],
+  ];
+
+  const STATE_LIST = [
+    {
+      status_code: false,
+      name: 'Dự án',
+      label: intl.formatMessage({
+        ...messages.enumProject,
+      }),
+      i18nlabel: intl.formatMessage({
+        ...messages.enumProject,
+      }),
+      color: '',
+    },
+    {
+      status_code: 1,
+      name: 'Sàng lọc',
+      label: intl.formatMessage({
+        ...messages.enumCheck,
+      }),
+      i18nlabel: intl.formatMessage({
+        ...messages.enumCheck,
+      }),
+      color: '#e8fb60',
+      colorText: '#4f4b4b',
+    },
+    {
+      status_code: 2,
+      name: 'Gọi điện',
+      label: intl.formatMessage({
+        ...messages.enumCall,
+      }),
+      i18nlabel: intl.formatMessage({
+        ...messages.enumCall,
+      }),
+      color: '#13f9d8',
+      colorText: '#4f4b4b',
+    },
+    {
+      status_code: 3,
+      name: 'Giới thiệu về công ty (USP)',
+      label: intl.formatMessage({
+        ...messages.enumIntroduce,
+      }),
+      i18nlabel: intl.formatMessage({
+        ...messages.enumIntroduce,
+      }),
+      color: '#9cf732',
+      colorText: '#4f4b4b',
+    },
+    {
+      status_code: 4,
+      name: 'Thuyết trình giải pháp',
+      label: intl.formatMessage({
+        ...messages.enumSolution,
+      }),
+      i18nlabel: intl.formatMessage({
+        ...messages.enumSolution,
+      }),
+      color: '#7ed321',
+      colorText: '#ffffff',
+    },
+    {
+      status_code: 5,
+      name: 'Chào giá',
+      label: intl.formatMessage({
+        ...messages.enumOffers,
+      }),
+      i18nlabel: intl.formatMessage({
+        ...messages.enumOffers,
+      }),
+      color: '#f91a06',
+      colorText: '#ffffff',
+    },
+    {
+      status_code: 6,
+      name: 'Thương thảo giá',
+      label: intl.formatMessage({
+        ...messages.enumPriceNegotiation,
+      }),
+      i18nlabel: intl.formatMessage({
+        ...messages.enumPriceNegotiation,
+      }),
+      color: '#fa9703',
+      colorText: '#ffffff',
+    },
+    {
+      status_code: 7,
+      name: 'Thương thảo hợp đồng',
+      label: intl.formatMessage({
+        ...messages.enumNegotiation,
+      }),
+      i18nlabel: intl.formatMessage({
+        ...messages.enumNegotiation,
+      }),
+      color: '#00bcd4',
+      colorText: '#ffffff',
+    },
+    {
+      status_code: 8,
+      name: 'CLOSE',
+      label: 'CLOSE',
+      i18nlabel: 'CLOSE',
+      color: '#7ed321',
+      colorText: '#ffffff',
+    },
+  ];
+
   useEffect(() => {
     if (!_isEmpty(reports)) {
       const { costStat, countStat } = reports;
       const costStatMap = headerCost.concat(
         costStat.map(cost => [
-          _get(ENUMS.STATE_LIST, `[${cost.status_code}].label`),
+          _get(STATE_LIST, `[${cost.status_code}].label`),
           _get(cost, 'cost_total'),
-          '#b7252c',
+          'rgb(51, 102, 204)',
         ]),
       );
       const countStatMap = headerCount.concat(
         countStat.map(count => [
-          _get(ENUMS.STATE_LIST, `[${count.status_code}].label`),
+          _get(STATE_LIST, `[${count.status_code}].label`),
           _get(count, 'project_count'),
-          '#b7252c',
+          'rgb(51, 102, 204)',
         ]),
       );
       setCostData({ costStat: costStatMap, countStat: countStatMap });
@@ -70,7 +189,11 @@ export function Reports({ history, reports, onFetchReports }) {
   return (
     <NotesComponent>
       <Helmet>
-        <title>Báo cáo</title>
+        <title>
+          {intl.formatMessage({
+            ...messages.reportTitle,
+          })}
+        </title>
         <meta name="description" content="Notes" />
       </Helmet>
       <CenteredSectionWithBack>
@@ -80,9 +203,11 @@ export function Reports({ history, reports, onFetchReports }) {
           icon={<ArrowLeftOutlined />}
           onClick={() => history.goBack()}
         >
-          Quay lại
+          <FormattedMessage {...messages.goBack} />
         </Button>
-        <h1>Báo cáo các dự án trong quá trình</h1>
+        <h1>
+          <FormattedMessage {...messages.reportTitle} />
+        </h1>
       </CenteredSectionWithBack>
       {!_isEmpty(_get(costData, 'costStat')) && (
         <Chart
@@ -138,6 +263,7 @@ Reports.propTypes = {
   history: PropTypes.object,
   onFetchReports: PropTypes.func,
   reports: PropTypes.any,
+  intl: intlShape.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -155,4 +281,4 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-export default compose(withConnect)(withRouter(Reports));
+export default compose(withConnect)(withRouter(injectIntl(Reports)));

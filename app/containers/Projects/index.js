@@ -165,7 +165,15 @@ export function Projects({
       render: statusCode => {
         const task = _get(ENUMS.STATE_LIST, `[${statusCode}]`);
         return (
-          <Tag color={task.color} style={{ color: task.colorText }}>
+          <Tag
+            color={task.color}
+            style={{
+              color: task.colorText,
+              width: '150px',
+              fontSize: '16px',
+              textAlign: 'center',
+            }}
+          >
             {task.label}
           </Tag>
         );

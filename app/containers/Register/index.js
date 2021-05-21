@@ -57,7 +57,7 @@ export function Register({
     history.push(ROUTE.LOGIN);
   };
 
-  return !statusResponse ? (
+  return statusResponse ? (
     <div className="register-myp">
       <Spin spinning={isLoading} tip="Loading...">
         <Helmet>
@@ -216,34 +216,45 @@ export function Register({
           />
         )}
         <H1>
-          {statusResponse === 'success' ? (
+          {statusResponse === 'success1' ? (
             <FormattedMessage {...messages.myProjRegisterSuccess} />
           ) : (
             <FormattedMessage {...messages.myProjRegisterError} />
           )}
         </H1>
         <p>
-          {statusResponse === 'success' ? (
+          {statusResponse === 'success1' ? (
             <FormattedMessage {...messages.myProjRegisterSuccessContent} />
           ) : (
             <FormattedMessage {...messages.myProjRegisterErrorContent} />
           )}
         </p>
-        <Button
-          type="primary"
-          htmlType="submit"
-          className="btn-goto-login"
-          onClick={goToLogin}
-        >
-          <FormattedMessage {...messages.myProjGoToLogin} />
-        </Button>
       </Col>
+      <IframeContainer lg={24}>
+        <iframe
+          width="560"
+          height="315"
+          src="https://www.youtube.com/embed/VCJcaVHdxe4"
+          title="YouTube video player"
+          frameBorder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+        />
+      </IframeContainer>
+      <Button
+        type="primary"
+        htmlType="submit"
+        className="btn-goto-login"
+        onClick={goToLogin}
+      >
+        <FormattedMessage {...messages.myProjGoToLogin} />
+      </Button>
     </StyledRegisterSuccess>
   );
 }
 
 const StyledRegisterSuccess = styled(Row)`
-  padding: 200px 100px;
+  padding: 48px 100px;
   border-radius: 4px;
   display: inline-block;
   margin: 0 auto;
@@ -253,7 +264,7 @@ const StyledRegisterSuccess = styled(Row)`
   }
 
   .ant-col {
-    margin: 0 auto;
+    margin: 15px auto;
     text-align: center;
   }
 
@@ -267,13 +278,30 @@ const StyledRegisterSuccess = styled(Row)`
   p {
     text-align: center;
     margin: 0;
-    color: #404F5E;
-    font-size:20px;
+    color: #404f5e;
+    font-size: 20px;
   }
 
   .btn-goto-login {
     margin: auto;
     margin-top: 20px;
+  }
+`;
+
+const IframeContainer = styled(Col)`
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  padding-top: 56.25%; /* 16:9 Aspect Ratio */
+  iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
   }
 `;
 

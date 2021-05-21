@@ -301,5 +301,9 @@
   "myp.components.Footer.download": "TẢI ỨNG DỤNG MY PROJECT",
   "myp.components.Footer.copyright": "@Copyright by MYP - Một sản phầm của MYP",
   "myp.containers.LocaleToggle.vi": "Tiếng Việt",
-  "myp.containers.LocaleToggle.en": "English"
+  "myp.containers.LocaleToggle.en": "English",
+  "myp.constants.HomePage.reportTitle": "Báo cáo các dự án trong quá trình",
+  "myp.constants.HomePage.goBack": "Quay lại",
+  "myp.constants.HomePage.project.follow.count": "Giá trị dự án đang theo dõi triệu USD",
+  "myp.constants.HomePage.project.follow": "Số lượng dự án đang theo dõi"
 }

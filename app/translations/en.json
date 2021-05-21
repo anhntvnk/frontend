@@ -304,5 +304,9 @@
   "myp.components.Footer.download": "DOWNLOAD APPLICATION MY PROJECT",
   "myp.components.Footer.copyright": "@Copyright by MYP - The product of MYP",
   "myp.containers.LocaleToggle.vi": "Vietnamese",
-  "myp.containers.LocaleToggle.en": "English"
+  "myp.containers.LocaleToggle.en": "English",
+  "myp.constants.HomePage.reportTitle": "Report projects in progress",
+  "myp.constants.HomePage.goBack": "Back",
+  "myp.constants.HomePage.project.follow.count": "The project value is being monitored in millions of USD",
+  "myp.constants.HomePage.project.follow": "Number of projects being watched"
 }
