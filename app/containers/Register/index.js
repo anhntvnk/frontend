@@ -57,7 +57,7 @@ export function Register({
     history.push(ROUTE.LOGIN);
   };
 
-  return statusResponse ? (
+  return !statusResponse ? (
     <div className="register-myp">
       <Spin spinning={isLoading} tip="Loading...">
         <Helmet>
@@ -216,31 +216,33 @@ export function Register({
           />
         )}
         <H1>
-          {statusResponse === 'success1' ? (
+          {statusResponse === 'success' ? (
             <FormattedMessage {...messages.myProjRegisterSuccess} />
           ) : (
             <FormattedMessage {...messages.myProjRegisterError} />
           )}
         </H1>
         <p>
-          {statusResponse === 'success1' ? (
+          {statusResponse === 'success' ? (
             <FormattedMessage {...messages.myProjRegisterSuccessContent} />
           ) : (
             <FormattedMessage {...messages.myProjRegisterErrorContent} />
           )}
         </p>
       </Col>
-      <IframeContainer lg={24}>
-        <iframe
-          width="560"
-          height="315"
-          src="https://www.youtube.com/embed/VCJcaVHdxe4"
-          title="YouTube video player"
-          frameBorder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
-        />
-      </IframeContainer>
+      {statusResponse === 'success' && (
+        <IframeContainer lg={24}>
+          <iframe
+            width="560"
+            height="315"
+            src="https://www.youtube.com/embed/VCJcaVHdxe4"
+            title="YouTube video player"
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+          />
+        </IframeContainer>
+      )}
       <Button
         type="primary"
         htmlType="submit"
