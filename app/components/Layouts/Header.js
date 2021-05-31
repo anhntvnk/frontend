@@ -408,7 +408,7 @@ const DescriptionNotify = styled.div`
 Header.propTypes = {
   location: PropTypes.object,
   history: PropTypes.object,
-  menus: PropTypes.object,
+  menus: PropTypes.array,
 };
 
 export default withRouter(Header);

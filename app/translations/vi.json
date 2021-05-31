@@ -13,6 +13,8 @@
   "myp.constants.HomePage.negotiation": "Thương thảo hợp đồng",
   "myp.containers.Procedure.status": "Chuyển trạng thái",
   "myp.containers.Procedure.changeStatus": "Bạn có muốn chuyển trạng thái không?",
+  "myp.containers.Procedure.meta": "Quy trình quản lý dự án",
+  "myp.containers.Procedure.back": "Quay lại",
   "myp.containers.HomePage.register.message": "Đăng Ký",
   "myp.containers.HomePage.signIn.message": "Đăng Nhập",
   "myp.containers.HomePage.logOut.message": "Đăng xuất",

@@ -16,3 +16,4 @@ export const GET_NOTES_ERROR = 'vnk/Notes/GET_NOTES_ERROR';
 export const UPDATE_NOTES = 'vnk/Notes/UPDATE_NOTES';
 export const UPDATE_NOTES_SUCCESS = 'vnk/Notes/UPDATE_NOTES_SUCCESS';
 export const UPDATE_NOTES_ERROR = 'vnk/Notes/UPDATE_NOTES_ERROR';
+export const RESET_STATE = 'vnk/Notes/RESET_STATE';

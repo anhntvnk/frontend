@@ -12,14 +12,19 @@ import { compose } from 'redux';
 import { Helmet } from 'react-helmet';
 import { ArrowLeftOutlined } from '@ant-design/icons';
 import { Calendar, Views, momentLocalizer } from 'react-big-calendar';
-import { FormattedMessage } from 'react-intl';
+import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import moment from 'moment';
 import { createStructuredSelector } from 'reselect';
 import { useInjectReducer } from 'utils/injectReducer';
 import { useInjectSaga } from 'utils/injectSaga';
-import { Button, Modal } from 'antd';
+import { Button, Modal, message } from 'antd';
 import styled from 'styled-components';
-import { makeSelectNotes, makeSelectUserData } from './selectors';
+import {
+  makeSelectErrors,
+  makeSelectNotes,
+  makeSelectSuccess,
+  makeSelectUserData,
+} from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 import { getNotes, updateNotes } from './actions';
@@ -34,15 +39,18 @@ export function Notes({
   history,
   notes,
   userData,
-  successMsg,
+  // successMsg,
+  // errors,
   onFetchNotes,
   onUpdateNotes,
+  intl,
 }) {
   useInjectReducer({ key, reducer });
   useInjectSaga({ key, saga });
 
   const [events, setEvents] = useState(notes);
   const [isDurty, setIsDurty] = useState(false);
+  const user = JSON.parse(localStorage.getItem('user'));
 
   useEffect(() => {
     onFetchNotes();
@@ -57,7 +65,9 @@ export function Notes({
   const handleSelect = ({ start, end }) => {
     // eslint-disable-next-line no-alert
     const title = window.prompt(
-      <FormattedMessage {...messages.myNotePrompt} />,
+      intl.formatMessage({
+        ...messages.myNotePrompt,
+      }),
     );
 
     if (title) {
@@ -84,6 +94,27 @@ export function Notes({
       content: event.title,
     });
   }
+
+  const updateNote = () => {
+    const newNotes = Object.assign(userData.custom.notes, events).map(note => ({
+      key: Math.random(),
+      date: moment(note.start).toISOString(),
+      content: note.title,
+    }));
+
+    // setEvents(Object.assign(userData.custom.notes, events));
+
+    const newData = {
+      ...userData,
+      password: user.password,
+      custom: {
+        fcmTokens: [],
+        notes: newNotes,
+      },
+    };
+
+    onUpdateNotes(newData);
+  };
 
   return (
     <NotesComponent>
@@ -117,14 +148,7 @@ export function Notes({
         onSelectEvent={openEvents}
       />
 
-      <StyledButton
-        type="primary"
-        onClick={() => {
-          Object.assign(userData.custom.notes, events);
-          // onUpdateNotes(events);
-        }}
-        disabled={!isDurty}
-      >
+      <StyledButton type="primary" onClick={updateNote} disabled={!isDurty}>
         <FormattedMessage {...messages.myNotebtnSave} />
       </StyledButton>
     </NotesComponent>
@@ -170,12 +194,16 @@ Notes.propTypes = {
   onUpdateNotes: PropTypes.func,
   notes: PropTypes.any,
   userData: PropTypes.object,
+  intl: intlShape.isRequired,
   // successMsg: PropTypes.bool,
+  // errors: PropTypes.bool,
 };
 
 const mapStateToProps = createStructuredSelector({
   notes: makeSelectNotes(),
   userData: makeSelectUserData(),
+  // errors: makeSelectErrors(),
+  // successMsg: makeSelectSuccess(),
 });
 
 export function mapDispatchToProps(dispatch) {
@@ -190,4 +218,4 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-export default compose(withConnect)(withRouter(Notes));
+export default compose(withConnect)(withRouter(injectIntl(Notes)));

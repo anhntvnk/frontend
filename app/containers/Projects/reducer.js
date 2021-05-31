@@ -10,7 +10,12 @@
  */
 
 import produce from 'immer';
-import { filter as _filter, concat as _concat, includes as _includes, get as _get } from 'lodash';
+import {
+  filter as _filter,
+  concat as _concat,
+  includes as _includes,
+  get as _get,
+} from 'lodash';
 import moment from 'moment';
 import {
   LOAD_PROJECTS,
@@ -34,16 +39,27 @@ const mappingProject = response => {
     fl => fl.parent_project_id,
   );
 
-  const projectShow = _filter(projectAvaiable, item => moment(item.last_modified).isSameOrAfter(timeShowProject));
+  const projectShow = _filter(projectAvaiable, item =>
+    moment(item.last_modified).isSameOrAfter(timeShowProject),
+  );
   const listProject =
     followedProjects.length > 0
-      ? _concat(followedProjects, _filter(projectShow, item => !_includes(getIdFollowedProjects, item.id)))
+      ? _concat(
+          followedProjects,
+          _filter(
+            projectShow,
+            item => !_includes(getIdFollowedProjects, item.id),
+          ),
+        )
       : projectAvaiable;
 
-  const result = listProject.map(project => Object.assign(project, { is_follow: _get(project, 'is_follow', false) }))
-  return result.sort((x, y) => y.is_follow - x.is_follow);
-}
-
+  const result = listProject.map(project =>
+    Object.assign(project, { is_follow: _get(project, 'is_follow', false) }),
+  );
+  return [...new Map(result.map(item => [item.name, item])).values()].sort(
+    (x, y) => y.is_follow - x.is_follow,
+  );
+};
 
 const updateProjectFollows = (projects, projectID) =>
   projects.map(project =>
@@ -51,7 +67,7 @@ const updateProjectFollows = (projects, projectID) =>
       ? { ...project, is_follow: true, parent_project_id: projectID }
       : project,
   );
-  
+
 const unFollowProject = (projects, projectID) =>
   projects.map(project =>
     project.id === projectID ? { ...project, is_follow: false } : project,
@@ -67,18 +83,28 @@ const projectReducer = (state = initialState, action) =>
         break;
       case LOAD_PROJECTS_SUCCESS:
         draft.project = mappingProject(response);
-        draft.followedProjects = response.followedProjects;
+        draft.followedProjects = [
+          ...new Map(
+            response.followedProjects.map(item => [item.name, item]),
+          ).values(),
+        ];
         draft.loading = false;
         break;
       case CHANGE_FOLLOW:
         draft.loading = false;
         break;
       case CHANGE_FOLLOW_SUCCESS:
-        const newProject = updateProjectFollows(state.project, response.parent_project_id);
+        const newProject = updateProjectFollows(
+          state.project,
+          response.parent_project_id,
+        );
         draft.project = newProject;
         break;
       case UN_FOLLOW_SUCCESS:
         draft.project = unFollowProject(state.project, response.id);
+        draft.followedProjects = state.followedProjects.filter(
+          followedProjects => followedProjects.id !== response.id,
+        );
         break;
       case LOADING:
         draft.loading = action.isLoading;

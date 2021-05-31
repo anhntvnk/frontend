@@ -46,7 +46,6 @@ export function LoginForm({ history, intl, onLoginForm, user, errorMessage }) {
         packageOrder,
         packageExpire,
       } = user;
-      console.log(user);
       if (accessToken) {
         if (!packageExpire) {
           setValidateStatus({ validateStatus: 'error' });

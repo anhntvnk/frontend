@@ -62,3 +62,14 @@ export function updateNotesErrors(error) {
     error,
   };
 }
+
+/**
+ * Dispatched reset state
+ *
+ * @return {object}       An action object with a type of RESET_STATE passing the error
+ */
+export function resetState() {
+  return {
+    type: RESET_STATE,
+  };
+}

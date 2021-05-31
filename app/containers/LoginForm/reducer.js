@@ -22,7 +22,7 @@ const companyReducer = (state = initialState, action) =>
   produce(state, draft => {
     switch (action.type) {
       case LOGIN_FORM_SUCCESS:
-        localStorage.setItem('user', action.response);
+        localStorage.setItem('user', JSON.stringify(action.response.profile));
 
         draft.user = action.response;
         draft.errorMessage = '';

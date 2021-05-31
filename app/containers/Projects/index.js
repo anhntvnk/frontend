@@ -17,6 +17,7 @@ import {
   omit as _omit,
   clone as _clone,
   has as _has,
+  isEmpty as _isEmpty,
 } from 'lodash';
 import { createStructuredSelector } from 'reselect';
 import { FormattedMessage } from 'react-intl';
@@ -55,26 +56,26 @@ export function Projects({
   onFollowProject,
   onUnFollowProject,
 }) {
-  // set project default with project all or project follow
-  const projectType = location.search.replace(/(^\/|\/$)/g, '').split('?')[1];
-  // eslint-disable-next-line prettier/prettier
-  const defaultProject =
-    projectType === 'project-follow' ? followedProjects : project;
-
   if (history.location.state) {
     message.success(_get(history.location.state, 'successMessage', ''));
     history.replace({ ...history.location, state: undefined });
   }
 
-  // const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const [projectList, setProjectList] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [fillter, setFilter] = useState('');
+  const [defaultProject, setDefaultProject] = useState([]);
+  const [projectType, setProjectType] = useState(
+    location.search.replace(/(^\/|\/$)/g, '').split('?')[1],
+  );
 
   useInjectSaga({ key, saga });
   useInjectReducer({ key, reducer });
 
   useEffect(() => {
-    onFetchProject();
+    if (_isEmpty(followedProjects) && _isEmpty(project)) {
+      onFetchProject();
+    }
   }, []);
 
   useEffect(() => {
@@ -82,6 +83,16 @@ export function Projects({
       setIsLoading(false);
     }, 500);
   }, [projectList]);
+
+  useEffect(() => {
+    searchProjects(fillter);
+  }, [project]);
+
+  useEffect(() => {
+    setDefaultProject(
+      projectType === 'project-follow' ? followedProjects : project,
+    );
+  }, [projectType]);
 
   const onFollow = (isFollow, projectFl) => {
     if (isFollow) {
@@ -170,7 +181,7 @@ export function Projects({
             style={{
               color: task.colorText,
               width: '150px',
-              fontSize: '16px',
+              fontSize: '13px',
               textAlign: 'center',
             }}
           >
@@ -238,6 +249,11 @@ export function Projects({
     setProjectList(project);
   };
 
+  const onSearchProjects = advSearch => {
+    setFilter(advSearch);
+    searchProjects(advSearch);
+  };
+
   const searchProjects = advSearch => {
     const {
       name: filterName,
@@ -250,6 +266,7 @@ export function Projects({
       type: filterType,
       stage: filterStage,
     } = advSearch;
+
     const listData = [];
 
     for (let i = 0; i < project.length; i += 1) {
@@ -380,11 +397,12 @@ export function Projects({
 
   const changeProjects = type => {
     setIsLoading(true);
-    if (type === 1) {
-      setProjectList(followedProjects);
-    } else {
-      setProjectList(project);
-    }
+    setProjectType(type === 1 ? 'project-follow' : '');
+    // if (type === 1) {
+    //   setProjectList(followedProjects);
+    // } else {
+    //   setProjectList(project);
+    // }
   };
 
   return (
@@ -394,7 +412,7 @@ export function Projects({
         <meta name="description" content="Danh sách dự án" />
       </Helmet>
       <AdvancedSearchForm
-        onSearchProjects={searchProjects}
+        onSearchProjects={onSearchProjects}
         onChangeProject={changeProjects}
         onResetFields={onResetFields}
         projectType={projectType}

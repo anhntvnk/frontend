@@ -1,5 +1,5 @@
 /**
- * kpis settings selectors
+ * notes selectors
  */
 
 import { createSelector } from 'reselect';
@@ -18,4 +18,21 @@ const makeSelectUserData = () =>
     state => state.userData,
   );
 
-export { select, makeSelectNotes, makeSelectUserData };
+const makeSelectErrors = () =>
+  createSelector(
+    select,
+    state => state.errors,
+  );
+const makeSelectSuccess = () =>
+  createSelector(
+    select,
+    state => state.successMsg,
+  );
+
+export {
+  select,
+  makeSelectNotes,
+  makeSelectUserData,
+  makeSelectErrors,
+  makeSelectSuccess,
+};

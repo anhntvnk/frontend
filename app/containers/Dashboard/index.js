@@ -20,7 +20,7 @@ import { useInjectSaga } from 'utils/injectSaga';
 import { Row, Col } from 'antd';
 import { ROUTE } from '../../constants';
 import { loadDashboard } from './actions';
-import { makeSelectDashboard } from './selectors';
+import { makeSelectDashboard, makeSelectLoginForm } from './selectors';
 import messages from './messages';
 // import { Page } from 'components';
 import NumberCard from './numberCard';
@@ -30,12 +30,14 @@ import './styles.less';
 
 const key = 'dashboard';
 
-export function Dashboard({ dashboards, onFetchDashboard }) {
+export function Dashboard({ dashboards, onFetchDashboard, user }) {
   useInjectReducer({ key, reducer });
   useInjectSaga({ key, saga });
 
   useEffect(() => {
-    onFetchDashboard();
+    if (dashboards.length === 0) {
+      onFetchDashboard();
+    }
   }, []);
 
   const {
@@ -43,7 +45,6 @@ export function Dashboard({ dashboards, onFetchDashboard }) {
     countCompanyFollowed,
     countProject,
     countProjectsFollowed,
-    user,
   } = dashboards;
 
   const Color = {
@@ -142,10 +143,12 @@ export function Dashboard({ dashboards, onFetchDashboard }) {
 Dashboard.propTypes = {
   onFetchDashboard: PropTypes.func,
   dashboards: PropTypes.any,
+  user: PropTypes.any,
 };
 
 const mapStateToProps = createStructuredSelector({
   dashboards: makeSelectDashboard(),
+  user: makeSelectLoginForm(),
 });
 
 export function mapDispatchToProps(dispatch) {

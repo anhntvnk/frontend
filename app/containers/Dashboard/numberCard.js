@@ -44,7 +44,7 @@ function NumberCard({ icon, color, title, number, countUp, url, show }) {
 NumberCard.propTypes = {
   icon: PropTypes.string,
   color: PropTypes.string,
-  title: PropTypes.string,
+  title: PropTypes.object,
   url: PropTypes.string,
   number: PropTypes.number,
   countUp: PropTypes.object,

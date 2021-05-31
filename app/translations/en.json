@@ -13,6 +13,8 @@
   "myp.constants.HomePage.negotiation": "Contract Negotiation",
   "myp.containers.Procedure.status": "Change State",
   "myp.containers.Procedure.changeStatus": "Do you want to change the state?",
+  "myp.containers.Procedure.meta": "PROJECT MANAGEMENT PROCESS",
+  "myp.containers.Procedure.back": "Back",
   "myp.containers.HomePage.register.message": "Registration",
   "myp.containers.HomePage.signIn.message": "SignIn",
   "myp.containers.HomePage.logOut.message": "Logout",

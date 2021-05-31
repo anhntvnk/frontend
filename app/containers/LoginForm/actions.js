@@ -15,11 +15,7 @@
  *    }
  */
 
-import {
-  LOGIN_FORM,
-  LOGIN_FORM_SUCCESS,
-  LOGIN_FORM_ERROR,
-} from './constants';
+import { LOGIN_FORM, LOGIN_FORM_SUCCESS, LOGIN_FORM_ERROR } from './constants';
 
 export function loginForm(data) {
   return {

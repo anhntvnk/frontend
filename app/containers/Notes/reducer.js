@@ -10,13 +10,19 @@
 
 import produce from 'immer';
 import { isEmpty as _isEmpty, get as _get } from 'lodash';
-import { GET_NOTES_SUCCESS } from './constants';
+import {
+  GET_NOTES_SUCCESS,
+  RESET_STATE,
+  UPDATE_NOTES,
+  UPDATE_NOTES_ERROR,
+} from './constants';
 
 // The initial state of the App
 export const initialState = {
   notes: [],
   userData: {},
   successMsg: false,
+  errors: false,
 };
 
 const mappingNotes = notes =>
@@ -39,6 +45,7 @@ const notesReducer = (state = initialState, action) =>
           },
           response,
         } = action;
+
         if (!_isEmpty(notes)) {
           draft.notes = mappingNotes(notes);
           draft.userData = response;
@@ -46,9 +53,28 @@ const notesReducer = (state = initialState, action) =>
           draft.notes = [];
         }
         break;
-      default:
-        draft.notes = initialState.notes;
-        draft.successMsg = initialState.successMsg;
+      case UPDATE_NOTES:
+        const {
+          data: {
+            custom: { notes: notesUpdate },
+          },
+          data,
+        } = action;
+
+        if (!_isEmpty(notesUpdate)) {
+          draft.notes = mappingNotes(notesUpdate);
+          draft.userData = data;
+        }
+
+        draft.successMsg = true;
+        break;
+      case UPDATE_NOTES_ERROR:
+        draft.errors = true;
+        break;
+      case RESET_STATE:
+        draft.errors = false;
+        draft.successMsg = false;
+        break;
     }
   });
 
