@@ -46,6 +46,7 @@ const CompanyList = styled.section`
 `;
 
 const key = 'companys';
+const MY_COMPANY_FOLLOW = 'company-follow';
 export function Companys({
   location,
   history,
@@ -64,23 +65,42 @@ export function Companys({
     history.replace({ ...history.location, state: undefined });
   }
 
-  // set project default with project all or project follow
-  const copmpanyType = location.search.replace(/(^\/|\/$)/g, '').split('?')[1];
-  const defaultCompany =
-    copmpanyType === 'company-follow' ? companyFollows : companys;
+  const [companyType, setCompanyType] = useState(
+    location.search.replace(/(^\/|\/$)/g, '').split('?')[1],
+  );
 
   const [companyData, setCompanyData] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [fillter, setFilter] = useState('');
 
   useEffect(() => {
     onFetchCompany();
   }, []);
 
   useEffect(() => {
+    searchCompany(fillter);
+  }, [companys]);
+
+  useEffect(() => {
     setTimeout(() => {
       setIsLoading(false);
     }, 500);
   }, [companyData]);
+
+  useEffect(() => {
+    const dataChange =
+      companyType === MY_COMPANY_FOLLOW
+        ? getCompanyFollows(companys)
+        : companys;
+    setCompanyData(dataChange);
+  }, [companyType]);
+
+  const onSearchProjects = advSearch => {
+    setFilter(advSearch);
+    searchCompany(advSearch);
+  };
+
+  const getCompanyFollows = datas => datas.filter(p => p.is_follow);
 
   const columns = [
     {
@@ -162,7 +182,7 @@ export function Companys({
     },
   ];
   const listProps = {
-    dataSource: companyData || defaultCompany,
+    dataSource: companyData,
     columns,
     loading: loading || isLoading,
   };
@@ -177,11 +197,7 @@ export function Companys({
 
   const changeProjects = type => {
     setIsLoading(true);
-    if (type === 1) {
-      setCompanyData(companyFollows);
-    } else {
-      setCompanyData(companys);
-    }
+    setCompanyType(type === 1 ? MY_COMPANY_FOLLOW : '');
   };
 
   const onResetFields = () => {
@@ -191,8 +207,12 @@ export function Companys({
   const searchCompany = itemSearch => {
     const { name: filterName, citys: filterCity } = itemSearch;
     const listData = [];
-    for (let i = 0; i < companys.length; i += 1) {
-      const item = companys[i];
+    const companyFilters =
+      companyType === MY_COMPANY_FOLLOW
+        ? getCompanyFollows(companys)
+        : companys;
+    for (let i = 0; i < companyFilters.length; i += 1) {
+      const item = companyFilters[i];
 
       let addToList = true;
 
@@ -232,10 +252,10 @@ export function Companys({
         <meta name="description" content="Danh sách dự án" />
       </Helmet>
       <SearchCompany
-        onSearchProjects={searchCompany}
+        onSearchProjects={onSearchProjects}
         onChangeProject={changeProjects}
         onResetFields={onResetFields}
-        copmpanyType={copmpanyType}
+        companyType={companyType}
       />
       <List {...listProps} />
     </CompanyList>

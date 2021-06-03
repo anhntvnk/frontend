@@ -133,8 +133,8 @@ export function ListItem({ data }) {
                 responsive: true,
               }}
               dataSource={projectList}
-              renderItem={item => (
-                <List.Item key={item.id}>
+              renderItem={(item, index) => (
+                <List.Item key={index}>
                   <Card
                     bodyStyle={{ paddingLeft: '15px' }}
                     cover={

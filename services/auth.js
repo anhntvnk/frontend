@@ -11,6 +11,9 @@ export const isLoggedIn = () => !!getToken();
 export const removeUserSession = () => {
   sessionStorage.removeItem('token');
   sessionStorage.removeItem('userId');
+  sessionStorage.removeItem('packageOrder');
+  localStorage.removeItem('user');
+  localStorage.removeItem('lang');
 };
 
 // set the token and user from the session storage

@@ -45,12 +45,12 @@ const mappingProject = response => {
   const listProject =
     followedProjects.length > 0
       ? _concat(
-          followedProjects,
-          _filter(
-            projectShow,
-            item => !_includes(getIdFollowedProjects, item.id),
-          ),
-        )
+        followedProjects,
+        _filter(
+          projectShow,
+          item => !_includes(getIdFollowedProjects, item.id),
+        ),
+      )
       : projectAvaiable;
 
   const result = listProject.map(project =>
@@ -102,9 +102,6 @@ const projectReducer = (state = initialState, action) =>
         break;
       case UN_FOLLOW_SUCCESS:
         draft.project = unFollowProject(state.project, response.id);
-        draft.followedProjects = state.followedProjects.filter(
-          followedProjects => followedProjects.id !== response.id,
-        );
         break;
       case LOADING:
         draft.loading = action.isLoading;

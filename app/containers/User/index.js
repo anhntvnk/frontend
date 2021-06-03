@@ -317,7 +317,7 @@ const CardStatus = styled.div`
 User.propTypes = {
   onLoadUserProfile: PropTypes.func,
   history: PropTypes.object,
-  userProfile: PropTypes.object,
+  userProfile: PropTypes.arrayOf,
 };
 
 const mapStateToProps = createStructuredSelector({

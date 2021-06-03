@@ -18,9 +18,13 @@ import API from '../../constants/apis';
 import { getToken, getUserId } from '../../../services/auth';
 
 export function* getProjectsAvaiable() {
-  // Select username from store
+  const user = JSON.parse(localStorage.getItem('user'));
+  let filter = `filter[where][user_id]=${getUserId()}`;
 
-  const filter = `filter[where][user_id]=${getUserId()}`;
+  if (user.team_id) {
+    filter = `filter[where][team_id]=${user.team_id}`;
+  }
+  
   const userUrl = `${API.BASE_URL}/user/${getUserId()}?access_token=${getToken()}`;
   const followedProjectsURL = `${API.BASE_URL}/FollowedProjects?access_token=${getToken()}&${filter}`;
 
@@ -45,7 +49,6 @@ export function* getProjectsAvaiable() {
 
 export function* followProjects(actionData) {
   const { data } = actionData;
-  // Select username from store
   const requestURL = `${API.BASE_URL}/FollowedProjects`;
 
   try {

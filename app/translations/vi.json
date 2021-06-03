@@ -251,6 +251,7 @@
   "myp.containers.Company.add_new.emailAdr": "Địa chỉ Email",
   "myp.containers.Company.add_new.note": "Ghi chú cá nhân",
   "myp.containers.Company.add_new.btn": "Đăng công ty",
+  "myp.containers.Company.add_new.btnBack": "Quay lại",
   "myp.containers.User.my_profile.title": "Thông tin cá nhân",
   "myp.containers.User.my_profile.btnBack": "Quay lại",
   "myp.containers.User.my_profile.id": "Mã NV:",
@@ -306,6 +307,6 @@
   "myp.containers.LocaleToggle.en": "English",
   "myp.constants.HomePage.reportTitle": "Báo cáo các dự án trong quá trình",
   "myp.constants.HomePage.goBack": "Quay lại",
-  "myp.constants.HomePage.project.follow.count": "Giá trị dự án đang theo dõi triệu USD",
-  "myp.constants.HomePage.project.follow": "Số lượng dự án đang theo dõi"
+  "myp.constants.HomePage.project.follow": "Giá trị dự án đang theo dõi triệu USD",
+  "myp.constants.HomePage.project.follow.count": "Số lượng dự án đang theo dõi"
 }

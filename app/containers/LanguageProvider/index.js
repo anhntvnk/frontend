@@ -20,6 +20,8 @@ const key = 'language';
 
 export function LanguageProvider(props) {
   useInjectReducer({ key, reducer });
+
+  localStorage.setItem('lang', props.locale);
   return (
     <IntlProvider
       locale={props.locale}

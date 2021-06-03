@@ -93,4 +93,8 @@ export default defineMessages({
     id: `${scope}.add_new.btn`,
     defaultMessage: 'Đăng công ty',
   },
+  myCompanyBtnBack: {
+    id: `${scope}.add_new.btnBack`,
+    defaultMessage: 'Quay lại',
+  },
 });

@@ -3,7 +3,7 @@
  */
 
 import { call, put, takeLatest } from 'redux-saga/effects';
-import request, { fetchAxios } from 'utils/request';
+import request from 'utils/request';
 import API from '../../constants/apis';
 import { getNotesSuccess, getNotesError, updateNotesErrors } from './actions';
 import { GET_NOTES, UPDATE_NOTES } from './constants';
@@ -28,15 +28,34 @@ export function* getNotesSaga() {
 
 export function* updateNotes(action) {
   const { data } = action;
-  const url = `${API.BASE_URL}/user/${getUserId()}?access_token=${getToken()}`;
+  const url = `${API.BASE_URL}/user/${getUserId()}/update`;
+
+  let params = '';
+  const keys = Object.keys(data);
+  // eslint-disable-next-line no-plusplus
+  for (let index = 0; index < keys.length; index++) {
+    const k = keys[index];
+    if (k !== 'id') {
+      if (params.length > 0) {
+        params += '&';
+      }
+      const value = data[k];
+      params += `${k}=${
+        typeof value === 'object' ? JSON.stringify(value) : value
+      }`;
+    }
+  }
+
+  const httpHeaders = {
+    'Content-Type': 'application/x-www-form-urlencoded',
+    Accept: 'application/json',
+  };
 
   try {
-    const response = yield call(fetchAxios, {
-      method: 'put',
-      url,
-      headers: { 'Content-Type': 'application/json' },
-      responseType: 'json',
-      data,
+    const response = yield call(fetch, url, {
+      method: 'post',
+      headers: new Headers(httpHeaders),
+      body: params,
     });
 
     if (response) {

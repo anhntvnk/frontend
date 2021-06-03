@@ -17,7 +17,6 @@ import {
   omit as _omit,
   clone as _clone,
   has as _has,
-  isEmpty as _isEmpty,
 } from 'lodash';
 import { createStructuredSelector } from 'reselect';
 import { FormattedMessage } from 'react-intl';
@@ -30,13 +29,8 @@ import List from 'components/List';
 import AdvancedSearchForm from 'components/AdvancedSearchForm';
 import ROUTE from '../../constants/routes';
 import { ENUMS } from '../../constants';
-import { getUserId } from '../../../services/auth';
 import { loadProjects, changeFollow, unFollow } from './actions';
-import {
-  makeSelectProjects,
-  makeSelectLoading,
-  makeSelectFollowedProjects,
-} from './selectors';
+import { makeSelectProjects, makeSelectLoading } from './selectors';
 import { cleanText } from './utils';
 import reducer from './reducer';
 import saga from './saga';
@@ -45,12 +39,12 @@ import './styles.less';
 import messages from './messages';
 
 const key = 'projects';
+const MY_PROJECT_FOLLOW = 'project-follow';
 
 export function Projects({
   history,
   location,
   project,
-  followedProjects,
   loading,
   onFetchProject,
   onFollowProject,
@@ -61,10 +55,10 @@ export function Projects({
     history.replace({ ...history.location, state: undefined });
   }
 
-  const [projectList, setProjectList] = useState(false);
+  const [projectList, setProjectList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [fillter, setFilter] = useState('');
-  const [defaultProject, setDefaultProject] = useState([]);
+
   const [projectType, setProjectType] = useState(
     location.search.replace(/(^\/|\/$)/g, '').split('?')[1],
   );
@@ -73,9 +67,7 @@ export function Projects({
   useInjectReducer({ key, reducer });
 
   useEffect(() => {
-    if (_isEmpty(followedProjects) && _isEmpty(project)) {
-      onFetchProject();
-    }
+    onFetchProject();
   }, []);
 
   useEffect(() => {
@@ -89,22 +81,22 @@ export function Projects({
   }, [project]);
 
   useEffect(() => {
-    setDefaultProject(
-      projectType === 'project-follow' ? followedProjects : project,
-    );
+    const dataChange =
+      projectType === MY_PROJECT_FOLLOW ? getProjectFollows(project) : project;
+    setProjectList(dataChange);
   }, [projectType]);
+
+  const getProjectFollows = projects => projects.filter(p => p.is_follow);
 
   const onFollow = (isFollow, projectFl) => {
     if (isFollow) {
+      const user = JSON.parse(localStorage.getItem('user'));
       const data = _omit(_clone(projectFl), ['idParentProjects', 'id']);
-      data.user_id = getUserId();
-      data.team_id = _get(projectFl, 'user.team_id', 0);
+      data.user_id = user.id;
+      data.team_id = user.team_id || 0;
       data.parent_project_id = projectFl.id;
       data.last_modified = moment().format();
-      data.status = ENUMS.STATE.SANG_LOC;
       data.is_follow = 1;
-      data.status_code = 1;
-      // call api add follow project
       onFollowProject(data);
     } else {
       // eslint-disable-next-line no-lonely-if
@@ -240,7 +232,7 @@ export function Projects({
   ];
 
   const listProps = {
-    dataSource: projectList || defaultProject,
+    dataSource: projectList,
     columns,
     loading: loading || isLoading,
   };
@@ -269,8 +261,12 @@ export function Projects({
 
     const listData = [];
 
-    for (let i = 0; i < project.length; i += 1) {
-      const item = project[i];
+    // eslint-disable-next-line prettier/prettier
+    const dataFilter =
+      projectType === MY_PROJECT_FOLLOW ? getProjectFollows(project) : project;
+
+    for (let i = 0; i < dataFilter.length; i += 1) {
+      const item = dataFilter[i];
 
       let addToList = true;
       const owner = item.owner ? cleanText(item.owner) : '';
@@ -397,12 +393,7 @@ export function Projects({
 
   const changeProjects = type => {
     setIsLoading(true);
-    setProjectType(type === 1 ? 'project-follow' : '');
-    // if (type === 1) {
-    //   setProjectList(followedProjects);
-    // } else {
-    //   setProjectList(project);
-    // }
+    setProjectType(type === 1 ? MY_PROJECT_FOLLOW : '');
   };
 
   return (
@@ -427,7 +418,6 @@ Projects.propTypes = {
   onFollowProject: PropTypes.func,
   onUnFollowProject: PropTypes.func,
   project: PropTypes.array,
-  followedProjects: PropTypes.array,
   loading: PropTypes.bool,
   location: PropTypes.object,
   history: PropTypes.object,
@@ -435,7 +425,6 @@ Projects.propTypes = {
 
 const mapStateToProps = createStructuredSelector({
   project: makeSelectProjects(),
-  followedProjects: makeSelectFollowedProjects(),
   loading: makeSelectLoading(),
 });
 

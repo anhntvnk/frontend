@@ -20,7 +20,11 @@ const getDataResponse = (response) => {
 }
 
 export function* getDataDashboard() {
-  const filter = `filter[where][user_id]=${getUserId()}`;
+  const user = JSON.parse(localStorage.getItem('user'));
+  let filter = `filter[where][user_id]=${getUserId()}`;
+  if (user.team_id) {
+    filter = `filter[where][team_id]=${user.team_id}`;
+  }
   const countCompany = `${API.BASE_URL}/company/count?access_token=${getToken()}`;
   const countCompanyFollowed = `${API.BASE_URL}/user/${getUserId()}/companies/count?access_token=${getToken()}`;
   const countProjectsFollowed = `${API.BASE_URL}/FollowedProjects?access_token=${getToken}&${filter}`;
@@ -38,8 +42,8 @@ export function* getDataDashboard() {
         axios.spread((...responses) => ({ dashboard: {
           countCompany: getPackageOrder() !== PACKAGE_ORDER ? getDataResponse(responses[0]).count : 0 ,
           countCompanyFollowed: getDataResponse(responses[1]).count,
-          countProjectsFollowed: getDataResponse(responses[2]).length,
-          countProject: getDataResponse(responses[3]).length,
+          countProjectsFollowed: [...new Map(getDataResponse(responses[2]).map(item => [item.name, item])).values()].length,
+          countProject: [...new Map(getDataResponse(responses[3]).map(item => [item.name, item])).values()].length,
         }})),
       );
 

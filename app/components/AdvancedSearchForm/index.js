@@ -145,7 +145,6 @@ const AdvancedSearchForm = ({
             label={<FormattedMessage {...messages.myFormCity} />}
           >
             <Select
-              autoComplete={false}
               showSearch
               placeholder={intl.formatMessage({
                 ...messages.myFormSelectCity,
@@ -176,7 +175,6 @@ const AdvancedSearchForm = ({
           >
             <Select
               showSearch
-              autoComplete={false}
               placeholder={intl.formatMessage({
                 ...messages.myFormSelectType,
               })}
@@ -207,7 +205,6 @@ const AdvancedSearchForm = ({
           >
             <Select
               showSearch
-              autoComplete={false}
               placeholder={intl.formatMessage({
                 ...messages.myFormPeriod,
               })}
@@ -232,7 +229,6 @@ const AdvancedSearchForm = ({
           >
             <Select
               onChange={onChangeProject}
-              autoComplete={false}
               defaultValue={projectType === 'project-follow' ? 1 : 0}
               optionFilterProp="children"
               filterOption={(input, option) =>

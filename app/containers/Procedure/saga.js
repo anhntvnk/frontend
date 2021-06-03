@@ -15,7 +15,6 @@ import API from '../../constants/apis';
 export function* changeStateProcedure(actionData) {
   const { data } = actionData;
 
-  // Select username from store
   const requestURL = `${API.BASE_URL}/FollowedProjects/${data.id}`;
 
   try {

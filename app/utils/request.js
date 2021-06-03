@@ -46,13 +46,25 @@ export function resData(response) {
  * @return {object}           The response data
  */
 export default function request(url, options) {
-  return fetch(url, options)
+  const lang = localStorage.getItem('lang');
+  const headers = new Headers({
+    ...options,
+    lang,
+  });
+
+  return fetch(url, {
+    method: 'GET',
+    headers,
+  })
     .then(checkStatus)
     .then(parseJSON);
 }
 
 export async function fetchAxios(options) {
-  let res = await axios(options);
+  const lang = localStorage.getItem('lang');
+  const headers = { ...options, headers: { ...options.headers, lang } };
+
+  let res = await axios(headers);
 
   res = checkStatus(res);
   res = resData(res);

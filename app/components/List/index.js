@@ -17,7 +17,7 @@ class List extends PureComponent {
         scroll={{ x: 900 }}
         locale={{ emptyText: 'Không tìm thấy dữ liệu !' }}
         simple
-        rowKey={record => record.id}
+        rowKey={record => `${record.id}${record.cost}`}
       />
     );
   }

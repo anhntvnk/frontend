@@ -14,7 +14,7 @@ const SearchCompany = ({
   onSearchProjects,
   onResetFields,
   onChangeProject,
-  copmpanyType,
+  companyType,
   intl,
 }) => {
   const [form] = Form.useForm();
@@ -84,7 +84,7 @@ const SearchCompany = ({
           >
             <Select
               onChange={onChangeProject}
-              defaultValue={copmpanyType === 'company-follow' ? 1 : 0}
+              defaultValue={companyType === 'company-follow' ? 1 : 0}
               optionFilterProp="children"
               filterOption={(input, option) =>
                 option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
@@ -131,7 +131,7 @@ SearchCompany.propTypes = {
   onSearchProjects: PropTypes.func,
   onChangeProject: PropTypes.func,
   onResetFields: PropTypes.func,
-  copmpanyType: PropTypes.string,
+  companyType: PropTypes.string,
   intl: intlShape.isRequired,
 };
 

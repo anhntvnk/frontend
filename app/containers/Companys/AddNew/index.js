@@ -24,7 +24,11 @@ import {
   Space,
 } from 'antd';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
-import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
+import {
+  MinusCircleOutlined,
+  PlusOutlined,
+  ArrowLeftOutlined,
+} from '@ant-design/icons';
 import { createStructuredSelector } from 'reselect';
 import { useInjectReducer } from 'utils/injectReducer';
 import { useInjectSaga } from 'utils/injectSaga';
@@ -99,11 +103,19 @@ export function AddCompany({
         <title>Thêm mới công ty</title>
         <meta name="description" content="Thêm mới công ty" />
       </Helmet>
-      <CenteredSection>
-        <H2 className="title">
+      <CenteredSectionWithBack>
+        <Button
+          type="primary"
+          shape="round"
+          icon={<ArrowLeftOutlined />}
+          onClick={() => history.goBack()}
+        >
+          <FormattedMessage {...messages.myCompanyBtnBack} />
+        </Button>
+        <h1>
           <FormattedMessage {...messages.myCompanyAddNewTitle} />
-        </H2>
-      </CenteredSection>
+        </h1>
+      </CenteredSectionWithBack>
 
       <CompanyContainer>
         <Form
@@ -438,10 +450,30 @@ export function AddCompany({
 }
 
 const CompanyName = styled(Col)``;
-
 const CompanyContainer = styled(Col)`
   display: flex;
   justify-content: center;
+`;
+const CenteredSectionWithBack = styled.section`
+  text-align: center;
+  margin: 50px auto;
+  width: 65%;
+  text-transform: uppercase;
+  .ant-btn {
+    display: flex;
+    align-items: center;
+    float: left;
+    margin-top: 6px;
+    @media only screen and (max-width: 767.99px) {
+      margin-top: 0;
+    }
+  }
+
+  @media only screen and (max-width: 767.99px) {
+    padding: 10px;
+    font-size: 7px;
+    margin: 30px 0px;
+  }
 `;
 
 AddCompany.propTypes = {

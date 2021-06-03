@@ -251,6 +251,7 @@
   "myp.containers.Company.add_new.emailAdr": "Email address",
   "myp.containers.Company.add_new.note": "Note",
   "myp.containers.Company.add_new.btn": "Upload company",
+  "myp.containers.Company.add_new.btnBack": "Back",
   "myp.containers.User.my_profile.title": "Personal information",
   "myp.containers.User.my_profile.btnBack": "Back",
   "myp.containers.User.my_profile.id": "ID:",
@@ -309,6 +310,6 @@
   "myp.containers.LocaleToggle.en": "English",
   "myp.constants.HomePage.reportTitle": "Report projects in progress",
   "myp.constants.HomePage.goBack": "Back",
-  "myp.constants.HomePage.project.follow.count": "The project value is being monitored in millions of USD",
-  "myp.constants.HomePage.project.follow": "Number of projects being watched"
+  "myp.constants.HomePage.project.follow": "The project value is being monitored in millions of USD",
+  "myp.constants.HomePage.project.follow.count": "Number of projects being watched"
 }

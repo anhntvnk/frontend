@@ -175,6 +175,8 @@ export function Reports({ history, reports, onFetchReports, intl }) {
           'rgb(51, 102, 204)',
         ]),
       );
+
+      console.log(headerCount);
       const countStatMap = headerCount.concat(
         countStat.map(count => [
           _get(STATE_LIST, `[${count.status_code}].label`),
@@ -182,6 +184,8 @@ export function Reports({ history, reports, onFetchReports, intl }) {
           'rgb(51, 102, 204)',
         ]),
       );
+
+      console.log(countStatMap, 'countStatMap');
       setCostData({ costStat: costStatMap, countStat: countStatMap });
     }
   }, [reports]);
@@ -257,6 +261,7 @@ const NotesComponent = styled.div`
   dispay: block;
   max-width: 860px;
   margin: auto;
+  margin-bottom: 50px;
 `;
 
 Reports.propTypes = {
