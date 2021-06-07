@@ -172,6 +172,16 @@ class Header extends React.Component {
   };
 
   logoutAccount = history => {
+    axios
+      .create({
+        baseURL: API.BASE_URL,
+        timeout: 5000,
+        validateStatus(status) {
+          return (status >= 200 && status < 300) || status === 403; // default
+        },
+        headers: { 'Content-Type': 'application/json' },
+      })
+      .post(`${API.BASE_URL}/user/logout?access_token=${getToken()}`);
     removeUserSession();
     history.push('/');
   };
