@@ -58,7 +58,10 @@ export function* fetchLogin(actionData) {
       yield put(loginFormError('Đã có lỗi xảy ra !'));
     }
   } catch (err) {
-    yield put(loginFormError(err));
+    const errors = err.response;
+    const errorCode = _get(errors, 'data.message');
+
+    yield put(loginFormError(errorCode));
   }
 }
 

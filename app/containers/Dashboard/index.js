@@ -22,7 +22,6 @@ import { ROUTE } from '../../constants';
 import { loadDashboard } from './actions';
 import { makeSelectDashboard } from './selectors';
 import messages from './messages';
-// import { Page } from 'components';
 import NumberCard from './numberCard';
 import reducer from './reducer';
 import saga from './saga';
@@ -129,8 +128,8 @@ export function Dashboard({ dashboards, onFetchDashboard }) {
   return (
     <div className="dashboard">
       <Helmet>
-        <title>Danh Sách Dự Án</title>
-        <meta name="description" content="Danh sách dự án" />
+        <title>Dashboard - My Project</title>
+        <meta name="description" content="Dashboard - My Project" />
       </Helmet>
       <div className="dashboard-welcome">
         <Row gutter={24}>{numberCards}</Row>

@@ -3,26 +3,26 @@ import PropTypes from 'prop-types';
 import { Row, Col, Form, Input, Button, Space } from 'antd';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
+import styled from 'styled-components';
 import messages from './messages';
 
+const { TextArea } = Input;
+
 function DynamicForm({ data, intl }) {
+  console.log(data, 'data');
   const onFinish = values => {
     console.log('Received values of form:', values);
   };
 
   return (
     <Row className="pd-bottom">
-      <Col lg={16} xs={22} className="dynamic-form">
+      <Col lg={12} xs={22} className="dynamic-form">
         <Form name="dynamic_form" onFinish={onFinish} autoComplete="off">
           <Form.List name="note">
             {(fields, { add, remove }) => (
               <>
                 {fields.map(field => (
-                  <Space
-                    key={field.key}
-                    style={{ display: 'flex', marginBottom: 8 }}
-                    align="baseline"
-                  >
+                  <div key={field.key} style={{ marginBottom: 8 }}>
                     <Form.Item
                       {...field}
                       name={[field.name, 'title']}
@@ -36,7 +36,7 @@ function DynamicForm({ data, intl }) {
                         },
                       ]}
                     >
-                      <Input
+                      <StyledInput
                         placeholder={intl.formatMessage({
                           ...messages.myNoteInputTitle,
                         })}
@@ -55,14 +55,15 @@ function DynamicForm({ data, intl }) {
                         },
                       ]}
                     >
-                      <Input
+                      <TextArea
                         placeholder={intl.formatMessage({
                           ...messages.myNoteInputContent,
                         })}
+                        autoSize={{ minRows: 2, maxRows: 6 }}
                       />
                     </Form.Item>
                     <MinusCircleOutlined onClick={() => remove(field.name)} />
-                  </Space>
+                  </div>
                 ))}
                 <Form.Item>
                   <Button
@@ -80,7 +81,7 @@ function DynamicForm({ data, intl }) {
           </Form.List>
           <Form.Item>
             <Button type="primary" htmlType="submit">
-              Submit
+              <FormattedMessage {...messages.myContactModalBtnOK} />
             </Button>
           </Form.Item>
         </Form>
@@ -101,5 +102,11 @@ DynamicForm.propTypes = {
   data: PropTypes.any,
   intl: intlShape.required,
 };
+
+const StyledInput = styled(Input)`
+  &::placeholder {
+    color: green;
+  }
+`;
 
 export default injectIntl(DynamicForm);

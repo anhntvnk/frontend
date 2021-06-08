@@ -1,6 +1,6 @@
 /* eslint-disable no-case-declarations */
 /*
- * CompanysReducer
+ * LoginReducer
  *
  * The reducer takes care of our data. Using actions, we can
  * update our application state. To add a new action,
@@ -28,7 +28,12 @@ const companyReducer = (state = initialState, action) =>
         draft.errorMessage = '';
         break;
       case LOGIN_FORM_ERROR:
-        draft.errorMessage = 'Đăng nhập không thành công!';
+        if (action.error === 'LOGIN_TO_MULTIPLE_DEVICE') {
+          draft.errorMessage = 'LOGIN_TO_MULTIPLE_DEVICE';
+        } else {
+          draft.errorMessage = 'LOGIN_FAILT';
+        }
+
         break;
       default:
         draft.user = initialState.user;

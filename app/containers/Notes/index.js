@@ -17,12 +17,12 @@ import moment from 'moment';
 import { createStructuredSelector } from 'reselect';
 import { useInjectReducer } from 'utils/injectReducer';
 import { useInjectSaga } from 'utils/injectSaga';
-import { Button, Modal, message } from 'antd';
+import { Button, Modal, Form, Input } from 'antd';
 import styled from 'styled-components';
 import {
-  makeSelectErrors,
+  // makeSelectErrors,
   makeSelectNotes,
-  makeSelectSuccess,
+  // makeSelectSuccess,
   makeSelectUserData,
 } from './selectors';
 import reducer from './reducer';
@@ -49,7 +49,10 @@ export function Notes({
   useInjectSaga({ key, saga });
 
   const [events, setEvents] = useState(notes);
+  const [noteOpenModal, setNoteOpenModal] = useState({});
   const [isDurty, setIsDurty] = useState(false);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [form] = Form.useForm();
   const user = JSON.parse(localStorage.getItem('user'));
 
   useEffect(() => {
@@ -61,6 +64,10 @@ export function Notes({
       setEvents(notes);
     }
   }, [notes]);
+
+  useEffect(() => {
+    form.setFieldsValue(noteOpenModal);
+  }, [form, noteOpenModal]);
 
   const handleSelect = ({ start, end }) => {
     // eslint-disable-next-line no-alert
@@ -74,6 +81,7 @@ export function Notes({
       const newEvents = [
         ...events,
         {
+          id: Math.random(),
           start,
           end,
           title,
@@ -86,14 +94,9 @@ export function Notes({
   };
 
   const openEvents = event => {
-    modalShowTitle(event);
+    setNoteOpenModal(event);
+    setIsModalVisible(true);
   };
-
-  function modalShowTitle(event) {
-    Modal.success({
-      content: event.title,
-    });
-  }
 
   const updateNote = () => {
     const newNotes = Object.assign(userData.custom.notes, events).map(note => ({
@@ -102,7 +105,7 @@ export function Notes({
       content: note.title,
     }));
 
-    // setEvents(Object.assign(userData.custom.notes, events));
+    setEvents(Object.assign(userData.custom.notes, events));
 
     const newData = {
       ...userData,
@@ -113,7 +116,54 @@ export function Notes({
       },
     };
 
+    setIsDurty(false);
     onUpdateNotes(newData);
+  };
+
+  const handleOk = () => {
+    form
+      .validateFields()
+      .then(newTitle => {
+        const newData = events.map(e => {
+          if (noteOpenModal.id === e.id) {
+            return { ...e, title: newTitle.title };
+          }
+
+          return e;
+        });
+
+        const newNotes = Object.assign(userData.custom.notes, newData).map(
+          note => ({
+            key: Math.random(),
+            date: moment(note.start).toISOString(),
+            content: note.title,
+          }),
+        );
+
+        const notesUpdate = {
+          ...userData,
+          password: user.password,
+          custom: {
+            fcmTokens: [],
+            notes: newNotes,
+          },
+        };
+
+        form.resetFields();
+        setIsDurty(false);
+        setEvents(Object.assign(userData.custom.notes, newData));
+        onUpdateNotes(notesUpdate);
+      })
+      .catch(info => {
+        console.log('Đã có lỗi xảy ra!', info);
+      });
+    setIsModalVisible(false);
+    setNoteOpenModal('');
+  };
+
+  const handleCancel = () => {
+    setIsModalVisible(false);
+    setNoteOpenModal('');
   };
 
   return (
@@ -151,6 +201,29 @@ export function Notes({
       <StyledButton type="primary" onClick={updateNote} disabled={!isDurty}>
         <FormattedMessage {...messages.myNotebtnSave} />
       </StyledButton>
+
+      <Modal
+        title={intl.formatMessage({
+          ...messages.myNotePrompt,
+        })}
+        maskClosable={false}
+        visible={isModalVisible}
+        onOk={handleOk}
+        onCancel={handleCancel}
+      >
+        <Form
+          form={form}
+          initialValues={{
+            title: noteOpenModal.title,
+          }}
+          layout="vertical"
+          name="form_in_modal"
+        >
+          <Form.Item name="title">
+            <Input />
+          </Form.Item>
+        </Form>
+      </Modal>
     </NotesComponent>
   );
 }

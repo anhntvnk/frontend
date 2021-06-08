@@ -256,12 +256,12 @@ export function ProjectDetails({
             >
               <DynamicForm data={data} />
             </TabPane>
-            <TabPane
+            {/* <TabPane
               tab={<FormattedMessage {...messages.myProjDetailAssign} />}
               key="4"
             >
               Đang cập nhật...
-            </TabPane>
+            </TabPane> */}
           </Tabs>
         </Col>
       </Row>

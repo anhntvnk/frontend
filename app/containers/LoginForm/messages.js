@@ -28,4 +28,17 @@ export default defineMessages({
     id: `${scope}.my_form.signup`,
     defaultMessage: 'Chưa là thành viên? Đăng ký',
   },
+  myFormLoginFail: {
+    id: `${scope}.my_form.login.fail`,
+    defaultMessage: 'Đăng nhập không thành công!',
+  },
+  myFormLoginMultipleDevice: {
+    id: `${scope}.my_form.login.multiple.device`,
+    defaultMessage: 'Bạn đang đăng nhập ở một thiết bị khác!',
+  },
+  myFormAccountExpire: {
+    id: `${scope}.my_form.account.expire`,
+    defaultMessage:
+      'Tài khoản đã hết hạn sử dụng đề nghị liên hệ hotline: 0927161161 để sử dụng tiếp dịch vụ!',
+  },
 });

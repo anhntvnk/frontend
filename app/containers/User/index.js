@@ -6,7 +6,7 @@
  */
 
 import React, { useEffect } from 'react';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import { get as _get } from 'lodash';
 import moment from 'moment';
 import PropTypes from 'prop-types';
@@ -75,19 +75,23 @@ export function User({ history, userProfile, onLoadUserProfile }) {
                   description={
                     <div>
                       <p>
-                        <FormattedMessage {...messages.myProfileId} />{' '}
+                        <FormattedMessage {...messages.myProfileId} />
+                        &nbsp;
                         <b>MYP{_get(userProfile, 'id')}</b>
                       </p>
                       <p>
-                        <FormattedMessage {...messages.myProfileName} />{' '}
+                        <FormattedMessage {...messages.myProfileName} />
+                        &nbsp;
                         <b>{_get(userProfile, 'full_name')}</b>
                       </p>
                       <p>
-                        <FormattedMessage {...messages.myProfilePosition} />{' '}
+                        <FormattedMessage {...messages.myProfilePosition} />
+                        &nbsp;
                         <b>{_get(userProfile, 'position')}</b>
                       </p>
                       <p>
-                        <FormattedMessage {...messages.myProfileSalary} />{' '}
+                        <FormattedMessage {...messages.myProfileSalary} />
+                        &nbsp;
                         <b>{moment().format('D/M/YYYY')}</b>
                       </p>
                     </div>
@@ -123,7 +127,7 @@ export function User({ history, userProfile, onLoadUserProfile }) {
                           <FormattedMessage
                             {...messages.myProfileAddressOffice}
                           />
-                        </b>{' '}
+                        </b>
                         {_get(userProfile, 'address_office')}
                       </Col>
                     </List.Item>
@@ -133,13 +137,13 @@ export function User({ history, userProfile, onLoadUserProfile }) {
                           <FormattedMessage
                             {...messages.myProfileAddressHome}
                           />
-                        </b>{' '}
+                        </b>
                         {_get(userProfile, 'address')}
                       </Col>
                       <Col lg={12}>
                         <b>
                           <FormattedMessage {...messages.myProfileCity} />
-                        </b>{' '}
+                        </b>
                         {_get(userProfile, 'city')}
                       </Col>
                     </List.Item>
@@ -147,13 +151,15 @@ export function User({ history, userProfile, onLoadUserProfile }) {
                       <Col lg={12}>
                         <b>
                           <FormattedMessage {...messages.myProfiletCompany} />
-                        </b>{' '}
+                          &nbsp;
+                        </b>
                         {_get(userProfile, 'company')}
                       </Col>
                       <Col lg={12}>
                         <b>
-                          <FormattedMessage {...messages.myProfileNote} />:
-                        </b>{' '}
+                          <FormattedMessage {...messages.myProfileNote} />
+                          :&nbsp;
+                        </b>
                         {_get(userProfile, 'note')}
                       </Col>
                     </List.Item>
@@ -161,7 +167,8 @@ export function User({ history, userProfile, onLoadUserProfile }) {
                       <Col lg={12} style={{ textTransform: 'capitalize' }}>
                         <b>
                           <FormattedMessage {...messages.myProfileService} />
-                        </b>{' '}
+                          &nbsp;
+                        </b>
                         {_get(userProfile, 'package')}
                       </Col>
                       <Col lg={12} style={{ textTransform: 'capitalize' }}>
@@ -169,7 +176,8 @@ export function User({ history, userProfile, onLoadUserProfile }) {
                           <FormattedMessage
                             {...messages.myProfiletitleEndDate}
                           />
-                        </b>{' '}
+                          &nbsp;
+                        </b>
                         {moment(_get(userProfile, 'expireDate')).format(
                           'D/M/YYYY',
                         )}
@@ -185,7 +193,12 @@ export function User({ history, userProfile, onLoadUserProfile }) {
                 <FormattedMessage {...messages.myProfileUpdating} />
               </TabPane>
               <TabPane
-                tab={<FormattedMessage {...messages.myProfileNote} />}
+                tab={
+                  <Link to="/notes">
+                    <FormattedMessage {...messages.myProfileNote} />
+                    &nbsp;
+                  </Link>
+                }
                 key="3"
               >
                 <FormattedMessage {...messages.myProfileUpdating} />

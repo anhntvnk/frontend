@@ -50,8 +50,7 @@ export function LoginForm({ history, intl, onLoginForm, user, errorMessage }) {
         if (!packageExpire) {
           setValidateStatus({ validateStatus: 'error' });
           setFormItemLayout({
-            help:
-              'Tài khoản đã hết hạn sử dụng đề nghị liên hệ hotline: 0927161161 để sử dụng tiếp dịch vụ!',
+            help: intl.formatMessage({ ...messages.myFormAccountExpire }),
             validateStatus: 'error',
           });
           return;
@@ -64,9 +63,15 @@ export function LoginForm({ history, intl, onLoginForm, user, errorMessage }) {
     }
 
     if (errorMessage) {
+      let messageError = intl.formatMessage({ ...messages.myFormLoginFail });
+      if (errorMessage === 'LOGIN_TO_MULTIPLE_DEVICE') {
+        messageError = intl.formatMessage({
+          ...messages.myFormLoginMultipleDevice,
+        });
+      }
       setValidateStatus({ validateStatus: 'error' });
       setFormItemLayout({
-        help: 'Đăng nhập không thành công!',
+        help: messageError,
         validateStatus: 'error',
       });
     }

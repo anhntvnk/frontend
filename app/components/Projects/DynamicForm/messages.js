@@ -28,4 +28,8 @@ export default defineMessages({
     id: `${scope}.note.add`,
     defaultMessage: 'Thêm ghi chú',
   },
+  myContactModalBtnOK: {
+    id: `myp.containers.Contact.contact.modalBtnOK`,
+    defaultMessage: 'Lưu lại',
+  },
 });
