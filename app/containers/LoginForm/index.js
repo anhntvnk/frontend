@@ -84,7 +84,7 @@ export function LoginForm({ history, intl, onLoginForm, user, errorMessage }) {
 
   const onFinish = async values => {
     const { email, password } = values;
-    onLoginForm({ email, password });
+    onLoginForm({ email, password, device_id: 'system' });
   };
 
   return (

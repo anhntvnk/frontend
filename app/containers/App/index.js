@@ -1,3 +1,4 @@
+/* eslint-disable no-return-assign */
 /**
  *
  * App
@@ -32,9 +33,12 @@ import Notes from 'containers/Notes/Loadable';
 import Reports from 'containers/Reports/Loadable';
 // import NotFoundPage from 'containers/NotFoundPage/Loadable';
 
+import axios from 'axios';
+import API from 'constants/apis';
 import { PrivateLayout, PublicLayout } from '../../components/Layouts';
 import GlobalStyle from '../../global-styles';
 import { ROUTE } from '../../constants';
+import { getToken } from '../../../services/auth';
 
 const AppWrapper = styled.div`
   max-width: 100%;
@@ -45,109 +49,126 @@ const AppWrapper = styled.div`
   scroll-behavior: smooth;
 `;
 
-const App = () => (
-  <AppWrapper>
-    <Helmet titleTemplate="%s - My Project" defaultTitle="My Project">
-      <meta name="description" content="My Project application" />
-    </Helmet>
-    <Switch>
-      <PublicLayout exact path={ROUTE.LOGIN} component={LoginForm} />
-      <PublicLayout exact path={ROUTE.REGISTER} component={Register} />
-      <PublicLayout
-        exact
-        path={ROUTE.CHANGE_PASSWORD}
-        component={ChangePassword}
-      />
-      <PublicLayout exact path={ROUTE.HOMEPAGE} component={HomePage} />
-      <PrivateLayout exact path={ROUTE.PACKAGES} component={Packages} />
-      <PrivateLayout exact path={ROUTE.PROJECT} component={Projects} />
-      <PrivateLayout exact path={ROUTE.COMPANY} component={Companys} />
-      <PrivateLayout exact path={ROUTE.DASHBOARD} component={Dashboard} />
-      <PrivateLayout exact path={ROUTE.USER} component={User} />
-      <PrivateLayout exact path={ROUTE.KPI_DAY} component={KpiDay} />
-      <PrivateLayout exact path={ROUTE.KPI_SETTINGS} component={Settings} />
-      <PrivateLayout exact path={ROUTE.KPI_MONTH} component={KpiMonth} />
-      <PrivateLayout exact path={ROUTE.NOTES} component={Notes} />
-      <PrivateLayout exact path={ROUTE.REPORTS} component={Reports} />
-      <PrivateLayout
-        exact
-        path={ROUTE.COMPANY}
-        getComponent={({ props: { location } }) =>
-          _get(location, 'state.data') ? (
-            <Companys {...location.state} />
-          ) : (
-            <Redirect strict to={ROUTE.PROJECT} />
-          )
-        }
-      />
-      <PrivateLayout
-        exact
-        path={ROUTE.PROCEDURE}
-        getComponent={({ props: { location } }) =>
-          _get(location, 'state.data') ? (
-            <Procedure {...location.state} />
-          ) : (
-            <Redirect strict to={ROUTE.PROJECT} />
-          )
-        }
-      />
-      <PrivateLayout
-        exact
-        path={ROUTE.PROJECT_DETAILS}
-        getComponent={({ props: { location } }) =>
-          _get(location, 'state.data') ? (
-            <ProjectDetails {...location.state} />
-          ) : (
-            <Redirect strict to={ROUTE.PROJECT} />
-          )
-        }
-      />
-      <PrivateLayout
-        exact
-        path={ROUTE.COMPANY_DETAILS}
-        getComponent={({ props: { location } }) =>
-          _get(location, 'state.data') ? (
-            <CompanyDetails {...location.state} />
-          ) : (
-            <Redirect strict to={ROUTE.COMPANY} />
-          )
-        }
-      />
-      {/* <PrivateLayout
-        exact
-        path={ROUTE.KPI_DAY}
-        getComponent={({ props: { location } }) =>
-          _get(location, 'state.data') ? (
-            <KpiDay {...location.state} />
-          ) : (
-            <Redirect strict to={ROUTE.HOMEPAGE} />
-          )
-        }
-      />
-      <PrivateLayout
-        exact
-        path={ROUTE.KPI_MONTH}
-        getComponent={({ props: { location } }) =>
-          _get(location, 'state.data') ? (
-            <KpiMonth {...location.state} />
-          ) : (
-            <Redirect strict to={ROUTE.HOMEPAGE} />
-          )
-        }
-      /> */}
-      <PrivateLayout
-        exact
-        path={ROUTE.PROJECT_ADDNEW}
-        getComponent={() => <ProjectAddNew />}
-      />
-      <PrivateLayout
-        exact
-        path={ROUTE.COMPANY_ADDNEW}
-        getComponent={() => <CompanyAddNew />}
-      />
-    </Switch>
-    <GlobalStyle />
-  </AppWrapper>
-);
+const App = () => {
+  React.useEffect(() => () => {
+    window.addEventListener('beforeunload', () => {
+      axios
+        .create({
+          baseURL: API.BASE_URL,
+          timeout: 5000,
+          validateStatus(status) {
+            return (status >= 200 && status < 300) || status === 403; // default
+          },
+          headers: { 'Content-Type': 'application/json' },
+        })
+        .post(`${API.BASE_URL}/user/logout?access_token=${getToken()}`);
+    });
+  });
+
+  return (
+    <AppWrapper>
+      <Helmet titleTemplate="%s - My Project" defaultTitle="My Project">
+        <meta name="description" content="My Project application" />
+      </Helmet>
+      <Switch>
+        <PublicLayout exact path={ROUTE.LOGIN} component={LoginForm} />
+        <PublicLayout exact path={ROUTE.REGISTER} component={Register} />
+        <PublicLayout
+          exact
+          path={ROUTE.CHANGE_PASSWORD}
+          component={ChangePassword}
+        />
+        <PublicLayout exact path={ROUTE.HOMEPAGE} component={HomePage} />
+        <PrivateLayout exact path={ROUTE.PACKAGES} component={Packages} />
+        <PrivateLayout exact path={ROUTE.PROJECT} component={Projects} />
+        <PrivateLayout exact path={ROUTE.COMPANY} component={Companys} />
+        <PrivateLayout exact path={ROUTE.DASHBOARD} component={Dashboard} />
+        <PrivateLayout exact path={ROUTE.USER} component={User} />
+        <PrivateLayout exact path={ROUTE.KPI_DAY} component={KpiDay} />
+        <PrivateLayout exact path={ROUTE.KPI_SETTINGS} component={Settings} />
+        <PrivateLayout exact path={ROUTE.KPI_MONTH} component={KpiMonth} />
+        <PrivateLayout exact path={ROUTE.NOTES} component={Notes} />
+        <PrivateLayout exact path={ROUTE.REPORTS} component={Reports} />
+        <PrivateLayout
+          exact
+          path={ROUTE.COMPANY}
+          getComponent={({ props: { location } }) =>
+            _get(location, 'state.data') ? (
+              <Companys {...location.state} />
+            ) : (
+              <Redirect strict to={ROUTE.PROJECT} />
+            )
+          }
+        />
+        <PrivateLayout
+          exact
+          path={ROUTE.PROCEDURE}
+          getComponent={({ props: { location } }) =>
+            _get(location, 'state.data') ? (
+              <Procedure {...location.state} />
+            ) : (
+              <Redirect strict to={ROUTE.PROJECT} />
+            )
+          }
+        />
+        <PrivateLayout
+          exact
+          path={ROUTE.PROJECT_DETAILS}
+          getComponent={({ props: { location } }) =>
+            _get(location, 'state.data') ? (
+              <ProjectDetails {...location.state} />
+            ) : (
+              <Redirect strict to={ROUTE.PROJECT} />
+            )
+          }
+        />
+        <PrivateLayout
+          exact
+          path={ROUTE.COMPANY_DETAILS}
+          getComponent={({ props: { location } }) =>
+            _get(location, 'state.data') ? (
+              <CompanyDetails {...location.state} />
+            ) : (
+              <Redirect strict to={ROUTE.COMPANY} />
+            )
+          }
+        />
+        {/* <PrivateLayout
+          exact
+          path={ROUTE.KPI_DAY}
+          getComponent={({ props: { location } }) =>
+            _get(location, 'state.data') ? (
+              <KpiDay {...location.state} />
+            ) : (
+              <Redirect strict to={ROUTE.HOMEPAGE} />
+            )
+          }
+        />
+        <PrivateLayout
+          exact
+          path={ROUTE.KPI_MONTH}
+          getComponent={({ props: { location } }) =>
+            _get(location, 'state.data') ? (
+              <KpiMonth {...location.state} />
+            ) : (
+              <Redirect strict to={ROUTE.HOMEPAGE} />
+            )
+          }
+        /> */}
+        <PrivateLayout
+          exact
+          path={ROUTE.PROJECT_ADDNEW}
+          getComponent={() => <ProjectAddNew />}
+        />
+        <PrivateLayout
+          exact
+          path={ROUTE.COMPANY_ADDNEW}
+          getComponent={() => <CompanyAddNew />}
+        />
+      </Switch>
+      <GlobalStyle />
+    </AppWrapper>
+  );
+};
 
 export default withRouter(App);

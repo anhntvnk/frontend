@@ -158,7 +158,7 @@ export function Projects({
       title: <FormattedMessage {...messages.myProjPeriod} />,
       dataIndex: 'stage',
       key: 'stage',
-      width: 150,
+      width: 100,
       responsive: ['lg', 'md'],
     },
     {
@@ -172,7 +172,7 @@ export function Projects({
             color={task.color}
             style={{
               color: task.colorText,
-              width: '150px',
+              width: '100px',
               fontSize: '13px',
               textAlign: 'center',
             }}
@@ -198,6 +198,7 @@ export function Projects({
       title: <FormattedMessage {...messages.myProjFollow} />,
       dataIndex: 'id',
       key: 'follow',
+      width: 75,
       render: (id, record) => (
         <Link
           className="btn-editor"
