@@ -250,12 +250,14 @@ export function ProjectDetails({
             >
               <Contact data={data} setVisible={setVisible} />
             </TabPane>
-            <TabPane
-              tab={<FormattedMessage {...messages.myProjDetailNote} />}
-              key="3"
-            >
-              <DynamicForm data={data} />
-            </TabPane>
+            {data.is_follow && (
+              <TabPane
+                tab={<FormattedMessage {...messages.myProjDetailNote} />}
+                key="3"
+              >
+                <DynamicForm data={data} />
+              </TabPane>
+            )}
             {/* <TabPane
               tab={<FormattedMessage {...messages.myProjDetailAssign} />}
               key="4"

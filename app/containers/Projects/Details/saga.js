@@ -10,7 +10,7 @@ import API from '../../../constants/apis';
 import { ADD_PROJECT_CONTACT } from './constants';
 // import { getToken } from '../../../../services/auth';
 
-export function* addProjectContact(actionData) {
+export function* updateProject(actionData) {
   const { data } = actionData;
   const url = `${API.BASE_URL}/FollowedProjects/${data.id}`;
 
@@ -36,5 +36,5 @@ export default function* projectDetails() {
   // By using `takeLatest` only the result of the latest API call is applied.
   // It returns task descriptor (just like fork) so we can continue execution
   // It will be cancelled automatically on component unmount
-  yield takeLatest(ADD_PROJECT_CONTACT, addProjectContact);
+  yield takeLatest(ADD_PROJECT_CONTACT, updateProject);
 }

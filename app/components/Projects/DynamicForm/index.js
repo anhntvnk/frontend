@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Row, Col, Form, Input, Button, Space } from 'antd';
+import moment from 'moment';
+import { Row, Col, Form, Input, Button } from 'antd';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import styled from 'styled-components';
@@ -9,9 +10,20 @@ import messages from './messages';
 const { TextArea } = Input;
 
 function DynamicForm({ data, intl }) {
-  console.log(data, 'data');
   const onFinish = values => {
-    console.log('Received values of form:', values);
+    const newNote = values.note.map(v => ({
+      time: moment().format('YYYY-MM-DD HH:mm'),
+      ...v,
+    }));
+
+    const newData = {
+      ...data,
+      custom: {
+        note_data: [...data.custom.note_data, ...newNote],
+      },
+    };
+
+    console.log(newData, 'data');
   };
 
   return (
