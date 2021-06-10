@@ -1,124 +1,138 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-import { Row, Col, Form, Input, Button } from 'antd';
-import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
+import { EditOutlined } from '@ant-design/icons';
+import { Row, Col, Form, Button, List, Skeleton } from 'antd';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import styled from 'styled-components';
 import messages from './messages';
+import NotesModal from './NotesModal';
+import logo from '../../../assets/images/logo/my-project.png';
 
-const { TextArea } = Input;
+function DynamicForm({ data, addContactProject, setProjectDetails }) {
+  const [notes, setNotes] = useState([]);
+  const [initialValues, setInitialValues] = useState({});
+  const [visible, setVisible] = useState(false);
 
-function DynamicForm({ data, intl }) {
+  useEffect(() => {
+    if (notes) {
+      // eslint-disable-next-line camelcase
+      const currentNote = data.custom ? data.custom.note_data : [];
+      setNotes(currentNote);
+    }
+  }, []);
+
   const onFinish = values => {
-    const newNote = values.note.map(v => ({
-      time: moment().format('YYYY-MM-DD HH:mm'),
-      ...v,
-    }));
+    const newNote = [
+      {
+        time: moment().format('YYYY-MM-DD HH:mm'),
+        ...values,
+      },
+    ];
 
+    // eslint-disable-next-line camelcase
+    const currentNote = data.custom ? data.custom.note_data : [];
     const newData = {
       ...data,
       custom: {
-        note_data: [...data.custom.note_data, ...newNote],
+        note_data: [...currentNote, ...newNote],
       },
     };
+    setVisible(false);
+    setNotes([...currentNote, ...newNote]);
+    setProjectDetails(newData);
+    addContactProject({ project: newData, location: 'ADD_NOTE' });
+  };
 
-    console.log(newData, 'data');
+  const onEditNote = item => {
+    setInitialValues(item);
+    setVisible(true);
   };
 
   return (
     <Row className="pd-bottom">
-      <Col lg={12} xs={22} className="dynamic-form">
+      <Col lg={9} xs={22} className="dynamic-form">
+        <StyledHeader>
+          <span>
+            <b>
+              <FormattedMessage {...messages.myNoteList} />
+            </b>
+          </span>
+          <Button
+            type="primary"
+            style={{ float: 'right', marginTop: '-6px' }}
+            onClick={() => {
+              setVisible(true);
+            }}
+          >
+            +
+          </Button>
+        </StyledHeader>
         <Form name="dynamic_form" onFinish={onFinish} autoComplete="off">
-          <Form.List name="note">
-            {(fields, { add, remove }) => (
-              <>
-                {fields.map(field => (
-                  <div key={field.key} style={{ marginBottom: 8 }}>
-                    <Form.Item
-                      {...field}
-                      name={[field.name, 'title']}
-                      fieldKey={[field.fieldKey, 'title']}
-                      rules={[
-                        {
-                          required: true,
-                          message: (
-                            <FormattedMessage {...messages.myNoteTitleReq} />
-                          ),
-                        },
-                      ]}
-                    >
-                      <StyledInput
-                        placeholder={intl.formatMessage({
-                          ...messages.myNoteInputTitle,
-                        })}
-                      />
-                    </Form.Item>
-                    <Form.Item
-                      {...field}
-                      name={[field.name, 'content']}
-                      fieldKey={[field.fieldKey, 'content']}
-                      rules={[
-                        {
-                          required: true,
-                          message: (
-                            <FormattedMessage {...messages.myNoteContentReq} />
-                          ),
-                        },
-                      ]}
-                    >
-                      <TextArea
-                        placeholder={intl.formatMessage({
-                          ...messages.myNoteInputContent,
-                        })}
-                        autoSize={{ minRows: 2, maxRows: 6 }}
-                      />
-                    </Form.Item>
-                    <MinusCircleOutlined onClick={() => remove(field.name)} />
-                  </div>
-                ))}
-                <Form.Item>
-                  <Button
-                    type="dashed"
-                    className="dynamic-btn"
-                    onClick={() => add()}
-                    block
-                    icon={<PlusOutlined />}
-                  >
-                    <FormattedMessage {...messages.myNoteAdd} />
+          <List
+            itemLayout="horizontal"
+            pagination={{
+              pageSize: 5,
+            }}
+            bordered
+            dataSource={notes}
+            renderItem={item => (
+              <List.Item>
+                <Skeleton avatar title={false} loading={item.loading} active>
+                  <List.Item.Meta
+                    title={
+                      <span>
+                        {item.title}&nbsp;-&nbsp;
+                        <span style={{ fontWeight: 300 }}>
+                          {moment(item.time, 'YYYY-MM-DD HH:mm').format(
+                            'YYYY-MM-DD HH:mm',
+                          )}
+                        </span>
+                      </span>
+                    }
+                    description={item.content}
+                  />
+                  <Button type="link" danger onClick={() => onEditNote(item)}>
+                    <EditOutlined />
                   </Button>
-                </Form.Item>
-              </>
+                </Skeleton>
+              </List.Item>
             )}
-          </Form.List>
-          <Form.Item>
-            <Button type="primary" htmlType="submit">
-              <FormattedMessage {...messages.myContactModalBtnOK} />
-            </Button>
-          </Form.Item>
+          />
         </Form>
       </Col>
-      {/* <Col lg={8} style={{ justifyContent: 'center', display: 'flex' }}>
+      <Col lg={8} style={{ justifyContent: 'center', display: 'flex' }}>
         <img
-          src={_.get(data, 'image') || logo}
+          src={data.image || logo}
           width={220}
+          height={220}
           alt=""
           className="vnk-logo"
         />
-      </Col> */}
+      </Col>
+
+      <NotesModal
+        visible={visible}
+        setVisible={setVisible}
+        initialValues={initialValues}
+        setInitialValues={setInitialValues}
+        onCreate={onFinish}
+      />
     </Row>
   );
 }
 
 DynamicForm.propTypes = {
   data: PropTypes.any,
+  addContactProject: PropTypes.any,
+  setProjectDetails: PropTypes.any,
   intl: intlShape.required,
 };
 
-const StyledInput = styled(Input)`
-  &::placeholder {
-    color: green;
-  }
+const StyledHeader = styled.div`
+  margin-bottom: 15px;
+  font-size: 16px;
+  color: #b7252c;
 `;
 
 export default injectIntl(DynamicForm);

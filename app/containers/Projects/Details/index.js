@@ -11,7 +11,7 @@ import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import { FormattedMessage } from 'react-intl';
+import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import moment from 'moment';
 import { get as _get } from 'lodash';
 import { Row, Col, Tabs, Button, message } from 'antd';
@@ -102,8 +102,9 @@ enquireScreen(b => {
 export function ProjectDetails({
   history,
   data,
-  successMsg,
+  successResponse,
   addContactProject,
+  intl,
 }) {
   useInjectReducer({ key, reducer });
   useInjectSaga({ key, saga });
@@ -121,11 +122,31 @@ export function ProjectDetails({
   }, []);
 
   useEffect(() => {
-    if (successMsg) {
-      message.success('Thêm người liên hệ thành công!');
-      history.replace({ ...history.location, state: { data: projectDetails } });
+    if (successResponse.location === 'ADD_CONTACT_PROJECT') {
+      message.success(
+        intl.formatMessage({
+          ...messages.myProjAddContactSuccess,
+        }),
+      );
+
+      history.replace({
+        ...history.location,
+        state: { data: projectDetails },
+      });
     }
-  }, [successMsg, projectDetails]);
+
+    if (successResponse.location === 'ADD_NOTE') {
+      message.success(
+        intl.formatMessage({
+          ...messages.myProjAddNoteSuccess,
+        }),
+      );
+      history.replace({
+        ...history.location,
+        state: { data: projectDetails },
+      });
+    }
+  }, [successResponse, projectDetails]);
 
   const changeStatus = project => {
     history.push(ROUTE.PROCEDURE, {
@@ -145,7 +166,7 @@ export function ProjectDetails({
     const newContacts = contacts ? contacts.concat(contact) : [contact];
 
     const project = { ...data, contacts: newContacts };
-    addContactProject(project);
+    addContactProject({ project, location: 'ADD_CONTACT_PROJECT' });
     setProjectDetails(project);
     setVisible(false);
   };
@@ -255,7 +276,11 @@ export function ProjectDetails({
                 tab={<FormattedMessage {...messages.myProjDetailNote} />}
                 key="3"
               >
-                <DynamicForm data={data} />
+                <DynamicForm
+                  data={data}
+                  addContactProject={addContactProject}
+                  setProjectDetails={setProjectDetails}
+                />
               </TabPane>
             )}
             {/* <TabPane
@@ -279,14 +304,15 @@ export function ProjectDetails({
 }
 
 ProjectDetails.propTypes = {
-  successMsg: PropTypes.bool,
+  successResponse: PropTypes.object,
   history: PropTypes.object,
   data: PropTypes.object,
   addContactProject: PropTypes.func,
+  intl: intlShape.required,
 };
 
 const mapStateToProps = createStructuredSelector({
-  successMsg: makeSelectSuccessMsg(),
+  successResponse: makeSelectSuccessMsg(),
 });
 
 export function mapDispatchToProps(dispatch) {
@@ -300,4 +326,4 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-export default compose(withConnect)(withRouter(ProjectDetails));
+export default compose(withConnect)(withRouter(injectIntl(ProjectDetails)));

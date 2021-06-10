@@ -11,8 +11,10 @@ import { ADD_PROJECT_CONTACT } from './constants';
 // import { getToken } from '../../../../services/auth';
 
 export function* updateProject(actionData) {
-  const { data } = actionData;
-  const url = `${API.BASE_URL}/FollowedProjects/${data.id}`;
+  const {
+    data: { project, location },
+  } = actionData;
+  const url = `${API.BASE_URL}/FollowedProjects/${project.id}`;
 
   try {
     const response = yield call(fetchAxios, {
@@ -20,10 +22,10 @@ export function* updateProject(actionData) {
       url,
       headers: { 'Content-Type': 'application/json' },
       responseType: 'json',
-      data,
+      data: project,
     });
 
-    yield put(addProjectContactSuccess(response));
+    yield put(addProjectContactSuccess({ response, location }));
   } catch (err) {
     yield put(addProjectContactError(err));
   }

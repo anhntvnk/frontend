@@ -48,4 +48,12 @@ export default defineMessages({
     id: `${scope}.proj_detail.assign`,
     defaultMessage: 'Giao việc',
   },
+  myProjAddContactSuccess: {
+    id: `${scope}.proj_detail.add_contact`,
+    defaultMessage: 'Thêm người liên hệ thành công!',
+  },
+  myProjAddNoteSuccess: {
+    id: `${scope}.proj_detail.add_note`,
+    defaultMessage: 'Thêm ghi chú thành công!',
+  },
 });

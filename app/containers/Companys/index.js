@@ -39,6 +39,9 @@ const CompanyList = styled.section`
   dispay: block;
   background: #fff;
   padding: 20px;
+  max-width: 1350px;
+  box-sizing: border-box;
+  margin: auto;
 
   .ant-table-cell > a {
     color: #2f54eb;

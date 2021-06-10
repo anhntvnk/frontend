@@ -32,4 +32,12 @@ export default defineMessages({
     id: `myp.containers.Contact.contact.modalBtnOK`,
     defaultMessage: 'Lưu lại',
   },
+  modalBtnExit: {
+    id: `myp.containers.Contact.contact.modalBtnExit`,
+    defaultMessage: 'Thoát',
+  },
+  myNoteList: {
+    id: `${scope}.note.list`,
+    defaultMessage: 'Danh sách ghi chú của bạn trong dự án:',
+  },
 });

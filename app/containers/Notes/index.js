@@ -185,22 +185,23 @@ export function Notes({
           <FormattedMessage {...messages.myNoteTitle} />
         </h1>
       </CenteredSectionWithBack>
-      <Calendar
-        selectable
-        localizer={localizer}
-        culture="ar-AE"
-        events={events || notes}
-        defaultView={Views.WEEK}
-        startAccessor="start"
-        endAccessor="end"
-        style={{ height: 500 }}
-        onSelectSlot={handleSelect}
-        onSelectEvent={openEvents}
-      />
-
-      <StyledButton type="primary" onClick={updateNote} disabled={!isDurty}>
-        <FormattedMessage {...messages.myNotebtnSave} />
-      </StyledButton>
+      <StyleCalendar>
+        <Calendar
+          selectable
+          localizer={localizer}
+          culture="ar-AE"
+          events={events || notes}
+          defaultView={Views.WEEK}
+          startAccessor="start"
+          endAccessor="end"
+          style={{ height: 500 }}
+          onSelectSlot={handleSelect}
+          onSelectEvent={openEvents}
+        />
+        <StyledButton type="primary" onClick={updateNote} disabled={!isDurty}>
+          <FormattedMessage {...messages.myNotebtnSave} />
+        </StyledButton>
+      </StyleCalendar>
 
       <Modal
         title={intl.formatMessage({
@@ -228,6 +229,10 @@ export function Notes({
   );
 }
 
+const StyleCalendar = styled.div`
+  background-color: #f0f2f5;
+  padding: 60px;
+`;
 const CenteredSectionWithBack = styled.section`
   text-align: center;
   margin: 50px 0px;
@@ -252,7 +257,7 @@ const CenteredSectionWithBack = styled.section`
 const NotesComponent = styled.div`
   height: 650px;
   dispay: block;
-  max-width: 800px;
+  max-width: 900px;
   margin: auto;
 `;
 
