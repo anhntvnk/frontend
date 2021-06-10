@@ -91,7 +91,14 @@ function Contact({ data, setVisible }) {
             )}
           </GutterRow>
         </Col>
-        <Col lg={8} style={{ justifyContent: 'center', display: 'flex' }}>
+        <Col
+          lg={8}
+          style={{
+            justifyContent: 'center',
+            display: 'flex',
+            marginTop: '9px',
+          }}
+        >
           <img
             src={_get(data, 'image') || logo}
             width={220}
