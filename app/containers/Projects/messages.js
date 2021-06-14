@@ -40,4 +40,12 @@ export default defineMessages({
     id: `${scope}.my_project.follow`,
     defaultMessage: 'Theo dõi',
   },
+  myProjFollowCostM: {
+    id: `${scope}.my_project.costM`,
+    defaultMessage: 'Triệu',
+  },
+  myProjFollowCostB: {
+    id: `${scope}.my_project.costB`,
+    defaultMessage: 'Tỷ',
+  },
 });

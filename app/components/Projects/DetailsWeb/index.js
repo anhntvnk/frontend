@@ -1,5 +1,8 @@
+/* eslint-disable no-nested-ternary */
+/* eslint-disable indent */
+/* eslint-disable radix */
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import PropTypes from 'prop-types';
 import { Row, Col } from 'antd';
 import styled from 'styled-components';
@@ -16,7 +19,15 @@ const GutterRow = styled.section`
   border-radius: 10px;
 `;
 
-function DetailsWeb({ data }) {
+function DetailsWeb({ data, intl }) {
+  const convertCost = labelValue =>
+    Math.abs(Number(labelValue)) >= 1.0e3
+      ? `${Math.abs(Number(labelValue)) / 1.0e3} ${intl.formatMessage({
+          ...messages.myProjFollowCostB,
+        })}`
+      : `${Number(labelValue)} ${intl.formatMessage({
+          ...messages.myProjFollowCostM,
+        })}`;
   return (
     <>
       <Row gutter={16} className="pd-bottom">
@@ -91,7 +102,7 @@ function DetailsWeb({ data }) {
               <FormattedMessage {...messages.myDetailWebValue} />
               &nbsp;
             </span>
-            <span>$ {_get(data, 'cost', '')}m</span>
+            <span>{convertCost(_get(data, 'cost', ''))}</span>
             <span style={{ float: 'right' }}>
               <span className="description">
                 <FormattedMessage {...messages.myDetailWebFloorNum} />
@@ -215,6 +226,7 @@ function DetailsWeb({ data }) {
 
 DetailsWeb.propTypes = {
   data: PropTypes.any,
+  intl: intlShape.Required,
 };
 
-export default DetailsWeb;
+export default injectIntl(DetailsWeb);

@@ -17,7 +17,7 @@ import {
 // The initial state of the App
 export const initialState = {
   company: [],
-  successMessage: '',
+  successMessage: false,
   errorMessage: '',
 };
 
@@ -26,7 +26,7 @@ const companyReducer = (state = initialState, action) =>
   produce(state, draft => {
     switch (action.type) {
       case CHANGE_STATE_PROCEDURE_SUCCESS:
-        draft.successMessage = 'Chuysển trạng thái thành công !';
+        draft.successMessage = true;
         break;
       case CHANGE_STATE_PROCEDURE_ERROR:
         draft.errorMessage = 'Đã có lỗi xảy ra !';

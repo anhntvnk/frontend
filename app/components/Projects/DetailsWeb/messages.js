@@ -80,4 +80,12 @@ export default defineMessages({
     id: `${scope}.detail_web.note`,
     defaultMessage: 'Ghi chú:',
   },
+  myProjFollowCostM: {
+    id: `myp.containers.Project.my_project.costM`,
+    defaultMessage: 'Triệu',
+  },
+  myProjFollowCostB: {
+    id: `myp.containers.Project.my_project.costB`,
+    defaultMessage: 'Tỷ!',
+  },
 });

@@ -193,8 +193,13 @@ export function User({ history, userProfile, onLoadUserProfile }) {
                 <FormattedMessage {...messages.myProfileUpdating} />
               </TabPane>
               <TabPane
+                style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  width: '80px',
+                }}
                 tab={
-                  <Link to="/notes">
+                  <Link to="/notes" style={{ padding: '12px' }}>
                     <FormattedMessage {...messages.myProfileNote} />
                     &nbsp;
                   </Link>
@@ -265,6 +270,9 @@ const UserProfileState = styled.section`
   .ant-tabs {
     .ant-tabs-tab {
       margin-right: 6px !important;
+      display: flex;
+      justify-content: center;
+      width: 80px;
     }
 
     .ant-tabs-nav-wrap {

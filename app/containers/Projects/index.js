@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 /* eslint-disable global-require */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /*
@@ -19,7 +20,7 @@ import {
   has as _has,
 } from 'lodash';
 import { createStructuredSelector } from 'reselect';
-import { FormattedMessage } from 'react-intl';
+import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 
 import { useInjectReducer } from 'utils/injectReducer';
 import { useInjectSaga } from 'utils/injectSaga';
@@ -49,6 +50,7 @@ export function Projects({
   onFetchProject,
   onFollowProject,
   onUnFollowProject,
+  intl,
 }) {
   if (history.location.state) {
     message.success(_get(history.location.state, 'successMessage', ''));
@@ -106,6 +108,15 @@ export function Projects({
     }
   };
 
+  const convertCost = labelValue =>
+    Math.abs(Number(labelValue)) >= 1.0e3
+      ? `${Math.abs(Number(labelValue)) / 1.0e3} ${intl.formatMessage({
+          ...messages.myProjFollowCostB,
+        })}`
+      : `${Number(labelValue)} ${intl.formatMessage({
+          ...messages.myProjFollowCostM,
+        })}`;
+
   const columns = [
     {
       title: <FormattedMessage {...messages.myProjImage} />,
@@ -140,6 +151,7 @@ export function Projects({
       key: 'cost',
       responsive: ['lg', 'md', 'xs'],
       sorter: (a, b) => a.cost - b.cost,
+      render: cost => convertCost(cost),
     },
     {
       title: <FormattedMessage {...messages.myProjAddress} />,
@@ -172,9 +184,9 @@ export function Projects({
             color={task.color}
             style={{
               color: task.colorText,
-              width: '100px',
-              fontSize: '13px',
+              width: '130px',
               textAlign: 'center',
+              fontWeight: 600,
             }}
           >
             {task.label}
@@ -422,6 +434,7 @@ Projects.propTypes = {
   loading: PropTypes.bool,
   location: PropTypes.object,
   history: PropTypes.object,
+  intl: intlShape.Required,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -442,4 +455,4 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-export default compose(withConnect)(withRouter(Projects));
+export default compose(withConnect)(withRouter(injectIntl(Projects)));

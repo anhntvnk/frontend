@@ -24,36 +24,8 @@ export default defineMessages({
     id: `${scope}.changeStatus`,
     defaultMessage: 'Bạn có muốn chuyển trạng thái không ?',
   },
-  // myProjRepassword: {
-  //   id: `${scope}.repassword`,
-  //   defaultMessage: 'Nhập lại mật khẩu',
-  // },
-  // myProjRegister: {
-  //   id: `${scope}.title`,
-  //   defaultMessage: 'Đăng Ký',
-  // },
-  // myProjNameReq: {
-  //   id: `${scope}.name.req`,
-  //   defaultMessage: 'Họ và tên là bắt buộc!',
-  // },
-  // myProjEmailReq: {
-  //   id: `${scope}.email.req`,
-  //   defaultMessage: 'Địa chỉ Email là bắt buộc!',
-  // },
-  // myProjPhoneReq: {
-  //   id: `${scope}.phone.req`,
-  //   defaultMessage: 'Số điện thoại là bắt buộc!',
-  // },
-  // myProjPasswordReq: {
-  //   id: `${scope}.password.req`,
-  //   defaultMessage: 'Mật khẩu là bắt buộc!',
-  // },
-  // myProjRePasswordReq: {
-  //   id: `${scope}.repassword.req`,
-  //   defaultMessage: 'Nhập lại khẩu là bắt buộc!',
-  // },
-  // myProjRePasswordMath: {
-  //   id: `${scope}.repassword.math`,
-  //   defaultMessage: 'Mật khẩu nhập lại không khớp!',
-  // },
+  myProjChangeStatusSuccess: {
+    id: `${scope}.changeStatus.success`,
+    defaultMessage: 'Chuyển trạng thái thành công!',
+  },
 });

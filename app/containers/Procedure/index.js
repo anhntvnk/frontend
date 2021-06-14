@@ -49,7 +49,11 @@ export function Procedure({
   const nextTask = _get(ENUMS.STATE_LIST, `[${data.status_code + 1}]`);
 
   if (successMessage) {
-    message.success(successMessage);
+    message.success(
+      intl.formatMessage({
+        ...messages.myProjChangeStatusSuccess,
+      }),
+    );
     history.replace({ ...history.location, state: { data: projectDetail } });
   }
 
