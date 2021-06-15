@@ -15,7 +15,15 @@
  *    }
  */
 
-import { LOAD_USER, LOAD_USER_SUCCESS, LOAD_USER_ERROR } from './constants';
+import {
+  LOAD_USER,
+  LOAD_USER_SUCCESS,
+  LOAD_USER_ERROR,
+  LOAD_PACKAGE_ORDER,
+  LOAD_PACKAGE_ORDER_SUCCESS,
+  LOAD_PACKAGE_ORDER_ERROR,
+  RESET_FORM,
+} from './constants';
 
 export function loadUserProfile() {
   return {
@@ -34,5 +42,31 @@ export function loadUserProfileError(error) {
   return {
     type: LOAD_USER_ERROR,
     error,
+  };
+}
+
+export function setPackageOrder(data, isEdit) {
+  return {
+    type: LOAD_PACKAGE_ORDER,
+    data,
+    isEdit,
+  };
+}
+
+export function setPackageOrderSuccess() {
+  return {
+    type: LOAD_PACKAGE_ORDER_SUCCESS,
+  };
+}
+
+export function setPackageOrderError() {
+  return {
+    type: LOAD_PACKAGE_ORDER_ERROR,
+  };
+}
+
+export function resetForm() {
+  return {
+    type: RESET_FORM,
   };
 }

@@ -1,6 +1,6 @@
 /* eslint-disable no-case-declarations */
 /*
- * CompanysReducer
+ * UserReducer
  *
  * The reducer takes care of our data. Using actions, we can
  * update our application state. To add a new action,
@@ -9,11 +9,16 @@
  */
 
 import produce from 'immer';
-import { LOAD_USER_SUCCESS } from './constants';
+import {
+  LOAD_PACKAGE_ORDER_SUCCESS,
+  LOAD_USER_SUCCESS,
+  RESET_FORM,
+} from './constants';
 
 // The initial state of the App
 export const initialState = {
   userProfile: [],
+  isSuccess: false,
 };
 
 /* eslint-disable default-case, no-param-reassign */
@@ -23,8 +28,11 @@ const userReducer = (state = initialState, action) =>
       case LOAD_USER_SUCCESS:
         draft.userProfile = action.response;
         break;
-      default:
-        draft.userProfile = initialState.userProfile;
+      case LOAD_PACKAGE_ORDER_SUCCESS:
+        draft.isSuccess = true;
+        break;
+      case RESET_FORM:
+        draft.isSuccess = false;
     }
   });
 

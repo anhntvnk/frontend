@@ -3,10 +3,15 @@
  */
 
 import { call, put, takeLatest } from 'redux-saga/effects';
-import request from 'utils/request';
+import request, { fetchAxios } from 'utils/request';
 import API from '../../constants/apis';
-import { loadUserProfileSuccess, loadUserProfileError } from './actions';
-import { LOAD_USER } from './constants';
+import {
+  loadUserProfileSuccess,
+  loadUserProfileError,
+  setPackageOrderSuccess,
+  setPackageOrderError,
+} from './actions';
+import { LOAD_PACKAGE_ORDER, LOAD_USER } from './constants';
 import { getToken, getUserId } from '../../../services/auth';
 
 export function* fetchProfile() {
@@ -21,6 +26,7 @@ export function* fetchProfile() {
 
     const data = {
       ...response,
+      orderId: order.id || '',
       package: order.package || '',
       expireDate: order.expire_date || '',
     };
@@ -35,6 +41,34 @@ export function* fetchProfile() {
   }
 }
 
+export function* orderPlan(action) {
+  const { data, isEdit } = action;
+  let method = 'post';
+  let url = `${API.BASE_URL}/order?access_token=${getToken()}`;
+  if (isEdit) {
+    url = `${API.BASE_URL}/order/${isEdit}?access_token=${getToken()}`;
+    method = 'put';
+  }
+
+  try {
+    const response = yield call(fetchAxios, {
+      method,
+      url,
+      headers: { 'Content-Type': 'application/json' },
+      responseType: 'json',
+      data,
+    });
+
+    if (response) {
+      yield put(setPackageOrderSuccess(data));
+    } else {
+      yield put(setPackageOrderError('Đã có lỗi xảy ra !'));
+    }
+  } catch (err) {
+    yield put(setPackageOrderError(err));
+  }
+}
+
 /**
  * Root saga manages watcher lifecycle
  */
@@ -43,4 +77,5 @@ export default function* userSaga() {
   // It returns task descriptor (just like fork) so we can continue execution
   // It will be cancelled automatically on component unmount
   yield takeLatest(LOAD_USER, fetchProfile);
+  yield takeLatest(LOAD_PACKAGE_ORDER, orderPlan);
 }

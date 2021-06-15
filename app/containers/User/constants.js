@@ -13,3 +13,7 @@
 export const LOAD_USER = 'vnk/User/LOAD_USER';
 export const LOAD_USER_SUCCESS = 'vnk/User/LOAD_USER_SUCCESS';
 export const LOAD_USER_ERROR = 'vnk/User/LOAD_USER_ERROR';
+export const LOAD_PACKAGE_ORDER = 'vnk/User/LOAD_PACKAGE_ORDER';
+export const LOAD_PACKAGE_ORDER_SUCCESS = 'vnk/User/LOAD_PACKAGE_ORDER_SUCCESS';
+export const LOAD_PACKAGE_ORDER_ERROR = 'vnk/User/LOAD_PACKAGE_ORDER_ERROR';
+export const RESET_FORM = 'vnk/User/RESET_FORM';

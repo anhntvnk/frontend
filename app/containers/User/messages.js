@@ -72,4 +72,37 @@ export default defineMessages({
     id: `${scope}.my_profile.assign`,
     defaultMessage: 'Giao việc',
   },
+  myProfileBascicPackage: {
+    id: `${scope}.my_profile.basic`,
+    defaultMessage: 'Gói Basic',
+  },
+  myProfileStandardPackage: {
+    id: `${scope}.my_profile.standard`,
+    defaultMessage: 'Gói Standard',
+  },
+  myProfileEnterprisePackage: {
+    id: `${scope}.my_profile.enterprise`,
+    defaultMessage: 'Gói Enterprise',
+  },
+  myProfileBuyPackage: {
+    id: `${scope}.my_profile.buyPackage`,
+    defaultMessage: 'Mua gói',
+  },
+  myProfileRenewPackage: {
+    id: `${scope}.my_profile.renewPackage`,
+    defaultMessage: 'Gia hạn',
+  },
+  myProfileTitlePackage: {
+    id: `${scope}.my_profile.titlePackage`,
+    defaultMessage: 'Gói Dịch Vụ',
+  },
+  myProfileContentConfirmPackage: {
+    id: `${scope}.my_profile.content.confirm`,
+    defaultMessage: 'Bạn có muốn gia hạn {package} không?',
+  },
+  myProfileRenewSuccess: {
+    id: `${scope}.my_profile.package.success`,
+    defaultMessage:
+      'Gia hạn gói thành công, nhân viên bán hàng sẽ liên hệ với bạn!',
+  },
 });

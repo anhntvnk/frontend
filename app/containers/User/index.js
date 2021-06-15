@@ -1,3 +1,5 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable indent */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /*
  * ProjectPage
@@ -13,7 +15,7 @@ import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import { Card, Row, Col, Button, List, Tabs, Avatar } from 'antd';
+import { Card, Row, Col, Button, List, Tabs, Avatar, Modal, Alert } from 'antd';
 import { ArrowLeftOutlined } from '@ant-design/icons';
 import { createStructuredSelector } from 'reselect';
 import { useInjectReducer } from 'utils/injectReducer';
@@ -21,25 +23,87 @@ import { useInjectSaga } from 'utils/injectSaga';
 import { FormattedMessage } from 'react-intl';
 import styled from 'styled-components';
 import H1 from 'components/H1';
-import { makeSelectUserProfille } from './selectors';
+import { makeSelectOrder, makeSelectUserProfille } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 import './styles.less';
-import { loadUserProfile } from './actions';
+import { loadUserProfile, resetForm, setPackageOrder } from './actions';
 import messages from './messages';
+import packageIcon from '../../assets/images/settings/ic_box.png';
 
 const key = 'user';
 
 const { TabPane } = Tabs;
 const { Meta } = Card;
 
-export function User({ history, userProfile, onLoadUserProfile }) {
+export function User({
+  history,
+  userProfile,
+  onLoadUserProfile,
+  onOrderPlan,
+  onResetForm,
+  isSuccess,
+}) {
   useInjectReducer({ key, reducer });
   useInjectSaga({ key, saga });
+
+  const [visible, setVisible] = React.useState(false);
+  const [orderPackage, setOrderPackage] = React.useState({});
+  const [edit, setEdit] = React.useState(false);
+  const [alert, setAlert] = React.useState(false);
 
   useEffect(() => {
     onLoadUserProfile();
   }, []);
+
+  useEffect(() => {
+    setAlert(isSuccess);
+  }, [isSuccess]);
+
+  const openModal = (item, isEdit) => {
+    setVisible(true);
+    setOrderPackage(item);
+    setEdit(isEdit);
+  };
+
+  const orderPlan = (item, isEdit) => {
+    const params = {
+      user_id: userProfile.id,
+      package: item.key,
+      note: item.key,
+      created: moment().format(),
+    };
+
+    if (userProfile.team_id) {
+      params.team_id = userProfile.team_id;
+    }
+    onOrderPlan(params, isEdit ? userProfile.orderId : isEdit);
+    setVisible(false);
+  };
+
+  const addDot = value =>
+    value ? value.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1.') : '';
+
+  const listPackage = [
+    {
+      key: 'basic',
+      title: <FormattedMessage {...messages.myProfileBascicPackage} />,
+      price: 580000,
+      level: 1,
+    },
+    {
+      key: 'standard',
+      title: <FormattedMessage {...messages.myProfileStandardPackage} />,
+      price: 1868000,
+      level: 2,
+    },
+    {
+      key: 'enterprise',
+      title: <FormattedMessage {...messages.myProfileEnterprisePackage} />,
+      price: 6868000,
+      level: 3,
+    },
+  ];
 
   return (
     <UserProfile>
@@ -61,7 +125,10 @@ export function User({ history, userProfile, onLoadUserProfile }) {
         </H1>
       </CenteredSectionWithBack>
       <UserProfileState>
-        <Row gutter={{ xs: 8, sm: 24, md: 24, lg: 16 }}>
+        <Row
+          style={{ marginBottom: '50px' }}
+          gutter={{ xs: 8, sm: 24, md: 24, lg: 16 }}
+        >
           <Col lg={8} xs={24}>
             <CardStatus>
               <Card>
@@ -169,7 +236,9 @@ export function User({ history, userProfile, onLoadUserProfile }) {
                           <FormattedMessage {...messages.myProfileService} />
                           &nbsp;
                         </b>
-                        {_get(userProfile, 'package')}
+                        <span style={{ color: 'red', fontWeight: 600 }}>
+                          {_get(userProfile, 'package')}
+                        </span>
                       </Col>
                       <Col lg={12} style={{ textTransform: 'capitalize' }}>
                         <b>
@@ -178,9 +247,11 @@ export function User({ history, userProfile, onLoadUserProfile }) {
                           />
                           &nbsp;
                         </b>
-                        {moment(_get(userProfile, 'expireDate')).format(
-                          'D/M/YYYY',
-                        )}
+                        <span style={{ color: '#279d58', fontWeight: 500 }}>
+                          {moment(_get(userProfile, 'expireDate')).format(
+                            'D/M/YYYY',
+                          )}
+                        </span>
                       </Col>
                     </List.Item>
                   </List>
@@ -211,10 +282,97 @@ export function User({ history, userProfile, onLoadUserProfile }) {
             </Tabs>
           </Col>
         </Row>
+
+        {alert && (
+          <Alert
+            message={<FormattedMessage {...messages.myProfileRenewSuccess} />}
+            style={{ marginBottom: '20px' }}
+            type="success"
+            afterClose={() => onResetForm()}
+            showIcon
+            closable
+          />
+        )}
+
+        <StyledPackageCard>
+          <Row gutter={{ sm: 24, md: 24, lg: 16 }}>
+            {listPackage.map(item => (
+              <Col
+                lg={8}
+                xs={24}
+                key={item.key}
+                style={{ marginBottom: '20px' }}
+              >
+                <Card
+                  title={
+                    <div>
+                      <StylePackageImg src={packageIcon} alt={item.title} />
+                      {item.title}
+                    </div>
+                  }
+                  bordered={false}
+                >
+                  <StyledCardContent
+                    isMyPackage={_get(userProfile, 'package') === item.key}
+                  >
+                    <StylePrice>{addDot(item.price)}</StylePrice>
+                    <StyleButtonPackage
+                      onClick={() =>
+                        openModal(
+                          item,
+                          _get(userProfile, 'package') === item.key,
+                        )
+                      }
+                      type="primary"
+                      shape="round"
+                      size="small"
+                    >
+                      {_get(userProfile, 'package') === item.key ? (
+                        <FormattedMessage {...messages.myProfileRenewPackage} />
+                      ) : (
+                        <FormattedMessage {...messages.myProfileBuyPackage} />
+                      )}
+                    </StyleButtonPackage>
+                  </StyledCardContent>
+                </Card>
+              </Col>
+            ))}
+          </Row>
+        </StyledPackageCard>
+        <ModalConfirm
+          visible={visible}
+          orderPackage={orderPackage}
+          setVisible={setVisible}
+          orderPlan={() => orderPlan(orderPackage, edit)}
+          title={<FormattedMessage {...messages.myProfileTitlePackage} />}
+        />
       </UserProfileState>
     </UserProfile>
   );
 }
+
+const ModalConfirm = ({
+  orderPackage,
+  orderPlan,
+  visible,
+  setVisible,
+  title,
+}) => (
+  <Modal
+    title={title}
+    centered
+    visible={visible}
+    onOk={orderPlan}
+    onCancel={() => setVisible(false)}
+  >
+    <FormattedMessage
+      {...messages.myProfileContentConfirmPackage}
+      values={{
+        package: orderPackage.title,
+      }}
+    />
+  </Modal>
+);
 
 const Profile = styled.div`
   .ant-list {
@@ -294,7 +452,7 @@ const UserProfile = styled.div`
 `;
 
 const CardStatus = styled.div`
-  margin-bottom: 30px;
+  margin-top: 50px;
   height: 200px;
   @media only screen and (max-width: 767.99px) {
     margin-bottom: 0px;
@@ -302,8 +460,8 @@ const CardStatus = styled.div`
   }
 
   .ant-avatar {
-    width: 80px;
-    height: 80px;
+    width: 60px;
+    height: 60px;
   }
 
   .ant-card-meta-avatar {
@@ -335,19 +493,63 @@ const CardStatus = styled.div`
   }
 `;
 
+const StyledPackageCard = styled.div`
+  padding: 30px;
+  background: #ececec;
+  margin: auto;
+`;
+
+const StylePackageImg = styled.img`
+  width: 32px;
+  padding-right: 5px;
+`;
+
+const StyleButtonPackage = styled(Button)``;
+
+const StyledCardContent = styled.div`
+  display: flex;
+  justify-content: space-between;
+
+  .ant-btn {
+    font-weight: 500;
+    background-color: ${({ isMyPackage }) =>
+      isMyPackage ? '#279d58' : '#FA860A'};
+    border-color: ${({ isMyPackage }) => (isMyPackage ? '#279d58' : '#FA860A')};
+  }
+
+  .ant-btn:hover,
+  .ant-btn:focus,
+  .ant-btn:active {
+    background-color: ${({ isMyPackage }) =>
+      isMyPackage ? '#279d58' : '#FA860A'};
+    border-color: ${({ isMyPackage }) => (isMyPackage ? '#279d58' : '#FA860A')};
+  }
+`;
+
+const StylePrice = styled.span`
+  color: #bb2121;
+  font-weight: 600;
+`;
+
 User.propTypes = {
   onLoadUserProfile: PropTypes.func,
+  onResetForm: PropTypes.func,
+  onOrderPlan: PropTypes.func,
   history: PropTypes.object,
-  userProfile: PropTypes.arrayOf,
+  userProfile: PropTypes.any,
+  isSuccess: PropTypes.bool,
 };
 
 const mapStateToProps = createStructuredSelector({
   userProfile: makeSelectUserProfille(),
+  isSuccess: makeSelectOrder(),
 });
 
 export function mapDispatchToProps(dispatch) {
   return {
     onLoadUserProfile: () => dispatch(loadUserProfile()),
+    onResetForm: () => dispatch(resetForm()),
+    onOrderPlan: (data, isEdit) => dispatch(setPackageOrder(data, isEdit)),
   };
 }
 
