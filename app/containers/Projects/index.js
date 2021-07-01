@@ -52,24 +52,30 @@ export function Projects({
   onUnFollowProject,
   intl,
 }) {
+  useInjectSaga({ key, saga });
+  useInjectReducer({ key, reducer });
+
   if (history.location.state) {
-    message.success(_get(history.location.state, 'successMessage', ''));
-    history.replace({ ...history.location, state: undefined });
+    if (_get(history.location.state, 'successMessage', '')) {
+      message.success(_get(history.location.state, 'successMessage', ''));
+      history.replace({ ...history.location, state: undefined });
+    }
   }
 
   const [projectList, setProjectList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [fillter, setFilter] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
 
   const [projectType, setProjectType] = useState(
     location.search.replace(/(^\/|\/$)/g, '').split('?')[1],
   );
 
-  useInjectSaga({ key, saga });
-  useInjectReducer({ key, reducer });
-
   useEffect(() => {
     onFetchProject();
+    if (_get(history.location.state, 'currentPage', '')) {
+      setCurrentPage(_get(history.location.state, 'currentPage', ''));
+    }
   }, []);
 
   useEffect(() => {
@@ -134,9 +140,12 @@ export function Projects({
       render: (text, record) => (
         <Link
           to={{
-            pathname: ROUTE.PROJECT_DETAILS,
+            pathname: `${ROUTE.PROJECT_DETAILS}/${record.parent_project_id ||
+              record.id}`,
+            // search: '?query=abc',
             state: {
               data: record,
+              currentPage,
             },
           }}
         >
@@ -245,6 +254,12 @@ export function Projects({
   ];
 
   const listProps = {
+    pagination: {
+      current: currentPage,
+      onChange: page => {
+        setCurrentPage(page);
+      },
+    },
     dataSource: projectList,
     columns,
     loading: loading || isLoading,

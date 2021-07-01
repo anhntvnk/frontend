@@ -9,23 +9,28 @@
  */
 
 import produce from 'immer';
-import { ADD_PROJECT_CONTACT_SUCCESS } from './constants';
+import {
+  ADD_PROJECT_CONTACT_SUCCESS,
+  LOAD_PROJECT_DETAILS_SUCCESS,
+} from './constants';
 
 // The initial state of the App
 export const initialState = {
   successMsg: {},
+  projectInfo: {},
 };
 
 /* eslint-disable default-case, no-param-reassign */
 const projectDetaisReducer = (state = initialState, action) =>
   produce(state, draft => {
     switch (action.type) {
-      case ADD_PROJECT_CONTACT_SUCCESS:
+      case LOAD_PROJECT_DETAILS_SUCCESS:
         const { response } = action;
-        draft.successMsg = response;
+        draft.projectInfo = response;
         break;
-      default:
-        draft.successMsg = initialState.successMsg;
+      case ADD_PROJECT_CONTACT_SUCCESS:
+        draft.successMsg = action.response;
+        break;
     }
   });
 

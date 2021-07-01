@@ -6,7 +6,7 @@
  */
 
 import React, { useEffect, useState } from 'react';
-import { withRouter } from 'react-router-dom';
+import { withRouter, useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
@@ -32,8 +32,8 @@ import DynamicForm from 'components/Projects/DynamicForm';
 import { Contact, ContactModal } from 'components/Projects/Contact';
 import H2 from 'components/H2';
 import styled from 'styled-components';
-import { makeSelectSuccessMsg } from './selectors';
-import { addProjectContact } from './actions';
+import { makeSelectSuccessMsg, makeSelectProjects } from './selectors';
+import { addProjectContact, loadProjectDetails } from './actions';
 import reducer from './reducer';
 import saga from './saga';
 import './styles.less';
@@ -102,8 +102,11 @@ enquireScreen(b => {
 export function ProjectDetails({
   history,
   data,
+  currentPage,
   successResponse,
   addContactProject,
+  fetchProject,
+  projectByID,
   intl,
 }) {
   useInjectReducer({ key, reducer });
@@ -113,12 +116,23 @@ export function ProjectDetails({
   const [visible, setVisible] = useState(false);
   const [projectDetails, setProjectDetails] = useState([]);
 
+  const { projectID } = useParams();
+
+  console.log(data, 'data');
+
   useEffect(() => {
     enquireScreen(b => {
       setIsMobile({
         isMobile: !!b,
       });
     });
+  }, []);
+
+  useEffect(() => {
+    fetchProject(projectID);
+    if (Object.keys(projectDetails).length > 0) {
+      setProjectDetails(projectByID);
+    }
   }, []);
 
   useEffect(() => {
@@ -155,7 +169,7 @@ export function ProjectDetails({
   };
 
   const onCreate = formValues => {
-    const { contacts } = data;
+    const { contacts } = projectByID;
 
     const contact = {
       ...formValues,
@@ -165,7 +179,7 @@ export function ProjectDetails({
 
     const newContacts = contacts ? contacts.concat(contact) : [contact];
 
-    const project = { ...data, contacts: newContacts };
+    const project = { ...projectByID, contacts: newContacts };
     addContactProject({ project, location: 'ADD_CONTACT_PROJECT' });
     setProjectDetails(project);
     setVisible(false);
@@ -182,7 +196,7 @@ export function ProjectDetails({
           type="primary"
           shape="round"
           icon={<ArrowLeftOutlined />}
-          onClick={() => history.push(ROUTE.PROJECT)}
+          onClick={() => history.push(ROUTE.PROJECT, { currentPage })}
         >
           <FormattedMessage {...messages.myProjDetailBtnBack} />
         </Button>
@@ -190,108 +204,112 @@ export function ProjectDetails({
           <FormattedMessage {...messages.myProjDetailTitle} />
         </H2>
       </CenteredSectionWithBack>
-
-      <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 16 }}>
-        {!isMobile && (
-          <Col lg={16} md={16} sm={24} xs={16}>
-            <Row>
-              <Col className="group-item" lg={24} md={24}>
-                <BoxDetail>
-                  <span className="description">
-                    <FormattedMessage {...messages.myProjDetailProj} />
-                  </span>
-                  <p className="project-name">{_get(data, 'name', '')}</p>
-                  <span className="description">
-                    <span>
-                      <FormattedMessage {...messages.myProjDetailUpdate} />
-                      &nbsp;
+      {Object.keys(projectByID).length > 0 && (
+        <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 16 }}>
+          {!isMobile && (
+            <Col lg={16} md={16} sm={24} xs={16}>
+              <Row>
+                <Col className="group-item" lg={24} md={24}>
+                  <BoxDetail>
+                    <span className="description">
+                      <FormattedMessage {...messages.myProjDetailProj} />
                     </span>
-                    <span>
-                      {moment(_get(data, 'last_modified', '')).format(
-                        'DD/MM/YYYY',
-                      )}
+                    <p className="project-name">
+                      {_get(projectByID, 'name', '')}
+                    </p>
+                    <span className="description">
+                      <span>
+                        <FormattedMessage {...messages.myProjDetailUpdate} />
+                        &nbsp;
+                      </span>
+                      <span>
+                        {moment(_get(projectByID, 'last_modified', '')).format(
+                          'DD/MM/YYYY',
+                        )}
+                      </span>
                     </span>
-                  </span>
-                </BoxDetail>
-              </Col>
-            </Row>
-          </Col>
-        )}
+                  </BoxDetail>
+                </Col>
+              </Row>
+            </Col>
+          )}
 
-        <Col className="status-box" lg={8} md={8} sm={24}>
-          <div className="status">
-            <div className="change-status">
-              <div className="calendar">
-                <ScheduleTwoTone /> {moment().format('DD/MM/YYYY')}
+          <Col className="status-box" lg={8} md={8} sm={24}>
+            <div className="status">
+              <div className="change-status">
+                <div className="calendar">
+                  <ScheduleTwoTone /> {moment().format('DD/MM/YYYY')}
+                </div>
+                <div className="calendar">
+                  <HomeTwoTone />{' '}
+                  <b>
+                    <FormattedMessage {...messages.myProjDetailHome} />
+                  </b>
+                </div>
+                <div className="calendar">
+                  <Button
+                    className="btn-change-status"
+                    type="primary"
+                    size="large"
+                    disabled={!projectByID.is_follow}
+                    onClick={() => changeStatus(projectByID)}
+                  >
+                    <FormattedMessage {...messages.myProjDetailStatus} />
+                  </Button>
+                </div>
               </div>
-              <div className="calendar">
-                <HomeTwoTone />{' '}
-                <b>
-                  <FormattedMessage {...messages.myProjDetailHome} />
-                </b>
-              </div>
-              <div className="calendar">
-                <Button
-                  className="btn-change-status"
-                  type="primary"
-                  size="large"
-                  onClick={() => changeStatus(data)}
-                >
-                  <FormattedMessage {...messages.myProjDetailStatus} />
-                </Button>
-              </div>
-            </div>
-            <StyledStatusIcon
-              status-color={
-                _get(ENUMS.STATE_LIST, `[${data.status_code}]`).color
-              }
-            >
-              <span>
-                {_get(ENUMS.STATE_LIST, `[${data.status_code}]`).label}
-              </span>
-            </StyledStatusIcon>
-          </div>
-        </Col>
-        <Col lg={24} className="menu-tab">
-          <Tabs defaultActiveKey="1" type="card" size="small">
-            {/* Tab Tổng Quan */}
-            <TabPane
-              tab={<FormattedMessage {...messages.myProjDetailOverview} />}
-              key="1"
-            >
-              {!isMobile ? (
-                <ProjectDetailsWeb data={data} />
-              ) : (
-                <ProjectDetailsMobile data={data} />
-              )}
-            </TabPane>
-            <TabPane
-              tab={<FormattedMessage {...messages.myProjDetailContact} />}
-              key="2"
-            >
-              <Contact data={data} setVisible={setVisible} />
-            </TabPane>
-            {data.is_follow && (
-              <TabPane
-                tab={<FormattedMessage {...messages.myProjDetailNote} />}
-                key="3"
+              <StyledStatusIcon
+                status-color={
+                  _get(ENUMS.STATE_LIST, `[${projectByID.status_code}]`).color
+                }
               >
-                <DynamicForm
-                  data={data}
-                  addContactProject={addContactProject}
-                  setProjectDetails={setProjectDetails}
-                />
+                <span>
+                  {_get(ENUMS.STATE_LIST, `[${projectByID.status_code}]`).label}
+                </span>
+              </StyledStatusIcon>
+            </div>
+          </Col>
+          <Col lg={24} className="menu-tab">
+            <Tabs defaultActiveKey="1" type="card" size="small">
+              {/* Tab Tổng Quan */}
+              <TabPane
+                tab={<FormattedMessage {...messages.myProjDetailOverview} />}
+                key="1"
+              >
+                {!isMobile ? (
+                  <ProjectDetailsWeb data={projectByID} />
+                ) : (
+                  <ProjectDetailsMobile data={projectByID} />
+                )}
               </TabPane>
-            )}
-            {/* <TabPane
+              <TabPane
+                tab={<FormattedMessage {...messages.myProjDetailContact} />}
+                key="2"
+              >
+                <Contact data={projectByID} setVisible={setVisible} />
+              </TabPane>
+              {projectByID.is_follow && (
+                <TabPane
+                  tab={<FormattedMessage {...messages.myProjDetailNote} />}
+                  key="3"
+                >
+                  <DynamicForm
+                    data={projectByID}
+                    addContactProject={addContactProject}
+                    setProjectDetails={setProjectDetails}
+                  />
+                </TabPane>
+              )}
+              {/* <TabPane
               tab={<FormattedMessage {...messages.myProjDetailAssign} />}
               key="4"
             >
               Đang cập nhật...
             </TabPane> */}
-          </Tabs>
-        </Col>
-      </Row>
+            </Tabs>
+          </Col>
+        </Row>
+      )}
       <ContactModal
         visible={visible}
         onCreate={onCreate}
@@ -305,19 +323,24 @@ export function ProjectDetails({
 
 ProjectDetails.propTypes = {
   successResponse: PropTypes.object,
+  projectByID: PropTypes.array,
   history: PropTypes.object,
   data: PropTypes.object,
+  currentPage: PropTypes.string,
   addContactProject: PropTypes.func,
+  fetchProject: PropTypes.func,
   intl: intlShape.required,
 };
 
 const mapStateToProps = createStructuredSelector({
   successResponse: makeSelectSuccessMsg(),
+  projectByID: makeSelectProjects(),
 });
 
 export function mapDispatchToProps(dispatch) {
   return {
     addContactProject: data => dispatch(addProjectContact(data)),
+    fetchProject: projectID => dispatch(loadProjectDetails(projectID)),
   };
 }
 

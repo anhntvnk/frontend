@@ -112,14 +112,15 @@ const App = () => {
           }
         />
         <PrivateLayout
-          exact
-          path={ROUTE.PROJECT_DETAILS}
-          getComponent={({ props: { location } }) =>
-            _get(location, 'state.data') ? (
+          path={`${ROUTE.PROJECT_DETAILS}/:projectID`}
+          getComponent={
+            ({ props: { location } }) => (
+              // _get(location, 'state.data') ? (
               <ProjectDetails {...location.state} />
-            ) : (
-              <Redirect strict to={ROUTE.PROJECT} />
             )
+            // ) : (
+            //   <Redirect strict to={ROUTE.PROJECT} />
+            // )
           }
         />
         <PrivateLayout

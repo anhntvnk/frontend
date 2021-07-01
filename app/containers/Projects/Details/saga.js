@@ -3,11 +3,17 @@
  */
 
 import { call, put, takeLatest } from 'redux-saga/effects';
-import { fetchAxios } from 'utils/request';
-import { addProjectContactError, addProjectContactSuccess } from './actions';
+import request, { fetchAxios } from 'utils/request';
+import {
+  addProjectContactError,
+  addProjectContactSuccess,
+  loadProjectDetailsError,
+  loadProjectDetailsSuccess,
+} from './actions';
 import API from '../../../constants/apis';
 
-import { ADD_PROJECT_CONTACT } from './constants';
+import { ADD_PROJECT_CONTACT, LOAD_PROJECT_DETAILS } from './constants';
+import { getToken } from '../../../../services/auth';
 // import { getToken } from '../../../../services/auth';
 
 export function* updateProject(actionData) {
@@ -31,6 +37,21 @@ export function* updateProject(actionData) {
   }
 }
 
+export function* getProjectDetails(actionData) {
+  const { projectID } = actionData;
+
+  const requestURL = `${
+    API.BASE_URL
+  }/project/${projectID}?access_token=${getToken()}`;
+
+  try {
+    const repos = yield call(request, requestURL);
+    yield put(loadProjectDetailsSuccess(repos));
+  } catch (err) {
+    yield put(loadProjectDetailsError(err));
+  }
+}
+
 /**
  * Root saga manages watcher lifecycle
  */
@@ -39,4 +60,5 @@ export default function* projectDetails() {
   // It returns task descriptor (just like fork) so we can continue execution
   // It will be cancelled automatically on component unmount
   yield takeLatest(ADD_PROJECT_CONTACT, updateProject);
+  yield takeLatest(LOAD_PROJECT_DETAILS, getProjectDetails);
 }
