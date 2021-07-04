@@ -96,7 +96,7 @@ export function Procedure({
           icon={<ArrowLeftOutlined />}
           onClick={() =>
             history.replace({
-              pathname: '/projects/details',
+              pathname: `/projects/details/following/${projectDetail.id}`,
               state: { data: projectDetail },
             })
           }

@@ -112,7 +112,7 @@ const App = () => {
           }
         />
         <PrivateLayout
-          path={`${ROUTE.PROJECT_DETAILS}/:projectID`}
+          path={`${ROUTE.PROJECT_DETAILS}/:follow/:projectID`}
           getComponent={
             ({ props: { location } }) => (
               // _get(location, 'state.data') ? (

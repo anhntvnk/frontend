@@ -137,21 +137,25 @@ export function Projects({
       key: 'name',
       sorter: (a, b) => a.name.length - b.name.length,
       responsive: ['lg', 'md', 'xs'],
-      render: (text, record) => (
-        <Link
-          to={{
-            pathname: `${ROUTE.PROJECT_DETAILS}/${record.parent_project_id ||
-              record.id}`,
-            // search: '?query=abc',
-            state: {
-              data: record,
-              currentPage,
-            },
-          }}
-        >
-          {text}
-        </Link>
-      ),
+      render: (text, record) => {
+        const follow = record.is_follow ? 'following' : 'notfollow';
+        return (
+          <Link
+            to={{
+              pathname: `${
+                ROUTE.PROJECT_DETAILS
+              }/${follow}/${record.parent_project_id || record.id}`,
+              // search: '?query=abc',
+              state: {
+                data: record,
+                currentPage,
+              },
+            }}
+          >
+            {text}
+          </Link>
+        );
+      },
     },
     {
       title: <FormattedMessage {...messages.myProjValue} />,

@@ -168,7 +168,7 @@
   "myp.containers.ProjectDetail.proj_detail.contact": "Người liên hệ",
   "myp.containers.ProjectDetail.proj_detail.note": "Ghi chú",
   "myp.containers.ProjectDetail.proj_detail.assign": "Giao việc",
-  "myp.containers.ProjectDetail.proj_detail.status": "Chuyền trạng thai",
+  "myp.containers.ProjectDetail.proj_detail.status": "Chuyển Trạng Thái",
   "myp.containers.ProjectDetail.proj_detail.add_note": "Thêm người liên hệ thành công!",
   "myp.containers.ProjectDetail.proj_detail.add_contact": "Thêm ghi chú thành công!",
   "myp.containers.DetailWeb.detail_web.owner": "Chủ sở hữu:",

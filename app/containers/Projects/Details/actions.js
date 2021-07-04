@@ -29,9 +29,10 @@ import {
  *
  * @return {object} An action object with a type of LOAD_PROJECT_DETAILS
  */
-export function loadProjectDetails(projectID) {
+export function loadProjectDetails({ follow, projectID }) {
   return {
     type: LOAD_PROJECT_DETAILS,
+    follow,
     projectID,
   };
 }

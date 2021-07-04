@@ -116,9 +116,7 @@ export function ProjectDetails({
   const [visible, setVisible] = useState(false);
   const [projectDetails, setProjectDetails] = useState([]);
 
-  const { projectID } = useParams();
-
-  console.log(data, 'data');
+  const { projectID, follow } = useParams();
 
   useEffect(() => {
     enquireScreen(b => {
@@ -129,7 +127,7 @@ export function ProjectDetails({
   }, []);
 
   useEffect(() => {
-    fetchProject(projectID);
+    fetchProject({ projectID, follow });
     if (Object.keys(projectDetails).length > 0) {
       setProjectDetails(projectByID);
     }
@@ -340,7 +338,7 @@ const mapStateToProps = createStructuredSelector({
 export function mapDispatchToProps(dispatch) {
   return {
     addContactProject: data => dispatch(addProjectContact(data)),
-    fetchProject: projectID => dispatch(loadProjectDetails(projectID)),
+    fetchProject: data => dispatch(loadProjectDetails(data)),
   };
 }
 

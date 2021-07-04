@@ -38,14 +38,15 @@ export function* updateProject(actionData) {
 }
 
 export function* getProjectDetails(actionData) {
-  const { projectID } = actionData;
+  const { follow, projectID } = actionData;
 
-  const requestURL = `${
-    API.BASE_URL
-  }/project/${projectID}?access_token=${getToken()}`;
+  const project = `${API.BASE_URL}/project/${projectID}`;
+  const projectFollow = `${API.BASE_URL}/FollowedProjects/${projectID}`;
+
+  const url = follow === 'following' ? projectFollow : project;
 
   try {
-    const repos = yield call(request, requestURL);
+    const repos = yield call(request, url);
     yield put(loadProjectDetailsSuccess(repos));
   } catch (err) {
     yield put(loadProjectDetailsError(err));
