@@ -445,7 +445,6 @@ const UserProfileState = styled.section`
 `;
 
 const UserProfile = styled.div`
-  height: 500px;
   dispay: block;
   max-width: 800px;
   margin: 30px auto;

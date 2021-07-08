@@ -14,7 +14,7 @@ import { compose } from 'redux';
 import moment from 'moment';
 import { get as _get } from 'lodash';
 import { Row, Col, Button } from 'antd';
-import { ArrowLeftOutlined } from '@ant-design/icons';
+import { ArrowLeftOutlined, FormOutlined } from '@ant-design/icons';
 import { createStructuredSelector } from 'reselect';
 import { enquireScreen } from 'enquire-js';
 import { FormattedMessage } from 'react-intl';
@@ -31,6 +31,7 @@ import saga from './saga';
 import './styles.less';
 import logo from '../../../assets/images/logo/my-project.png';
 import messages from '../../../components/SearchCompany/messages';
+import { ROUTE } from '../../../constants';
 
 const key = 'companyDetails';
 const Details = styled.section`
@@ -102,6 +103,21 @@ export function CompanyDetails({ history, data }) {
       </CenteredSectionWithBack>
 
       <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 8 }}>
+        <Col lg={24} md={24}>
+          {_get(data, 'is_follow', '') && (
+            <FormOutlined
+              onClick={() =>
+                history.push(ROUTE.COMPANY_ADDNEW, { isEdit: true, data })
+              }
+              style={{
+                fontSize: '24px',
+                color: '#b7252c',
+                marginBottom: '10px',
+                float: 'right',
+              }}
+            />
+          )}
+        </Col>
         {!isMobile && (
           <Col className="group-item" lg={24} md={24}>
             <BoxDetail>
@@ -124,7 +140,7 @@ export function CompanyDetails({ history, data }) {
           <>
             <Col className="group-item" lg={16} md={24}>
               <BoxDetail>
-                {_get(data, 'contacts', '').length > 0 && (
+                {data.contacts && data.contacts.length > 0 && (
                   <span>
                     <span className="description">
                       <FormattedMessage {...messages.myCompanyDetailContact} />

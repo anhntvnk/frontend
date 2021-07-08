@@ -12,6 +12,10 @@ export default defineMessages({
     id: `${scope}.add_new.title`,
     defaultMessage: 'THÊM MỚI CÔNG TY',
   },
+  myCompanyUpdateNewTitle: {
+    id: `${scope}.update_new.title`,
+    defaultMessage: 'CẬP NHẬT CÔNG TY',
+  },
   myCompanyAddNewName: {
     id: `${scope}.add_new.name`,
     defaultMessage: 'Tên công ty',
@@ -92,6 +96,10 @@ export default defineMessages({
   myCompanyAddBtn: {
     id: `${scope}.add_new.btn`,
     defaultMessage: 'Đăng công ty',
+  },
+  myCompanyUpdateBtn: {
+    id: `${scope}.update_new.btn`,
+    defaultMessage: 'Cập nhật',
   },
   myCompanyBtnBack: {
     id: `${scope}.add_new.btnBack`,

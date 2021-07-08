@@ -12,6 +12,10 @@
 export const ADD_COMPANY = 'vnk/Projects/ADD_COMPANY';
 export const ADD_COMPANY_SUCCESS = 'vnk/Projects/ADD_COMPANY_SUCCESS';
 export const ADD_COMPANY_ERROR = 'vnk/Projects/ADD_COMPANY_ERROR';
+export const UPDATE_COMPANY = 'vnk/Projects/UPDATE_COMPANY';
+export const UPDATE_COMPANY_SUCCESS = 'vnk/Projects/UPDATE_COMPANY_SUCCESS';
+export const UPDATE_COMPANY_ERROR = 'vnk/Projects/UPDATE_COMPANY_ERROR';
+export const RESET_STATE = 'vnk/Projects/RESET_STATE';
 
 export const citys = [
   'An Giang',

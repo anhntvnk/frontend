@@ -13,7 +13,8 @@ import moment from 'moment';
 import {
   ADD_COMPANY_SUCCESS,
   ADD_COMPANY_ERROR,
-  // RESET_STATE,
+  UPDATE_COMPANY_SUCCESS,
+  RESET_STATE,
 } from './constants';
 
 // The initial state of the App
@@ -49,8 +50,16 @@ const addCompanyReducer = (state = initialState, action) =>
           draft.successMessage = 'Thêm Công Ty Thành Công!';
         }
         break;
+      case UPDATE_COMPANY_SUCCESS:
+        if (action.response) {
+          draft.successMessage = 'Cập Nhật Thành Công!';
+        }
+        break;
       case ADD_COMPANY_ERROR:
         draft.error = 'Đã có lỗi xảy ra, không thể thêm công ty!';
+        break;
+      case RESET_STATE:
+        draft.successMessage = '';
         break;
     }
   });

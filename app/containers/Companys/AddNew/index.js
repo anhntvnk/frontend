@@ -11,6 +11,7 @@ import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
+import { isEmpty as _isEmpty } from 'lodash';
 import moment from 'moment';
 import {
   Form,
@@ -32,11 +33,9 @@ import {
 import { createStructuredSelector } from 'reselect';
 import { useInjectReducer } from 'utils/injectReducer';
 import { useInjectSaga } from 'utils/injectSaga';
-import H2 from 'components/H2';
-import CenteredSection from 'components/CenteredSection';
 import styled from 'styled-components';
 import ROUTE from '../../../constants/routes';
-import { addCompany } from './actions';
+import { addCompany, resetState, updateCompany } from './actions';
 import { citys } from './constants';
 import { successMessageSelector, errorSelector } from './selectors';
 import reducer from './reducer';
@@ -53,33 +52,14 @@ export function AddCompany({
   successMessage,
   errorMgs,
   addNewCompany,
+  onUpdateCompany,
+  onReset,
   intl,
 }) {
   useInjectReducer({ key, reducer });
   useInjectSaga({ key, saga });
 
-  useEffect(() => {
-    if (successMessage) {
-      history.push(ROUTE.COMPANY, {
-        successMessage,
-      });
-    }
-  }, [successMessage]);
-
-  useEffect(() => {
-    if (errorMgs) {
-      message.error(errorMgs);
-    }
-  }, [errorMgs]);
-
-  const onFinish = values => {
-    const data = Object.assign(values, {
-      latest_update: moment().format('DD/MM/YYYY HH:mm:ss'),
-    });
-    addNewCompany(data);
-  };
-
-  const formValues = {
+  let formValues = {
     users: [],
     user: null,
     name: '',
@@ -95,6 +75,44 @@ export function AddCompany({
     note: '',
     manager: '',
     image: '',
+  };
+
+  const { isEdit, data } = history.location.state;
+  if (isEdit) {
+    formValues = {
+      ...data,
+      latest_update: moment(data.latest_update).format('DD/MM/YYYY HH:mm:ss'),
+      date: moment(data.date, 'YYYY-MM-DD'),
+    };
+  }
+
+  // const [formValues, setFormValues] = useState({});
+  useEffect(() => {
+    if (successMessage) {
+      onReset();
+      history.push(ROUTE.COMPANY, {
+        successMessage,
+      });
+    }
+  }, [successMessage]);
+
+  useEffect(() => {
+    if (errorMgs) {
+      onReset();
+      message.error(errorMgs);
+    }
+  }, [errorMgs]);
+
+  const onFinish = values => {
+    const company = Object.assign(values, {
+      latest_update: moment().format('DD/MM/YYYY HH:mm:ss'),
+    });
+    if (isEdit) {
+      const newData = { ...data, ...company };
+      onUpdateCompany(newData);
+    } else {
+      addNewCompany(company);
+    }
   };
 
   return (
@@ -113,7 +131,11 @@ export function AddCompany({
           <FormattedMessage {...messages.myCompanyBtnBack} />
         </Button>
         <h1>
-          <FormattedMessage {...messages.myCompanyAddNewTitle} />
+          {isEdit ? (
+            <FormattedMessage {...messages.myCompanyUpdateNewTitle} />
+          ) : (
+            <FormattedMessage {...messages.myCompanyAddNewTitle} />
+          )}
         </h1>
       </CenteredSectionWithBack>
 
@@ -122,7 +144,7 @@ export function AddCompany({
           name="myp_add_company"
           layout="vertical"
           className="add-company-form"
-          initialValues={formValues}
+          initialValues={!_isEmpty(formValues) && formValues}
           onFinish={onFinish}
         >
           <Row gutter={{ xs: 8, sm: 24, md: 24, lg: 32 }}>
@@ -440,7 +462,11 @@ export function AddCompany({
 
           <Form.Item className="register-form-button">
             <Button type="primary" htmlType="submit">
-              <FormattedMessage {...messages.myCompanyAddBtn} />
+              {isEdit ? (
+                <FormattedMessage {...messages.myCompanyUpdateBtn} />
+              ) : (
+                <FormattedMessage {...messages.myCompanyAddBtn} />
+              )}
             </Button>
           </Form.Item>
         </Form>
@@ -478,6 +504,8 @@ const CenteredSectionWithBack = styled.section`
 
 AddCompany.propTypes = {
   addNewCompany: PropTypes.func,
+  onUpdateCompany: PropTypes.func,
+  onReset: PropTypes.func,
   successMessage: PropTypes.string,
   errorMgs: PropTypes.string,
   history: PropTypes.object,
@@ -492,6 +520,8 @@ const mapStateToProps = createStructuredSelector({
 export function mapDispatchToProps(dispatch) {
   return {
     addNewCompany: data => dispatch(addCompany(data)),
+    onUpdateCompany: data => dispatch(updateCompany(data)),
+    onReset: () => dispatch(resetState()),
   };
 }
 

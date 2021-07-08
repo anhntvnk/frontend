@@ -17,8 +17,12 @@
 
 import {
   ADD_COMPANY,
+  UPDATE_COMPANY,
   ADD_COMPANY_SUCCESS,
   ADD_COMPANY_ERROR,
+  UPDATE_COMPANY_SUCCESS,
+  UPDATE_COMPANY_ERROR,
+  RESET_STATE,
 } from './constants';
 
 /**
@@ -29,6 +33,13 @@ import {
 export function addCompany(data) {
   return {
     type: ADD_COMPANY,
+    data,
+  };
+}
+
+export function updateCompany(data) {
+  return {
+    type: UPDATE_COMPANY,
     data,
   };
 }
@@ -58,5 +69,39 @@ export function addCompanyError(error) {
   return {
     type: ADD_COMPANY_ERROR,
     error,
+  };
+}
+
+/**
+ * Dispatched when the repositories are loaded by the request saga
+ *
+ * @param  {array} response The repository data
+ *
+ * @return {object}
+ */
+export function updateCompanySuccess(response) {
+  return {
+    type: UPDATE_COMPANY_SUCCESS,
+    response,
+  };
+}
+
+/**
+ * Dispatched when loading the repositories fails
+ *
+ * @param  {object} error The error
+ *
+ * @return {object}       An action object with a type of ADD_COMPANY_ERROR passing the error
+ */
+export function updateCompanyError(error) {
+  return {
+    type: UPDATE_COMPANY_ERROR,
+    error,
+  };
+}
+
+export function resetState() {
+  return {
+    type: RESET_STATE,
   };
 }

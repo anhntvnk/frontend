@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Form, Row, Col, Input, Button, Select } from 'antd';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import messages from './messages';
 import { citys } from './constants';
@@ -15,6 +15,7 @@ const SearchCompany = ({
   onResetFields,
   onChangeProject,
   companyType,
+  history,
   intl,
 }) => {
   const [form] = Form.useForm();
@@ -102,11 +103,17 @@ const SearchCompany = ({
       </Row>
       <Row>
         <Col span={12} style={{ textAlign: 'left' }}>
-          <Link component="a" toHash={false} to={routes.COMPANY_ADDNEW}>
-            <Button style={{ marginLeft: '5px' }} type="primary">
-              <FormattedMessage {...messages.myCompanyBtnAdd} />
-            </Button>
-          </Link>
+          {/* <Link component="a" toHash={false} to={routes.COMPANY_ADDNEW}> */}
+          <Button
+            style={{ marginLeft: '5px' }}
+            type="primary"
+            onClick={() =>
+              history.push(routes.COMPANY_ADDNEW, { isEdit: false, data: [] })
+            }
+          >
+            <FormattedMessage {...messages.myCompanyBtnAdd} />
+          </Button>
+          {/* </Link> */}
         </Col>
         <Col span={12} style={{ textAlign: 'right' }}>
           <Button type="primary" htmlType="submit">
@@ -132,7 +139,8 @@ SearchCompany.propTypes = {
   onChangeProject: PropTypes.func,
   onResetFields: PropTypes.func,
   companyType: PropTypes.string,
+  history: PropTypes.object,
   intl: intlShape.isRequired,
 };
 
-export default injectIntl(SearchCompany);
+export default withRouter(injectIntl(SearchCompany));
