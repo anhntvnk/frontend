@@ -142,9 +142,9 @@ export function Projects({
       responsive: ['lg', 'md', 'xs'],
       render: (text, record) => {
         const follow = record.is_follow ? 'following' : 'notfollow';
-        let projectId = record.parent_project_id;
-        if (record.is_follow) {
-          projectId = record.id;
+        let projectId = record.id;
+        if (!record.is_follow) {
+          projectId = record.parent_project_id || record.id;
         }
         return (
           <Link

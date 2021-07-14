@@ -257,12 +257,12 @@ export function User({
                   </List>
                 </Profile>
               </TabPane>
-              <TabPane
+              {/* <TabPane
                 tab={<FormattedMessage {...messages.myProfileAssign} />}
                 key="2"
               >
                 <FormattedMessage {...messages.myProfileUpdating} />
-              </TabPane>
+              </TabPane> */}
               <TabPane
                 style={{
                   display: 'flex',
