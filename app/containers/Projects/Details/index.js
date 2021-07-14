@@ -321,7 +321,7 @@ export function ProjectDetails({
 
 ProjectDetails.propTypes = {
   successResponse: PropTypes.object,
-  projectByID: PropTypes.array,
+  projectByID: PropTypes.object,
   history: PropTypes.object,
   data: PropTypes.object,
   currentPage: PropTypes.string,
