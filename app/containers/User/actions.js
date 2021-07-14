@@ -23,6 +23,9 @@ import {
   LOAD_PACKAGE_ORDER_SUCCESS,
   LOAD_PACKAGE_ORDER_ERROR,
   RESET_FORM,
+  LOAD_LIST_USER,
+  LOAD_LIST_USER_SUCCESS,
+  LOAD_LIST_USER_ERROR,
 } from './constants';
 
 export function loadUserProfile() {
@@ -41,6 +44,26 @@ export function loadUserProfileSuccess(response) {
 export function loadUserProfileError(error) {
   return {
     type: LOAD_USER_ERROR,
+    error,
+  };
+}
+
+export function getListUser() {
+  return {
+    type: LOAD_LIST_USER,
+  };
+}
+
+export function getListUserSuccess(response) {
+  return {
+    type: LOAD_LIST_USER_SUCCESS,
+    response,
+  };
+}
+
+export function getListUserError(error) {
+  return {
+    type: LOAD_LIST_USER_ERROR,
     error,
   };
 }

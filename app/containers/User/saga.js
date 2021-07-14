@@ -10,8 +10,10 @@ import {
   loadUserProfileError,
   setPackageOrderSuccess,
   setPackageOrderError,
+  getListUserSuccess,
+  getListUserError,
 } from './actions';
-import { LOAD_PACKAGE_ORDER, LOAD_USER } from './constants';
+import { LOAD_LIST_USER, LOAD_PACKAGE_ORDER, LOAD_USER } from './constants';
 import { getToken, getUserId } from '../../../services/auth';
 
 export function* fetchProfile() {
@@ -38,6 +40,36 @@ export function* fetchProfile() {
     }
   } catch (err) {
     yield put(loadUserProfileError(err));
+  }
+}
+
+export function* fetchUser() {
+  const user = JSON.parse(localStorage.getItem('user'));
+  let filter = ``;
+  if (user.team_id) {
+    filter = `filter[where][team_id]=${user.team_id}`;
+  } else {
+    filter = `filter[where][team_id]=-1`;
+  }
+
+  if (!user) {
+    // eslint-disable-next-line no-multi-assign
+    filter = filter += `&filter[where][id]=${user.id}`;
+  }
+  const url = `${API.BASE_URL}/user/?access_token=${getToken()}&${filter}`;
+  const url2 = `${API.BASE_URL}/task/?access_token=${getToken()}`;
+
+  try {
+    const userRes = yield call(request, url);
+    const taskRes = yield call(request, url2);
+
+    if (userRes && taskRes) {
+      yield put(getListUserSuccess({ user: userRes, tasks: taskRes }));
+    } else {
+      yield put(getListUserError('Đã có lỗi xảy ra !'));
+    }
+  } catch (err) {
+    yield put(getListUserError(err));
   }
 }
 
@@ -77,5 +109,6 @@ export default function* userSaga() {
   // It returns task descriptor (just like fork) so we can continue execution
   // It will be cancelled automatically on component unmount
   yield takeLatest(LOAD_USER, fetchProfile);
+  yield takeLatest(LOAD_LIST_USER, fetchUser);
   yield takeLatest(LOAD_PACKAGE_ORDER, orderPlan);
 }

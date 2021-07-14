@@ -19,4 +19,10 @@ const makeSelectOrder = () =>
     state => state.isSuccess,
   );
 
-export { select, makeSelectUserProfille, makeSelectOrder };
+const makeSelectListUser = () =>
+  createSelector(
+    select,
+    state => state.listUser,
+  );
+
+export { select, makeSelectUserProfille, makeSelectOrder, makeSelectListUser };
