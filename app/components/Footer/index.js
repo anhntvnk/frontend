@@ -124,13 +124,13 @@ function Footer() {
             <FormattedMessage {...messages.footerCopyright} />
           </Col>
           <Col span={12}>
-            <a className="logo" href="/">
+            {/* <a className="logo" href="/">
               <img
                 src={require('../../assets/images/vnk-iso.png')}
                 alt="VNK ISO"
                 className="vnk-iso"
               />
-            </a>
+            </a> */}
           </Col>
         </Copyright>
       </Info>

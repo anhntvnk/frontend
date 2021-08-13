@@ -23,7 +23,7 @@ import { useInjectSaga } from 'utils/injectSaga';
 import { FormattedMessage } from 'react-intl';
 import styled from 'styled-components';
 import H1 from 'components/H1';
-import DynamicForm from 'components/User/DynamicForm';
+// import AssignTasks from 'components/User/AssignTasks';
 import {
   makeSelectListUser,
   makeSelectOrder,
@@ -49,11 +49,11 @@ const { Meta } = Card;
 export function User({
   history,
   userProfile,
-  onGetListUser,
+  // onGetListUser,
   onLoadUserProfile,
   onOrderPlan,
   onResetForm,
-  listUser,
+  // listUser,
   isSuccess,
 }) {
   useInjectReducer({ key, reducer });
@@ -66,7 +66,7 @@ export function User({
 
   useEffect(() => {
     onLoadUserProfile();
-    onGetListUser();
+    // onGetListUser();
   }, []);
 
   useEffect(() => {
@@ -271,12 +271,12 @@ export function User({
                   </List>
                 </Profile>
               </TabPane>
-              <TabPane
+              {/* <TabPane
                 tab={<FormattedMessage {...messages.myProfileAssign} />}
                 key="2"
               >
-                <DynamicForm />
-              </TabPane>
+                <AssignTasks data={listUser} />
+              </TabPane> */}
               <TabPane
                 style={{
                   display: 'flex',

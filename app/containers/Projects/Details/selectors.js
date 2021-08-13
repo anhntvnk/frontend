@@ -19,4 +19,10 @@ const makeSelectProjects = () =>
     state => state.projectInfo,
   );
 
-export { makeSelectProjects, makeSelectSuccessMsg };
+const makeSelectListUser = () =>
+  createSelector(
+    selectProjects,
+    state => state.listUser,
+  );
+
+export { makeSelectProjects, makeSelectSuccessMsg, makeSelectListUser };

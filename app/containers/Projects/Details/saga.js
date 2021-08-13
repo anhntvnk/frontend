@@ -7,13 +7,22 @@ import request, { fetchAxios } from 'utils/request';
 import {
   addProjectContactError,
   addProjectContactSuccess,
+  addTaskError,
+  addTaskSuccess,
+  getListUserError,
+  getListUserSuccess,
   loadProjectDetailsError,
   loadProjectDetailsSuccess,
 } from './actions';
 import API from '../../../constants/apis';
 
-import { ADD_PROJECT_CONTACT, LOAD_PROJECT_DETAILS } from './constants';
-import { getToken } from '../../../../services/auth';
+import {
+  ADD_PROJECT_CONTACT,
+  ADD_TASK,
+  LOAD_LIST_USER,
+  LOAD_PROJECT_DETAILS,
+} from './constants';
+import { getToken, getUserId } from '../../../../services/auth';
 // import { getToken } from '../../../../services/auth';
 
 export function* updateProject(actionData) {
@@ -53,6 +62,60 @@ export function* getProjectDetails(actionData) {
   }
 }
 
+export function* fetchUser() {
+  const user = JSON.parse(localStorage.getItem('user'));
+  let filter = ``;
+  if (user.team_id) {
+    // eslint-disable-next-line prettier/prettier
+    filter = `filter[where][team_id]=${
+      user.team_id
+    }&filter[where][id][neq]=${getUserId()}`;
+  } else {
+    filter = `filter[where][team_id]=-1`;
+  }
+
+  if (!user) {
+    // eslint-disable-next-line no-multi-assign
+    filter = filter += `&filter[where][id]=${user.id}`;
+  }
+  const url = `${API.BASE_URL}/user/?access_token=${getToken()}&${filter}`;
+  const url2 = `${API.BASE_URL}/task?access_token=${getToken()}`;
+
+  try {
+    const userRes = yield call(request, url);
+    const taskRes = yield call(request, url2);
+
+    if (userRes && taskRes) {
+      yield put(getListUserSuccess({ user: userRes, tasks: taskRes }));
+    } else {
+      yield put(getListUserError('Đã có lỗi xảy ra !'));
+    }
+  } catch (err) {
+    yield put(getListUserError(err));
+  }
+}
+
+export function* addTaskSaga(actionData) {
+  const {
+    data: { newTask, location },
+  } = actionData;
+  const url = `${API.BASE_URL}/task?access_token=${getToken()}`;
+
+  try {
+    const response = yield call(fetchAxios, {
+      method: 'post',
+      url,
+      headers: { 'Content-Type': 'application/json' },
+      responseType: 'json',
+      data: newTask,
+    });
+
+    yield put(addTaskSuccess({ task: response, location }));
+  } catch (err) {
+    yield put(addTaskError(err));
+  }
+}
+
 /**
  * Root saga manages watcher lifecycle
  */
@@ -62,4 +125,6 @@ export default function* projectDetails() {
   // It will be cancelled automatically on component unmount
   yield takeLatest(ADD_PROJECT_CONTACT, updateProject);
   yield takeLatest(LOAD_PROJECT_DETAILS, getProjectDetails);
+  yield takeLatest(LOAD_LIST_USER, fetchUser);
+  yield takeLatest(ADD_TASK, addTaskSaga);
 }

@@ -11,6 +11,8 @@
 import produce from 'immer';
 import {
   ADD_PROJECT_CONTACT_SUCCESS,
+  ADD_TASK_SUCCESS,
+  LOAD_LIST_USER_SUCCESS,
   LOAD_PROJECT_DETAILS_SUCCESS,
 } from './constants';
 
@@ -18,6 +20,7 @@ import {
 export const initialState = {
   successMsg: {},
   projectInfo: {},
+  listUser: [],
 };
 
 /* eslint-disable default-case, no-param-reassign */
@@ -29,6 +32,18 @@ const projectDetaisReducer = (state = initialState, action) =>
         draft.projectInfo = response;
         break;
       case ADD_PROJECT_CONTACT_SUCCESS:
+        draft.successMsg = action.response;
+        break;
+      case LOAD_LIST_USER_SUCCESS:
+        const { user, tasks } = action.response;
+        const userWithTask = user.map(item => {
+          const task = tasks.filter(t => item.id === t.user_id);
+          return { ...item, task };
+        });
+
+        draft.listUser = userWithTask;
+        break;
+      case ADD_TASK_SUCCESS:
         draft.successMsg = action.response;
         break;
     }

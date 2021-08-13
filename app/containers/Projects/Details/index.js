@@ -29,16 +29,27 @@ import CenteredSectionWithBack from 'components/CenteredSectionWithBack';
 import ProjectDetailsMobile from 'components/Projects/DetailsMobile';
 import ProjectDetailsWeb from 'components/Projects/DetailsWeb';
 import DynamicForm from 'components/Projects/DynamicForm';
+import AssignTasks from 'components/Projects/AssignTasks';
 import { Contact, ContactModal } from 'components/Projects/Contact';
 import H2 from 'components/H2';
 import styled from 'styled-components';
-import { makeSelectSuccessMsg, makeSelectProjects } from './selectors';
-import { addProjectContact, loadProjectDetails } from './actions';
-import reducer from './reducer';
 import saga from './saga';
-import './styles.less';
+import reducer from './reducer';
+import {
+  makeSelectSuccessMsg,
+  makeSelectProjects,
+  makeSelectListUser,
+} from './selectors';
+import {
+  addProjectContact,
+  loadProjectDetails,
+  getListUser,
+  addTaskAssign,
+} from './actions';
+
 import { ENUMS, ROUTE } from '../../../constants';
 import messages from './messages';
+import './styles.less';
 
 const key = 'projectDetails';
 const { TabPane } = Tabs;
@@ -101,11 +112,13 @@ enquireScreen(b => {
 
 export function ProjectDetails({
   history,
-  data,
+  listUser,
   currentPage,
   successResponse,
   addContactProject,
   fetchProject,
+  addTask,
+  fetchListUser,
   projectByID,
   intl,
 }) {
@@ -128,6 +141,7 @@ export function ProjectDetails({
 
   useEffect(() => {
     fetchProject({ projectID, follow });
+    fetchListUser();
     if (Object.keys(projectDetails).length > 0) {
       setProjectDetails(projectByID);
     }
@@ -151,6 +165,18 @@ export function ProjectDetails({
       message.success(
         intl.formatMessage({
           ...messages.myProjAddNoteSuccess,
+        }),
+      );
+      history.replace({
+        ...history.location,
+        state: { data: projectDetails },
+      });
+    }
+
+    if (successResponse.location === 'ADD_TASK') {
+      message.success(
+        intl.formatMessage({
+          ...messages.myProjAddTaskSuccess,
         }),
       );
       history.replace({
@@ -298,12 +324,16 @@ export function ProjectDetails({
                   />
                 </TabPane>
               )}
-              {/* <TabPane
-              tab={<FormattedMessage {...messages.myProjDetailAssign} />}
-              key="4"
-            >
-              Đang cập nhật...
-            </TabPane> */}
+              <TabPane
+                tab={<FormattedMessage {...messages.myProjDetailAssign} />}
+                key="4"
+              >
+                <AssignTasks
+                  data={listUser}
+                  projectID={projectByID.id}
+                  addTask={addTask}
+                />
+              </TabPane>
             </Tabs>
           </Col>
         </Row>
@@ -321,24 +351,30 @@ export function ProjectDetails({
 
 ProjectDetails.propTypes = {
   successResponse: PropTypes.object,
-  projectByID: PropTypes.array,
+  projectByID: PropTypes.object,
+  listUser: PropTypes.array,
   history: PropTypes.object,
   data: PropTypes.object,
-  currentPage: PropTypes.string,
+  currentPage: PropTypes.number,
   addContactProject: PropTypes.func,
   fetchProject: PropTypes.func,
+  fetchListUser: PropTypes.func,
+  addTask: PropTypes.func,
   intl: intlShape.required,
 };
 
 const mapStateToProps = createStructuredSelector({
   successResponse: makeSelectSuccessMsg(),
   projectByID: makeSelectProjects(),
+  listUser: makeSelectListUser(),
 });
 
 export function mapDispatchToProps(dispatch) {
   return {
     addContactProject: data => dispatch(addProjectContact(data)),
+    addTask: data => dispatch(addTaskAssign(data)),
     fetchProject: data => dispatch(loadProjectDetails(data)),
+    fetchListUser: () => dispatch(getListUser()),
   };
 }
 

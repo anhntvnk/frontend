@@ -47,7 +47,8 @@ export function* fetchUser() {
   const user = JSON.parse(localStorage.getItem('user'));
   let filter = ``;
   if (user.team_id) {
-    filter = `filter[where][team_id]=${user.team_id}`;
+    // eslint-disable-next-line prettier/prettier
+    filter = `filter[where][team_id]=${user.team_id}&filter[where][id][neq]=${getUserId()}`;
   } else {
     filter = `filter[where][team_id]=-1`;
   }

@@ -2,16 +2,26 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import { EditOutlined } from '@ant-design/icons';
-import { Row, Col, Form, Button, List, Skeleton, Modal, Input } from 'antd';
-import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
+import {
+  Row,
+  Col,
+  Form,
+  Button,
+  List,
+  Skeleton,
+  Modal,
+  Input,
+  Select,
+} from 'antd';
+import { injectIntl, intlShape } from 'react-intl';
 import styled from 'styled-components';
 import messages from './messages';
-import logo from '../../../assets/images/logo/my-project.png';
 
-function DynamicForm({ data, intl }) {
-  // const [notes, setNotes] = useState([]);
+const { Option } = Select;
+
+function AssignTasks({ data, intl }) {
+  const [notes, setNotes] = useState([]);
   const [initialValues, setInitialValues] = useState({});
-  // const [noteEdits, setNoteEdits] = useState({});
   const [visible, setVisible] = useState(false);
   const [form] = Form.useForm();
 
@@ -33,6 +43,11 @@ function DynamicForm({ data, intl }) {
     // }
   }, []);
 
+  const onChange = values => {
+    const user = JSON.parse(values);
+    setNotes(user.task);
+  };
+
   const onFinish = values => {
     // const newNote = [
     //   {
@@ -40,11 +55,9 @@ function DynamicForm({ data, intl }) {
     //     ...values,
     //   },
     // ];
-
     // // eslint-disable-next-line camelcase
     // const currentNote = data.custom ? data.custom.note_data : [];
     // const noteMapping = currentNote.filter(n => [noteEdits].indexOf(n) === -1);
-
     // const newData = {
     //   ...data,
     //   custom: {
@@ -69,12 +82,29 @@ function DynamicForm({ data, intl }) {
 
   return (
     <Row className="pd-bottom">
-      <Col lg={9} xs={22} className="dynamic-form">
+      <Col xs={22} className="dynamic-form">
         <StyledHeader>
           <span>
-            <b>
-              <FormattedMessage {...messages.myNoteList} />
-            </b>
+            {data && data.length > 0 && (
+              <Select
+                showSearch
+                style={{ width: 300 }}
+                placeholder="Select a person"
+                optionFilterProp="children"
+                onChange={onChange}
+                filterOption={(input, option) =>
+                  option.children.toLowerCase().indexOf(input.toLowerCase()) >=
+                  0
+                }
+              >
+                {data.map(user => (
+                  <Option value={JSON.stringify(user)}>
+                    {user.full_name}
+                    {user.saleteam_position && ` (${user.saleteam_position})`}
+                  </Option>
+                ))}
+              </Select>
+            )}
           </span>
           <Button
             type="primary"
@@ -98,22 +128,21 @@ function DynamicForm({ data, intl }) {
               pageSize: 5,
             }}
             bordered
-            dataSource={data}
+            dataSource={notes}
             renderItem={item => (
               <List.Item>
                 <Skeleton avatar title={false} loading={item.loading} active>
                   <List.Item.Meta
                     title={
                       <span>
-                        {item.title}&nbsp;-&nbsp;
+                        {item.content}&nbsp;-&nbsp;
                         <span style={{ fontWeight: 300 }}>
-                          {moment(item.time, 'YYYY-MM-DD HH:mm').format(
+                          {moment(item.created, 'YYYY-MM-DD HH:mm').format(
                             'YYYY-MM-DD HH:mm',
                           )}
                         </span>
                       </span>
                     }
-                    description={item.content}
                   />
                   <Button type="link" danger onClick={() => onEditNote(item)}>
                     <EditOutlined />
@@ -123,23 +152,6 @@ function DynamicForm({ data, intl }) {
             )}
           />
         </Form>
-      </Col>
-      <Col
-        lg={8}
-        style={{
-          justifyContent: 'center',
-          display: 'flex',
-          marginTop: '9px',
-          marginLeft: '16px',
-        }}
-      >
-        <img
-          src={data.image || logo}
-          width={220}
-          height={220}
-          alt=""
-          className="vnk-logo"
-        />
       </Col>
 
       <Modal
@@ -211,10 +223,10 @@ function DynamicForm({ data, intl }) {
   );
 }
 
-DynamicForm.propTypes = {
+AssignTasks.propTypes = {
   data: PropTypes.any,
-  addContactProject: PropTypes.any,
-  setProjectDetails: PropTypes.any,
+  // addContactProject: PropTypes.any,
+  // setProjectDetails: PropTypes.any,
   intl: intlShape.required,
 };
 
@@ -224,4 +236,4 @@ const StyledHeader = styled.div`
   color: #b7252c;
 `;
 
-export default injectIntl(DynamicForm);
+export default injectIntl(AssignTasks);
