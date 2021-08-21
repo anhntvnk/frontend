@@ -15,6 +15,7 @@ import {
   concat as _concat,
   includes as _includes,
   get as _get,
+  clone as _clone,
 } from 'lodash';
 import moment from 'moment';
 import {
@@ -61,12 +62,15 @@ const mappingProject = response => {
   );
 };
 
-const updateProjectFollows = (projects, projectID) =>
-  projects.map(project =>
-    project.id === projectID
-      ? { ...project, is_follow: true, parent_project_id: projectID }
-      : project,
-  );
+const updateProjectFollows = (projects, response) => {
+  const cloneProject = _clone(projects);
+  const findIndex = projects.findIndex(project => project.id === response.parent_project_id);
+  if (cloneProject[findIndex]) {
+    cloneProject[findIndex] = response;
+  }
+
+  return cloneProject;
+};
 
 const unFollowProject = (projects, projectID) =>
   projects.map(project =>
@@ -96,7 +100,7 @@ const projectReducer = (state = initialState, action) =>
       case CHANGE_FOLLOW_SUCCESS:
         const newProject = updateProjectFollows(
           state.project,
-          response.parent_project_id,
+          response,
         );
         draft.project = newProject;
         break;

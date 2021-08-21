@@ -18,6 +18,7 @@ import {
   omit as _omit,
   clone as _clone,
   has as _has,
+  isEmpty as _isEmpty,
 } from 'lodash';
 import { createStructuredSelector } from 'reselect';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
@@ -72,7 +73,9 @@ export function Projects({
   );
 
   useEffect(() => {
-    onFetchProject();
+    if (_isEmpty(projectList)) {
+      onFetchProject();
+    }
     if (_get(history.location.state, 'currentPage', '')) {
       setCurrentPage(_get(history.location.state, 'currentPage', ''));
     }
@@ -139,13 +142,14 @@ export function Projects({
       responsive: ['lg', 'md', 'xs'],
       render: (text, record) => {
         const follow = record.is_follow ? 'following' : 'notfollow';
+        let projectId = record.id;
+        if (!record.is_follow) {
+          projectId = record.parent_project_id || record.id;
+        }
         return (
           <Link
             to={{
-              pathname: `${
-                ROUTE.PROJECT_DETAILS
-              }/${follow}/${record.parent_project_id || record.id}`,
-              // search: '?query=abc',
+              pathname: `${ROUTE.PROJECT_DETAILS}/${follow}/${projectId}`,
               state: {
                 data: record,
                 currentPage,
