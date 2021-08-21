@@ -23,11 +23,21 @@ import { useInjectSaga } from 'utils/injectSaga';
 import { FormattedMessage } from 'react-intl';
 import styled from 'styled-components';
 import H1 from 'components/H1';
-import { makeSelectOrder, makeSelectUserProfille } from './selectors';
+// import AssignTasks from 'components/User/AssignTasks';
+import {
+  makeSelectListUser,
+  makeSelectOrder,
+  makeSelectUserProfille,
+} from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 import './styles.less';
-import { loadUserProfile, resetForm, setPackageOrder } from './actions';
+import {
+  getListUser,
+  loadUserProfile,
+  resetForm,
+  setPackageOrder,
+} from './actions';
 import messages from './messages';
 import packageIcon from '../../assets/images/settings/ic_box.png';
 
@@ -39,9 +49,11 @@ const { Meta } = Card;
 export function User({
   history,
   userProfile,
+  // onGetListUser,
   onLoadUserProfile,
   onOrderPlan,
   onResetForm,
+  // listUser,
   isSuccess,
 }) {
   useInjectReducer({ key, reducer });
@@ -54,6 +66,7 @@ export function User({
 
   useEffect(() => {
     onLoadUserProfile();
+    // onGetListUser();
   }, []);
 
   useEffect(() => {
@@ -131,14 +144,15 @@ export function User({
         >
           <Col lg={8} xs={24}>
             <CardStatus>
-              <Card>
+              <Card
+                cover={
+                  <Avatar
+                    // eslint-disable-next-line global-require
+                    src={require('../../assets/images/settings/ic_user_default.png')}
+                  />
+                }
+              >
                 <Meta
-                  avatar={
-                    <Avatar
-                      // eslint-disable-next-line global-require
-                      src={require('../../assets/images/globe/noavatar.png')}
-                    />
-                  }
                   description={
                     <div>
                       <p>
@@ -154,7 +168,7 @@ export function User({
                       <p>
                         <FormattedMessage {...messages.myProfilePosition} />
                         &nbsp;
-                        <b>{_get(userProfile, 'position')}</b>
+                        <b>{_get(userProfile, 'position') || '--'}</b>
                       </p>
                       <p>
                         <FormattedMessage {...messages.myProfileSalary} />
@@ -261,7 +275,7 @@ export function User({
                 tab={<FormattedMessage {...messages.myProfileAssign} />}
                 key="2"
               >
-                <FormattedMessage {...messages.myProfileUpdating} />
+                <AssignTasks data={listUser} />
               </TabPane> */}
               <TabPane
                 style={{
@@ -276,9 +290,7 @@ export function User({
                   </Link>
                 }
                 key="3"
-              >
-                <FormattedMessage {...messages.myProfileUpdating} />
-              </TabPane>
+              />
             </Tabs>
           </Col>
         </Row>
@@ -459,8 +471,14 @@ const CardStatus = styled.div`
   }
 
   .ant-avatar {
-    width: 60px;
-    height: 60px;
+    width: 70px;
+    height: 70px;
+    padding: 5px;
+  }
+
+  .ant-card-cover {
+    display: flex;
+    justify-content: center;
   }
 
   .ant-card-meta-avatar {
@@ -479,6 +497,8 @@ const CardStatus = styled.div`
     border-radius: 2px;
   }
   .ant-card {
+    height: 235px;
+
     @media only screen and (max-width: 767.99px) {
       height: 140px;
     }
@@ -494,7 +514,7 @@ const CardStatus = styled.div`
 
 const StyledPackageCard = styled.div`
   padding: 30px;
-  background: #ececec;
+  background: #d9d9d9;
   margin: auto;
 `;
 
@@ -532,21 +552,25 @@ const StylePrice = styled.span`
 
 User.propTypes = {
   onLoadUserProfile: PropTypes.func,
+  onGetListUser: PropTypes.func,
   onResetForm: PropTypes.func,
   onOrderPlan: PropTypes.func,
   history: PropTypes.object,
   userProfile: PropTypes.any,
+  listUser: PropTypes.any,
   isSuccess: PropTypes.bool,
 };
 
 const mapStateToProps = createStructuredSelector({
   userProfile: makeSelectUserProfille(),
   isSuccess: makeSelectOrder(),
+  listUser: makeSelectListUser(),
 });
 
 export function mapDispatchToProps(dispatch) {
   return {
     onLoadUserProfile: () => dispatch(loadUserProfile()),
+    onGetListUser: () => dispatch(getListUser()),
     onResetForm: () => dispatch(resetForm()),
     onOrderPlan: (data, isEdit) => dispatch(setPackageOrder(data, isEdit)),
   };

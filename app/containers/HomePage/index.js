@@ -352,7 +352,7 @@ export function HomePage({ intl }) {
 
           <MessengerCustomerChat
             pageId="718183361653935"
-            appId="814098585836431"
+            appId="341431724256703"
           />
         </Row>
       </div>

@@ -20,11 +20,12 @@ export default defineMessages({
   },
   address: {
     id: `${scope}.address`,
-    defaultMessage: 'Số 88 Láng Hạ, Đống Đa, Hà Nội',
+    defaultMessage: 'Sky City 88 Láng Hạ, Đống Đa, Hà Nội',
   },
   footerMsg1: {
     id: `${scope}.msg1`,
-    defaultMessage: 'Nếu bạn cần gia tăng doanh số?',
+    defaultMessage:
+      'Chia sẻ cơ hội và kết nối doanh nghiệp ngành xây dựng, cơ điện, nội thất về các công trình. Giúp bạn tiết kiệm 50% thời gian và gia tăng gấp 3 lần doanh số với App My Project!',
   },
   footerMsg2: {
     id: `${scope}.msg2`,
@@ -34,12 +35,40 @@ export default defineMessages({
     id: `${scope}.support`,
     defaultMessage: 'Hỗ trợ khách hàng',
   },
-  footerDown: {
-    id: `${scope}.download`,
-    defaultMessage: 'TẢI ỨNG DỤNG MY PROJECT',
+  footerService: {
+    id: `${scope}.service`,
+    defaultMessage: 'DỊCH VỤ HỖ TRỢ',
+  },
+  footerServiceAcademy: {
+    id: `${scope}.service.academy`,
+    defaultMessage: '• Đào tạo quy trình chuẩn Bán Hàng Dự Án',
+  },
+  footerServiceShare: {
+    id: `${scope}.service.share`,
+    defaultMessage: '• Chia sẻ cơ hội – hỗ trợ kết nối dự án',
+  },
+  footerServiceProvided: {
+    id: `${scope}.service.provided`,
+    defaultMessage: '• Cung cấp công cụ quản lý và theo dõi dự án hiệu quả',
+  },
+  footerServiceInvite: {
+    id: `${scope}.service.invite`,
+    defaultMessage: '• Tham gia cộng đồng Hiệp Hội Xây Dựng Công Nghiệp',
   },
   footerCopyright: {
     id: `${scope}.copyright`,
     defaultMessage: '@Copyright by MYP - Một sản phầm của MYP',
+  },
+  footerPolicy: {
+    id: `${scope}.policy`,
+    defaultMessage: 'Chính Sách',
+  },
+  footerProvision: {
+    id: `${scope}.provision`,
+    defaultMessage: 'Điều Khoản',
+  },
+  footerSolution: {
+    id: `${scope}.solution`,
+    defaultMessage: 'Giải Pháp',
   },
 });

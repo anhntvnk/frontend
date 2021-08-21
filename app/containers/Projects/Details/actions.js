@@ -22,6 +22,12 @@ import {
   ADD_PROJECT_CONTACT,
   ADD_PROJECT_CONTACT_SUCCESS,
   ADD_PROJECT_CONTACT_ERROR,
+  LOAD_LIST_USER_ERROR,
+  LOAD_LIST_USER_SUCCESS,
+  LOAD_LIST_USER,
+  ADD_TASK,
+  ADD_TASK_SUCCESS,
+  ADD_TASK_ERROR,
 } from './constants';
 
 /**
@@ -101,6 +107,47 @@ export function addProjectContactSuccess(response) {
 export function addProjectContactError(error) {
   return {
     type: ADD_PROJECT_CONTACT_ERROR,
+    error,
+  };
+}
+
+export function addTaskAssign(data) {
+  return {
+    type: ADD_TASK,
+    data,
+  };
+}
+
+export function addTaskSuccess(response) {
+  return {
+    type: ADD_TASK_SUCCESS,
+    response,
+  };
+}
+
+export function addTaskError(error) {
+  return {
+    type: ADD_TASK_ERROR,
+    error,
+  };
+}
+
+export function getListUser() {
+  return {
+    type: LOAD_LIST_USER,
+  };
+}
+
+export function getListUserSuccess(response) {
+  return {
+    type: LOAD_LIST_USER_SUCCESS,
+    response,
+  };
+}
+
+export function getListUserError(error) {
+  return {
+    type: LOAD_LIST_USER_ERROR,
     error,
   };
 }

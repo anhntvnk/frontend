@@ -10,6 +10,7 @@
 
 import produce from 'immer';
 import {
+  LOAD_LIST_USER_SUCCESS,
   LOAD_PACKAGE_ORDER_SUCCESS,
   LOAD_USER_SUCCESS,
   RESET_FORM,
@@ -18,6 +19,7 @@ import {
 // The initial state of the App
 export const initialState = {
   userProfile: [],
+  listUser: [],
   isSuccess: false,
 };
 
@@ -27,6 +29,15 @@ const userReducer = (state = initialState, action) =>
     switch (action.type) {
       case LOAD_USER_SUCCESS:
         draft.userProfile = action.response;
+        break;
+      case LOAD_LIST_USER_SUCCESS:
+        const { user, tasks } = action.response;
+        const userWithTask = user.map(item => {
+          const task = tasks.filter(t => item.id === t.user_id);
+          return { ...item, task };
+        });
+
+        draft.listUser = userWithTask;
         break;
       case LOAD_PACKAGE_ORDER_SUCCESS:
         draft.isSuccess = true;

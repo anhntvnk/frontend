@@ -56,4 +56,8 @@ export default defineMessages({
     id: `${scope}.proj_detail.add_note`,
     defaultMessage: 'Thêm ghi chú thành công!',
   },
+  myProjAddTaskSuccess: {
+    id: `${scope}.proj_detail.add_task_success`,
+    defaultMessage: 'Giao việc thành công!',
+  },
 });

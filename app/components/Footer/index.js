@@ -2,9 +2,16 @@
 import React from 'react';
 import { Card, Row, Col, Avatar } from 'antd';
 import styled from 'styled-components';
-import { HomeOutlined, MailOutlined, PhoneOutlined } from '@ant-design/icons';
+import {
+  HomeOutlined,
+  MailOutlined,
+  PhoneOutlined,
+  AppstoreOutlined,
+} from '@ant-design/icons';
 import { FormattedMessage } from 'react-intl';
+import { Link } from 'react-router-dom';
 import messages from './messages';
+import ROUTE from '../../constants/routes';
 const { Meta } = Card;
 
 function Footer() {
@@ -56,37 +63,57 @@ function Footer() {
               <p>
                 <FormattedMessage {...messages.footerMsg1} />
               </p>
-              <p>
+              <b>
                 <FormattedMessage {...messages.footerMsg2} />
-              </p>
+              </b>
             </ChatNow>
           </VnkAdress>
         </Col>
-        <Support lg={8} md={8} sm={24} xs={24}>
+        <Support lg={6} md={6} sm={24} xs={24}>
+          {/* <Card title="Card title">Card content</Card> */}
+          <Card bordered={false}>
+            <FooterSupport>
+              <Link to={ROUTE.POLICY}>
+                <AppstoreOutlined />
+                &nbsp;
+                <FormattedMessage {...messages.footerPolicy} />
+              </Link>
+            </FooterSupport>
+            <FooterSupport>
+              <Link to={ROUTE.PROVISION}>
+                <AppstoreOutlined />
+                &nbsp;
+                <FormattedMessage {...messages.footerProvision} />
+              </Link>
+            </FooterSupport>
+            <FooterSupport>
+              <Link to={ROUTE.SOLUTION}>
+                <AppstoreOutlined />
+                &nbsp;
+                <FormattedMessage {...messages.footerSolution} />
+              </Link>
+            </FooterSupport>
+          </Card>
+        </Support>
+        <Support lg={6} md={6} sm={24} xs={24}>
           {/* <Card title="Card title">Card content</Card> */}
           <Card bordered={false}>
             <p>
               <span className="sp-title">
-                <FormattedMessage {...messages.footerDown} />
+                <FormattedMessage {...messages.footerService} />
               </span>
             </p>
             <p>
-              <a className="logo" href="/">
-                <img
-                  src={require('../../assets/images/ch-play.png')}
-                  alt=""
-                  className="vnk-download-app"
-                />
-              </a>
+              <FormattedMessage {...messages.footerServiceAcademy} />
             </p>
             <p>
-              <a className="logo" href="/">
-                <img
-                  src={require('../../assets/images/app-store.png')}
-                  alt=""
-                  className="vnk-download-app"
-                />
-              </a>
+              <FormattedMessage {...messages.footerServiceShare} />
+            </p>
+            <p>
+              <FormattedMessage {...messages.footerServiceInvite} />
+            </p>
+            <p>
+              <FormattedMessage {...messages.footerServiceProvided} />
             </p>
 
             <p>
@@ -104,11 +131,11 @@ function Footer() {
             </p>
           </Card>
         </Support>
-        <Chairman lg={8} md={8} sm={24} xs={24}>
+        <Chairman lg={4} md={4} sm={24} xs={24}>
           <Card
             bordered={false}
             hoverable
-            style={{ width: 240 }}
+            style={{ width: 200 }}
             cover={
               <img
                 alt="example"
@@ -124,13 +151,13 @@ function Footer() {
             <FormattedMessage {...messages.footerCopyright} />
           </Col>
           <Col span={12}>
-            <a className="logo" href="/">
+            {/* <a className="logo" href="/">
               <img
                 src={require('../../assets/images/vnk-iso.png')}
                 alt="VNK ISO"
                 className="vnk-iso"
               />
-            </a>
+            </a> */}
           </Col>
         </Copyright>
       </Info>
@@ -140,7 +167,6 @@ function Footer() {
 
 const ChatNow = styled.div`
   text-align: center;
-  margin-top: 50px;
 
   .ant-btn,
   .ant-btn:hover,
@@ -235,6 +261,21 @@ const Chairman = styled(Col)`
 const Info = styled(Row)`
   background-color: #b7252c;
   border-bottom: 1px solid #ffffff;
+`;
+
+const FooterSupport = styled.p`
+  font-size: 18px;
+  padding-left: 70px;
+
+  a {
+    display: flex;
+    align-items: center;
+    color: #fff;
+  }
+  a:hover {
+    color: #fff;
+    font-weight: bold;
+  }
 `;
 
 const Copyright = styled(Row)`
