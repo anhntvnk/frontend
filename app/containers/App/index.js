@@ -27,6 +27,10 @@ import Settings from 'containers/Kpi/Settings';
 import KpiMonth from 'containers/Kpi/Month';
 import LoginForm from 'containers/LoginForm/Loadable';
 import Register from 'containers/Register/Loadable';
+import Certification from 'containers/Certification/Loadable';
+import Policy from 'containers/Policy/Loadable';
+import Provision from 'containers/Provision/Loadable';
+import Solution from 'containers/Solution/Loadable';
 import ChangePassword from 'containers/ChangePassword/Loadable';
 import User from 'containers/User/Loadable';
 import Notes from 'containers/Notes/Loadable';
@@ -73,6 +77,14 @@ const App = () => {
       <Switch>
         <PublicLayout exact path={ROUTE.LOGIN} component={LoginForm} />
         <PublicLayout exact path={ROUTE.REGISTER} component={Register} />
+        <PublicLayout
+          exact
+          path={ROUTE.CERTIFICATION}
+          component={Certification}
+        />
+        <PublicLayout exact path={ROUTE.POLICY} component={Policy} />
+        <PublicLayout exact path={ROUTE.PROVISION} component={Provision} />
+        <PublicLayout exact path={ROUTE.SOLUTION} component={Solution} />
         <PublicLayout
           exact
           path={ROUTE.CHANGE_PASSWORD}

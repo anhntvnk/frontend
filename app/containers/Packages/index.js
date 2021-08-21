@@ -6,9 +6,7 @@
 import React from 'react';
 import { Card, Row, Col, Button } from 'antd';
 import { Helmet } from 'react-helmet';
-import CenteredSection from 'components/CenteredSection';
 import CarouselSlide from 'components/Carousel';
-import H1 from 'components/H1';
 import './styles.less';
 import packageStandard from '../../assets/images/package-standard.png';
 import packageEnterprise from '../../assets/images/package-enterprise.png';
