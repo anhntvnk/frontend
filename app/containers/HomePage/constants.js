@@ -9,4 +9,6 @@
  * export const YOUR_ACTION_CONSTANT = 'yourproject/YourContainer/YOUR_ACTION_CONSTANT';
  */
 
-export const CHANGE_USERNAME = 'boilerplate/Home/CHANGE_USERNAME';
+export const LOAD_USER = 'vnk/HOME/LOAD_USER';
+export const LOAD_USER_SUCCESS = 'vnk/HOME/LOAD_USER_SUCCESS';
+export const LOAD_USER_ERROR = 'vnk/HOME/LOAD_USER_ERROR';

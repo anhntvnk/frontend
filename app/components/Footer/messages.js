@@ -35,6 +35,10 @@ export default defineMessages({
     id: `${scope}.support`,
     defaultMessage: 'Hỗ trợ khách hàng',
   },
+  codeCer: {
+    id: `${scope}.codeCer`,
+    defaultMessage: 'Mã giấy phép kinh doanh',
+  },
   footerService: {
     id: `${scope}.service`,
     defaultMessage: 'DỊCH VỤ HỖ TRỢ',

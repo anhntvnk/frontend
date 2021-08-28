@@ -7,6 +7,7 @@ import {
   MailOutlined,
   PhoneOutlined,
   AppstoreOutlined,
+  FieldNumberOutlined,
 } from '@ant-design/icons';
 import { FormattedMessage } from 'react-intl';
 import { Link } from 'react-router-dom';
@@ -47,6 +48,14 @@ function Footer() {
                     &ensp;
                     <span>
                       <a href="mailto: crm@myp.vn">crm@myp.vn</a>
+                    </span>
+                  </p>
+                  <p>
+                    <FieldNumberOutlined />
+                    &ensp;
+                    <span>
+                      <b>001188004366</b>&ensp; (
+                      <FormattedMessage {...messages.codeCer} />)
                     </span>
                   </p>
                 </>

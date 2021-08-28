@@ -15,18 +15,24 @@
  *    }
  */
 
-import { CHANGE_USERNAME } from './constants';
+import { LOAD_USER, LOAD_USER_SUCCESS, LOAD_USER_ERROR } from './constants';
 
-/**
- * Changes the input field of the form
- *
- * @param  {string} username The new text of the input field
- *
- * @return {object} An action object with a type of CHANGE_USERNAME
- */
-export function changeUsername(username) {
+export function loadUserProfile() {
   return {
-    type: CHANGE_USERNAME,
-    username,
+    type: LOAD_USER,
+  };
+}
+
+export function loadUserProfileSuccess(response) {
+  return {
+    type: LOAD_USER_SUCCESS,
+    response,
+  };
+}
+
+export function loadUserProfileError(error) {
+  return {
+    type: LOAD_USER_ERROR,
+    error,
   };
 }

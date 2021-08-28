@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable global-require */
 /* eslint-disable react/no-unescaped-entities */
 /* eslint-disable jsx-a11y/anchor-is-valid */
@@ -7,22 +8,30 @@
  * This is the first thing users see of our App, at the '/' route
  */
 
-import React, { memo } from 'react';
+import React, { memo, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
+import PropTypes from 'prop-types';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import MessengerCustomerChat from 'react-messenger-customer-chat';
 
 import H1 from 'components/H1';
 import H3 from 'components/H3';
-import { Row, Col } from 'antd';
+import PackageCard from 'components/PackageCard';
+import { Row, Col, Modal } from 'antd';
+import { useInjectReducer } from 'utils/injectReducer';
+import { useInjectSaga } from 'utils/injectSaga';
 import {
   CaretRightFilled,
   FileTextFilled,
   DribbbleSquareOutlined,
 } from '@ant-design/icons';
 import styled from 'styled-components';
+import { createStructuredSelector } from 'reselect';
+import { makeSelectUserProfille } from './selectors';
+import reducer from './reducer';
+import saga from './saga';
 import messages from './messages';
 import CenteredSection from './CenteredSection';
 import homeApp from '../../assets/images/home-app.jpg';
@@ -34,9 +43,29 @@ import successReport from '../../assets/images/feature/success-report.png';
 import teacherIcon from '../../assets/images/feature/teacher-icon.png';
 import kpi from '../../assets/images/feature/kpi.jpg';
 import './styles.less';
+import { loadUserProfile } from './actions';
 
+const key = 'home';
 // eslint-disable-next-line react/prop-types
-export function HomePage({ intl }) {
+export function HomePage({ userProfile, onLoadUserProfile, intl }) {
+  useInjectReducer({ key, reducer });
+  useInjectSaga({ key, saga });
+
+  // const [visible, setVisible] = React.useState(false);
+  // const [orderPackage, setOrderPackage] = React.useState({});
+  // const [edit, setEdit] = React.useState(false);
+  // const [alert, setAlert] = React.useState(false);
+
+  useEffect(() => {
+    onLoadUserProfile();
+  }, []);
+
+  const openModal = (item, isEdit) => {
+    // setVisible(true);
+    // setOrderPackage(item);
+    // setEdit(isEdit);
+  };
+
   return (
     <div>
       <Helmet>
@@ -355,11 +384,51 @@ export function HomePage({ intl }) {
             appId="341431724256703"
           />
         </Row>
+        <StylePackageCard>
+          <Col lg={12}>
+            <PackageCard openModal={openModal} userProfile={userProfile} />
+          </Col>
+        </StylePackageCard>
+
+        {/* <ModalConfirm
+          visible={visible}
+          orderPackage={orderPackage}
+          setVisible={setVisible}
+          orderPlan={() => orderPlan(orderPackage, edit)}
+          title={<FormattedMessage {...messages.myProfileTitlePackage} />}
+        /> */}
       </div>
     </div>
   );
 }
 
+// const ModalConfirm = ({
+//   orderPackage,
+//   orderPlan,
+//   visible,
+//   setVisible,
+//   title,
+// }) => (
+//   <Modal
+//     title={title}
+//     centered
+//     visible={visible}
+//     onOk={orderPlan}
+//     onCancel={() => setVisible(false)}
+//   >
+//     <FormattedMessage
+//       {...messages.myProfileContentConfirmPackage}
+//       values={{
+//         package: orderPackage.title,
+//       }}
+//     />
+//   </Modal>
+// );
+const StylePackageCard = styled(Row)`
+  display: flex;
+  justify-content: center;
+  padding-bottom: 50px;
+`;
 const Container = styled(Row)`
   max-width: 1280px;
   margin: 0 auto;
@@ -462,11 +531,23 @@ const BackgroudQRCode = styled.div`
 
 HomePage.prototype = {
   intl: intlShape.isRequired,
+  userProfile: PropTypes.any,
+  onLoadUserProfile: PropTypes.func,
 };
 
+const mapStateToProps = createStructuredSelector({
+  userProfile: makeSelectUserProfille(),
+});
+
+export function mapDispatchToProps(dispatch) {
+  return {
+    onLoadUserProfile: () => dispatch(loadUserProfile()),
+  };
+}
+
 const withConnect = connect(
-  null,
-  null,
+  mapStateToProps,
+  mapDispatchToProps,
 );
 
 export default compose(
