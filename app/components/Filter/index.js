@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import FilterItem from 'components/FilterItem';
 
-import { Button, Row, Col, DatePicker, Form, Input, Cascader } from 'antd';
+import { Button, Row, Col, DatePicker, Form, Input } from 'antd';
 
 const { Search } = Input;
 const { RangePicker } = DatePicker;

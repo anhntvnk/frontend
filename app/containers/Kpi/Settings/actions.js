@@ -22,6 +22,9 @@ import {
   LOAD_KPI,
   LOAD_KPI_SUCCESS,
   LOAD_KPI_ERROR,
+  LOAD_ALL_KPI_SUCCESS,
+  LOAD_ALL_KPI,
+  LOAD_ALL_KPI_ERROR,
 } from './constants';
 
 export function loadKPI() {
@@ -40,6 +43,27 @@ export function loadKPISuccess(response) {
 export function loadKPIError(error) {
   return {
     type: LOAD_KPI_ERROR,
+    error,
+  };
+}
+
+export function loadAllKPI(data) {
+  return {
+    type: LOAD_ALL_KPI,
+    data,
+  };
+}
+
+export function loadAllKPISuccess(response) {
+  return {
+    type: LOAD_ALL_KPI_SUCCESS,
+    response,
+  };
+}
+
+export function loadAllKPIError(error) {
+  return {
+    type: LOAD_ALL_KPI_ERROR,
     error,
   };
 }

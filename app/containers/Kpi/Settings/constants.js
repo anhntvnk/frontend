@@ -13,6 +13,9 @@
 export const LOAD_KPI = 'vnk/KPI/Settings/LOAD_KPI';
 export const LOAD_KPI_SUCCESS = 'vnk/KPI/Settings/LOAD_KPI_SUCCESS';
 export const LOAD_KPI_ERROR = 'vnk/KPI/Settings/LOAD_KPI_ERROR';
+export const LOAD_ALL_KPI = 'vnk/KPI/Settings/LOAD_ALL_KPI';
+export const LOAD_ALL_KPI_SUCCESS = 'vnk/KPI/Settings/LOAD_ALL_KPI_SUCCESS';
+export const LOAD_ALL_KPI_ERROR = 'vnk/KPI/Settings/LOAD_ALL_KPI_ERROR';
 export const UPDATE_KPI = 'vnk/KPI/Settings/UPDATE_KPI';
 export const UPDATE_KPI_SUCCESS = 'vnk/KPI/Settings/UPDATE_KPI_SUCCESS';
 export const UPDATE_KPI_ERROR = 'vnk/KPI/Settings/UPDATE_KPI_ERROR';

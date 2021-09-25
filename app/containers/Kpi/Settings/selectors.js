@@ -12,10 +12,21 @@ const makeSelectKPISettings = () =>
     select,
     state => state.kpis,
   );
+
+const makeSelectKPIExport = () =>
+  createSelector(
+    select,
+    state => state.kpisExport,
+  );
 const makeSelectKPISettingsMsg = () =>
   createSelector(
     select,
     state => state.successMsg,
   );
 
-export { select, makeSelectKPISettings, makeSelectKPISettingsMsg };
+export {
+  select,
+  makeSelectKPISettings,
+  makeSelectKPISettingsMsg,
+  makeSelectKPIExport,
+};

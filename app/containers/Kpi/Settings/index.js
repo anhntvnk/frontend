@@ -6,13 +6,16 @@
  * This is the first thing users see of our App, at the '/' route
  */
 
-import React, { useReducer, useEffect } from 'react';
+import React, { useReducer, useEffect, useState } from 'react';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { Helmet } from 'react-helmet';
 import { FormattedMessage } from 'react-intl';
+import * as FileSaver from 'file-saver';
+import * as XLSX from 'xlsx';
+
 import {
   get as _get,
   mapKeys as _mapKeys,
@@ -20,6 +23,7 @@ import {
   round as _round,
   isNaN as _isNaN,
   isEmpty as _isEmpty,
+  omit as _omit,
 } from 'lodash';
 import moment from 'moment';
 import {
@@ -28,6 +32,7 @@ import {
   SmileTwoTone,
   ReconciliationTwoTone,
   PhoneTwoTone,
+  DownloadOutlined,
 } from '@ant-design/icons';
 import { createStructuredSelector } from 'reselect';
 import { useInjectReducer } from 'utils/injectReducer';
@@ -42,12 +47,18 @@ import {
   List,
   Avatar,
   message,
+  DatePicker,
+  Table,
 } from 'antd';
 import styled from 'styled-components';
-import { makeSelectKPISettings, makeSelectKPISettingsMsg } from './selectors';
+import {
+  makeSelectKPIExport,
+  makeSelectKPISettings,
+  makeSelectKPISettingsMsg,
+} from './selectors';
 import reducer from './reducer';
 import saga from './saga';
-import { loadKPI, updateKPI } from './actions';
+import { loadAllKPI, loadKPI, updateKPI } from './actions';
 import { stateDefault } from './constants';
 import { getUserId } from '../../../../services/auth';
 import messages from '../../../components/Kpi/messages';
@@ -70,12 +81,46 @@ function Point({ point }) {
 export function Settings({
   history,
   kpi,
+  kpiExport,
   successMsg,
   onUpdateKPI,
   onLoadKPIs,
+  onLoadAllKPIs,
 }) {
   useInjectReducer({ key, reducer });
   useInjectSaga({ key, saga });
+
+  const columns = [
+    {
+      title: 'Chào giá',
+      dataIndex: 'chao_gia',
+      key: 'chao_gia',
+      render: text => <a>{text}</a>,
+    },
+    {
+      title: 'Chốt đơn hàng',
+      dataIndex: 'chot_don_hang',
+      key: 'chot_don_hang',
+    },
+    {
+      title: 'Cuộc gọi',
+      dataIndex: 'cuoc_goi',
+      key: 'cuoc_goi',
+    },
+    {
+      title: 'Lịch hẹn gặp',
+      dataIndex: 'lich_hen_gap',
+      key: 'lich_hen_gap',
+    },
+    {
+      title: 'Ngày tháng',
+      dataIndex: 'created',
+      key: 'created',
+    },
+  ];
+
+  const [form] = Form.useForm();
+  const [isDirty, setIsDirty] = useState(true);
 
   useEffect(() => {
     onLoadKPIs();
@@ -86,6 +131,12 @@ export function Settings({
       message.success(<FormattedMessage {...messages.myKPIsuccessMsg} />);
     }
   }, [successMsg]);
+
+  useEffect(() => {
+    if (kpiExport.length > 0) {
+      setIsDirty(false);
+    }
+  }, [kpiExport]);
 
   useEffect(() => {
     if (kpi) {
@@ -210,6 +261,33 @@ export function Settings({
   const dailyScore = _get(stateDefault, 'kpiConfig.daily_score', 0);
   const kpiDaily = _round(total / dailyScore, 2);
   const result = _round((total / dailyScore) * 100, 0);
+  const fileType =
+    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
+  const fileExtension = '.xlsx';
+
+  const config = {
+    rules: [{ type: 'object', required: true, message: 'Please select time!' }],
+  };
+
+  const onSearchKPI = dateTimes => {
+    const { startDate, endDate } = dateTimes;
+    onLoadAllKPIs({
+      startDate: moment(startDate).format('YYYY-MM-DD'),
+      endDate: moment(endDate).format('YYYY-MM-DD'),
+    });
+  };
+
+  const exportToCSV = dataExport => {
+    const newData = dataExport.map(exp =>
+      _omit(exp, ['id', 'user_id', 'custom']),
+    );
+
+    const ws = XLSX.utils.json_to_sheet(newData);
+    const wb = { Sheets: { data: ws }, SheetNames: ['data'] };
+    const excelBuffer = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
+    const data = new Blob([excelBuffer], { type: fileType });
+    FileSaver.saveAs(data, `myp-report-kpi${fileExtension}`);
+  };
 
   return (
     <SettingsComponent>
@@ -363,6 +441,53 @@ export function Settings({
           </Row>
         </Form>
       </KpiState>
+
+      <Form
+        form={form}
+        name="advanced_search"
+        className="ant-advanced-search-form"
+        onFinish={onSearchKPI}
+      >
+        <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
+          <Col md={8}>
+            <Form.Item name="startDate" label="Ngày bắt đầu" {...config}>
+              <DatePicker
+                style={{ width: '100%' }}
+                autoComplete="off"
+                placeholder="Chọn ngày"
+              />
+            </Form.Item>
+          </Col>
+          <Col md={8}>
+            <Form.Item name="endDate" label="Ngày kết thúc" {...config}>
+              <DatePicker
+                style={{ width: '100%' }}
+                autoComplete="off"
+                placeholder="Chọn ngày"
+              />
+            </Form.Item>
+          </Col>
+          <Col md={4}>
+            <Button type="primary" htmlType="submit">
+              Hiển thị KPI
+            </Button>
+          </Col>
+
+          <Col md={4}>
+            <Button
+              disabled={isDirty}
+              type="primary"
+              icon={<DownloadOutlined />}
+              onClick={() => exportToCSV(kpiExport)}
+            >
+              Xuất Excel
+            </Button>
+          </Col>
+        </Row>
+        {kpiExport.length > 0 && (
+          <Table columns={columns} dataSource={kpiExport} />
+        )}
+      </Form>
     </SettingsComponent>
   );
 }
@@ -463,7 +588,6 @@ const KpiState = styled.section`
 `;
 
 const SettingsComponent = styled.div`
-  height: 650px;
   dispay: block;
   max-width: 800px;
   margin: 30px auto;
@@ -539,13 +663,16 @@ const Result = styled.div`
 Settings.propTypes = {
   onUpdateKPI: PropTypes.func,
   onLoadKPIs: PropTypes.any,
+  onLoadAllKPIs: PropTypes.any,
   history: PropTypes.object,
   kpi: PropTypes.any,
+  kpiExport: PropTypes.any,
   successMsg: PropTypes.bool,
 };
 
 const mapStateToProps = createStructuredSelector({
   kpi: makeSelectKPISettings(),
+  kpiExport: makeSelectKPIExport(),
   successMsg: makeSelectKPISettingsMsg(),
 });
 
@@ -553,6 +680,7 @@ export function mapDispatchToProps(dispatch) {
   return {
     onUpdateKPI: data => dispatch(updateKPI(data)),
     onLoadKPIs: () => dispatch(loadKPI()),
+    onLoadAllKPIs: data => dispatch(loadAllKPI(data)),
   };
 }
 

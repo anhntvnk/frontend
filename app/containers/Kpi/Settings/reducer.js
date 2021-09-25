@@ -9,11 +9,17 @@
  */
 
 import produce from 'immer';
-import { LOAD_KPI_SUCCESS, UPDATE_KPI_SUCCESS } from './constants';
+import moment from 'moment';
+import {
+  LOAD_ALL_KPI_SUCCESS,
+  LOAD_KPI_SUCCESS,
+  UPDATE_KPI_SUCCESS,
+} from './constants';
 
 // The initial state of the App
 export const initialState = {
   kpis: [],
+  kpisExport: [],
   successMsg: false,
 };
 
@@ -24,12 +30,20 @@ const userReducer = (state = initialState, action) =>
       case LOAD_KPI_SUCCESS:
         draft.kpis = action.response;
         break;
+      case LOAD_ALL_KPI_SUCCESS:
+        const data = action.response.map(item => ({
+          ...item,
+          created: moment(item.created).format('DD/MM/YYYY'),
+        }));
+        draft.kpisExport = data;
+        break;
       case UPDATE_KPI_SUCCESS:
         draft.kpis = action.response;
         draft.successMsg = true;
         break;
       default:
         draft.kpis = initialState.kpis;
+        draft.kpisExport = initialState.kpisExport;
         draft.successMsg = initialState.successMsg;
     }
   });
