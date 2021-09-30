@@ -47,27 +47,6 @@ export function loadKPIError(error) {
   };
 }
 
-export function loadAllKPI(data) {
-  return {
-    type: LOAD_ALL_KPI,
-    data,
-  };
-}
-
-export function loadAllKPISuccess(response) {
-  return {
-    type: LOAD_ALL_KPI_SUCCESS,
-    response,
-  };
-}
-
-export function loadAllKPIError(error) {
-  return {
-    type: LOAD_ALL_KPI_ERROR,
-    error,
-  };
-}
-
 export function updateKPI(data) {
   return {
     type: UPDATE_KPI,

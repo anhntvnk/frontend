@@ -38,7 +38,8 @@ function Point({ point }) {
 
 const { Meta } = Card;
 
-function Kpi({ kpi, history, Back }) {
+function Kpi({ kpi, user, history, Back }) {
+  console.log('🚀 ~ file: index.js ~ line 42 ~ Kpi ~ user', user);
   const scores = {
     cuoc_goi: 1,
     lich_hen_gap: 3,
@@ -97,15 +98,15 @@ function Kpi({ kpi, history, Back }) {
                         <FormattedMessage
                           {...messages.myKPIprofileAccessCode}
                         />{' '}
-                        <b>MYP{_get(kpi, 'id')}</b>
+                        <b>MYP{_get(user, 'id')}</b>
                       </p>
                       <p>
                         <FormattedMessage {...messages.myKPIprofileName} />{' '}
-                        <b>{_get(kpi, 'full_name')}</b>
+                        <b>{_get(user, 'full_name')}</b>
                       </p>
                       <p>
                         <FormattedMessage {...messages.myKPIprofilePosition} />{' '}
-                        <b>{_get(kpi, 'position')}</b>
+                        <b>{_get(user, 'position')}</b>
                       </p>
                       <p>
                         <FormattedMessage {...messages.myKPIprofileSalary} />{' '}
@@ -389,7 +390,7 @@ const KpiComponent = styled.div`
   height: 650px;
   dispay: block;
   max-width: 800px;
-  margin: 30px auto;
+  margin: 30px auto 10px auto;
 `;
 
 const CardStatus = styled.div`
@@ -457,6 +458,7 @@ const StyledKpis = styled.div`
 
 Kpi.propTypes = {
   kpi: PropTypes.any,
+  user: PropTypes.any,
   history: PropTypes.any,
   Back: PropTypes.any,
 };

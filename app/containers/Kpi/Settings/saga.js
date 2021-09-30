@@ -12,17 +12,17 @@ import {
   updateKPIError,
   loadKPISuccess,
   loadKPIError,
-  loadAllKPISuccess,
-  loadAllKPIError,
 } from './actions';
-import { LOAD_ALL_KPI, LOAD_KPI, UPDATE_KPI } from './constants';
+import { LOAD_KPI, UPDATE_KPI } from './constants';
 import { getToken, getUserId } from '../../../../services/auth';
 
 export function* getKPIs() {
   const currentTime = moment().format('YYYY-MM-DD');
   const filter = `filter[where][user_id]=${getUserId()}&filter[where][created][gte]=${currentTime}`;
   // eslint-disable-next-line prettier/prettier
-  const url = `${API.BASE_URL}/kpi-score/findOne?access_token=${getToken()}&${filter}`;
+  const url = `${
+    API.BASE_URL
+  }/kpi-score/findOne?access_token=${getToken()}&${filter}`;
 
   try {
     const response = yield call(request, url);
@@ -34,26 +34,6 @@ export function* getKPIs() {
     }
   } catch (err) {
     yield put(loadKPIError(err));
-  }
-}
-
-export function* getDataKPI(action) {
-  const { data } = action;
-  const { startDate, endDate } = data;
-  const filter = `filter[where][user_id]=${getUserId()}&filter[where][created][between]=${startDate}&filter[where][created][between]=${endDate}`;
-  // eslint-disable-next-line prettier/prettier
-  const url = `${API.BASE_URL}/kpi-score?access_token=${getToken()}&${filter}`;
-
-  try {
-    const response = yield call(request, url);
-
-    if (response) {
-      yield put(loadAllKPISuccess(response));
-    } else {
-      yield put(loadAllKPIError('Đã có lỗi xảy ra !'));
-    }
-  } catch (err) {
-    yield put(loadAllKPIError(err));
   }
 }
 
@@ -89,6 +69,5 @@ export default function* userSaga() {
   // It returns task descriptor (just like fork) so we can continue execution
   // It will be cancelled automatically on component unmount
   yield takeLatest(LOAD_KPI, getKPIs);
-  yield takeLatest(LOAD_ALL_KPI, getDataKPI);
   yield takeLatest(UPDATE_KPI, updateKpis);
 }

@@ -13,4 +13,16 @@ const makeSelectKPIs = () =>
     state => state.kpis,
   );
 
-export { select, makeSelectKPIs };
+const makeSelectKPIExport = () =>
+  createSelector(
+    select,
+    state => state.kpisExport,
+  );
+
+const makeSelectUser = () =>
+  createSelector(
+    select,
+    state => state.user,
+  );
+
+export { select, makeSelectKPIs, makeSelectKPIExport, makeSelectUser };

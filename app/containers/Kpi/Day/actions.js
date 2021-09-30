@@ -15,7 +15,17 @@
  *    }
  */
 
-import { LOAD_KPI, LOAD_KPI_SUCCESS, LOAD_KPI_ERROR } from './constants';
+import {
+  LOAD_KPI,
+  LOAD_KPI_SUCCESS,
+  LOAD_KPI_ERROR,
+  LOAD_ALL_KPI,
+  LOAD_ALL_KPI_SUCCESS,
+  LOAD_ALL_KPI_ERROR,
+  LOAD_USER,
+  LOAD_USER_SUCCESS,
+  LOAD_USER_ERROR,
+} from './constants';
 
 export function loadKPI() {
   return {
@@ -33,6 +43,47 @@ export function loadKPISuccess(response) {
 export function loadKPIError(error) {
   return {
     type: LOAD_KPI_ERROR,
+    error,
+  };
+}
+
+export function loadAllKPI(data) {
+  return {
+    type: LOAD_ALL_KPI,
+    data,
+  };
+}
+
+export function loadAllKPISuccess(response) {
+  return {
+    type: LOAD_ALL_KPI_SUCCESS,
+    response,
+  };
+}
+
+export function loadAllKPIError(error) {
+  return {
+    type: LOAD_ALL_KPI_ERROR,
+    error,
+  };
+}
+
+export function loadUser() {
+  return {
+    type: LOAD_USER,
+  };
+}
+
+export function loadUserSuccess(response) {
+  return {
+    type: LOAD_USER_SUCCESS,
+    response,
+  };
+}
+
+export function loadUserError(error) {
+  return {
+    type: LOAD_USER_ERROR,
     error,
   };
 }
