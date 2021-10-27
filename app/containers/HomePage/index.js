@@ -18,8 +18,7 @@ import MessengerCustomerChat from 'react-messenger-customer-chat';
 
 import H1 from 'components/H1';
 import H3 from 'components/H3';
-import PackageCard from 'components/PackageCard';
-import { Row, Col, Modal } from 'antd';
+import { Row, Col } from 'antd';
 import { useInjectReducer } from 'utils/injectReducer';
 import { useInjectSaga } from 'utils/injectSaga';
 import {
@@ -384,11 +383,6 @@ export function HomePage({ userProfile, onLoadUserProfile, intl }) {
             appId="341431724256703"
           />
         </Row>
-        <StylePackageCard>
-          <Col lg={12}>
-            <PackageCard openModal={openModal} userProfile={userProfile} />
-          </Col>
-        </StylePackageCard>
 
         {/* <ModalConfirm
           visible={visible}
@@ -424,11 +418,7 @@ export function HomePage({ userProfile, onLoadUserProfile, intl }) {
 //     />
 //   </Modal>
 // );
-const StylePackageCard = styled(Row)`
-  display: flex;
-  justify-content: center;
-  padding-bottom: 50px;
-`;
+
 const Container = styled(Row)`
   max-width: 1280px;
   margin: 0 auto;

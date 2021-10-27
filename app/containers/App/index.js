@@ -31,6 +31,7 @@ import Certification from 'containers/Certification/Loadable';
 import Policy from 'containers/Policy/Loadable';
 import Provision from 'containers/Provision/Loadable';
 import Solution from 'containers/Solution/Loadable';
+import PriceList from 'containers/PriceList/Loadable';
 import ChangePassword from 'containers/ChangePassword/Loadable';
 import User from 'containers/User/Loadable';
 import Notes from 'containers/Notes/Loadable';
@@ -85,6 +86,7 @@ const App = () => {
         <PublicLayout exact path={ROUTE.POLICY} component={Policy} />
         <PublicLayout exact path={ROUTE.PROVISION} component={Provision} />
         <PublicLayout exact path={ROUTE.SOLUTION} component={Solution} />
+        <PublicLayout exact path={ROUTE.PRICE} component={PriceList} />
         <PublicLayout
           exact
           path={ROUTE.CHANGE_PASSWORD}

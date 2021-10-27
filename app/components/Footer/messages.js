@@ -75,4 +75,8 @@ export default defineMessages({
     id: `${scope}.solution`,
     defaultMessage: 'Giải Pháp',
   },
+  footerPriceList: {
+    id: `${scope}.priceList`,
+    defaultMessage: 'Bảng Giá',
+  },
 });

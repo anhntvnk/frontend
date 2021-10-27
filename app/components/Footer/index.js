@@ -102,6 +102,13 @@ function Footer() {
                 <FormattedMessage {...messages.footerSolution} />
               </Link>
             </FooterSupport>
+            <FooterSupport>
+              <Link to={ROUTE.PRICE}>
+                <AppstoreOutlined />
+                &nbsp;
+                <FormattedMessage {...messages.footerPriceList} />
+              </Link>
+            </FooterSupport>
           </Card>
         </Support>
         <Support lg={6} md={6} sm={24} xs={24}>

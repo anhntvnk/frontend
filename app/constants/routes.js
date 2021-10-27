@@ -11,6 +11,7 @@ export default {
   POLICY: '/Policy',
   PROVISION: '/Provision',
   SOLUTION: '/Solution',
+  PRICE: '/PriceList',
   CHANGE_PASSWORD: '/change-password',
   PACKAGES: '/packages',
   PROCEDURE: '/procedure',
