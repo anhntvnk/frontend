@@ -78,10 +78,18 @@ export function AddProject({
       formData.append('file', fileList[0].originFileObj);
     }
 
+    const user = JSON.parse(localStorage.getItem('user'));
+    const teamID = user.team_id || 0;
+
     const data = {
-      project: Object.assign(values, { status_code: 1 }),
+      project: Object.assign(values, {
+        status_code: 1,
+        user_id: user.id,
+        team_id: teamID,
+      }),
       formData,
     };
+
     addNewProject(data);
   };
 

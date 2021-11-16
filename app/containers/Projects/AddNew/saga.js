@@ -6,7 +6,6 @@ import { call, put, takeLatest } from 'redux-saga/effects';
 import { fetchAxios } from 'utils/request';
 import { ADD_PROJECTS } from './constants';
 import { addProjectSuccess, addProjectError } from './actions';
-import { getUserId } from '../../../../services/auth';
 import API from '../../../constants/apis';
 
 export function* addProject(actionData) {
@@ -34,7 +33,7 @@ export function* addProject(actionData) {
       url: requestURL,
       headers: { 'Content-Type': 'application/json' },
       responseType: 'json',
-      data: { ...project, user_id: getUserId() },
+      data: project,
     });
     yield put(addProjectSuccess(response));
   } catch (err) {

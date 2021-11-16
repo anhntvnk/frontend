@@ -417,7 +417,12 @@ export default function PriceList() {
         </StylePackageCard>
         <Row>
           <StyleCol lg={24}>
-            <Table dataSource={data} bordered>
+            <Table
+              style={{ marginBottom: '100px' }}
+              dataSource={data}
+              bordered
+              pagination={false}
+            >
               <Column title="Function" dataIndex="function" key="function" />
               <ColumnGroup title="Package">
                 <Column title="Basic" dataIndex="basic" key="basic" />
@@ -460,4 +465,8 @@ const StyleContent = styled.div`
 `;
 const StyleCol = styled(Col)`
   padding: 0 100px;
+
+  @media screen and (max-width: 767px) {
+    padding: unset;
+  }
 `;
