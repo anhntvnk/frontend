@@ -56,13 +56,13 @@ function Contact({ data, setVisible }) {
                         <span>
                           <b>
                             <FormattedMessage {...messages.myContactEmail} />
-                          </b>{' '}
+                          </b>
                           {contact.email}
                         </span>
                         <span>
                           <b>
                             <FormattedMessage {...messages.myContactPosition} />
-                          </b>{' '}
+                          </b>
                           {contact.position}
                         </span>
                       </StyledContent>
@@ -70,7 +70,7 @@ function Contact({ data, setVisible }) {
                         <span>
                           <b>
                             <FormattedMessage {...messages.myContactPhone} />
-                          </b>{' '}
+                          </b>
                           {contact.phone}
                         </span>
                         <span>

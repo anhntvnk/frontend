@@ -6,7 +6,7 @@
  * This is the first thing users see of our App, at the '/' route
  */
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
@@ -48,6 +48,15 @@ export function Register({
 }) {
   useInjectReducer({ key, reducer });
   useInjectSaga({ key, saga });
+
+  useEffect(() => {
+    if (statusResponse === 'success') {
+      window.gtag('config', 'AW-880683669', {
+        page_title: 'Register Success',
+        page_path: ROUTE.REGISTER,
+      });
+    }
+  }, [statusResponse]);
 
   const onFinish = formValues => {
     onRegister(_omit(formValues, ['repassword']));
