@@ -57,7 +57,7 @@ const mappingProject = response => {
   const result = listProject.map(project =>
     Object.assign(project, { is_follow: _get(project, 'is_follow', false) }),
   );
-  return [...new Map(result.map(item => [item.name, item])).values()].sort(
+  return result.sort(
     (x, y) => y.is_follow - x.is_follow,
   );
 };

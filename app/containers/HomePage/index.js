@@ -328,6 +328,18 @@ export function HomePage({ userProfile, onLoadUserProfile, intl }) {
               image={require('../../assets/images/home/report.jpg')}
             />
           </Col>
+          <Col lg={6} xs={24} />
+          <Col lg={6} xs={24}>
+            <BackgroudImg
+              image={require('../../assets/images/home/project-list.jpg')}
+            />
+          </Col>
+          <Col lg={6} xs={24}>
+            <BackgroudImg
+              image={require('../../assets/images/home/process.jpg')}
+            />
+          </Col>
+          <Col lg={6} xs={24} />
         </Container>
 
         <Row>
