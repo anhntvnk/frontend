@@ -396,40 +396,84 @@ export function HomePage({ userProfile, onLoadUserProfile, intl }) {
           />
         </Row>
 
-        {/* <ModalConfirm
-          visible={visible}
-          orderPackage={orderPackage}
-          setVisible={setVisible}
-          orderPlan={() => orderPlan(orderPackage, edit)}
-          title={<FormattedMessage {...messages.myProfileTitlePackage} />}
-        /> */}
+        <Row>
+          <Col lg={24} className="highlights">
+            <HeadLine>
+              <FormattedMessage {...messages.myBlog} />
+            </HeadLine>
+            <hr className="vnk-line hr-feature" />
+            <Row>
+              <Blog lg={8} sm={24}>
+                <a
+                  target="_black"
+                  href="https://kinhtedothi.vn/vnk-voi-su-menh-cung-cap-cac-giai-phap-than-thien-moi-truong.html"
+                >
+                  <img
+                    width={300}
+                    height={300}
+                    src={require('../../assets/images/blog/blog-vnk.jpg')}
+                    alt="App My Project"
+                  />
+                  <p>Sứ mệnh của VNK</p>
+                </a>
+              </Blog>
+              <Blog lg={8} sm={24}>
+                <a
+                  target="_black"
+                  href="https://diendandoanhnhanvietnam.vn/doanh-nghiep/he-lo-giai-phap-cong-nghe-moi-giup-cac-nha-thau-xay-dung-xay-lap-hay-thuong-mai-tiep-can-du-an-nhanh-chong-va-hieu-qua/"
+                >
+                  <img
+                    width={300}
+                    height={300}
+                    src={require('../../assets/images/blog/my-p.jpg')}
+                    alt="App My Project"
+                  />
+                  <p>Giải pháp công nghệ My Project</p>
+                </a>
+              </Blog>
+              <Blog lg={8} sm={24}>
+                <a
+                  target="_black"
+                  href="http://kinhtevadautu.vn/app-my-project-tro-thu-dac-luc-tren-con-duong-ban-hang-du-an-xay-dung-2967.html"
+                >
+                  <img
+                    width={300}
+                    height={300}
+                    src={require('../../assets/images/blog/blogApp.jpg')}
+                    alt="App My Project"
+                  />
+                  <p>
+                    App My Project - trợ thủ đắc lực trên con đường bán hàng dự
+                    án xây dựng
+                  </p>
+                </a>
+              </Blog>
+            </Row>
+          </Col>
+        </Row>
       </div>
     </div>
   );
 }
 
-// const ModalConfirm = ({
-//   orderPackage,
-//   orderPlan,
-//   visible,
-//   setVisible,
-//   title,
-// }) => (
-//   <Modal
-//     title={title}
-//     centered
-//     visible={visible}
-//     onOk={orderPlan}
-//     onCancel={() => setVisible(false)}
-//   >
-//     <FormattedMessage
-//       {...messages.myProfileContentConfirmPackage}
-//       values={{
-//         package: orderPackage.title,
-//       }}
-//     />
-//   </Modal>
-// );
+const Blog = styled(Col)`
+  font-size: 16px;
+  margin-bottom: 50px;
+  margin-top: 50px;
+  a {
+    margin: auto;
+    display: grid;
+    padding: 0 50px;
+    width: 300px;
+  }
+
+  p {
+    margin-top: 20px;
+    color: #333;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+`;
 
 const Container = styled(Row)`
   max-width: 1280px;

@@ -143,6 +143,10 @@ export default defineMessages({
     id: `${scope}.my_exp.title`,
     defaultMessage: 'TRẢI NGHIỆM ỨNG DỤNG',
   },
+  myBlog: {
+    id: `${scope}.my_exp.blog`,
+    defaultMessage: 'TRUYỀN THÔNG VỚI CHÚNG TÔI',
+  },
   myExperienceMsg: {
     id: `${scope}.my_exp.msg`,
     defaultMessage:
