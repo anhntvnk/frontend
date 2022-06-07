@@ -32,9 +32,8 @@ export function* fetchLogin(actionData) {
       const getUserById = yield call(request, userUrl);
 
       if (getUserById) {
-        // const filter = `filter[where][user_id]=${userId}`;
-        const order = yield call(request, `${orderUrl}`);
-        // const order = yield call(request, `${orderUrl}&${filter}`);
+        const filter = `filter[where][user_id]=${userId}`;
+        const order = yield call(request, `${orderUrl}&${filter}`);
 
         if (order && _get(order, 'package')) {
           packageOrder = _get(order, 'package');

@@ -24,7 +24,7 @@ function PackageCard({ openModal, userProfile, history }) {
     {
       key: 'standard',
       title: <FormattedMessage {...messages.myProfileStandardPackage} />,
-      price: 1868000,
+      price: 1897000,
       level: 2,
     },
     {
