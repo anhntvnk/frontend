@@ -114,6 +114,7 @@ export function ProjectDetails({
   history,
   listUser,
   currentPage,
+  fillter,
   successResponse,
   addContactProject,
   fetchProject,
@@ -220,7 +221,7 @@ export function ProjectDetails({
           type="primary"
           shape="round"
           icon={<ArrowLeftOutlined />}
-          onClick={() => history.push(ROUTE.PROJECT, { currentPage })}
+          onClick={() => history.push(ROUTE.PROJECT, { currentPage, fillter })}
         >
           <FormattedMessage {...messages.myProjDetailBtnBack} />
         </Button>
@@ -356,6 +357,7 @@ ProjectDetails.propTypes = {
   history: PropTypes.object,
   data: PropTypes.object,
   currentPage: PropTypes.number,
+  fillter: PropTypes.object,
   addContactProject: PropTypes.func,
   fetchProject: PropTypes.func,
   fetchListUser: PropTypes.func,

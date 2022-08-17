@@ -64,6 +64,10 @@ export default defineMessages({
     id: `${scope}.error`,
     defaultMessage: 'Đã xảy ra lỗi!',
   },
+  myProjRegisterErrorEmail: {
+    id: `${scope}.error.email`,
+    defaultMessage: 'Địa chỉ Email đã tồn tại!',
+  },
   myProjRegisterErrorContent: {
     id: `${scope}.error.content`,
     defaultMessage: 'Đăng ký tài khoản không thành công, vui long thử lại sau!',
@@ -80,5 +84,9 @@ export default defineMessages({
   myProjGoToLogin: {
     id: `${scope}.nextLogin`,
     defaultMessage: 'Đi tới trang Đăng Nhập',
+  },
+  myProjGoToZalo: {
+    id: `${scope}.nextZalo`,
+    defaultMessage: 'Tham gia nhóm Zalo',
   },
 });

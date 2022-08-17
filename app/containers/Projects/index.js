@@ -79,6 +79,10 @@ export function Projects({
     if (_get(history.location.state, 'currentPage', '')) {
       setCurrentPage(_get(history.location.state, 'currentPage', ''));
     }
+
+    if (_get(history.location.state, 'fillter', '')) {
+      setFilter(_get(history.location.state, 'fillter', ''));
+    }
   }, []);
 
   useEffect(() => {
@@ -153,6 +157,7 @@ export function Projects({
               state: {
                 data: record,
                 currentPage,
+                fillter,
               },
             }}
           >

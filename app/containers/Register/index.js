@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 /* eslint-disable import/order */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /*
@@ -11,6 +12,7 @@ import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
+import { Link } from 'react-router-dom';
 import { omit as _omit } from 'lodash';
 import H1 from 'components/H1';
 import { Form, Input, Button, Spin, Row, Col } from 'antd';
@@ -234,6 +236,8 @@ export function Register({
         <p>
           {statusResponse === 'success' ? (
             <FormattedMessage {...messages.myProjRegisterSuccessContent} />
+          ) : statusResponse === 'email' ? (
+            <FormattedMessage {...messages.myProjRegisterErrorEmail} />
           ) : (
             <FormattedMessage {...messages.myProjRegisterErrorContent} />
           )}
@@ -252,14 +256,28 @@ export function Register({
           />
         </IframeContainer>
       )}
-      <Button
-        type="primary"
-        htmlType="submit"
-        className="btn-goto-login"
-        onClick={goToLogin}
-      >
-        <FormattedMessage {...messages.myProjGoToLogin} />
-      </Button>
+      <Col lg={24} xs={24}>
+        <Link to={{ pathname: 'https://zalo.me/g/muhxnn082' }} target="_blank">
+          <Button
+            lg={24}
+            type="primary"
+            htmlType="submit"
+            className="btn-goto-zalo"
+          >
+            <FormattedMessage {...messages.myProjGoToZalo} />
+          </Button>
+        </Link>
+      </Col>
+      <Col lg={24} xs={24}>
+        <Button
+          type="primary"
+          htmlType="submit"
+          className="btn-goto-login"
+          onClick={goToLogin}
+        >
+          <FormattedMessage {...messages.myProjGoToLogin} />
+        </Button>
+      </Col>
     </StyledRegisterSuccess>
   );
 }
@@ -295,7 +313,15 @@ const StyledRegisterSuccess = styled(Row)`
 
   .btn-goto-login {
     margin: auto;
-    margin-top: 20px;
+  }
+
+  .btn-goto-zalo {
+    :active {
+      background: linear-gradient(45deg, #3386ff, #0068ff);
+      border-color: unset;
+    }
+    background: linear-gradient(45deg, #3386ff, #0068ff);
+    border-color: unset;
   }
 `;
 

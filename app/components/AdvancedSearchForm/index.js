@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
+import { get as _get } from 'lodash';
 import PropTypes from 'prop-types';
 import { Form, Row, Col, Input, Button, Select, DatePicker } from 'antd';
 import locale from 'antd/es/date-picker/locale/vi_VN';
 import './styles.less';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { citys, stages, types } from './constants';
 import routes from '../../constants/routes';
 import messages from './messages';
@@ -17,8 +18,16 @@ const AdvancedSearchForm = ({
   onChangeProject,
   projectType,
   intl,
+  history,
 }) => {
   const [form] = Form.useForm();
+
+  useEffect(() => {
+    if (_get(history.location.state, 'fillter', '')) {
+      const fillter = _get(history.location.state, 'fillter', '');
+      form.setFieldsValue(fillter);
+    }
+  }, [form]);
 
   const ColProps = {
     xs: 24,
@@ -277,7 +286,8 @@ AdvancedSearchForm.propTypes = {
   onChangeProject: PropTypes.func,
   onResetFields: PropTypes.func,
   projectType: PropTypes.string,
+  history: PropTypes.object,
   intl: intlShape.required,
 };
 
-export default injectIntl(AdvancedSearchForm);
+export default injectIntl(withRouter(AdvancedSearchForm));

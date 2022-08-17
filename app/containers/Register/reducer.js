@@ -9,6 +9,7 @@
  */
 
 import produce from 'immer';
+import { get as _get } from 'lodash';
 import {
   REGISTER_FORM,
   REGISTER_FORM_ERROR,
@@ -34,7 +35,15 @@ const companyReducer = (state = initialState, action) =>
         draft.isLoading = false;
         break;
       case REGISTER_FORM_ERROR:
-        draft.statusResponse = 'error';
+        const { error } = action;
+        const errorMess = _get(error, 'email', '');
+
+        if (errorMess) {
+          draft.statusResponse = 'email';
+        } else {
+          draft.statusResponse = 'error';
+        }
+
         draft.isLoading = false;
         break;
       default:

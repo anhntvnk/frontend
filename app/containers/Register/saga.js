@@ -3,6 +3,7 @@
  */
 
 import { call, put, takeLatest } from 'redux-saga/effects';
+import { get as _get } from 'lodash';
 import { fetchAxios } from 'utils/request';
 import { registerAccountSuccess, registerAccountError } from './actions';
 import { REGISTER_FORM } from './constants';
@@ -26,7 +27,8 @@ export function* registerMyproject(actionData) {
       yield put(registerAccountError('Đã có lỗi xảy ra !'));
     }
   } catch (err) {
-    yield put(registerAccountError(err));
+    const error = _get(err, 'response.data.error.details.messages');
+    yield put(registerAccountError(error));
   }
 }
 
