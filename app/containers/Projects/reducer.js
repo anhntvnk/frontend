@@ -57,14 +57,14 @@ const mappingProject = response => {
   const result = listProject.map(project =>
     Object.assign(project, { is_follow: _get(project, 'is_follow', false) }),
   );
-  return result.sort(
-    (x, y) => y.is_follow - x.is_follow,
-  );
+  return result.sort((x, y) => y.is_follow - x.is_follow);
 };
 
 const updateProjectFollows = (projects, response) => {
   const cloneProject = _clone(projects);
-  const findIndex = projects.findIndex(project => project.id === response.parent_project_id);
+  const findIndex = projects.findIndex(
+    project => project.id === response.parent_project_id,
+  );
   if (cloneProject[findIndex]) {
     cloneProject[findIndex] = response;
   }
@@ -86,26 +86,23 @@ const projectReducer = (state = initialState, action) =>
         draft.loading = true;
         break;
       case LOAD_PROJECTS_SUCCESS:
-        draft.project = mappingProject(response);
+        draft.project = mappingProject(response).sort((a, b) => new Date(b.last_modified) - new Date(a.last_modified));
         draft.followedProjects = [
           ...new Map(
             response.followedProjects.map(item => [item.name, item]),
           ).values(),
-        ];
+        ].sort((a, b) => new Date(b.last_modified) - new Date(a.last_modified));
         draft.loading = false;
         break;
       case CHANGE_FOLLOW:
         draft.loading = false;
         break;
       case CHANGE_FOLLOW_SUCCESS:
-        const newProject = updateProjectFollows(
-          state.project,
-          response,
-        );
-        draft.project = newProject;
+        const newProject = updateProjectFollows(state.project, response);
+        draft.project = newProject.sort((a, b) => new Date(b.last_modified) - new Date(a.last_modified));
         break;
       case UN_FOLLOW_SUCCESS:
-        draft.project = unFollowProject(state.project, response.id);
+        draft.project = unFollowProject(state.project, response.id).sort((a, b) => new Date(b.last_modified) - new Date(a.last_modified));
         break;
       case LOADING:
         draft.loading = action.isLoading;
