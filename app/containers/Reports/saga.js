@@ -15,13 +15,18 @@ export function* getReportsSaga() {
 
   try {
     const response = yield call(request, user);
+
     if (response && response.team_id !== 0) {
-      const { team_id: teamId }  = response;
-      const costStatUrl = `${API.BASE_URL}/FollowedProjects/cost-stat/${teamId}?access_token=${getToken()}`;
-      const countStatUrl = `${API.BASE_URL}/FollowedProjects/count-stat/${teamId}?access_token=${getToken()}`;
+      const { team_id: teamId } = response;
+      const costStatUrl = `${
+        API.BASE_URL
+      }/FollowedProjects/cost-stat/${teamId}?access_token=${getToken()}`;
+      const countStatUrl = `${
+        API.BASE_URL
+      }/FollowedProjects/count-stat/${teamId}?access_token=${getToken()}`;
       const costStat = yield call(request, costStatUrl);
       const countStat = yield call(request, countStatUrl);
-      
+
       yield put(getReportsSuccess({ costStat, countStat }));
     } else {
       yield put(getReportsError('Đã có lỗi xảy ra !'));

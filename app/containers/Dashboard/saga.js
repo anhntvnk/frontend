@@ -27,7 +27,7 @@ export function* getDataDashboard() {
   }
   const countCompany = `${API.BASE_URL}/company/count?access_token=${getToken()}`;
   const countCompanyFollowed = `${API.BASE_URL}/user/${getUserId()}/companies/count?access_token=${getToken()}`;
-  const countProjectsFollowed = `${API.BASE_URL}/FollowedProjects?access_token=${getToken}&${filter}`;
+  const countProjectsFollowed = `${API.BASE_URL}/FollowedProjects?access_token=${getToken()}&${filter}`;
   const countProject = `${API.BASE_URL}/user/get-available-projects/${getUserId()}?access_token=${getToken()}`;
 
   try {

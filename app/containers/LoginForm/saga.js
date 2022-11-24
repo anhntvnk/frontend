@@ -13,6 +13,7 @@ import API from '../../constants/apis';
 export function* fetchLogin(actionData) {
   const { data } = actionData;
   let packageExpire;
+  let expireDate;
   let packageOrder;
 
   const loginUrl = `${API.BASE_URL}/user/login`;
@@ -37,9 +38,9 @@ export function* fetchLogin(actionData) {
 
         if (order && _get(order, 'package')) {
           packageOrder = _get(order, 'package');
-          const expireDate = moment(_get(order, 'expire_date'));
+          expireDate = _get(order, 'expire_date');
 
-          if (expireDate.isValid()) {
+          if (moment(expireDate).isValid()) {
             packageExpire = expireDate.diff(moment()) > 0;
           }
         }
@@ -52,6 +53,7 @@ export function* fetchLogin(actionData) {
           access_token: token,
           packageOrder,
           packageExpire,
+          expireDate,
         }),
       );
     } else {

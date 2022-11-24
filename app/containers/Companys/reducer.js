@@ -48,12 +48,18 @@ const companyReducer = (state = initialState, action) =>
         } = action;
 
         draft.loading = false;
-        draft.companys = mappingCompany(companys, companyFollows);
-        draft.companyFollows = companyFollows.map(company =>
-          Object.assign(company, {
-            is_follow: true,
-          }),
+        draft.companys = mappingCompany(companys, companyFollows).sort(
+          (a, b) => new Date(b.latest_update) - new Date(a.latest_update),
         );
+        draft.companyFollows = companyFollows
+          .map(company =>
+            Object.assign(company, {
+              is_follow: true,
+            }),
+          )
+          .sort(
+            (a, b) => new Date(b.latest_update) - new Date(a.latest_update),
+          );
         break;
       case LOAD_COMPANYS_FOLLOW_SUCCESS:
         const {

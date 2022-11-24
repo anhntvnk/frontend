@@ -45,6 +45,7 @@ export function LoginForm({ history, intl, onLoginForm, user, errorMessage }) {
         userId,
         packageOrder,
         packageExpire,
+        expireDate,
       } = user;
       if (accessToken) {
         if (!packageExpire) {
@@ -56,7 +57,7 @@ export function LoginForm({ history, intl, onLoginForm, user, errorMessage }) {
           return;
         }
 
-        setUserSession(accessToken, userId, packageOrder);
+        setUserSession(accessToken, userId, packageOrder, expireDate);
         setFormItemLayout({});
         history.replace('/dashboard');
       }

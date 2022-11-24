@@ -11,6 +11,7 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 import styled from 'styled-components';
 import { get as _get } from 'lodash';
+import moment from 'moment';
 import { Switch, withRouter, Redirect } from 'react-router-dom';
 import HomePage from 'containers/HomePage/Loadable';
 import Dashboard from 'containers/Dashboard/Loadable';
@@ -43,7 +44,7 @@ import API from 'constants/apis';
 import { PrivateLayout, PublicLayout } from '../../components/Layouts';
 import GlobalStyle from '../../global-styles';
 import { ROUTE } from '../../constants';
-import { getToken } from '../../../services/auth';
+import { getExpireDate, getToken, logoutAccount } from '../../../services/auth';
 
 const AppWrapper = styled.div`
   max-width: 100%;
@@ -69,6 +70,14 @@ const App = () => {
         .post(`${API.BASE_URL}/user/logout?access_token=${getToken()}`);
     });
   });
+
+  React.useEffect(() => {
+    if (moment(getExpireDate()).isValid()) {
+      if (moment(getExpireDate()).diff(moment()) > 0) {
+        logoutAccount();
+      }
+    }
+  }, []);
 
   return (
     <AppWrapper>

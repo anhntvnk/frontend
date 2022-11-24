@@ -330,7 +330,7 @@ class Header extends React.Component {
                           title={
                             <Fragment>
                               <Avatar
-                                name="Thúy Nga"
+                                name="my project"
                                 size="35px"
                                 round
                                 color="#357edd"

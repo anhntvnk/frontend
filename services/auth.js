@@ -9,6 +9,8 @@ export const getUserId = () => localStorage.getItem('userId') || null;
 export const getPackageOrder = () =>
   localStorage.getItem('packageOrder') || null;
 
+export const getExpireDate = () => localStorage.getItem('expireDate') || null;
+
 export const isLoggedIn = () => !!getToken();
 // remove the token and user from the session storage
 export const removeUserSession = () => {
@@ -16,10 +18,11 @@ export const removeUserSession = () => {
 };
 
 // set the token and user from the session storage
-export const setUserSession = (token, userId, packageOrder) => {
+export const setUserSession = (token, userId, packageOrder, expireDate) => {
   localStorage.setItem('token', token);
   localStorage.setItem('userId', userId);
   localStorage.setItem('packageOrder', packageOrder);
+  localStorage.setItem('expireDate', expireDate);
 
   localStorage.setItem('loginTime', new Date().getTime());
 };
