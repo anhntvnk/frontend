@@ -40,8 +40,9 @@ export function* getDataDashboard() {
       ])
       .then(
         axios.spread((...responses) => ({ dashboard: {
-          countCompany: getPackageOrder() !== PACKAGE_ORDER ? getDataResponse(responses[0]).count : 0 ,
-          countCompanyFollowed: getDataResponse(responses[1]).count,
+          // countCompany: getPackageOrder() !== PACKAGE_ORDER ? getDataResponse(responses[0]).length : 0 ,
+          countCompany: getDataResponse(responses[0]).length,
+          countCompanyFollowed: getDataResponse(responses[1]).length,
           countProjectsFollowed: getDataResponse(responses[2]).length,
           countProject: [...new Map(getDataResponse(responses[3]).map(item => [item.name, item])).values()].length,
         }})),

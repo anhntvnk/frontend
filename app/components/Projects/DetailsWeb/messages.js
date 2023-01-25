@@ -42,11 +42,11 @@ export default defineMessages({
   },
   myDetailWebStart: {
     id: `${scope}.detail_web.start`,
-    defaultMessage: 'Khởi công:',
+    defaultMessage: 'Dự kiến khởi công:',
   },
   myDetailWebComplete: {
     id: `${scope}.detail_web.complete`,
-    defaultMessage: 'Hoàn công:',
+    defaultMessage: 'Dự kiến hoàn công:',
   },
   myDetailWebNation: {
     id: `${scope}.detail_web.nation`,

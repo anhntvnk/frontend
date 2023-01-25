@@ -18,7 +18,7 @@ export const initialState = {
 };
 
 /* eslint-disable default-case, no-param-reassign */
-const companyReducer = (state = initialState, action) =>
+const loginReducer = (state = initialState, action) =>
   produce(state, draft => {
     switch (action.type) {
       case LOGIN_FORM_SUCCESS:
@@ -41,4 +41,4 @@ const companyReducer = (state = initialState, action) =>
     }
   });
 
-export default companyReducer;
+export default loginReducer;

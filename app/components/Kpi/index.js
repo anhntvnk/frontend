@@ -39,7 +39,6 @@ function Point({ point }) {
 const { Meta } = Card;
 
 function Kpi({ kpi, user, history, Back }) {
-  console.log('🚀 ~ file: index.js ~ line 42 ~ Kpi ~ user', user);
   const scores = {
     cuoc_goi: 1,
     lich_hen_gap: 3,

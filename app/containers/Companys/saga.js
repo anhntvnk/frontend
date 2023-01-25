@@ -23,14 +23,17 @@ const PACKAGE_ORDER = 'basic';
 export function* getCompanys() {
   // get all company
   // eslint-disable-next-line prettier/prettier
-  const reqCompany = `${API.BASE_URL}/company?filter[order]=latest_update%20ASC`;
-  const reqCompanyFollow = `${API.BASE_URL}/user/${getUserId()}/companies`;
+  const reqCompany = `${API.BASE_URL}/company?filter[order]=latest_update%20DESC`;
+  const reqCompanyFollow = `${
+    API.BASE_URL
+  }/user/${getUserId()}/companies?filter[order]=latest_update%20DESC`;
 
   try {
     const companys = yield call(request, reqCompany);
     const companyFollows = yield call(request, reqCompanyFollow);
-    const companyByPackage =
-      getPackageOrder() !== PACKAGE_ORDER ? companys : [];
+    const companyByPackage = companys;
+    // getPackageOrder() !== PACKAGE_ORDER ? companys : [];
+    getPackageOrder() !== PACKAGE_ORDER ? companys : [];
     yield put(
       loadCompanySuccess({ companys: companyByPackage, companyFollows }),
     );

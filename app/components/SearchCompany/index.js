@@ -26,6 +26,13 @@ const SearchCompany = ({
     lg: 8,
   };
 
+  // useEffect(() => {
+  //   if (_get(history.location.state, 'fillter', '')) {
+  //     const fillter = _get(history.location.state, 'fillter', '');
+  //     form.setFieldsValue(fillter);
+  //   }
+  // }, [form]);
+
   return (
     <Form
       form={form}

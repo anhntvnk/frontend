@@ -72,8 +72,8 @@ const App = () => {
   });
 
   React.useEffect(() => {
-    if (moment(getExpireDate()).isValid()) {
-      if (moment(getExpireDate()).diff(moment()) > 0) {
+    if (getExpireDate() && moment(getExpireDate()).isValid()) {
+      if (moment(getExpireDate()).diff(moment()) < 0) {
         logoutAccount();
       }
     }
