@@ -1,7 +1,7 @@
 /* eslint-disable global-require */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /*
- * ProjectPage
+ * CompanyPage
  *
  * This is the first thing users see of our App, at the '/' route
  */
@@ -9,7 +9,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link, withRouter } from 'react-router-dom';
-import { get as _get } from 'lodash';
+import { get as _get, isEmpty as _isEmpty } from 'lodash';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
@@ -63,7 +63,7 @@ export function Companys({
   useInjectReducer({ key, reducer });
   useInjectSaga({ key, saga });
 
-  if (history.location.state) {
+  if (history.location.state && _get(history.location.state, 'successMessage', '')) {
     message.success(_get(history.location.state, 'successMessage', ''));
     history.replace({ ...history.location, state: undefined });
   }
@@ -75,13 +75,25 @@ export function Companys({
   const [companyData, setCompanyData] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [fillter, setFilter] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
-    onFetchCompany();
+    if (_isEmpty(companyData)) {
+      onFetchCompany();
+    }
+    console.log(history.location, 'history.location.state');
+
+    if (_get(history.location.state, 'currentPage', '')) {
+      setCurrentPage(_get(history.location.state, 'currentPage', ''));
+    }
+
+    if (_get(history.location.state, 'fillter', '')) {
+      setFilter(_get(history.location.state, 'fillter', ''));
+    }
   }, []);
 
   useEffect(() => {
-    searchCompany(fillter);
+    fillter && searchCompany(fillter);
   }, [companys]);
 
   useEffect(() => {
@@ -124,6 +136,8 @@ export function Companys({
             pathname: ROUTE.COMPANY_DETAILS,
             state: {
               data: record,
+              currentPage,
+              fillter,
             },
           }}
         >
@@ -185,8 +199,14 @@ export function Companys({
     },
   ];
   const listProps = {
-    dataSource: companyData,
+    pagination: {
+      current: currentPage,
+      onChange: page => {
+        setCurrentPage(page);
+      },
+    },
     columns,
+    dataSource: companyData,
     loading: loading || isLoading,
   };
 

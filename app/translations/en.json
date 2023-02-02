@@ -182,6 +182,7 @@
   "myp.containers.DetailWeb.detail_web.area": "Area:",
   "myp.containers.DetailWeb.detail_web.start": "Start:",
   "myp.containers.DetailWeb.detail_web.complete": "Complete:",
+  "myp.containers.DetailWeb.detail_web.capital": "Capital:",
   "myp.containers.DetailWeb.detail_web.nation": "Nation:",
   "myp.containers.DetailWeb.detail_web.vietNam": "Viet Nam",
   "myp.containers.DetailWeb.detail_web.province": "Province:",

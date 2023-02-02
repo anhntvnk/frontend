@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { get as _get } from 'lodash';
 import { Form, Row, Col, Input, Button, Select } from 'antd';
-import { Link, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import messages from './messages';
 import { citys } from './constants';
@@ -26,12 +27,12 @@ const SearchCompany = ({
     lg: 8,
   };
 
-  // useEffect(() => {
-  //   if (_get(history.location.state, 'fillter', '')) {
-  //     const fillter = _get(history.location.state, 'fillter', '');
-  //     form.setFieldsValue(fillter);
-  //   }
-  // }, [form]);
+  useEffect(() => {
+    if (_get(history.location.state, 'fillter', '')) {
+      const fillter = _get(history.location.state, 'fillter', '');
+      form.setFieldsValue(fillter);
+    }
+  }, [form]);
 
   return (
     <Form

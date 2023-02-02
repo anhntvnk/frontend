@@ -44,6 +44,10 @@ export default defineMessages({
     id: `${scope}.detail_web.start`,
     defaultMessage: 'Dự kiến khởi công:',
   },
+  myDetailWebCapital: {
+    id: `${scope}.detail_web.capital`,
+    defaultMessage: 'Dự án vốn:',
+  },
   myDetailWebComplete: {
     id: `${scope}.detail_web.complete`,
     defaultMessage: 'Dự kiến hoàn công:',

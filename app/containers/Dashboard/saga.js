@@ -22,9 +22,9 @@ const getDataResponse = (response) => {
 export function* getDataDashboard() {
   const user = JSON.parse(localStorage.getItem('user'));
   let filter = `filter[where][user_id]=${getUserId()}`;
-  if (user.team_id) {
-    filter = `filter[where][team_id]=${user.team_id}`;
-  }
+  // if (user.team_id) {
+  //   filter = `filter[where][team_id]=${user.team_id}`;
+  // }
   const countCompany = `${API.BASE_URL}/company/count?access_token=${getToken()}`;
   const countCompanyFollowed = `${API.BASE_URL}/user/${getUserId()}/companies/count?access_token=${getToken()}`;
   const countProjectsFollowed = `${API.BASE_URL}/FollowedProjects?access_token=${getToken()}&${filter}`;

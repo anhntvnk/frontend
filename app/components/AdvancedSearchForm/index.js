@@ -23,9 +23,29 @@ const AdvancedSearchForm = ({
   const [form] = Form.useForm();
 
   useEffect(() => {
+    console.log(history.location.state, 'history.location.state');
     if (_get(history.location.state, 'fillter', '')) {
       const fillter = _get(history.location.state, 'fillter', '');
-      form.setFieldsValue(fillter);
+      form.setFieldsValue({
+        ...fillter,
+        projectType:
+          (_get(history.location.state, 'projectType', '') || projectType) ===
+          'project-follow'
+            ? 1
+            : 0,
+      });
+    } else {
+      if (_get(history.location.state, 'projectType', '')) {
+        const fillter = _get(history.location.state, 'projectType', '');
+        form.setFieldsValue({
+          ...fillter,
+          projectType:
+            (_get(history.location.state, 'projectType', '') || projectType) ===
+            'project-follow'
+              ? 1
+              : 0,
+        });
+      }
     }
   }, [form]);
 
@@ -232,7 +252,7 @@ const AdvancedSearchForm = ({
         </Col>
         <Col {...ColProps} xl={{ span: 8 }} md={{ span: 8 }} sm={{ span: 24 }}>
           <Form.Item
-            name=""
+            name="projectType"
             key="project-type"
             label={<FormattedMessage {...messages.myFormProject} />}
           >

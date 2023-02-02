@@ -103,6 +103,13 @@ function DetailsWeb({ data, intl }) {
               &nbsp;
             </span>
             <span>{convertCost(_get(data, 'cost', ''))}</span>
+            <div>
+              <span className="description">
+                <FormattedMessage {...messages.myDetailWebCapital} />
+                &nbsp;
+              </span>
+              <span>{_get(data, 'du_an_von', '')}</span>
+            </div>
             <span style={{ float: 'right' }}>
               <span className="description">
                 <FormattedMessage {...messages.myDetailWebFloorNum} />
@@ -125,16 +132,15 @@ function DetailsWeb({ data, intl }) {
               <FormattedMessage {...messages.myDetailWebStart} />
               &nbsp;
             </span>
-            <span>{moment(_get(data, 'start', '')).format('DD/MM/YYYY')}</span>
+            <span>{moment(_get(data, 'start', '')).format('MM/YYYY')}</span>
             <div>
               <span className="description">
                 <FormattedMessage {...messages.myDetailWebComplete} />
                 &nbsp;
               </span>
-              <span>
-                {moment(_get(data, 'finish', '')).format('DD/MM/YYYY')}
-              </span>
+              <span>{moment(_get(data, 'finish', '')).format('MM/YYYY')}</span>
             </div>
+           
           </GutterRow>
         </Col>
       </Row>

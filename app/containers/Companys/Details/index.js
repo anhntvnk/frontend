@@ -68,7 +68,9 @@ enquireScreen(b => {
   mobileScreen = b;
 });
 
-export function CompanyDetails({ history, data }) {
+export function CompanyDetails({ history, data, currentPage, fillter }) {
+  console.log(currentPage, 'currentPage');
+  console.log(fillter, 'fillter');
   useInjectReducer({ key, reducer });
   useInjectSaga({ key, saga });
 
@@ -93,7 +95,7 @@ export function CompanyDetails({ history, data }) {
           type="primary"
           shape="round"
           icon={<ArrowLeftOutlined />}
-          onClick={() => history.goBack()}
+          onClick={() => history.push(ROUTE.COMPANY, { currentPage, fillter })}
         >
           <FormattedMessage {...messages.myCompanyDetailBtnBack} />
         </Button>

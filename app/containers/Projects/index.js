@@ -83,6 +83,10 @@ export function Projects({
     if (_get(history.location.state, 'fillter', '')) {
       setFilter(_get(history.location.state, 'fillter', ''));
     }
+
+    if (_get(history.location.state, 'projectType', '')) {
+      setProjectType(_get(history.location.state, 'projectType', ''));
+    }
   }, []);
 
   useEffect(() => {
@@ -158,6 +162,7 @@ export function Projects({
                 data: record,
                 currentPage,
                 fillter,
+                projectType,
               },
             }}
           >
@@ -217,6 +222,20 @@ export function Projects({
       },
     },
     {
+      title: 'Người theo dõi',
+      dataIndex: 'id',
+      key: 'id',
+      width: 150,
+      render: id => (
+        <div>
+          {console.log([9287, 9286, 9285].includes(id), 'id')}
+          {[9287, 9282, 9285, 8849, 9286].includes(id)
+            ? 'Nguyễn Văn A, Nguyễn Văn B, Nguyễn Văn C, Nguyễn Văn D'
+            : ''}
+        </div>
+      ),
+    },
+    {
       title: <FormattedMessage {...messages.myProjUpdate} />,
       dataIndex: 'last_modified',
       key: 'last_modified',
@@ -269,12 +288,13 @@ export function Projects({
   const listProps = {
     pagination: {
       current: currentPage,
+      projectType,
       onChange: page => {
         setCurrentPage(page);
       },
     },
-    dataSource: projectList,
     columns,
+    dataSource: projectList,
     loading: loading || isLoading,
   };
 

@@ -183,6 +183,7 @@
   "myp.containers.DetailWeb.detail_web.area": "Diện tích:",
   "myp.containers.DetailWeb.detail_web.start": "Dự kiến khởi công:",
   "myp.containers.DetailWeb.detail_web.complete": "Dự kiến hoàn công:",
+  "myp.containers.DetailWeb.detail_web.capital": "Dự án vốn:",
   "myp.containers.DetailWeb.detail_web.nation": "Quốc gia:",
   "myp.containers.DetailWeb.detail_web.vietNam": "Việt Nam",
   "myp.containers.DetailWeb.detail_web.province": "Tỉnh thành:",

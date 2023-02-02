@@ -115,6 +115,7 @@ export function ProjectDetails({
   listUser,
   currentPage,
   fillter,
+  projectType,
   successResponse,
   addContactProject,
   fetchProject,
@@ -123,6 +124,7 @@ export function ProjectDetails({
   projectByID,
   intl,
 }) {
+  console.log(projectType, 'projectType');
   useInjectReducer({ key, reducer });
   useInjectSaga({ key, saga });
 
@@ -221,7 +223,7 @@ export function ProjectDetails({
           type="primary"
           shape="round"
           icon={<ArrowLeftOutlined />}
-          onClick={() => history.push(ROUTE.PROJECT, { currentPage, fillter })}
+          onClick={() => history.push(ROUTE.PROJECT, { currentPage, fillter, projectType })}
         >
           <FormattedMessage {...messages.myProjDetailBtnBack} />
         </Button>

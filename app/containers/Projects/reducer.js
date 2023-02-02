@@ -46,18 +46,20 @@ const mappingProject = response => {
   const listProject =
     followedProjects.length > 0
       ? _concat(
-        followedProjects,
-        _filter(
-          projectShow,
-          item => !_includes(getIdFollowedProjects, item.id),
-        ),
-      )
+          followedProjects,
+          _filter(
+            projectShow,
+            item => !_includes(getIdFollowedProjects, item.id),
+          ),
+        )
       : projectAvaiable;
 
   const result = listProject.map(project =>
     Object.assign(project, { is_follow: _get(project, 'is_follow', false) }),
   );
-  return result.sort((x, y) => y.is_follow - x.is_follow);
+  return result
+    .sort((a, b) => new Date(b.last_modified) - new Date(a.last_modified))
+    .sort((x, y) => y.is_follow - x.is_follow);
 };
 
 const updateProjectFollows = (projects, response) => {
@@ -86,7 +88,7 @@ const projectReducer = (state = initialState, action) =>
         draft.loading = true;
         break;
       case LOAD_PROJECTS_SUCCESS:
-        draft.project = mappingProject(response).sort((a, b) => new Date(b.last_modified) - new Date(a.last_modified));
+        draft.project = mappingProject(response);
         draft.followedProjects = [
           ...new Map(
             response.followedProjects.map(item => [item.name, item]),
@@ -99,10 +101,14 @@ const projectReducer = (state = initialState, action) =>
         break;
       case CHANGE_FOLLOW_SUCCESS:
         const newProject = updateProjectFollows(state.project, response);
-        draft.project = newProject.sort((a, b) => new Date(b.last_modified) - new Date(a.last_modified));
+        draft.project = newProject.sort(
+          (a, b) => new Date(b.last_modified) - new Date(a.last_modified),
+        );
         break;
       case UN_FOLLOW_SUCCESS:
-        draft.project = unFollowProject(state.project, response.id).sort((a, b) => new Date(b.last_modified) - new Date(a.last_modified));
+        draft.project = unFollowProject(state.project, response.id).sort(
+          (a, b) => new Date(b.last_modified) - new Date(a.last_modified),
+        );
         break;
       case LOADING:
         draft.loading = action.isLoading;

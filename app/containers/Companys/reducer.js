@@ -33,7 +33,10 @@ const mappingCompany = (companys, companyFollows) => {
   );
 
   // remove company same name is duplicate
-  return [...new Map(newCompanys.map(item => [item.name, item])).values()].sort(
+  return [...new Map(newCompanys.map(item => [item.name, item])).values()]
+  .sort(function(a, b) {
+    return a.latest_update > b.latest_update ? -1 : (b.latest_update > a.latest_update ? 1 : 0)
+  }).sort(
     (a, b) => b.is_follow - a.is_follow,
   );
 };
@@ -48,18 +51,16 @@ const companyReducer = (state = initialState, action) =>
         } = action;
 
         draft.loading = false;
-        draft.companys = mappingCompany(companys, companyFollows).sort(
-          (a, b) => new Date(b.latest_update) - new Date(a.latest_update),
-        );
+        draft.companys = mappingCompany(companys, companyFollows);
+
         draft.companyFollows = companyFollows
           .map(company =>
             Object.assign(company, {
               is_follow: true,
             }),
-          )
-          .sort(
-            (a, b) => new Date(b.latest_update) - new Date(a.latest_update),
-          );
+          ).sort(function(a, b) {
+            return a.latest_update > b.latest_update ? -1 : (b.latest_update > a.latest_update ? 1 : 0)
+          });
         break;
       case LOAD_COMPANYS_FOLLOW_SUCCESS:
         const {
