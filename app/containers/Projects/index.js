@@ -223,17 +223,10 @@ export function Projects({
     },
     {
       title: 'Người theo dõi',
-      dataIndex: 'id',
+      dataIndex: 'userName',
       key: 'id',
       width: 150,
-      render: id => (
-        <div>
-          {console.log([9287, 9286, 9285].includes(id), 'id')}
-          {[9287, 9282, 9285, 8849, 9286].includes(id)
-            ? 'Nguyễn Văn A, Nguyễn Văn B, Nguyễn Văn C, Nguyễn Văn D'
-            : ''}
-        </div>
-      ),
+      render: userName => <div>{userName}</div>,
     },
     {
       title: <FormattedMessage {...messages.myProjUpdate} />,

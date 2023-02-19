@@ -24,24 +24,47 @@ export function* getProjectsAvaiable() {
   if (user.team_id) {
     filter = `filter[where][team_id]=${user.team_id}`;
   }
-  
-  const userUrl = `${API.BASE_URL}/user/${getUserId()}?access_token=${getToken()}`;
-  const followedProjectsURL = `${API.BASE_URL}/FollowedProjects?access_token=${getToken()}&${filter}`;
+
+  const userUrl = `${
+    API.BASE_URL
+  }/user/${getUserId()}?access_token=${getToken()}`;
+  const followedProjectsURL = `${
+    API.BASE_URL
+  }/FollowedProjects?access_token=${getToken()}&${filter}`;
 
   try {
     const getUserById = yield call(request, userUrl);
 
-    let timeShowProject = moment().subtract(6, 'months').format('YYYY-MM-DD');
+    let timeShowProject = moment()
+      .subtract(6, 'months')
+      .format('YYYY-MM-DD');
     if (getUserById) {
-      timeShowProject = moment(getUserById.created).subtract(6, 'months').format('YYYY-MM-DD');
+      timeShowProject = moment(getUserById.created)
+        .subtract(6, 'months')
+        .format('YYYY-MM-DD');
     }
 
-    const projectAvaiableURL = `${API.BASE_URL}/user/get-available-projects/${getUserId()}?access_token=${getToken()}`;
+    const projectAvaiableURL = `${
+      API.BASE_URL
+    }/user/get-available-projects/${getUserId()}?access_token=${getToken()}`;
+    const userListEndpoint = `${API.BASE_URL}/user?access_token=${getToken()}`;
 
-    const followedProjects = yield call(request, followedProjectsURL);
+    let followedProjects = yield call(request, followedProjectsURL);
     const projectAvaiable = yield call(request, projectAvaiableURL);
+    const userList = yield call(request, userListEndpoint);
 
-    yield put(loadProjectSuccess({ followedProjects, projectAvaiable, timeShowProject }));
+    followedProjects = (followedProjects || []).map(f => {
+      const userById = userList.find(u => u.id === f.user_id);
+      return { ...f, userName: userById ? userById.full_name : '' };
+    });
+
+    yield put(
+      loadProjectSuccess({
+        followedProjects,
+        projectAvaiable,
+        timeShowProject,
+      }),
+    );
   } catch (err) {
     yield put(loadProjectsError(err));
   }
