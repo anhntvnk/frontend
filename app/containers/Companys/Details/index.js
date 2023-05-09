@@ -69,8 +69,6 @@ enquireScreen(b => {
 });
 
 export function CompanyDetails({ history, data, currentPage, fillter }) {
-  console.log(currentPage, 'currentPage');
-  console.log(fillter, 'fillter');
   useInjectReducer({ key, reducer });
   useInjectSaga({ key, saga });
 

@@ -23,7 +23,6 @@ const AdvancedSearchForm = ({
   const [form] = Form.useForm();
 
   useEffect(() => {
-    console.log(history.location.state, 'history.location.state');
     if (_get(history.location.state, 'fillter', '')) {
       const fillter = _get(history.location.state, 'fillter', '');
       form.setFieldsValue({

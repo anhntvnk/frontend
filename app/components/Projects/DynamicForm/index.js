@@ -9,6 +9,7 @@ import messages from './messages';
 import logo from '../../../assets/images/logo/my-project.png';
 
 function DynamicForm({ data, addContactProject, setProjectDetails, intl }) {
+  const userLogin = JSON.parse(localStorage.getItem('user'));
   const [notes, setNotes] = useState([]);
   const [initialValues, setInitialValues] = useState({});
   const [noteEdits, setNoteEdits] = useState({});
@@ -116,7 +117,7 @@ function DynamicForm({ data, addContactProject, setProjectDetails, intl }) {
                     description={item.content}
                   />
                   <Button type="link" danger onClick={() => onEditNote(item)}>
-                    <EditOutlined />
+                    {userLogin.id === data.user_id && <EditOutlined />}
                   </Button>
                 </Skeleton>
               </List.Item>

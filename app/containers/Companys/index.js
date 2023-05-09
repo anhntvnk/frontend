@@ -81,7 +81,6 @@ export function Companys({
     if (_isEmpty(companyData)) {
       onFetchCompany();
     }
-    console.log(history.location, 'history.location.state');
 
     if (_get(history.location.state, 'currentPage', '')) {
       setCurrentPage(_get(history.location.state, 'currentPage', ''));

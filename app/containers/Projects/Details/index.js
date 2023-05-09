@@ -309,12 +309,12 @@ export function ProjectDetails({
                   <ProjectDetailsMobile data={projectByID} />
                 )}
               </TabPane>
-              <TabPane
+              {/* <TabPane
                 tab={<FormattedMessage {...messages.myProjDetailContact} />}
                 key="2"
               >
                 <Contact data={projectByID} setVisible={setVisible} />
-              </TabPane>
+              </TabPane> */}
               {projectByID.is_follow && (
                 <TabPane
                   tab={<FormattedMessage {...messages.myProjDetailNote} />}
