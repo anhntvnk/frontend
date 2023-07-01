@@ -67,12 +67,12 @@ function Contact({ data, setVisible }) {
                         </span>
                       </StyledContent>
                       <StyledContent>
-                        <span>
+                        {/* <span>
                           <b>
                             <FormattedMessage {...messages.myContactPhone} />
                           </b>
                           {contact.phone}
-                        </span>
+                        </span> */}
                         <span>
                           <b>
                             <FormattedMessage {...messages.myContactAddress} />
@@ -133,8 +133,9 @@ const StyledContact = styled.div`
   padding-left: 10px;
 `;
 const StyledContentMeta = styled.div`
-  display: flex;
+  display: block;
   justify-content: space-between;
+  
 `;
 const StyledContent = styled.div`
   display: grid;

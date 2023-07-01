@@ -40,14 +40,14 @@ function Footer() {
                     <PhoneOutlined />
                     &ensp;
                     <span>
-                      <a href="tel: 0912808996">0912808996</a>
+                      <a href="tel: 02437373366">024.3737.3366</a>
                     </span>
                   </p>
                   <p>
                     <MailOutlined />
                     &ensp;
                     <span>
-                      <a href="mailto: crm@myp.vn">crm@myp.vn</a>
+                      <a href="mailto: info@myp.vn">info@myp.vn</a>
                     </span>
                   </p>
                   <p>
@@ -138,12 +138,12 @@ function Footer() {
               </span>
             </p>
             <p>
-              <span>Hotline: 091 280 89 96</span>
+              <span>Hotline: 024.3737.3366</span>
             </p>
             <p style={{ display: 'flex', alignItems: 'center' }}>
               <MailOutlined />
               &ensp;
-              <span>Email: crm@myp.vn</span>
+              <span>Email: info@myp.vn</span>
             </p>
           </Card>
         </Support>

@@ -60,6 +60,7 @@ export function Companys({
   onUnfollowCompany,
   loading,
 }) {
+
   useInjectReducer({ key, reducer });
   useInjectSaga({ key, saga });
 
@@ -107,7 +108,7 @@ export function Companys({
         ? getCompanyFollows(companys)
         : companys;
     setCompanyData(dataChange);
-  }, [companyType]);
+  }, [companyType, companys]);
 
   const onSearchProjects = advSearch => {
     setFilter(advSearch);
