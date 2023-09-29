@@ -35,11 +35,12 @@ export function* fetchLogin(actionData) {
       if (getUserById) {
         const filter = `filter[where][user_id]=${userId}`;
         const order = yield call(request, `${orderUrl}&${filter}`);
+
         expireDate = _get(order, 'expire_date');
 
         if (order && _get(order, 'package')) {
           packageOrder = _get(order, 'package');
-          const expire = moment(_get(order, 'expire_date'));
+          const expire = moment(expireDate);
 
           if (expire.isValid()) {
             packageExpire = expire.diff(moment()) > 0;

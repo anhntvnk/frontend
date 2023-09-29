@@ -311,6 +311,7 @@ export function Projects({
       month_of_completion: filterFinish,
       type: filterType,
       stage: filterStage,
+      capital: filterCapital,
     } = advSearch;
 
     const listData = [];
@@ -374,7 +375,7 @@ export function Projects({
 
         if (typeof filterCity !== 'undefined') {
           if (
-            city.indexOf(cleanText(filterCity)) === -1 ||
+            city.replace('-', ' ').indexOf(cleanText(filterCity)) === -1 ||
             address.indexOf(cleanText(filterCity)) === -1
           ) {
             addToList = false;
@@ -386,6 +387,17 @@ export function Projects({
         const type = item.type || '';
 
         if (typeof filterType !== 'undefined' && type !== filterType) {
+          addToList = false;
+        }
+      }
+
+      if (addToList) {
+        const capital = item.du_an_von ? cleanText(item.du_an_von) : '';
+
+        if (
+          typeof filterCapital !== 'undefined' &&
+          capital.indexOf(cleanText(filterCapital)) === -1
+        ) {
           addToList = false;
         }
       }

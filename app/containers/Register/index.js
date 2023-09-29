@@ -57,15 +57,13 @@ export function Register({
         page_title: 'Register Success',
         page_path: ROUTE.REGISTER,
       });
+
+      history.push(ROUTE.THANK_YOU);
     }
   }, [statusResponse]);
 
   const onFinish = formValues => {
     onRegister(_omit(formValues, ['repassword']));
-  };
-
-  const goToLogin = () => {
-    history.push(ROUTE.LOGIN);
   };
 
   return !statusResponse ? (
@@ -219,63 +217,26 @@ export function Register({
   ) : (
     <StyledRegisterSuccess status={statusResponse === 'success' ? 1 : 0}>
       <Col span={24}>
-        {statusResponse === 'success' ? (
-          <CheckCircleOutlined style={{ fontSize: '60px', color: '#52c41a' }} />
-        ) : (
-          <ExclamationCircleOutlined
-            style={{ fontSize: '60px', color: 'red' }}
-          />
-        )}
+        <ExclamationCircleOutlined style={{ fontSize: '60px', color: 'red' }} />
         <H1>
-          {statusResponse === 'success' ? (
-            <FormattedMessage {...messages.myProjRegisterSuccess} />
-          ) : (
-            <FormattedMessage {...messages.myProjRegisterError} />
-          )}
+          <FormattedMessage {...messages.myProjRegisterError} />
         </H1>
         <p>
-          {statusResponse === 'success' ? (
-            <FormattedMessage {...messages.myProjRegisterSuccessContent} />
-          ) : statusResponse === 'email' ? (
+          {statusResponse === 'email' ? (
             <FormattedMessage {...messages.myProjRegisterErrorEmail} />
           ) : (
             <FormattedMessage {...messages.myProjRegisterErrorContent} />
           )}
         </p>
       </Col>
-      {statusResponse === 'success' && (
-        <IframeContainer lg={24}>
-          <iframe
-            width="560"
-            height="315"
-            src="https://www.youtube.com/embed/VCJcaVHdxe4"
-            title="YouTube video player"
-            frameBorder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-          />
-        </IframeContainer>
-      )}
-      <Col lg={24} xs={24}>
-        <Link to={{ pathname: 'https://zalo.me/g/muhxnn082' }} target="_blank">
-          <Button
-            lg={24}
-            type="primary"
-            htmlType="submit"
-            className="btn-goto-zalo"
-          >
-            <FormattedMessage {...messages.myProjGoToZalo} />
-          </Button>
-        </Link>
-      </Col>
       <Col lg={24} xs={24}>
         <Button
           type="primary"
           htmlType="submit"
           className="btn-goto-login"
-          onClick={goToLogin}
+          onClick={() => history.push(ROUTE.REGISTER)}
         >
-          <FormattedMessage {...messages.myProjGoToLogin} />
+          <FormattedMessage {...messages.myProjGoBack} />
         </Button>
       </Col>
     </StyledRegisterSuccess>

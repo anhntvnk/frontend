@@ -7,6 +7,7 @@ export default {
   SETTING: '/setting',
   LOGIN: '/login',
   REGISTER: '/register',
+  THANK_YOU: '/thank-you',
   CERTIFICATION: '/Certification',
   POLICY: '/Policy',
   PROVISION: '/Provision',
@@ -25,4 +26,5 @@ export default {
   KPI_MONTH: '/kpi/montth',
   NOTES: '/notes',
   REPORTS: '/reports',
+  TV: '/tv',
 };

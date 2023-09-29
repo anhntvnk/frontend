@@ -6,7 +6,7 @@ import { Form, Row, Col, Input, Button, Select, DatePicker } from 'antd';
 import locale from 'antd/es/date-picker/locale/vi_VN';
 import './styles.less';
 import { Link, withRouter } from 'react-router-dom';
-import { citys, stages, types } from './constants';
+import { citys, stages, types, capitalProjects } from './constants';
 import routes from '../../constants/routes';
 import messages from './messages';
 
@@ -33,18 +33,16 @@ const AdvancedSearchForm = ({
             ? 1
             : 0,
       });
-    } else {
-      if (_get(history.location.state, 'projectType', '')) {
-        const fillter = _get(history.location.state, 'projectType', '');
-        form.setFieldsValue({
-          ...fillter,
-          projectType:
-            (_get(history.location.state, 'projectType', '') || projectType) ===
-            'project-follow'
-              ? 1
-              : 0,
-        });
-      }
+    } else if (_get(history.location.state, 'projectType', '')) {
+      const fillter = _get(history.location.state, 'projectType', '');
+      form.setFieldsValue({
+        ...fillter,
+        projectType:
+          (_get(history.location.state, 'projectType', '') || projectType) ===
+          'project-follow'
+            ? 1
+            : 0,
+      });
     }
   }, [form]);
 
@@ -269,6 +267,36 @@ const AdvancedSearchForm = ({
               <Option key="project-follow" value={1}>
                 {<FormattedMessage {...messages.myFormFollowProj} />}
               </Option>
+            </Select>
+          </Form.Item>
+        </Col>
+        <Col
+          {...ColProps}
+          xl={{ span: 8 }}
+          md={{ span: 8 }}
+          sm={{ span: 24 }}
+          key="capital"
+        >
+          <Form.Item
+            name="capitalProjects"
+            key="capital-item"
+            label={<FormattedMessage {...messages.capitalPro} />}
+          >
+            <Select
+              showSearch
+              placeholder={intl.formatMessage({
+                ...messages.capitalPro,
+              })}
+              optionFilterProp="children"
+              filterOption={(input, option) =>
+                option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+              }
+            >
+              {capitalProjects.map(capital => (
+                <Option key={capital} value={capital}>
+                  {capital}
+                </Option>
+              ))}
             </Select>
           </Form.Item>
         </Col>

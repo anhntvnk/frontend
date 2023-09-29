@@ -28,6 +28,7 @@ import Settings from 'containers/Kpi/Settings';
 import KpiMonth from 'containers/Kpi/Month';
 import LoginForm from 'containers/LoginForm/Loadable';
 import Register from 'containers/Register/Loadable';
+import RegisterSuccess from 'containers/RegisterSuccess/Loadable';
 import Certification from 'containers/Certification/Loadable';
 import Policy from 'containers/Policy/Loadable';
 import Provision from 'containers/Provision/Loadable';
@@ -37,6 +38,7 @@ import ChangePassword from 'containers/ChangePassword/Loadable';
 import User from 'containers/User/Loadable';
 import Notes from 'containers/Notes/Loadable';
 import Reports from 'containers/Reports/Loadable';
+import TV from 'containers/TV/Loadable';
 // import NotFoundPage from 'containers/NotFoundPage/Loadable';
 
 import axios from 'axios';
@@ -77,7 +79,7 @@ const App = () => {
         logoutAccount();
       }
     }
-  }, []);
+  });
 
   return (
     <AppWrapper>
@@ -87,6 +89,11 @@ const App = () => {
       <Switch>
         <PublicLayout exact path={ROUTE.LOGIN} component={LoginForm} />
         <PublicLayout exact path={ROUTE.REGISTER} component={Register} />
+        <PublicLayout
+          exact
+          path={ROUTE.THANK_YOU}
+          component={RegisterSuccess}
+        />
         <PublicLayout
           exact
           path={ROUTE.CERTIFICATION}
@@ -112,6 +119,7 @@ const App = () => {
         <PrivateLayout exact path={ROUTE.KPI_MONTH} component={KpiMonth} />
         <PrivateLayout exact path={ROUTE.NOTES} component={Notes} />
         <PrivateLayout exact path={ROUTE.REPORTS} component={Reports} />
+        <PrivateLayout exact path={ROUTE.TV} component={TV} />
         <PrivateLayout
           exact
           path={ROUTE.COMPANY}

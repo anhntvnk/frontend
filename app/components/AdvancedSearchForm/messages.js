@@ -56,6 +56,10 @@ export default defineMessages({
     id: `${scope}.form_search.period`,
     defaultMessage: 'Giai đoạn',
   },
+  capitalPro: {
+    id: `${scope}.form_search.capital`,
+    defaultMessage: 'Dự án vốn',
+  },
   myFormSelectPeriod: {
     id: `${scope}.form_search.selectPeriod`,
     defaultMessage: 'Chọn giai đoạn',

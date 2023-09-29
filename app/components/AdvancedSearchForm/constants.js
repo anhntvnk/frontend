@@ -77,6 +77,14 @@ export const stages = [
   'Thi công: nhà thầu phụ',
 ];
 
+export const capitalProjects = [
+  'FDI',
+  'FDI Korea',
+  'FDI China',
+  'FDI Japan',
+  'DDI',
+];
+
 export const types = [
   {
     name: 'Nhà máy, KCN, cơ sở hạ tầng',

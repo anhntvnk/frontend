@@ -25,6 +25,11 @@ const GlobalStyle = createGlobalStyle`
     display: flex;
     align-items: center;
   }
+
+  .zalo-chat-widget {
+    right: 26px !important;
+    bottom: 100px !important;
+  }
 `;
 
 export default GlobalStyle;

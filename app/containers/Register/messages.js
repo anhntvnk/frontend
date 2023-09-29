@@ -85,6 +85,10 @@ export default defineMessages({
     id: `${scope}.nextLogin`,
     defaultMessage: 'Đi tới trang Đăng Nhập',
   },
+  myProjGoBack: {
+    id: `${scope}.backRegister`,
+    defaultMessage: 'Quay Lại',
+  },
   myProjGoToZalo: {
     id: `${scope}.nextZalo`,
     defaultMessage: 'Tham gia nhóm Zalo',
