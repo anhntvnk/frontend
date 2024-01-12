@@ -20,7 +20,8 @@ export default defineMessages({
   },
   address: {
     id: `${scope}.address`,
-    defaultMessage: 'Sky City 88 Láng Hạ, Đống Đa, Hà Nội',
+    defaultMessage:
+      'Số 7 Ngõ Thông Phong, Tôn Đức Thắng, Phường Quốc Tử Giám, Quận Đống Đa, Hà Nội',
   },
   footerMsg1: {
     id: `${scope}.msg1`,

@@ -311,10 +311,18 @@ export function Projects({
       month_of_completion: filterFinish,
       type: filterType,
       stage: filterStage,
-      capital: filterCapital,
+      capitalProjects: filterCapital,
     } = advSearch;
 
     const listData = [];
+
+    const CAPITAL_PROJECTS = {
+      fdi: 'FDI',
+      fdi_korea: 'FDI Korea',
+      fdi_china: 'FDI China',
+      fdi_japan: 'FDI Japan',
+      ddi: 'DDI',
+    };
 
     // eslint-disable-next-line prettier/prettier
     const dataFilter =
@@ -374,11 +382,19 @@ export function Projects({
           : '';
 
         if (typeof filterCity !== 'undefined') {
-          if (
-            city.replace('-', ' ').indexOf(cleanText(filterCity)) === -1 ||
-            address.indexOf(cleanText(filterCity)) === -1
-          ) {
-            addToList = false;
+          if (filterCity.length > 0) {
+            if (filterCity.split('-')[1]) {
+              if (address.indexOf(cleanText(filterCity.split('-')[1])) === -1) {
+                addToList = false;
+              }
+            } else if (
+              city
+                .replace('-', ' ')
+                .indexOf(cleanText(filterCity.toLowerCase())) === -1 ||
+              address.indexOf(cleanText(filterCity.toLowerCase())) === -1
+            ) {
+              addToList = false;
+            }
           }
         }
       }
@@ -393,10 +409,10 @@ export function Projects({
 
       if (addToList) {
         const capital = item.du_an_von ? cleanText(item.du_an_von) : '';
-
         if (
           typeof filterCapital !== 'undefined' &&
-          capital.indexOf(cleanText(filterCapital)) === -1
+          (!CAPITAL_PROJECTS.hasOwnProperty(capital) ||
+            cleanText(CAPITAL_PROJECTS[capital]) !== cleanText(filterCapital))
         ) {
           addToList = false;
         }

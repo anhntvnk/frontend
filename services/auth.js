@@ -1,5 +1,6 @@
 import axios from 'axios';
 import API from 'constants/apis';
+import moment from 'moment';
 
 // return the token from the session storage
 export const getToken = () => localStorage.getItem('token') || null;
@@ -24,7 +25,21 @@ export const setUserSession = (token, userId, packageOrder, expireDate) => {
   localStorage.setItem('packageOrder', packageOrder);
   localStorage.setItem('expireDate', expireDate);
 
-  localStorage.setItem('loginTime', new Date().getTime());
+  const formatTime = 'DD MMM YYYY hh:mm:ss';
+  localStorage.setItem(
+    'loginTime',
+    moment()
+      .format(formatTime)
+      .valueOf(),
+  );
+
+  localStorage.setItem(
+    'after6Hour',
+    moment()
+      .add(6, 'hours')
+      .format(formatTime)
+      .valueOf(),
+  );
 };
 
 export const logoutAccount = () => {

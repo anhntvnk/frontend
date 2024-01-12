@@ -58,8 +58,8 @@ export const citys = [
   'Yên Bái',
   'Điện Biên',
   'Đà Nẵng',
-  'Đắk Lắk',
-  'Đắk Nông',
+  'Đắc Lắc',
+  'Đắc Nông',
   'Đồng Nai',
   'Đồng Tháp',
 ];

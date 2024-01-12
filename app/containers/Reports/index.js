@@ -31,10 +31,13 @@ const key = 'reports';
 
 // eslint-disable-next-line react/prop-types
 export function Reports({ history, reports, onFetchReports, intl }) {
+  console.log(reports, 'reports');
   useInjectReducer({ key, reducer });
   useInjectSaga({ key, saga });
 
   const [costData, setCostData] = useState([]);
+
+  console.log(costData, 'costData');
 
   useEffect(() => {
     onFetchReports();

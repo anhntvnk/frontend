@@ -19,7 +19,7 @@ export const RESET_STATE = 'vnk/Projects/RESET_STATE';
 
 export const citys = [
   'An Giang',
-  'Bà Rịa - Vũng Tàu',
+  'Vũng Tàu',
   'Bình Dương',
   'Bình Phước',
   'Bình Thuận',

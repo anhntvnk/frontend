@@ -1,6 +1,6 @@
 export const citys = [
   'An Giang',
-  'Bà Rịa - Vũng Tàu',
+  'Vũng Tàu',
   'Bình Dương',
   'Bình Phước',
   'Bình Thuận',

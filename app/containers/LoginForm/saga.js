@@ -11,10 +11,12 @@ import { LOGIN_FORM } from './constants';
 import API from '../../constants/apis';
 
 export function* fetchLogin(actionData) {
-  const { data } = actionData;
+  let { data } = actionData;
   let packageExpire;
   let expireDate;
   let packageOrder;
+
+  data = { ...data, device_id: `VNK_WEB_ID_${data.email}` };
 
   const loginUrl = `${API.BASE_URL}/user/login`;
   try {
@@ -24,6 +26,7 @@ export function* fetchLogin(actionData) {
       headers: { 'Content-Type': 'application/json' },
       responseType: 'json',
       data,
+      // data: { ...loginData, device_id: `VNK_WEB_ID_${loginData.email}` },
     });
 
     if (response) {

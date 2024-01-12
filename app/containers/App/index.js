@@ -79,6 +79,13 @@ const App = () => {
         logoutAccount();
       }
     }
+
+    const loginTime = localStorage.getItem('loginTime');
+    const after6Hour = localStorage.getItem('after6Hour');
+
+    if (moment(loginTime).diff(moment(after6Hour)) > 0) {
+      logoutAccount();
+    }
   });
 
   return (

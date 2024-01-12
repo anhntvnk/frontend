@@ -1,11 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Helmet } from 'react-helmet';
-import H1 from 'components/H1';
-import { Row, Col } from 'antd';
-import { FormattedMessage } from 'react-intl';
 import './styles.less';
 import styled from 'styled-components';
-import messages from './messages';
 
 function Iframe(props) {
   return (
@@ -36,13 +32,13 @@ export default function TV() {
 }
 
 const StyleTV = styled.div``;
-const StyleHeader = styled.p`
-  border-radius: 6px;
-  border: 1px solid #dadce0;
-  background: #fff;
-  padding: 24px;
-  margin-top: 10px;
-`;
+// const StyleHeader = styled.p`
+//   border-radius: 6px;
+//   border: 1px solid #dadce0;
+//   background: #fff;
+//   padding: 24px;
+//   margin-top: 10px;
+// `;
 const StyleContent = styled.div`
   margin-top: 50px;
 `;

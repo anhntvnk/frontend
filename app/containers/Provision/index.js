@@ -98,8 +98,7 @@ export default function Provision() {
               </p>
               <b>CÔNG TY CỔ PHẦN DỊCH VỤ VÀ GIẢI PHÁP SỐ MYP</b>
               <p>
-                Địa chỉ : P 902, Tầng 9, Tòa nhà Sky City Tower A, số 88 Láng
-                Hạ, Phường Láng Hạ, Quận Đống Đa, Hà Nội
+                Địa chỉ : Số 7 ngõ Thông Phong, Tôn Đức Thắng, Phường Quốc Tử Giám, Quận Đống Đa, Hà Nội
               </p>
             </span>
             <span style={{ color: '#898989' }}>

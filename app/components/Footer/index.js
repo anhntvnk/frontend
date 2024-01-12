@@ -47,7 +47,7 @@ function Footer() {
                     <MailOutlined />
                     &ensp;
                     <span>
-                      <a href="mailto: info@myp.vn">info@myp.vn</a>
+                      <a href="mailto: admin@myp.vn">admin@myp.vn</a>
                     </span>
                   </p>
                   <p>
@@ -143,7 +143,7 @@ function Footer() {
             <p style={{ display: 'flex', alignItems: 'center' }}>
               <MailOutlined />
               &ensp;
-              <span>Email: info@myp.vn</span>
+              <span>Email: admin@myp.vn</span>
             </p>
           </Card>
         </Support>
