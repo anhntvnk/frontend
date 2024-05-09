@@ -29,6 +29,7 @@ export function* fetchLogin(actionData) {
       // data: { ...loginData, device_id: `VNK_WEB_ID_${loginData.email}` },
     });
 
+    console.log(response, 'response============');
     if (response) {
       const { userId, id: token } = response;
       const userUrl = `${API.BASE_URL}/user/${userId}?access_token=${token}`;

@@ -36,7 +36,7 @@ export const setUserSession = (token, userId, packageOrder, expireDate) => {
   localStorage.setItem(
     'after6Hour',
     moment()
-      .add(6, 'hours')
+      .add(1, 'days')
       .format(formatTime)
       .valueOf(),
   );

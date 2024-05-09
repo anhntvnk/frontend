@@ -28,6 +28,7 @@ const loginReducer = (state = initialState, action) =>
         draft.errorMessage = '';
         break;
       case LOGIN_FORM_ERROR:
+        console.log(action, '=============');
         if (action.error === 'LOGIN_TO_MULTIPLE_DEVICE') {
           draft.errorMessage = 'LOGIN_TO_MULTIPLE_DEVICE';
         } else {

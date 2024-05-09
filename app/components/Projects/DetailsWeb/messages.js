@@ -72,6 +72,10 @@ export default defineMessages({
     id: `${scope}.detail_web.address`,
     defaultMessage: 'Địa chỉ:',
   },
+  myDetailWebProjectPhase: {
+    id: `${scope}.detail_web.project_phase`,
+    defaultMessage: 'Giai đoạn dự án:',
+  },
   myDetailWebVersion: {
     id: `${scope}.detail_web.version`,
     defaultMessage: 'Phiên bản:',

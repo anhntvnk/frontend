@@ -190,6 +190,7 @@
   "myp.containers.DetailWeb.detail_web.province": "Tỉnh thành:",
   "myp.containers.DetailWeb.detail_web.district": "Quận huyện:",
   "myp.containers.DetailWeb.detail_web.address": "Địa chỉ:",
+  "myp.containers.DetailWeb.detail_web.project_phase": "Giai đoạn dự án:",
   "myp.containers.DetailWeb.detail_web.version": "Phiên bản:",
   "myp.containers.DetailWeb.detail_web.versionDescribe": "Mô tả phiên bản:",
   "myp.containers.DetailWeb.detail_web.note": "Ghi chú:",

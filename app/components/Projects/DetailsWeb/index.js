@@ -20,6 +20,7 @@ const GutterRow = styled.section`
 `;
 
 function DetailsWeb({ data, intl }) {
+  console.log(data, '=============');
   const convertCost = labelValue =>
     Math.abs(Number(labelValue)) >= 1.0e3
       ? `${Math.abs(Number(labelValue)) / 1.0e3} ${intl.formatMessage({
@@ -184,6 +185,19 @@ function DetailsWeb({ data, intl }) {
                 &nbsp;
               </span>
               <span>{_get(data, 'address', '')}</span>
+            </GutterRow>
+          </Col>
+        )}
+      </Row>
+      <Row gutter={16} className="pd-bottom">
+        {_get(data, 'stage', '') && (
+          <Col lg={24}>
+            <GutterRow>
+              <span className="description">
+                <FormattedMessage {...messages.myDetailWebProjectPhase} />
+                &nbsp;
+              </span>
+              <span>{_get(data, 'stage', '')}</span>
             </GutterRow>
           </Col>
         )}
