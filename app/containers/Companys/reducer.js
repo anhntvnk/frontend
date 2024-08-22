@@ -62,7 +62,7 @@ const companyReducer = (state = initialState, action) =>
             return a.latest_update > b.latest_update ? -1 : (b.latest_update > a.latest_update ? 1 : 0)
           });
 
-        console.log(draft.companyFollows, 'draft.companyFollows')
+        // console.log(draft.companyFollows, 'draft.companyFollows')
         break;
       case LOAD_COMPANYS_FOLLOW_SUCCESS:
         const {

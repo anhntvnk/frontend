@@ -124,7 +124,7 @@ export function ProjectDetails({
   projectByID,
   intl,
 }) {
-  console.log(projectType, 'projectType');
+
   useInjectReducer({ key, reducer });
   useInjectSaga({ key, saga });
 

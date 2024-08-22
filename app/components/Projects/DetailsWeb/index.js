@@ -20,7 +20,7 @@ const GutterRow = styled.section`
 `;
 
 function DetailsWeb({ data, intl }) {
-  console.log(data, '=============');
+  // console.log(data, '=============');
   const convertCost = labelValue =>
     Math.abs(Number(labelValue)) >= 1.0e3
       ? `${Math.abs(Number(labelValue)) / 1.0e3} ${intl.formatMessage({
