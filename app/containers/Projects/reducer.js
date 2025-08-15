@@ -35,20 +35,16 @@ export const initialState = {
 };
 
 const mappingProject = response => {
-  const { followedProjects, projectAvaiable, timeShowProject } = response;
+  const { followedProjects, projectAvaiable } = response;
   const getIdFollowedProjects = followedProjects.map(
     fl => fl.parent_project_id,
-  );
-
-  const projectShow = _filter(projectAvaiable, item =>
-    moment(item.last_modified).isSameOrAfter(timeShowProject),
   );
   const listProject =
     followedProjects.length > 0
       ? _concat(
           followedProjects,
           _filter(
-            projectShow,
+            projectAvaiable,
             item => !_includes(getIdFollowedProjects, item.id),
           ),
         )

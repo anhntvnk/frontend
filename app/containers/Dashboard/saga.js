@@ -13,11 +13,11 @@ import { LOAD_DATA_DASHBOARD } from './constants';
 
 const PACKAGE_ORDER = 'basic';
 
-const getDataResponse = (response) => {
+const getDataResponse = response => {
   let res = checkStatus(response);
   res = resData(response);
   return res;
-}
+};
 
 export function* getDataDashboard() {
   const user = JSON.parse(localStorage.getItem('user'));
@@ -25,27 +25,37 @@ export function* getDataDashboard() {
   // if (user.team_id) {
   //   filter = `filter[where][team_id]=${user.team_id}`;
   // }
-  const countCompany = `${API.BASE_URL}/company/count?access_token=${getToken()}`;
-  const countCompanyFollowed = `${API.BASE_URL}/user/${getUserId()}/companies/count?access_token=${getToken()}`;
-  const countProjectsFollowed = `${API.BASE_URL}/FollowedProjects?access_token=${getToken()}&${filter}`;
-  const countProject = `${API.BASE_URL}/user/get-available-projects/${getUserId()}?access_token=${getToken()}`;
+  const countCompany = `${
+    API.BASE_URL
+  }/company/count?access_token=${getToken()}`;
+  const countCompanyFollowed = `${
+    API.BASE_URL
+  }/user/${getUserId()}/companies/count?access_token=${getToken()}`;
+  const countProjectsFollowed = `${
+    API.BASE_URL
+  }/FollowedProjects?access_token=${getToken()}&${filter}`;
+  const countProjectAvailable = `${
+    API.BASE_URL
+  }/user/get-available-projects/${getUserId()}/count?access_token=${getToken()}`;
 
   try {
-    const  repos = yield axios
+    const repos = yield axios
       .all([
         axios.get(countCompany),
         axios.get(countCompanyFollowed),
         axios.get(countProjectsFollowed),
-        axios.get(countProject),
+        axios.get(countProjectAvailable),
       ])
       .then(
-        axios.spread((...responses) => ({ dashboard: {
-          // countCompany: getPackageOrder() !== PACKAGE_ORDER ? getDataResponse(responses[0]).length : 0 ,
-          countCompany: getDataResponse(responses[0]).count,
-          countCompanyFollowed: getDataResponse(responses[1]).count,
-          countProjectsFollowed: getDataResponse(responses[2]).length,
-          countProject: [...new Map(getDataResponse(responses[3]).map(item => [item.name, item])).values()].length,
-        }})),
+        axios.spread((...responses) => ({
+          dashboard: {
+            // countCompany: getPackageOrder() !== PACKAGE_ORDER ? getDataResponse(responses[0]).length : 0 ,
+            countCompany: getDataResponse(responses[0]).count,
+            countCompanyFollowed: getDataResponse(responses[1]).count,
+            countProjectsFollowed: getDataResponse(responses[2]).length,
+            countProjectAvailable: getDataResponse(responses[3]).count,
+          },
+        })),
       );
 
     yield put(loadDashboardSuccess(repos));

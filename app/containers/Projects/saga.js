@@ -33,17 +33,6 @@ export function* getProjectsAvaiable() {
   }/FollowedProjects?access_token=${getToken()}&${filter}`;
 
   try {
-    const getUserById = yield call(request, userUrl);
-
-    let timeShowProject = moment()
-      .subtract(6, 'months')
-      .format('YYYY-MM-DD');
-    if (getUserById) {
-      timeShowProject = moment(getUserById.created)
-        .subtract(6, 'months')
-        .format('YYYY-MM-DD');
-    }
-
     const projectAvaiableURL = `${
       API.BASE_URL
     }/user/get-available-projects/${getUserId()}?access_token=${getToken()}`;
@@ -62,7 +51,6 @@ export function* getProjectsAvaiable() {
       loadProjectSuccess({
         followedProjects,
         projectAvaiable,
-        timeShowProject,
       }),
     );
   } catch (err) {

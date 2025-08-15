@@ -20,7 +20,17 @@ const GutterRow = styled.section`
 `;
 
 function DetailsWeb({ data, intl }) {
-  // console.log(data, '=============');
+  const TextWithLineBreaks = text => {
+    const textWithBreaks = text.split('\n').map((t, i) => (
+      <React.Fragment key={i}>
+        {t}
+        <br />
+      </React.Fragment>
+    ));
+
+    return <div>{textWithBreaks}</div>;
+  };
+
   const convertCost = labelValue =>
     Math.abs(Number(labelValue)) >= 1.0e3
       ? `${Math.abs(Number(labelValue)) / 1.0e3} ${intl.formatMessage({
@@ -141,7 +151,6 @@ function DetailsWeb({ data, intl }) {
               </span>
               <span>{moment(_get(data, 'finish', '')).format('MM/YYYY')}</span>
             </div>
-           
           </GutterRow>
         </Col>
       </Row>
@@ -221,7 +230,9 @@ function DetailsWeb({ data, intl }) {
                 <FormattedMessage {...messages.myDetailWebVersionDescribe} />
                 &nbsp;
               </span>
-              <span>{_get(data, 'version_description', '')}</span>
+              <span>
+                {TextWithLineBreaks(_get(data, 'version_description', ''))}
+              </span>
             </GutterRow>
           </Col>
         )}
@@ -230,9 +241,9 @@ function DetailsWeb({ data, intl }) {
         <Row gutter={16} className="pd-bottom">
           <Col lg={24}>
             <GutterRow>
-              <p className="description">
+              <div className="description">
                 <FormattedMessage {...messages.myDetailWebNote} />
-              </p>
+              </div>
               <span style={{ whiteSpace: 'pre-wrap' }}>
                 {_get(data, 'note', '')}
               </span>

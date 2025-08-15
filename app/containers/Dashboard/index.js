@@ -41,7 +41,7 @@ export function Dashboard({ dashboards, onFetchDashboard }) {
   const {
     countCompany,
     countCompanyFollowed,
-    countProject,
+    countProjectAvailable,
     countProjectsFollowed,
   } = dashboards;
 
@@ -77,7 +77,7 @@ export function Dashboard({ dashboards, onFetchDashboard }) {
       icon: 'search',
       color: Color.yellow,
       title: <FormattedMessage {...messages.myDashBoardSearch} />,
-      number: countProject,
+      number: countProjectAvailable,
       url: ROUTE.PROJECT,
     },
     {

@@ -54,7 +54,7 @@ function Footer() {
                     <FieldNumberOutlined />
                     &ensp;
                     <span>
-                      <b>001188004366</b>&ensp; (
+                      <b>0108764036</b>&ensp; (
                       <FormattedMessage {...messages.codeCer} />)
                     </span>
                   </p>
