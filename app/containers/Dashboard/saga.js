@@ -36,7 +36,7 @@ export function* getDataDashboard() {
   }/FollowedProjects?access_token=${getToken()}&${filter}`;
   const countProjectAvailable = `${
     API.BASE_URL
-  }/user/get-available-projects/${getUserId()}/count?access_token=${getToken()}`;
+  }/user/get-available-projects/${getUserId()}?access_token=${getToken()}`;
 
   try {
     const repos = yield axios
@@ -53,7 +53,7 @@ export function* getDataDashboard() {
             countCompany: getDataResponse(responses[0]).count,
             countCompanyFollowed: getDataResponse(responses[1]).count,
             countProjectsFollowed: getDataResponse(responses[2]).length,
-            countProjectAvailable: getDataResponse(responses[3]).count,
+            countProjectAvailable: getDataResponse(responses[3]).length,
           },
         })),
       );
