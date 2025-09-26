@@ -90,8 +90,6 @@ const App = () => {
     }
   });
 
-  const packageOrder = localStorage.getItem('packageOrder');
-
   return (
     <AppWrapper>
       <Helmet titleTemplate="%s - My Project" defaultTitle="My Project">
@@ -122,9 +120,7 @@ const App = () => {
         <PublicLayout exact path={ROUTE.HOMEPAGE} component={HomePage} />
         <PrivateLayout exact path={ROUTE.PACKAGES} component={Packages} />
         <PrivateLayout exact path={ROUTE.PROJECT} component={Projects} />
-        {packageOrder !== 'basic' && (
-          <PrivateLayout exact path={ROUTE.COMPANY} component={Companys} />
-        )}
+        <PrivateLayout exact path={ROUTE.COMPANY} component={Companys} />
         <PrivateLayout exact path={ROUTE.DASHBOARD} component={Dashboard} />
         <PrivateLayout exact path={ROUTE.USER} component={User} />
         <PrivateLayout exact path={ROUTE.KPI_DAY} component={KpiDay} />
