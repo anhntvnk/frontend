@@ -130,14 +130,18 @@ class Header extends React.Component {
   getMenuToRender = (history, menus) => {
     // eslint-disable-next-line react/prop-types
     const { location } = this.props;
+    const packageBasic = localStorage.getItem('packageOrder') === 'basic';
 
     const menuMode = this.state.isMobile ? 'inline' : 'horizontal';
     const module = location.pathname.replace(/(^\/|\/$)/g, '').split('/')[0]; // .slice(0, -1).join('/');
     const activeMenuItem = (module.match('index') && 'home') || module;
+    const filteredMenus = packageBasic
+      ? menus.filter(item => item.key !== 'companys')
+      : menus;
 
     return (
       <Menu mode={menuMode} selectedKeys={[activeMenuItem]} id="nav" key="nav">
-        {menus.map(item => {
+        {filteredMenus.map(item => {
           if (item.isLogin === false) {
             return;
           }

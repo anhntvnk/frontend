@@ -34,6 +34,7 @@ export function Dashboard({ dashboards, onFetchDashboard }) {
   useInjectSaga({ key, saga });
 
   const user = JSON.parse(localStorage.getItem('user'));
+  const packageBasic = localStorage.getItem('packageOrder') === 'basic';
   useEffect(() => {
     if (dashboards.length === 0) onFetchDashboard();
   }, []);
@@ -119,7 +120,11 @@ export function Dashboard({ dashboards, onFetchDashboard }) {
     },
   ];
 
-  const numberCards = mockDashboard.map((item, k) => (
+  const mockDashboardFilter = packageBasic
+    ? mockDashboard.filter(item => !item.url.includes(ROUTE.COMPANY))
+    : mockDashboard;
+
+  const numberCards = mockDashboardFilter.map((item, k) => (
     <Col key={k} lg={6} md={12} xs={24} sm={24} className="dashboard-card">
       <NumberCard {...item} />
     </Col>
