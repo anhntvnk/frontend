@@ -18,6 +18,22 @@ export default defineMessages({
       Made with love by {author}.
     `,
   },
+  myBanner2Title: {
+    id: `${scope}.my_banner2.title`,
+    defaultMessage: 'Phần mềm My Project',
+  },
+  myBanner2Msg: {
+    id: `${scope}.my_banner2.msg`,
+    defaultMessage: 'Tiết kiệm thời gian và gia tăng số lượng dự án cho bạn!',
+  },
+  myProjectSaveTime: {
+    id: `${scope}.my_project.save`,
+    defaultMessage: 'Save Time More Project',
+  },
+  myBanner2DownApp: {
+    id: `${scope}.my_banner2.down`,
+    defaultMessage: 'Tải App My Project trên kho ứng dụng',
+  },
   address: {
     id: `${scope}.address`,
     defaultMessage:

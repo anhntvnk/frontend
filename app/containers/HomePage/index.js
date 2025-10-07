@@ -81,7 +81,7 @@ export function HomePage({ userProfile, onLoadUserProfile, intl }) {
         />
       </Helmet>
       <div className="vnk-homepage">
-        <CenteredSection>
+        {/* <CenteredSection>
           <H1 className="vnk-headline">
             <FormattedMessage {...messages.mypIntroduceHeader} />
           </H1>
@@ -130,7 +130,7 @@ export function HomePage({ userProfile, onLoadUserProfile, intl }) {
           </Col>
         </Row>
 
-        <div className="page2">
+       <div className="page2">
           <Row className="content">
             <Col sm={24} lg={12} className="myp-software">
               <H1 className="vnk-headline title ">
@@ -173,16 +173,9 @@ export function HomePage({ userProfile, onLoadUserProfile, intl }) {
             </Col>
             <Col sm={24} lg={12} className="ipApp">
               <div className="app-bg" />
-              {/* <img
-                className="ipApp"
-                width={550}
-                height={600}
-                src={ipApp}
-                alt="App My Project"
-              /> */}
             </Col>
           </Row>
-        </div>
+        </div> */}
 
         <Container className="myp-feature">
           <Col sm={12} lg={10}>
@@ -302,7 +295,10 @@ export function HomePage({ userProfile, onLoadUserProfile, intl }) {
             </Row>
           </Col>
         </Container>
-
+        <HomeFeature>
+          <H1>This is title</H1>
+        </HomeFeature>
+        {/* 
         <Container>
           <Col xs={24} md={12} lg={24} className="highlights">
             <HeadLine>
@@ -450,11 +446,16 @@ export function HomePage({ userProfile, onLoadUserProfile, intl }) {
               </Blog>
             </Row>
           </Col>
-        </Row>
+        </Row> */}
       </div>
     </div>
   );
 }
+
+const HomeFeature = styled.section`
+  margin-top: 50px;
+  margin-bottom: 50px;
+`;
 
 const Blog = styled(Col)`
   font-size: 16px;
