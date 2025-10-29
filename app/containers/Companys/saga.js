@@ -3,7 +3,7 @@
  */
 
 import { call, put, takeLatest } from 'redux-saga/effects';
-import request, { fetchAxios } from 'utils/request';
+import { fetchAxios } from 'utils/request';
 
 import {
   LOAD_COMPANYS,
@@ -23,17 +23,32 @@ const PACKAGE_ORDER = 'basic';
 export function* getCompanys() {
   // get all company
   // eslint-disable-next-line prettier/prettier
-  const reqCompany = `${API.BASE_URL}/company?filter[order]=latest_update%20DESC`;
+  const reqCompany = `${
+    API.BASE_URL
+  }/company?filter[order]=latest_update%20DESC`;
   const reqCompanyFollow = `${
     API.BASE_URL
   }/user/${getUserId()}/companies?filter[order]=latest_update%20DESC`;
 
   try {
-    const companys = yield call(request, reqCompany);
-    const companyFollows = yield call(request, reqCompanyFollow);
-    const companyByPackage = companys;
-    // getPackageOrder() !== PACKAGE_ORDER ? companys : [];
-    getPackageOrder() !== PACKAGE_ORDER ? companys : [];
+    const headers = {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${getToken()}`,
+    };
+    const companys = yield call(fetchAxios, {
+      method: 'get',
+      url: reqCompany,
+      headers,
+      responseType: 'json',
+    });
+    const companyFollows = yield call(fetchAxios, {
+      method: 'get',
+      url: reqCompanyFollow,
+      headers,
+      responseType: 'json',
+    });
+    const companyByPackage =
+      getPackageOrder() !== PACKAGE_ORDER ? companys : [];
     yield put(
       loadCompanySuccess({ companys: companyByPackage, companyFollows }),
     );
