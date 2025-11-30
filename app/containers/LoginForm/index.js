@@ -28,6 +28,7 @@ import './styles.less';
 import { createStructuredSelector } from 'reselect';
 import { setUserSession } from '../../../services/auth';
 import messages from './messages';
+import bgLogin from '../../assets/images/login/bg-login.jpg';
 const key = 'loginForm';
 
 // eslint-disable-next-line react/prop-types
@@ -89,15 +90,32 @@ export function LoginForm({ history, intl, onLoginForm, user, errorMessage }) {
   };
 
   return (
-    <div className="form-login">
+    <div
+      className="form-login bg-cover bg-center h-[calc(100vh-64px)] items-center justify-start flex flex-col relative"
+      style={{ backgroundImage: `url(${bgLogin})` }}
+    >
       <Helmet>
         <title>Đăng Nhập</title>
         <meta name="description" content="Đăng Nhập My Project" />
       </Helmet>
+      <div className="bg-[#292E32E3] h-[250px] w-full absolute top-0 z-[1]" />
+      <div
+        className="
+          absolute top-[250px] left-0 w-full h-[120px]
+          bg-[#292E32E3] z-[1] 
+          [clip-path:polygon(0_0,100%_0,50%_100%)]
+        "
+      />
+      <img
+        className="z-[3] -mb-5"
+        width={100}
+        alt="logo"
+        src={require('../../assets/images/logo/my-project.png')}
+      />
 
       <Form
         name="myp_login"
-        className="login-form"
+        className="login-form bg-white p-5 z-[2] rounded-lg shadow-lg"
         initialValues={{
           remember: true,
         }}
