@@ -99,7 +99,7 @@ const HomeChartLine = () => {
   return (
     <div>
       <div className="flex justify-between items-center flex-wrap gap-y-2">
-        <h2 className="text-[#fff] font-[700] text-[13px]">
+        <h2 className="text-[#fff] font-[700] text-[13px] uppercase">
           <FormattedMessage {...messages.homeChartLineTitle} />
         </h2>
         <div className="flex flex-wrap gap-[8px] text-[10px] md:text-[12px]">

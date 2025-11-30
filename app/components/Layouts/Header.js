@@ -369,6 +369,17 @@ class Header extends React.Component {
               </Col>
             )}
           </Row>
+          <a
+            href="https://www.facebook.com/messages/t/102016709355195"
+            className="fixed bottom-6 right-6"
+            target="_blank"
+          >
+            <img
+              src={require('../../assets/images/messeger.png')}
+              width={60}
+              alt="facebook-messenger"
+            />
+          </a>
         </div>
         {/* {!module && <Banner isMobile={isMobile} />} */}
       </>
