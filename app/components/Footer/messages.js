@@ -62,19 +62,19 @@ export default defineMessages({
   },
   footerServiceAcademy: {
     id: `${scope}.service.academy`,
-    defaultMessage: '• Đào tạo quy trình chuẩn Bán Hàng Dự Án',
+    defaultMessage: 'Đào tạo quy trình chuẩn Bán Hàng Dự Án',
   },
   footerServiceShare: {
     id: `${scope}.service.share`,
-    defaultMessage: '• Chia sẻ cơ hội – hỗ trợ kết nối dự án',
+    defaultMessage: 'Chia sẻ cơ hội – hỗ trợ kết nối dự án',
   },
   footerServiceProvided: {
     id: `${scope}.service.provided`,
-    defaultMessage: '• Cung cấp công cụ quản lý và theo dõi dự án hiệu quả',
+    defaultMessage: 'Cung cấp công cụ quản lý và theo dõi dự án hiệu quả',
   },
   footerServiceInvite: {
     id: `${scope}.service.invite`,
-    defaultMessage: '• Tham gia cộng đồng Hiệp Hội Xây Dựng Công Nghiệp',
+    defaultMessage: 'Tham gia cộng đồng Hiệp Hội Xây Dựng Công Nghiệp',
   },
   footerCopyright: {
     id: `${scope}.copyright`,

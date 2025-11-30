@@ -370,7 +370,7 @@ class Header extends React.Component {
             )}
           </Row>
         </div>
-        {!module && <Banner isMobile={isMobile} />}
+        {/* {!module && <Banner isMobile={isMobile} />} */}
       </>
     );
   }
