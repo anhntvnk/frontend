@@ -68,6 +68,10 @@ export default defineMessages({
     id: `${scope}.home_chart_line.currency_billion`,
     defaultMessage: 'tỷ đồng',
   },
+  newProjectTitle: {
+    id: `${scope}.new_projects.title`,
+    defaultMessage: 'Tổng thầu mới trúng tốt nhất Việt Nam',
+  },
   topProjectsTitle: {
     id: `${scope}.top_projects.title`,
     defaultMessage: 'Tổng thầu mới trúng tốt nhất Việt Nam',
@@ -75,6 +79,22 @@ export default defineMessages({
   projectTableDomesticTitle: {
     id: `${scope}.project_table.domestic_title`,
     defaultMessage: 'Top dự án khu vực trong nước',
+  },
+  projectTableTheadDirector: {
+    id: `${scope}.project_table.thead.director`,
+    defaultMessage: 'Giám đốc',
+  },
+  projectTableTheadContractor: {
+    id: `${scope}.project_table.thead.contractor`,
+    defaultMessage: 'Công ty',
+  },
+  projectTableTheadAddress: {
+    id: `${scope}.project_table.thead.address`,
+    defaultMessage: 'Địa chỉ',
+  },
+  projectTableTheadDate: {
+    id: `${scope}.project_table.thead.date`,
+    defaultMessage: 'Ngày cập nhật',
   },
   projectTableDomesticTitleUpper: {
     id: `${scope}.project_table.domestic_title_upper`,

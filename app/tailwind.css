@@ -16,10 +16,13 @@ object {
     @apply text-[18px] leading-[24px] lg:text-[26px] lg:leading-[30px] font-[700] mb-[0px];
 }
 .custom-dark-table{
-    .ant-table,.ant-table-tbody > tr.ant-table-row:hover > td, .ant-table-tbody > tr > td.ant-table-cell-row-hover{
+    .ant-table,.ant-table-tbody > tr.ant-table-row:hover > td, .ant-table-tbody > tr > td.ant-table-cell-row-hover,.ant-table-thead .ant-table-cell{
         @apply bg-[#212529];
     }
-    .ant-table-tbody > tr > td{
+    .ant-table-thead .ant-table-cell{
+        @apply font-bold uppercase;
+    }
+    .ant-table-tbody > tr > td,.ant-table-thead .ant-table-cell{
         @apply border-b-[#2c3034] text-[12px] text-[#fff];
     }
     .ant-pagination{

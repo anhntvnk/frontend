@@ -83,7 +83,7 @@ const NewProjectsTable = () => (
   <>
     <div className="flex justify-between items-center border-b border-[#32383e] mb-[12px] py-[15px] px-[20px]">
       <h2 className="text-[#fff] text-[13px] font-[700] mb-[0px] uppercase">
-        <FormattedMessage {...messages.topProjectsTitle} />
+        <FormattedMessage {...messages.newProjectTitle} />
       </h2>
     </div>
     <Table
