@@ -81,7 +81,7 @@ export function HomePage({ userProfile, onLoadUserProfile, intl }) {
       </Helmet>
       <HomeCount />
       <div className="bg-[#1b1d21] p-[20px] pt-[0px]">
-        <div className="grid lg:grid-cols-3 gap-[20px]">
+        <div className="lg:grid lg:grid-cols-3 gap-[20px]">
           <div className="lg:col-span-2 bg-[#212529] p-[20px] rounded-[4px]">
             <HomeChartLine />
           </div>
@@ -115,16 +115,16 @@ export function HomePage({ userProfile, onLoadUserProfile, intl }) {
               </h2>
               <img
                 src={imageFeature1}
-                className="mr-[10px] md:mr-[20px] xl:max-w-full md:max-w-[300px] max-w-[63%]"
+                className="mr-[10px] md:mr-[20px] 2xl:max-w-full xl:max-w-[360px] max-w-[63%]"
                 alt="images"
               />
               <img
                 src={imageFeature2}
                 alt="images"
-                className="xl:max-w-full md:max-w-[170px] max-w-[calc(37%-10px)]"
+                className="2xl:max-w-full xl:max-w-[200px] max-w-[calc(37%-10px)]"
               />
             </div>
-            <div className="col-span-1 bg-[#8A232CB0] rounded-xl text-[#ccc] [&_b]:text-[#fff] gap-x-3 p-5 gap-y-2 grid md:grid-cols-2 text-[16px] xl:text-[20px] [&_p]:!m-0 [&_img]:w-[40px] [&_span]:pt-[8px]">
+            <div className="col-span-1 xl:max-w-[680px] bg-[#8A232CB0] rounded-xl text-[#ccc] [&_b]:text-[#fff] gap-x-3 p-5 gap-y-2 grid md:grid-cols-2 text-[16px] xl:text-[20px] [&_p]:!m-0 [&_img]:w-[40px] [&_span]:pt-[8px]">
               <div className="grid grid-cols-[40px_1fr] gap-x-[13px]">
                 <span>
                   <img src={iconFeature1} alt="images" />
