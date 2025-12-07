@@ -16,7 +16,7 @@ import PropTypes from 'prop-types';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 
 import H1 from 'components/H1';
-import { Row, Col } from 'antd';
+import { Row, Col, Modal } from 'antd';
 import { useInjectReducer } from 'utils/injectReducer';
 import { useInjectSaga } from 'utils/injectSaga';
 import styled from 'styled-components';
@@ -49,6 +49,8 @@ export function HomePage({ userProfile, onLoadUserProfile, intl }) {
   useInjectReducer({ key, reducer });
   useInjectSaga({ key, saga });
 
+  const [visibleForm, setVisibleForm] = React.useState(false);
+
   // const [visible, setVisible] = React.useState(false);
   // const [orderPackage, setOrderPackage] = React.useState({});
   // const [edit, setEdit] = React.useState(false);
@@ -56,6 +58,8 @@ export function HomePage({ userProfile, onLoadUserProfile, intl }) {
 
   useEffect(() => {
     onLoadUserProfile();
+    const timer = setTimeout(() => setVisibleForm(true), 10000); // mở sau 5s
+    return () => clearTimeout(timer);
   }, []);
 
   const openModal = (item, isEdit) => {
@@ -79,6 +83,24 @@ export function HomePage({ userProfile, onLoadUserProfile, intl }) {
           })}
         />
       </Helmet>
+      <Modal
+        open={visibleForm}
+        onCancel={() => setVisibleForm(false)}
+        footer={null}
+        width={700}
+        bodyStyle={{ padding: 0 }}
+        centered
+        destroyOnClose
+      >
+        <h2 className="text-center py-8 text-[20px] font-bold max-w-[600px] mx-auto">
+          ĐỂ LẠI THÔNG TIN ĐỂ ĐƯỢC TƯ VẤN MIỄN PHÍ VÀ NHẬN DỰ ÁN DEMO MỚI NHẤT!
+        </h2>
+        <iframe
+          src="https://salekit.io/form/428317c8?iframe=true"
+          title="Salekit Form"
+          style={{ width: '100%', height: '400px', border: 'none' }}
+        />
+      </Modal>
       <HomeCount />
       <div className="bg-[#1b1d21] p-[20px] pt-[0px]">
         <div className="lg:grid lg:grid-cols-3 gap-[20px]">

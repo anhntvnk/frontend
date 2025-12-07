@@ -426,6 +426,19 @@ const Info = styled(Row)`
   background-image: url(${bgFooter2});
   background-size: cover;
   padding: 60px 100px 50px;
+  background-position: center;
+  position: relative;
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+    pointer-events: none;
+  }
+  > * {
+    position: relative;
+    z-index: 1;
+  }
   @media (max-width: 1600px) {
     padding: 50px 20px;
   }
