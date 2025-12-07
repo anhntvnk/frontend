@@ -8,9 +8,121 @@ import { defineMessages } from 'react-intl';
 export const scope = 'myp.containers.HomePage';
 
 export default defineMessages({
-  mypIntroduceHeader: {
-    id: `${scope}.myp_introduce.header`,
-    defaultMessage: 'KHÔNG CHỈ LÀ CẬP NHẬT THÔNG TIN DỰ ÁN',
+  mypHomeCountTitle1: {
+    id: `${scope}.home_count.title1`,
+    defaultMessage: 'TỔNG DỰ ÁN MỚI KHỞI CÔNG',
+  },
+  mypHomeCountTitle2: {
+    id: `${scope}.home_count.title2`,
+    defaultMessage: 'TỔNG ĐƠN HÀNG',
+  },
+  mypHomeCountTitle3: {
+    id: `${scope}.home_count.title3`,
+    defaultMessage: 'TỔNG KHÁCH HÀNG MYP',
+  },
+  mypHomeCountTitle4: {
+    id: `${scope}.home_count.title4`,
+    defaultMessage: 'TỔNG CÔNG TY',
+  },
+  mypHomeCoutViewall: {
+    id: `${scope}.home_count.viewall`,
+    defaultMessage: 'Xem tất cả',
+  },
+  homeChartLineTitle: {
+    id: `${scope}.home_chart_line.title`,
+    defaultMessage: 'TỔNG HỢP DỰ ÁN BÁN ĐƯỢC TỐT NHẤT VIỆT NAM',
+  },
+  homeChartLineToday: {
+    id: `${scope}.home_chart_line.today`,
+    defaultMessage: 'Hôm nay',
+  },
+  homeChartLineWeek: {
+    id: `${scope}.home_chart_line.week`,
+    defaultMessage: 'Tuần này',
+  },
+  homeChartLineMonth: {
+    id: `${scope}.home_chart_line.month`,
+    defaultMessage: 'Tháng này',
+  },
+  homeChartLineYear: {
+    id: `${scope}.home_chart_line.year`,
+    defaultMessage: 'Năm này',
+  },
+  homeChartLineOrders: {
+    id: `${scope}.home_chart_line.orders`,
+    defaultMessage: 'Đơn hàng',
+  },
+  homeChartLineNewlyStarted: {
+    id: `${scope}.home_chart_line.newly_started`,
+    defaultMessage: 'Dự án mới khởi công',
+  },
+  homeChartLineCompleted: {
+    id: `${scope}.home_chart_line.completed`,
+    defaultMessage: 'Dự án vừa hoàn thành',
+  },
+  homeChartLineWon: {
+    id: `${scope}.home_chart_line.won`,
+    defaultMessage: 'Tổng thầu mới trúng',
+  },
+  homeChartLineCurrencyBillion: {
+    id: `${scope}.home_chart_line.currency_billion`,
+    defaultMessage: 'tỷ đồng',
+  },
+  newProjectTitle: {
+    id: `${scope}.new_projects.title`,
+    defaultMessage: 'Tổng thầu mới trúng tốt nhất Việt Nam',
+  },
+  topProjectsTitle: {
+    id: `${scope}.top_projects.title`,
+    defaultMessage: 'Tổng thầu mới trúng tốt nhất Việt Nam',
+  },
+  projectTableDomesticTitle: {
+    id: `${scope}.project_table.domestic_title`,
+    defaultMessage: 'Top dự án khu vực trong nước',
+  },
+  projectTableTheadDirector: {
+    id: `${scope}.project_table.thead.director`,
+    defaultMessage: 'Giám đốc',
+  },
+  projectTableTheadContractor: {
+    id: `${scope}.project_table.thead.contractor`,
+    defaultMessage: 'Công ty',
+  },
+  projectTableTheadAddress: {
+    id: `${scope}.project_table.thead.address`,
+    defaultMessage: 'Địa chỉ',
+  },
+  projectTableTheadDate: {
+    id: `${scope}.project_table.thead.date`,
+    defaultMessage: 'Ngày cập nhật',
+  },
+  projectTableDomesticTitleUpper: {
+    id: `${scope}.project_table.domestic_title_upper`,
+    defaultMessage: 'TOP DỰ ÁN KHU VỰC TRONG NƯỚC',
+  },
+  homeChartTitle3Regions: {
+    id: `${scope}.home_chart.title_3_regions`,
+    defaultMessage: 'Biểu đồ dự án khu vực 03 miền',
+  },
+  countryMapTitle: {
+    id: `${scope}.country_map.title`,
+    defaultMessage: 'DỰ ÁN KHU VỰC VIỆT NAM VÀ NGOÀI NƯỚC',
+  },
+  countryMapExportReport: {
+    id: `${scope}.country_map.export_report`,
+    defaultMessage: 'Xuất báo cáo',
+  },
+  countryVietnam: {
+    id: `${scope}.country_map.vietnam`,
+    defaultMessage: 'Việt Nam',
+  },
+  countryJapan: {
+    id: `${scope}.country_map.japan`,
+    defaultMessage: 'Nhật Bản',
+  },
+  countryChina: {
+    id: `${scope}.country_map.china`,
+    defaultMessage: 'Trung Quốc',
   },
   mypIntroduceHome: {
     id: `${scope}.myp_introduce.home`,

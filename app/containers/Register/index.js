@@ -38,6 +38,7 @@ import {
   makeSelectStatusResponse,
   makeSelectRegisterLoading,
 } from './selectors';
+import bgLogin from '../../assets/images/login/bg-login.jpg';
 
 const key = 'register';
 
@@ -67,8 +68,19 @@ export function Register({
   };
 
   return !statusResponse ? (
-    <div className="register-myp">
-      <Spin spinning={isLoading} tip="Loading...">
+    <div
+      className="register-myp bg-cover bg-center h-[calc(100vh-64px)] items-center justify-start flex flex-col relative"
+      style={{ backgroundImage: `url(${bgLogin})` }}
+    >
+      <div className="bg-[#292E32E3] h-[250px] w-full absolute top-0 z-[1]" />
+      <div
+        className="
+          absolute top-[250px] left-0 w-full h-[120px]
+          bg-[#292E32E3] z-[1] 
+          [clip-path:polygon(0_0,100%_0,50%_100%)]
+        "
+      />
+      <Spin className="z-[2]" spinning={isLoading} tip="Loading...">
         <Helmet>
           <title>
             {intl.formatMessage({
@@ -82,10 +94,17 @@ export function Register({
             })}
           />
         </Helmet>
-
+        <div className="text-center relative z-[3]">
+          <img
+            className="z-[3] -mb-5 mx-auto"
+            width={100}
+            alt="logo"
+            src={require('../../assets/images/logo/my-project.png')}
+          />
+        </div>
         <Form
           name="myp_login"
-          className="register-form"
+          className="register-form relative bg-white rounded-lg shadow-lg p-5 z-[2]"
           initialValues={{
             remember: true,
           }}

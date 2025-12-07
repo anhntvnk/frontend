@@ -37,7 +37,6 @@ const { SubMenu } = Menu;
 class Header extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
       isMobile,
       username: '',
@@ -72,6 +71,7 @@ class Header extends React.Component {
             data: { full_name },
           } = response;
           this.setState({ username: full_name });
+          console.log('full_name', full_name);
         })
         .catch(e => console.log(e));
 
@@ -325,43 +325,40 @@ class Header extends React.Component {
                           <BellOutlined className="iconFont" />
                         </Badge>
                       </Popover>
-                      <Menu key="user" mode="horizontal">
-                        <SubMenu
-                          title={
-                            <Fragment>
-                              <Avatar
-                                name="my project"
-                                size="35px"
-                                round
-                                color="#357edd"
-                              />
-                              <span
-                                style={{ color: '#fff', paddingLeft: '5px' }}
-                              >
-                                {this.state.username}
-                              </span>
-                            </Fragment>
-                          }
-                        >
-                          <Menu.Item key="persional-infomation">
+                      <div className="group relative">
+                        <Fragment>
+                          <Avatar
+                            name="my project"
+                            size="35px"
+                            round
+                            color="#357edd"
+                          />
+                          <span className="ml-1 hidden lg:inline-block text-white">
+                            {this.state.username}
+                          </span>
+                        </Fragment>
+                        <ul className="hidden tw-menu-user group-hover:block absolute right-0 min-w-48 bg-white border border-gray-200 shadow-lg z-20">
+                          <li>
                             <Link to={ROUTE.USER}>Thông tin cá nhân</Link>
-                          </Menu.Item>
-                          <Menu.Item key="kpi-settings">
+                          </li>
+                          <li>
                             <Link to={ROUTE.KPI_SETTINGS}>
                               Tự đánh giá KPIs
                             </Link>
-                          </Menu.Item>
-                          <Menu.Item key="change-password">
+                          </li>
+                          <li>
                             <Link to={ROUTE.CHANGE_PASSWORD}>Đổi mật khẩu</Link>
-                          </Menu.Item>
-                          <Menu.Item
-                            key="SignOut"
-                            onClick={() => this.logoutAccount(history)}
-                          >
-                            <FormattedMessage {...messages.logOut} />
-                          </Menu.Item>
-                        </SubMenu>
-                      </Menu>
+                          </li>
+                          <li>
+                            <span
+                              className="cursor-pointer block px-4"
+                              onClick={() => this.logoutAccount(history)}
+                            >
+                              <FormattedMessage {...messages.logOut} />
+                            </span>
+                          </li>
+                        </ul>
+                      </div>
                     </>
                   )}
                   <LocaleToggle />
@@ -369,8 +366,19 @@ class Header extends React.Component {
               </Col>
             )}
           </Row>
+          <a
+            href="https://www.facebook.com/messages/t/102016709355195"
+            className="fixed bottom-6 right-6"
+            target="_blank"
+          >
+            <img
+              src={require('../../assets/images/messeger.png')}
+              width={60}
+              alt="facebook-messenger"
+            />
+          </a>
         </div>
-        {!module && <Banner isMobile={isMobile} />}
+        {/* {!module && <Banner isMobile={isMobile} />} */}
       </>
     );
   }

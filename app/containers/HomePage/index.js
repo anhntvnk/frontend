@@ -14,41 +14,42 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import PropTypes from 'prop-types';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
-import MessengerCustomerChat from 'react-messenger-customer-chat';
 
 import H1 from 'components/H1';
-import H3 from 'components/H3';
-import { Row, Col } from 'antd';
+import { Row, Col, Modal } from 'antd';
 import { useInjectReducer } from 'utils/injectReducer';
 import { useInjectSaga } from 'utils/injectSaga';
-import {
-  CaretRightFilled,
-  FileTextFilled,
-  DribbbleSquareOutlined,
-} from '@ant-design/icons';
 import styled from 'styled-components';
 import { createStructuredSelector } from 'reselect';
 import { makeSelectUserProfille } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 import messages from './messages';
-import CenteredSection from './CenteredSection';
-import homeApp from '../../assets/images/home-app.jpg';
-import info from '../../assets/images/feature/info.png';
-import next from '../../assets/images/feature/next.png';
-import scale from '../../assets/images/feature/scale.png';
-import statchart from '../../assets/images/feature/statschart.png';
-import successReport from '../../assets/images/feature/success-report.png';
-import teacherIcon from '../../assets/images/feature/teacher-icon.png';
-import kpi from '../../assets/images/feature/kpi.jpg';
+import bgHomeFeature from '../../assets/images/home/home-feature.jpg';
+import imageFeature1 from '../../assets/images/home/home-feature-image1.png';
+import imageFeature2 from '../../assets/images/home/home-feature-image2.jpg';
+import iconFeature1 from '../../assets/images/globe/icon-feature1.png';
+import iconFeature2 from '../../assets/images/globe/icon-feature2.png';
+import iconFeature3 from '../../assets/images/globe/icon-feature3.png';
+import iconFeature4 from '../../assets/images/globe/icon-feature4.png';
+import iconFeature5 from '../../assets/images/globe/icon-feature5.png';
 import './styles.less';
 import { loadUserProfile } from './actions';
+import HomeChart from './HomeChart';
+import ProjectTable from './ProjectTable';
+import TopProjectsTable from './TopProjectsTable';
+import NewProjectsTable from './NewProjectsTable';
+import HomeChartLine from './HomeChartLine.js';
+import CountryMap from './CountryMap.js';
+import HomeCount from './HomeCount.js';
 
 const key = 'home';
 // eslint-disable-next-line react/prop-types
 export function HomePage({ userProfile, onLoadUserProfile, intl }) {
   useInjectReducer({ key, reducer });
   useInjectSaga({ key, saga });
+
+  const [visibleForm, setVisibleForm] = React.useState(false);
 
   // const [visible, setVisible] = React.useState(false);
   // const [orderPackage, setOrderPackage] = React.useState({});
@@ -57,6 +58,8 @@ export function HomePage({ userProfile, onLoadUserProfile, intl }) {
 
   useEffect(() => {
     onLoadUserProfile();
+    const timer = setTimeout(() => setVisibleForm(true), 10000); // mở sau 5s
+    return () => clearTimeout(timer);
   }, []);
 
   const openModal = (item, isEdit) => {
@@ -80,381 +83,179 @@ export function HomePage({ userProfile, onLoadUserProfile, intl }) {
           })}
         />
       </Helmet>
-      <div className="vnk-homepage">
-        <CenteredSection>
-          <H1 className="vnk-headline">
-            <FormattedMessage {...messages.mypIntroduceHeader} />
-          </H1>
-
-          <hr className="vnk-line" />
-        </CenteredSection>
-
-        <Row className="page1">
-          <Col sm={24} lg={12}>
-            <CenteredSection>
-              <img
-                // width={280}
-                height={450}
-                src={homeApp}
-                alt="App My Project"
-              />
-            </CenteredSection>
-          </Col>
-          <Col sm={24} lg={12}>
-            <H3 className="box-title">
-              <FormattedMessage {...messages.myIntroTitle} />
-            </H3>
-            <p className="vnk-paragraph">
-              <FormattedMessage {...messages.myIntroSubTitle} />
-            </p>
-            <p className="vnk-paragraph">
-              <CaretRightFilled />
-              <FormattedMessage {...messages.myIntroText1} />
-            </p>
-            <p className="vnk-paragraph">
-              <CaretRightFilled />
-              <FormattedMessage {...messages.myIntroText2} />
-            </p>
-            <p className="vnk-paragraph">
-              <CaretRightFilled />
-              <FormattedMessage {...messages.myIntroText3} />
-            </p>
-            <p className="vnk-paragraph">
-              <CaretRightFilled />
-              <FormattedMessage {...messages.myIntroText4} />
-            </p>
-            <p className="vnk-paragraph">
-              <CaretRightFilled />
-              <FormattedMessage {...messages.myIntroText5} />
-            </p>
-          </Col>
-        </Row>
-
-        <div className="page2">
-          <Row className="content">
-            <Col sm={24} lg={12} className="myp-software">
-              <H1 className="vnk-headline title ">
-                {' '}
-                <FormattedMessage {...messages.myBanner2Title} />
-              </H1>
-              <p className="vnk-paragraph ">
-                <FormattedMessage {...messages.myBanner2Msg} />
-              </p>
-              <p className="vnk-paragraph ">
-                "<FormattedMessage {...messages.myProjectSaveTime} />"
-              </p>
-              <p className="vnk-paragraph ">
-                <FormattedMessage {...messages.myBanner2DownApp} />
-              </p>
-              <Row className="app-mobile">
-                <Col sm={24} lg={12}>
-                  <a
-                    target="_black"
-                    href="https://itunes.apple.com/us/app/my-project/id1442049236?mt=8"
-                  >
-                    <img
-                      src={require('../../assets/images/app-store.png')}
-                      alt="App-store App My Project"
-                    />
-                  </a>
-                </Col>
-                <Col sm={24} lg={12}>
-                  <a
-                    target="_black"
-                    href="https://play.google.com/store/apps/details?id=vn.com.vnk.myp&hl=vi"
-                  >
-                    <img
-                      src={require('../../assets/images/ch-play.png')}
-                      alt="App-store App My Project"
-                    />
-                  </a>
-                </Col>
-              </Row>
-            </Col>
-            <Col sm={24} lg={12} className="ipApp">
-              <div className="app-bg" />
-              {/* <img
-                className="ipApp"
-                width={550}
-                height={600}
-                src={ipApp}
-                alt="App My Project"
-              /> */}
-            </Col>
-          </Row>
+      <Modal
+        open={visibleForm}
+        onCancel={() => setVisibleForm(false)}
+        footer={null}
+        width={700}
+        bodyStyle={{ padding: 0 }}
+        centered
+        destroyOnClose
+      >
+        <h2 className="text-center py-8 text-[20px] font-bold max-w-[600px] mx-auto">
+          ĐỂ LẠI THÔNG TIN ĐỂ ĐƯỢC TƯ VẤN MIỄN PHÍ VÀ NHẬN DỰ ÁN DEMO MỚI NHẤT!
+        </h2>
+        <iframe
+          src="https://salekit.io/form/428317c8?iframe=true"
+          title="Salekit Form"
+          style={{ width: '100%', height: '400px', border: 'none' }}
+        />
+      </Modal>
+      <HomeCount />
+      <div className="bg-[#1b1d21] p-[20px] pt-[0px]">
+        <div className="lg:grid lg:grid-cols-3 gap-[20px]">
+          <div className="lg:col-span-2 bg-[#212529] p-[20px] rounded-[4px]">
+            <HomeChartLine />
+          </div>
+          <div className="lg:col-span-1 bg-[#212529] rounded-[4px]">
+            <CountryMap />
+          </div>
         </div>
-
-        <Container className="myp-feature">
-          <Col sm={12} lg={10}>
-            <CenteredSection>
+        <div className="grid lg:grid-cols-2 gap-[20px] mt-[20px] mb-[30px]">
+          <div className="grid col-span-1 bg-[#212529] rounded-[4px] overflow-x-auto">
+            <NewProjectsTable />
+          </div>
+          <div className="grid col-span-1 bg-[#212529] rounded-[4px] overflow-x-auto">
+            <TopProjectsTable />
+          </div>
+        </div>
+        <div className="grid lg:grid-cols-3 gap-[20px]">
+          <div className="grid col-span-1 bg-[#212529] rounded-[4px]">
+            <HomeChart />
+          </div>
+          <div className="grid lg:col-span-2 bg-[#212529] rounded-[4px]">
+            <ProjectTable />
+          </div>
+        </div>
+      </div>
+      <div className="vnk-homepage">
+        <HomeFeature>
+          <div className="grid xl:grid-cols-2 bg-cover px-[10px] py-0 md:py-[50px] gap-[20px] lg:gap-[50px]">
+            <div className="col-span-1 xl:text-right">
+              <h2 className="uppercase font-bold text-[28px] lg:text-[36px] text-[#fff] mb-5">
+                <FormattedMessage {...messages.myFunction} />
+              </h2>
               <img
-                // width={280}
-                height={450}
-                style={{ marginTop: '10px' }}
-                src={kpi}
-                alt="App My Project"
+                src={imageFeature1}
+                className="mr-[10px] md:mr-[20px] 2xl:max-w-full xl:max-w-[360px] max-w-[63%]"
+                alt="images"
               />
-            </CenteredSection>
-          </Col>
-          <Col sm={12} lg={14}>
-            <Row>
-              <Col className="highlights">
-                <H1 className="vnk-headline">
-                  <FormattedMessage {...messages.myFunction} />
-                </H1>
-                <hr className="vnk-line hr-feature" />
-              </Col>
-            </Row>
-            <Row>
-              <Col sm={12} lg={12} className="flex">
-                <img width={78} height={78} src={next} alt="progess" />
-                <div className="pd-r">
-                  <H3 className="feature-title">
+              <img
+                src={imageFeature2}
+                alt="images"
+                className="2xl:max-w-full xl:max-w-[200px] max-w-[calc(37%-10px)]"
+              />
+            </div>
+            <div className="col-span-1 xl:max-w-[680px] bg-[#8A232CB0] rounded-xl text-[#ccc] [&_b]:text-[#fff] gap-x-3 p-5 gap-y-2 grid md:grid-cols-2 text-[16px] xl:text-[20px] [&_p]:!m-0 [&_img]:w-[40px] [&_span]:pt-[8px]">
+              <div className="grid grid-cols-[40px_1fr] gap-x-[13px]">
+                <span>
+                  <img src={iconFeature1} alt="images" />
+                </span>
+                <div>
+                  <b>
                     <FormattedMessage {...messages.myFunctionSubTitle1} />
-                  </H3>
-                  <span className="vnk-paragraph feature">
-                    <FormattedMessage {...messages.myFunctionMsg1} />
-                  </span>
+                  </b>
+                  <br />
+                  <FormattedMessage {...messages.myFunctionMsg1} />
                 </div>
-              </Col>
-              <Col sm={24} lg={12} className="flex">
-                <img width={78} height={78} src={statchart} alt="statchart" />
-                <div className="pd-r">
-                  <H3 className="feature-title">
-                    <FormattedMessage {...messages.myFunctionSubTitle5} />
-                  </H3>
-                  <span className="vnk-paragraph feature">
-                    <FormattedMessage {...messages.myFunctionMsg5} />
-                  </span>
-                </div>
-              </Col>
-              <Col sm={24} lg={12} className="flex">
-                <img width={78} height={78} src={scale} alt="statchart" />
-                <div className="pd-r">
-                  <H3 className="feature-title">
+              </div>
+              <div className="grid grid-cols-[40px_1fr] gap-x-[13px]">
+                <span>
+                  <img src={iconFeature2} alt="images" />
+                </span>
+                <div>
+                  <b>
                     <FormattedMessage {...messages.myFunctionSubTitle2} />
-                  </H3>
-                  <span className="vnk-paragraph feature">
-                    <FormattedMessage {...messages.myFunctionMsg2} />
-                  </span>
+                  </b>
+                  <br />
+                  <FormattedMessage {...messages.myFunctionMsg2} />
                 </div>
-              </Col>
-              <Col sm={24} lg={12} className="flex">
-                <img width={78} height={78} src={teacherIcon} alt="statchart" />
-                <div className="pd-r">
-                  <H3 className="feature-title">
-                    <FormattedMessage {...messages.myFunctionSubTitle6} />
-                  </H3>
-                  <span className="vnk-paragraph feature">
-                    <FormattedMessage {...messages.myFunctionMsg6} />
-                  </span>
-                </div>
-              </Col>
-              <Col sm={24} lg={12} className="flex">
-                <FileTextFilled />
-                <div className="pd-r">
-                  <H3 className="feature-title">
+              </div>
+              <div className="grid grid-cols-[40px_1fr] gap-x-[13px]">
+                <span>
+                  <img src={iconFeature3} alt="images" />
+                </span>
+                <div>
+                  <b>
                     <FormattedMessage {...messages.myFunctionSubTitle3} />
-                  </H3>
-                  <span className="vnk-paragraph feature">
-                    <FormattedMessage {...messages.myFunctionMsg3} />
-                  </span>
+                  </b>
+                  <br />
+                  <FormattedMessage {...messages.myFunctionMsg3} />
                 </div>
-              </Col>
-              <Col sm={24} lg={12} className="flex">
-                <DribbbleSquareOutlined />
-                <div className="pd-r">
-                  <H3 className="feature-title">
-                    <FormattedMessage {...messages.myFunctionSubTitle7} />
-                  </H3>
-                  <span className="vnk-paragraph feature">
-                    <FormattedMessage {...messages.myFunctionMsg7} />
-                  </span>
-                </div>
-              </Col>
-              <Col sm={24} lg={12} className="flex">
-                <img width={78} height={78} src={info} alt="statchart" />
-                <div className="pd-r">
-                  <H3 className="feature-title">
+              </div>
+              <div className="grid grid-cols-[40px_1fr] gap-x-[13px]">
+                <span>
+                  <img src={iconFeature4} alt="images" />
+                </span>
+                <div>
+                  <b>
                     <FormattedMessage {...messages.myFunctionSubTitle4} />
-                  </H3>
-                  <span className="vnk-paragraph feature">
-                    <FormattedMessage {...messages.myFunctionMsg4} />
-                  </span>
+                  </b>
+                  <br />
+                  <FormattedMessage {...messages.myFunctionMsg4} />
                 </div>
-              </Col>
-              <Col sm={24} lg={12} className="flex">
-                <img
-                  width={78}
-                  height={78}
-                  src={successReport}
-                  alt="statchart"
-                />
-                <div className="pd-r">
-                  <H3 className="feature-title">
+              </div>
+              <div className="grid grid-cols-[40px_1fr] gap-x-[13px]">
+                <span>
+                  <img src={iconFeature2} alt="images" />
+                </span>
+                <div>
+                  <b>
+                    <FormattedMessage {...messages.myFunctionSubTitle5} />
+                  </b>
+                  <br />
+                  <FormattedMessage {...messages.myFunctionMsg5} />
+                </div>
+              </div>
+              <div className="grid grid-cols-[40px_1fr] gap-x-[13px]">
+                <span>
+                  <img src={iconFeature2} alt="images" />
+                </span>
+                <div>
+                  <b>
+                    <FormattedMessage {...messages.myFunctionSubTitle6} />
+                  </b>
+                  <br />
+                  <FormattedMessage {...messages.myFunctionMsg6} />
+                </div>
+              </div>
+              <div className="grid grid-cols-[40px_1fr] gap-x-[13px]">
+                <span>
+                  <img src={iconFeature5} alt="images" />
+                </span>
+                <div>
+                  <b>
+                    <FormattedMessage {...messages.myFunctionSubTitle7} />
+                  </b>
+                  <br />
+                  <FormattedMessage {...messages.myFunctionMsg7} />
+                </div>
+              </div>
+              <div className="grid grid-cols-[40px_1fr] gap-x-[13px]">
+                <span>
+                  <img src={iconFeature4} alt="images" />
+                </span>
+                <div>
+                  <b>
                     <FormattedMessage {...messages.myFunctionSubTitle8} />
-                  </H3>
-                  <span className="vnk-paragraph feature">
-                    <FormattedMessage {...messages.myFunctionMsg8} />
-                  </span>
+                  </b>
+                  <br />
+                  <FormattedMessage {...messages.myFunctionMsg8} />
                 </div>
-              </Col>
-            </Row>
-          </Col>
-        </Container>
-
-        <Container>
-          <Col xs={24} md={12} lg={24} className="highlights">
-            <HeadLine>
-              <FormattedMessage {...messages.myLanguage} />
-            </HeadLine>
-            <hr className="vnk-line hr-feature" />
-          </Col>
-          <Col lg={6} xs={24}>
-            <BackgroudImg
-              image={require('../../assets/images/home/register.jpg')}
-            />
-          </Col>
-          <Col lg={6} xs={24}>
-            <BackgroudImg
-              image={require('../../assets/images/home/home-page.jpg')}
-            />
-          </Col>
-          <Col lg={6} xs={24}>
-            <BackgroudImg image={require('../../assets/images/home/kpi.jpg')} />
-          </Col>
-          <Col lg={6} xs={24}>
-            <BackgroudImg
-              image={require('../../assets/images/home/report.jpg')}
-            />
-          </Col>
-          <Col lg={6} xs={24} />
-          <Col lg={6} xs={24}>
-            <BackgroudImg
-              image={require('../../assets/images/home/project-list.jpg')}
-            />
-          </Col>
-          <Col lg={6} xs={24}>
-            <BackgroudImg
-              image={require('../../assets/images/home/process.jpg')}
-            />
-          </Col>
-          <Col lg={6} xs={24} />
-        </Container>
-
-        <Row>
-          <Col lg={24} className="highlights">
-            <HeadLine>
-              <FormattedMessage {...messages.myExperience} />
-            </HeadLine>
-            <hr className="vnk-line hr-feature" />
-            <LadiParagraph>
-              <FormattedMessage {...messages.myExperienceMsg} />
-            </LadiParagraph>
-          </Col>
-          <Col lg={12}>
-            <BackgroudQRCode
-              float="right"
-              image={require('../../assets/images/home/appstore-qrcode.jpg')}
-            />
-          </Col>
-          <Col lg={12}>
-            <BackgroudQRCode
-              image={require('../../assets/images/home/android-qrcode.png')}
-            />
-          </Col>
-          <Col lg={12}>
-            <ImgDownload float="right">
-              <a
-                target="_black"
-                href="https://itunes.apple.com/us/app/my-project/id1442049236?mt=8"
-              >
-                <img
-                  src={require('../../assets/images/app-store.png')}
-                  alt="App-store App My Project"
-                />
-              </a>
-            </ImgDownload>
-          </Col>
-          <Col lg={12}>
-            <ImgDownload>
-              <a
-                target="_black"
-                href="https://play.google.com/store/apps/details?id=vn.com.vnk.myp&hl=vi"
-              >
-                <img
-                  src={require('../../assets/images/ch-play.png')}
-                  alt="Chplay App My Project"
-                />
-              </a>
-            </ImgDownload>
-          </Col>
-
-          <MessengerCustomerChat
-            pageId="718183361653935"
-            appId="341431724256703"
-          />
-        </Row>
-
-        <Row>
-          <Col lg={24} className="highlights">
-            <HeadLine>
-              <FormattedMessage {...messages.myBlog} />
-            </HeadLine>
-            <hr className="vnk-line hr-feature" />
-            <Row>
-              <Blog lg={8} sm={24}>
-                <a
-                  target="_black"
-                  href="https://kinhtedothi.vn/vnk-voi-su-menh-cung-cap-cac-giai-phap-than-thien-moi-truong.html"
-                >
-                  <img
-                    width={300}
-                    height={300}
-                    src={require('../../assets/images/blog/blog-vnk.jpg')}
-                    alt="App My Project"
-                  />
-                  <p>Sứ mệnh của VNK</p>
-                </a>
-              </Blog>
-              <Blog lg={8} sm={24}>
-                <a
-                  target="_black"
-                  href="https://diendandoanhnhanvietnam.vn/doanh-nghiep/he-lo-giai-phap-cong-nghe-moi-giup-cac-nha-thau-xay-dung-xay-lap-hay-thuong-mai-tiep-can-du-an-nhanh-chong-va-hieu-qua/"
-                >
-                  <img
-                    width={300}
-                    height={300}
-                    src={require('../../assets/images/blog/my-p.jpg')}
-                    alt="App My Project"
-                  />
-                  <p>Giải pháp công nghệ My Project</p>
-                </a>
-              </Blog>
-              <Blog lg={8} sm={24}>
-                <a
-                  target="_black"
-                  href="http://kinhtevadautu.vn/app-my-project-tro-thu-dac-luc-tren-con-duong-ban-hang-du-an-xay-dung-2967.html"
-                >
-                  <img
-                    width={300}
-                    height={300}
-                    src={require('../../assets/images/blog/blogApp.jpg')}
-                    alt="App My Project"
-                  />
-                  <p>
-                    App My Project - trợ thủ đắc lực trên con đường bán hàng dự
-                    án xây dựng
-                  </p>
-                </a>
-              </Blog>
-            </Row>
-          </Col>
-        </Row>
+              </div>
+            </div>
+          </div>
+        </HomeFeature>
       </div>
     </div>
   );
 }
+
+const HomeFeature = styled.section`
+  background-image: url(${bgHomeFeature});
+  background-size: cover;
+  padding: 50px 10px;
+`;
 
 const Blog = styled(Col)`
   font-size: 16px;
@@ -552,28 +353,6 @@ const BackgroudQRCode = styled.div`
     display: none;
   }
 `;
-
-// HomePage.propTypes = {
-//   onSubmitForm: PropTypes.func,
-//   username: PropTypes.string,
-// };
-
-// const mapStateToProps = createStructuredSelector({
-//   repos: makeSelectRepos(),
-//   username: makeSelectUsername(),
-//   loading: makeSelectLoading(),
-//   error: makeSelectError(),
-// });
-
-// export function mapDispatchToProps(dispatch) {
-//   return {
-//     onChangeUsername: evt => dispatch(changeUsername(evt.target.value)),
-//     onSubmitForm: evt => {
-//       if (evt !== undefined && evt.preventDefault) evt.preventDefault();
-//       dispatch(loadRepos());
-//     },
-//   };
-// }
 
 HomePage.prototype = {
   intl: intlShape.isRequired,
