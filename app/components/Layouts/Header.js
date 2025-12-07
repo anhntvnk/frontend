@@ -333,7 +333,9 @@ class Header extends React.Component {
                             round
                             color="#357edd"
                           />
-                          <span className="ml-1 hidden lg:inline-block text-white">{this.state.username}</span>
+                          <span className="ml-1 hidden lg:inline-block text-white">
+                            {this.state.username}
+                          </span>
                         </Fragment>
                         <ul className="hidden tw-menu-user group-hover:block absolute right-0 min-w-48 bg-white border border-gray-200 shadow-lg z-20">
                           <li>
